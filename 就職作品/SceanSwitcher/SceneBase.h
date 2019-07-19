@@ -1,4 +1,5 @@
 #pragma once
+#include"../ResourceManager.h"
 class SceneBase
 {
 public:
