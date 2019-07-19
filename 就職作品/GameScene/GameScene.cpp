@@ -1,14 +1,18 @@
 #include "GameScene.h"
 
+void DrawMesh(XFILE *XFile);				//Draw‚Í‚±‚±‚¶‚á‚È‚¢	Œã‚ÅˆÚ“®‚³‚¹‚é
+
+
+
 GameScene::GameScene()
 {
-	LoadMesh(&fieldMesh,"XFiles/Field.x" );
+	fieldMesh = resourceManager->GetXFILE("XFiles/Field.x" );
 	D3DXMatrixTranslation(&fieldMat, 0, 0, 0);
 }
 
 GameScene::~GameScene()
 {
-	ReleaseMesh(&fieldMesh);
+	
 }
 
 void GameScene::Render3D(void)

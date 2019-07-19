@@ -1,9 +1,9 @@
 #pragma once
 #include<d3d9.h>
 #include"../SceanSwitcher/SceneSwitcher.h"
-#include"../Func.h"
+#include"../ResourceManager.h"
 
-
+extern ResourceManager *resourceManager;
 
 class GameScene : public SceneBase {
 private:

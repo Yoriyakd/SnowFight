@@ -30,6 +30,7 @@ LPD3DXFONT lpFont;		// フォント
 bool gameFullScreen;	// フルスクリーン（true,false)
 
 SceneSwitcher sceneSwitcher;
+ResourceManager *resourceManager;
 
 
 
@@ -216,7 +217,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	timeBeginPeriod(1);
 
 	// ゲームに関する初期化処理 ---------------------------
-
+	resourceManager = new ResourceManager();
 
 
 
