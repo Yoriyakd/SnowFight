@@ -1,8 +1,7 @@
+#include<time.h>
 #include<windows.h>
 #include<stdio.h>
-#include<d3dx9.h>
-#include<time.h>
-#include"StructDefinition.h"
+#include"main.h"
 #include"SceanSwitcher/SceneSwitcher.h"
 #include"GameScene/GameScene.h"
 
@@ -13,13 +12,12 @@
 #pragma comment(lib, "winmm.lib")
 
 
+
 LPDIRECT3D9				lpD3D;		// Direct3Dインターフェイス
 
 LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 
 D3DPRESENT_PARAMETERS d3dpp;
-
-
 
 
 ////  グローバル変数宣言

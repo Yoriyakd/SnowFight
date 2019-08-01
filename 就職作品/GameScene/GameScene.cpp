@@ -1,6 +1,5 @@
 #include "GameScene.h"
 
-void DrawMesh(XFILE *XFile);				//Draw‚Í‚±‚±‚¶‚á‚È‚¢	Œã‚ÅˆÚ“®‚³‚¹‚é
 
 
 
@@ -17,9 +16,7 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
-	//lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &fieldMat);
-	DrawMesh(&fieldMesh);
+	
 }
 
 void GameScene::SetCamera(void)

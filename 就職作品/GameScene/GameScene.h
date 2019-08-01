@@ -1,5 +1,6 @@
 #pragma once
 #include<d3d9.h>
+#include"../main.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
 

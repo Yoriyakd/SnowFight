@@ -1,7 +1,6 @@
 #include "ResourceManager.h"
 
 void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color);
-void DrawMesh(XFILE *XFile);				//Draw‚Í‚±‚±‚¶‚á‚È‚¢	Œã‚ÅˆÚ“®‚³‚¹‚é
 void LoadMesh(struct XFILE *XFile, const char FName[]);
 void ReleaseMesh(struct XFILE *XFile);
 
@@ -79,15 +78,7 @@ void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3
 	D3DXCreateTextureFromFileEx(lpD3DDevice, fname, W, H, 1, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT, Color, NULL, NULL, lpTex);
 }
 
-void DrawMesh(XFILE *XFile)
-{
-	for (DWORD i = 0; i < XFile->NumMaterial; i++)
-	{
-		lpD3DDevice->SetMaterial(&(XFile->Mat[i]));
-		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
-		XFile->lpMesh->DrawSubset(i);
-	}
-}
+
 
 void LoadMesh(struct XFILE *XFile, const char FName[])
 {

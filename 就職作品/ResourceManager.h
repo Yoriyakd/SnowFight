@@ -1,9 +1,9 @@
 #pragma once
-#include"StructDefinition.h"
+#include"main.h"
 #include<string>
 #include<map>
 
-extern LPDIRECT3DDEVICE9		lpD3DDevice;
+
 
 class ResourceManager
 {

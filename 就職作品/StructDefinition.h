@@ -19,5 +19,3 @@ struct XFILE {
 	LPDIRECT3DTEXTURE9 *Tex;	//Textureの内容 * グループ数分		
 };
 
-#define	SCRW		1280	// ウィンドウ幅（Width
-#define	SCRH		720		// ウィンドウ高さ（Height
