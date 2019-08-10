@@ -1,12 +1,20 @@
 #include "GameScene.h"
 
+extern ResourceManager *resourceManager;
+
+void DrawMesh(XFILE *XFile);		//TEST:
+
+Player *player;
+
+//XFILE TestMesh;
+//D3DXMATRIX TestMat;
 
 
 
 GameScene::GameScene()
 {
-	fieldMesh = resourceManager->GetXFILE("XFiles/Field.x" );
-	D3DXMatrixTranslation(&fieldMat, 0, 0, 0);
+	player = new Player();
+	//TestMesh = resourceManager->GetXFILE("XFiles/EnemyBody.x");
 }
 
 GameScene::~GameScene()
@@ -16,7 +24,7 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
-	
+	player->Draw();
 }
 
 void GameScene::SetCamera(void)
@@ -46,5 +54,7 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
+	//D3DXMatrixTranslation(&TestMat, 0, 0, 0);		//TEST:
+	player->Update();
 	return true;
 }

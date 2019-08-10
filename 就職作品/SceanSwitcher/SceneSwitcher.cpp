@@ -17,7 +17,8 @@ void SceneSwitcher::NowScene(void)
 {
 	if (Scene != nullptr)
 	{
-		Scene->Frame();			//今のシーンのフレームを実行
+		//今のシーンのフレームを実行
+		Scene->Frame();			
 	}
 }
 

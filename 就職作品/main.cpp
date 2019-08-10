@@ -30,7 +30,15 @@ bool gameFullScreen;	// フルスクリーン（true,false)
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
 
-
+void DrawMesh(XFILE *XFile)
+{
+	for (DWORD i = 0; i < XFile->NumMaterial; i++)
+	{
+		lpD3DDevice->SetMaterial(&(XFile->Mat[i]));
+		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
+		XFile->lpMesh->DrawSubset(i);
+	}
+}
 
 
 

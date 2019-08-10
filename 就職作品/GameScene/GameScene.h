@@ -3,8 +3,9 @@
 #include"../main.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
+#include"../Player/Player.h"
 
-extern ResourceManager *resourceManager;
+
 
 class GameScene : public SceneBase {
 private:

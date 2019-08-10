@@ -1,9 +1,11 @@
 #pragma once
 #include<d3dx9.h>
-#include"../BaseClass/XFILEObject.h"
+#include"../ResourceManager.h"
 
-class Player : public XFILEObject {
+class Player {
 private:
+	XFILE mesh;
+	D3DXMATRIX mat;
 	D3DXVECTOR3 Pos;
 	int remainingBalls;
 
@@ -15,4 +17,5 @@ public:
 	~Player();
 	bool Update(void);
 	void SetCamera(void);
+	void Draw(void);
 };
