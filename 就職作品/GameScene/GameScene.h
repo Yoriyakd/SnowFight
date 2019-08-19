@@ -4,6 +4,7 @@
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
 #include"../Player/Player.h"
+#include"../Map/StageCreater.h"
 
 
 

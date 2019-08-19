@@ -1,10 +1,11 @@
 #include "GameScene.h"
 
-extern ResourceManager *resourceManager;
+
 
 void DrawMesh(XFILE *XFile);		//TEST:
 
 Player *player;
+StageCreater *stageCreater;
 
 //XFILE TestMesh;
 //D3DXMATRIX TestMat;
@@ -14,6 +15,7 @@ Player *player;
 GameScene::GameScene()
 {
 	player = new Player();
+	stageCreater = new StageCreater(1);
 	//TestMesh = resourceManager->GetXFILE("XFiles/EnemyBody.x");
 }
 
@@ -24,6 +26,7 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
+	stageCreater->Draw();
 	player->Draw();
 }
 
@@ -33,7 +36,7 @@ void GameScene::SetCamera(void)
 
 	// 視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
-		&D3DXVECTOR3(0.0f, 10.0f, -10.0f),	// カメラの位置
+		&D3DXVECTOR3(0.0f, 5.0f, -5.0f),	// カメラの位置
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// カメラの視点
 		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
 	);
@@ -56,5 +59,6 @@ bool GameScene::Update()
 {
 	//D3DXMatrixTranslation(&TestMat, 0, 0, 0);		//TEST:
 	player->Update();
+	
 	return true;
 }

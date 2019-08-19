@@ -10,6 +10,9 @@ extern D3DPRESENT_PARAMETERS d3dpp;
 #define	SCRH		720		// ウィンドウ高さ（Height
 
 
+#define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
+
 // 頂点フォーマットの定義
 struct VERTEX
 {
