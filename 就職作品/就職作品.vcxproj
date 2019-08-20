@@ -115,6 +115,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy\Enemy.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="GameScene\GameScene.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -141,6 +144,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Ground.h" />

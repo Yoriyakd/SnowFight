@@ -15,7 +15,7 @@ StageCreater *stageCreater;
 GameScene::GameScene()
 {
 	player = new Player();
-	stageCreater = new StageCreater(1);
+	stageCreater = new StageCreater();
 	//TestMesh = resourceManager->GetXFILE("XFiles/EnemyBody.x");
 }
 

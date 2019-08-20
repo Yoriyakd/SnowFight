@@ -1,5 +1,7 @@
 #pragma once
 #include"Ground.h"
+#include"../Enemy/Enemy.h"
+#include<vector>
 class StageCreater {
 private:
 	static const int stageX = 10;		//マップのサイズの横幅(値は仮のもの)
@@ -11,7 +13,7 @@ private:
 
 
 public:
-	StageCreater(int);					//現在のステージを引数に入れる
+	StageCreater();
 	~StageCreater();
 	void Draw();
 };

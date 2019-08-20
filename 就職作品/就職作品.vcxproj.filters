@@ -48,6 +48,9 @@
     <ClCompile Include="Map\Ground.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="Map\Ground.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Enemy.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
