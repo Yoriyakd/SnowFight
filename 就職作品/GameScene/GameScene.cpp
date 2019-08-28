@@ -5,7 +5,7 @@
 void DrawMesh(XFILE *XFile);		//TEST:
 
 Player *player;
-StageCreater *stageCreater;
+Stage *stage;
 
 //XFILE TestMesh;
 //D3DXMATRIX TestMat;
@@ -15,8 +15,10 @@ StageCreater *stageCreater;
 GameScene::GameScene()
 {
 	player = new Player();
-	stageCreater = new StageCreater();
+	stage = new Stage(1);
 	//TestMesh = resourceManager->GetXFILE("XFiles/EnemyBody.x");
+
+	
 }
 
 GameScene::~GameScene()
@@ -26,29 +28,13 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
-	stageCreater->Draw();
+	stage->Draw();
 	player->Draw();
 }
 
 void GameScene::SetCamera(void)
 {
-	D3DXMATRIX mView, mProj;
-
-	// 視点行列の設定
-	D3DXMatrixLookAtLH(&mView,
-		&D3DXVECTOR3(0.0f, 5.0f, -5.0f),	// カメラの位置
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// カメラの視点
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
-	);
-
-	// 投影行列の設定
-	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 1000.0f);
-
-	//行列設定
-	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
-	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
-
-
+	player->SetCamera();
 }
 
 void GameScene::Render2D(void)

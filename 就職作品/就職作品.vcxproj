@@ -127,7 +127,7 @@
     <ClCompile Include="Map\Ground.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\StageCreater.cpp">
+    <ClCompile Include="Map\Stage.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Player\Player.cpp">
@@ -148,7 +148,7 @@
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Ground.h" />
-    <ClInclude Include="Map\StageCreater.h" />
+    <ClInclude Include="Map\Stage.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceanSwitcher\SceneBase.h" />

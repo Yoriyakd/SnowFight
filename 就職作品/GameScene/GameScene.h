@@ -4,7 +4,7 @@
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
 #include"../Player/Player.h"
-#include"../Map/StageCreater.h"
+#include"../Map/Stage.h"
 
 
 
@@ -12,6 +12,8 @@ class GameScene : public SceneBase {
 private:
 	XFILE fieldMesh;
 	D3DXMATRIX fieldMat;
+
+
 
 public:
 	GameScene();

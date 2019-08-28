@@ -26,6 +26,7 @@ LPD3DXSPRITE lpSprite;	// スプライト
 LPD3DXFONT lpFont;		// フォント
 
 bool gameFullScreen;	// フルスクリーン（true,false)
+HWND hwnd;
 
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
@@ -71,7 +72,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 {
 	MSG msg;
 
-	HWND hwnd;
+	//HWND hwnd;
 	WNDCLASS wc;
 	char szAppName[] = "Generic Game SDK Window";
 

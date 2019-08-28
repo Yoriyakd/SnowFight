@@ -24,4 +24,4 @@ public:
 	void AllDelete(void);
 };
 
-extern ResourceManager *resourceManager;		//‚±‚±‚É‘‚¢‚Ä‚à‘åä•v‚¾‚ë‚¤‚©H
+extern ResourceManager *resourceManager;		//main‚ÅéŒ¾

@@ -5,9 +5,15 @@
 class Player {
 private:
 	XFILE mesh;
-	D3DXMATRIX mat;
+	D3DXMATRIX mat, transMat, rotMat;
 	D3DXVECTOR3 Pos;
-	int remainingBalls;
+	static int remainingBalls;
+	POINT basePt;
+	//============================================================
+	//ƒJƒƒ‰‚Ì•Ï”
+	//============================================================
+	float camAngY, camAngX;			//ŒX‚«‚Ì—Ê‚ğ“ü‚ê‚é	‰ñ“]²‚Å–¼‘O•t‚¯
+	D3DXMATRIX camRotMatY, camRotMatX, camRotMat;
 
 	void Move(void);
 	int ShootSnowball(void);
