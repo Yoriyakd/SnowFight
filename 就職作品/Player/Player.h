@@ -6,7 +6,7 @@ class Player {
 private:
 	XFILE mesh;
 	D3DXMATRIX mat, transMat, rotMat;
-	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 pos;
 	static int remainingBalls;
 	POINT basePt;
 	//============================================================

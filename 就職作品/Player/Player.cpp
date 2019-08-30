@@ -7,93 +7,54 @@ extern ResourceManager *resourceManager;
 
 void Player::Move(void)
 {
-	///*--ここで毎回リセットしている--*/
-	//bool moveFlag = false;
-	//D3DXVECTOR3 moveVec(0, 0, 0);
-	///*--ここで毎回リセットしている--*/
-	//D3DXVECTOR3 TmpVec;
+	D3DXVECTOR3 movePos(0, 0, 0);
+	 bool moveFlag = false;
 
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		D3DXMATRIX RotMat;
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY));
+		D3DXVECTOR3 Vec;
+		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
+		movePos += Vec;
+		moveFlag = true;
+	}
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		D3DXMATRIX RotMat;
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY + 180));
+		D3DXVECTOR3 Vec;
+		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
+		movePos += Vec;
+		moveFlag = true;
+	}
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		D3DXMATRIX RotMat;
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY - 90));
+		D3DXVECTOR3 Vec;
+		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
+		movePos += Vec;
+		moveFlag = true;
+	}
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		D3DXMATRIX RotMat;
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY + 90));
+		D3DXVECTOR3 Vec;
+		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
+		movePos += Vec;
+		moveFlag = true;
+	}
 
-	//if (GetAsyncKeyState('W') & 0x8000)
-	//{
-	//	D3DXVec3TransformNormal(&TmpVec, &D3DXVECTOR3(0, 0, 1), &camRotMatX);
-	//	/*ここを切り替えて他のキーを作る*/
-	//	moveVec += TmpVec;
-	//	moveFlag = true;
-	//}
-	//if (GetAsyncKeyState('A') & 0x8000)
-	//{
-	//	D3DXVec3TransformNormal(&TmpVec, &D3DXVECTOR3(-1, 0, 0), &camRotMatX);
+	D3DXVec3Normalize(&movePos, &movePos);			//移動量正規化
 
-	//	moveVec += TmpVec;
-	//	moveFlag = true;
-	//}
-	//if (GetAsyncKeyState('S') & 0x8000)
-	//{
-	//	D3DXVec3TransformNormal(&TmpVec, &D3DXVECTOR3(0, 0, -1), &camRotMatX);
+	movePos *= 0.5;		//移動スピード調整
 
-	//	moveVec += TmpVec;
-	//	moveFlag = true;
-	//}
-	//if (GetAsyncKeyState('D') & 0x8000)
-	//{
-	//	D3DXVec3TransformNormal(&TmpVec, &D3DXVECTOR3(1, 0, 0), &camRotMatX);
-
-	//	moveVec += TmpVec;
-	//	moveFlag = true;
-	//}
-
-	////押してる間だけ動く
-	//if (moveFlag == true)
-	//{
-	//	D3DXVec3Normalize(&moveVec, &moveVec);
-
-	//	D3DXMATRIX tmpMat;
-	//	D3DXMatrixTranslation(&tmpMat,
-	//		moveVec.x,
-	//		moveVec.y,
-	//		moveVec.z);
-
-	//	D3DXVECTOR3 nowVec;
-	//	D3DXVec3TransformNormal(&nowVec, &D3DXVECTOR3(0, 0, 1), &rotMat);			//今向いている方向のベクトルを入れている		//確か長さを1にしている斜め移動が速くなるやつの対策
-	//	D3DXVec3Normalize(&moveVec, &moveVec);
-	//	float tmpAng;
-	//	tmpAng = D3DXVec3Dot(&nowVec, &moveVec);
-	//	tmpAng = D3DXToDegree(acos(tmpAng));
-
-	//	if (tmpAng >= 0.1f)			//float型では== や!=　を使わない
-	//	{
-	//		D3DXVECTOR3 crossVec;
-	//		D3DXVec3Cross(&crossVec, &nowVec, &moveVec);			//外積を計算してベクトルが上か下かを見る
-
-	//		if (tmpAng >= 10.0f)			//ゆっくりかいてんさせる処理
-	//		{
-	//			tmpAng = 8.0f;
-	//		}
-
-	//		if (crossVec.y > 0.1f)			//ここの桁数を増やすと振動がなくなるっぽい
-	//		{
-	//			camAngY += tmpAng;
-	//		}
-	//		else
-	//		{
-	//			if (crossVec.y < -0.1f)		//ここの桁数を増やすと振動がなくなるっぽい
-	//			{
-	//				camAngY -= tmpAng;
-	//			}
-	//			else
-	//			{
-	//				camAngY += tmpAng;			//180度開いているようなときは(どちらにも当てはまらない)
-	//			}
-	//		}
-	//	}
-
-	//	D3DXMatrixRotationY(&rotMat, D3DXToRadian(camAngY));
-
-	//	transMat = tmpMat * transMat;
-	//}
-
-	//mat = rotMat * transMat;
+	if (moveFlag)
+	{
+		pos += movePos;
+	}
 }
 
 int Player::ShootSnowball(void)
@@ -108,10 +69,17 @@ int Player::ShootSnowball(void)
 Player::Player()
 {
 	mesh = resourceManager->GetXFILE("Player/player.x");
-	SetCursorPos(SCRW / 2, SCRH / 2);
-	camAngX = 0, camAngY = 0;
-	basePt.x = SCRH / 2;
-	basePt.y = SCRW / 2;
+	
+	camAngX = 0, camAngY = 0;		//初期化
+
+	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXMatrixIdentity(&mat);
+
+	//--------------------------------------------------------------
+	//カメラ回りの初期化
+	//--------------------------------------------------------------
+	basePt.x = SCRW / 2;
+	basePt.y = SCRH / 2;
 
 	ClientToScreen(hwnd, &basePt);
 	SetCursorPos(basePt.x, basePt.y);
@@ -125,8 +93,13 @@ Player::~Player()
 bool Player::Update(void)
 {
 	Move();
-	D3DXMatrixTranslation(&mat, 0, 0, 0);		//仮
-	Pos.x = mat._41, Pos.y = mat._42 + 5, Pos.z = mat._43;		//Playerの座標をPosに入れる		場所考え中
+	//D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);		//仮
+	//D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		//仮
+	//mat = transMat * mat;		//合成すると(0, 0, 10)のやつを合成し続けるような形になる	変化があった時のみ合成とかでもいけるかも
+	
+
+	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		
+
 	return true;
 }
 
@@ -146,7 +119,7 @@ void Player::SetCamera(void)
 	camAngY += (Pt.x - basePt.x) / 4.0f;	//最初の位置との差を求め、移動量を調整している
 	
 	camAngX += (Pt.y - basePt.y) / 4.0f;
-	SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット		スクリーン座標に変換したほうがいい気がする
+	SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット
 
 	if (camAngX >= 70)
 	{
@@ -170,8 +143,8 @@ void Player::SetCamera(void)
 
 	// 視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
-		&Pos,	// カメラの位置
-		&(Pos + camTmpVec),	// カメラの視点
+		&D3DXVECTOR3(pos.x, pos.y + 5, pos.z ),	// カメラの位置						//カメラの変数を用意した方がいい
+		&(D3DXVECTOR3(pos.x, pos.y + 5, pos.z) + camTmpVec),	// カメラの視点		//カメラの変数を用意した方がいい	
 		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
 	);
 	// 投影行列の設定

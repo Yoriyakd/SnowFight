@@ -34,11 +34,19 @@ void Stage::SetStageMap(void)
 		dataBuff[i];
 	}
 
+	//int a;
+	//fscanf(fp, "壁:%d\n", &a);		//シーク位置は読んだあと移動する
+	//fscanf(fp, "%d ", &a);
+
+//	int b[10] = {0,1,2,3,4,5};
+//	fwrite(b, sizeof(b), 1, fp);		バイナリ型式でする必要がある
+//	fread(b, sizeof(b), 1, fp);			バイナリ型式で
+
 	//while (1)
 	//{
 	//	int buf;
 	//	
-	//	buf = fgetc(fp);
+	//	buf = fgetc(fp);			//fscanf_sのほうがいいらしい
 	//	if (buf == EOF)break;
 	//	if (buf >= '0' && buf <= '9')		//数字以外はじく
 	//	{
