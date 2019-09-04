@@ -2,23 +2,29 @@
 #include"Ground.h"
 #include"../Enemy/Enemy.h"
 #include<vector>
+
+enum objType { EMPTY, WALL, ENEMY = 5 };
+
 class Stage {
 private:
-	static const int stageX = 10;		//マップのサイズの横幅(値は仮のもの)
-	static const int stageY = 10;		//マップのサイズの縦幅(値は仮のもの)
-	int StageMap[stageX][stageY];		//ステージのオブジェクトの番号を入れてマップを作りたい
+	static const int STAGE_X = 11;		//マップのサイズの横幅(値は仮のもの)
+	static const int STAGE_Y = 11;		//マップのサイズの縦幅(値は仮のもの)
+	static const float TILE_SIZE;		//ここで初期化できない?
+
+	objType StageMap[STAGE_Y][STAGE_X];		//ステージのオブジェクトの番号を入れてマップを作りたい		[Y][X]
 	int enemyNum, wallNum;				//ステージ内のオブジェクトの数を入れる
 	int nowStageNo;						//ステージNo.を参照するときに使う
 
-	FILE *fp;							//オープンしたファイルのポインタ
-	
+	FILE *fp;
+
+	D3DXVECTOR3 *wallPos;				
+	D3DXVECTOR3 *enemyPos;				
+
 
 	std::vector <Enemy*> enemy;
 	
 	void SetStageMap(void);				//textファイルを開いてマップを作る
-	
-	//charをintに変換　戻り値は変換した数を返す　0～9以外は-999を返す
-	int ctoi(char c);					
+			
 
 
 public:

@@ -43,7 +43,6 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	//D3DXMatrixTranslation(&TestMat, 0, 0, 0);		//TEST:
 	player->Update();
 	
 	return true;

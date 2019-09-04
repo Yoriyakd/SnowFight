@@ -9,7 +9,7 @@ private:
 	void ShootSnowBall(D3DXVECTOR3);
 
 public:
-	Enemy();
+	Enemy(D3DXVECTOR3);
 	~Enemy();
 	bool Update(void);
 	void Draw(void);

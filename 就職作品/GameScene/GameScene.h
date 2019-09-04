@@ -10,8 +10,7 @@
 
 class GameScene : public SceneBase {
 private:
-	XFILE fieldMesh;
-	D3DXMATRIX fieldMat;
+	
 
 
 

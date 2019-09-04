@@ -35,7 +35,7 @@ void Ground::SetMat(D3DXMATRIX)
 
 void Ground::Draw()
 {
-	D3DXMatrixTranslation(&mat, 0, 0, 0);
+	D3DXMatrixTranslation(&mat, 0, 0, 0);		//test
 	lpD3DDevice->SetFVF(FVF_VERTEX);
 	lpD3DDevice->SetTexture(0,tex);
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);

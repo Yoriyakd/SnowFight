@@ -14,10 +14,10 @@ void Enemy::ShootSnowBall(D3DXVECTOR3)
 //publicƒƒ\ƒbƒh
 //=====================================
 
-Enemy::Enemy()
+Enemy::Enemy(D3DXVECTOR3 Pos)
 {
 	mesh = resourceManager->GetXFILE("Enemy/EnemyBody.x");
-	D3DXMatrixTranslation(&mat, 0, 0, 10);  //‰¼
+	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
 }
 
 Enemy::~Enemy()
