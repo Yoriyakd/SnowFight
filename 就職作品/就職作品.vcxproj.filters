@@ -22,6 +22,9 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{dc879cfa-2222-4781-9957-a816709f3179}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commonObj">
+      <UniqueIdentifier>{87171ce0-bfbd-4ba3-91ba-fbca2e80da76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="Map\Stage.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\SnowBall.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -79,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Map\Stage.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\SnowBall.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

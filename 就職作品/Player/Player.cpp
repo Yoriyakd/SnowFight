@@ -49,7 +49,7 @@ void Player::Move(void)
 
 	D3DXVec3Normalize(&movePos, &movePos);			//移動量正規化
 
-	movePos *= 0.5;		//移動スピード調整
+	movePos *= moveSpeed;		//移動スピード調整
 
 	if (moveFlag)
 	{
@@ -59,6 +59,10 @@ void Player::Move(void)
 
 int Player::ShootSnowball(void)
 {
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+
+	}
 	return 0;
 }
 
@@ -68,6 +72,7 @@ int Player::ShootSnowball(void)
 
 Player::Player()
 {
+	moveSpeed = 0.5;		//test
 	mesh = resourceManager->GetXFILE("Player/player.x");
 	
 	camAngX = 0, camAngY = 0;		//初期化

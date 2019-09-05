@@ -2,13 +2,9 @@
 
 
 
-void DrawMesh(XFILE *XFile);		//TEST:
-
 Player *player;
 Stage *stage;
 
-//XFILE TestMesh;
-//D3DXMATRIX TestMat;
 
 
 

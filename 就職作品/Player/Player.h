@@ -2,6 +2,8 @@
 #include<d3dx9.h>
 #include"../ResourceManager.h"
 
+//ワールド座標で管理
+
 class Player {
 private:
 	XFILE mesh;
@@ -9,6 +11,7 @@ private:
 	D3DXVECTOR3 pos;
 	static int remainingBalls;
 	POINT basePt;
+	float moveSpeed;
 	//============================================================
 	//カメラの変数
 	//============================================================
