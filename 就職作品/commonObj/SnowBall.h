@@ -8,7 +8,7 @@ private:
 	float power;
 	static const float radius;
 public:
-	SnowBall();
+	SnowBall(D3DXVECTOR3);
 	~SnowBall();
 	bool Update(void);
 	void Draw(void);

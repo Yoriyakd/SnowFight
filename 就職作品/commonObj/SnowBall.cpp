@@ -2,9 +2,10 @@
 
 const float SnowBall::radius = 1.5;
 
-SnowBall::SnowBall()
+SnowBall::SnowBall(D3DXVECTOR3 Pos)
 {
 	mesh = resourceManager->GetXFILE("SnowBall.x");
+	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
 }
 
 SnowBall::~SnowBall()
@@ -30,4 +31,6 @@ bool SnowBall::Update(void)
 
 void SnowBall::Draw(void)
 {
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	DrawMesh(&mesh);
 }

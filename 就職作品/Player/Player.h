@@ -1,6 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 #include"../ResourceManager.h"
+#include"../commonObj/SnowBall.h"
 
 //ƒ[ƒ‹ƒhÀ•W‚ÅŠÇ—
 
@@ -20,6 +21,9 @@ private:
 
 	void Move(void);
 	int ShootSnowball(void);
+
+	SnowBall *snowBall;
+	bool ballF = false;
 
 public:
 	Player();

@@ -61,7 +61,8 @@ int Player::ShootSnowball(void)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-
+		snowBall = new SnowBall(pos);
+		snowBall->Draw();
 	}
 	return 0;
 }
@@ -164,4 +165,5 @@ void Player::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
+	
 }
