@@ -27,3 +27,7 @@ bool SnowBall::Update(void)
 	}
 	return true;
 }
+
+void SnowBall::Draw(void)
+{
+}

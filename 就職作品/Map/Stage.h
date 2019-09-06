@@ -1,5 +1,6 @@
 #pragma once
 #include"Ground.h"
+#include"Wall.h"
 #include"../Enemy/Enemy.h"
 #include<vector>
 
@@ -20,7 +21,7 @@ private:
 	D3DXVECTOR3 *wallPos;				
 	D3DXVECTOR3 *enemyPos;				
 
-
+	std::vector <Wall*> wall;
 	std::vector <Enemy*> enemy;
 	
 	void SetStageMap(void);				//textファイルを開いてマップを作る

@@ -11,4 +11,5 @@ public:
 	SnowBall();
 	~SnowBall();
 	bool Update(void);
+	void Draw(void);
 };

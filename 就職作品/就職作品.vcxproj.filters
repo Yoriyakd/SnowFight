@@ -57,6 +57,9 @@
     <ClCompile Include="commonObj\SnowBall.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="Map\Wall.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="commonObj\SnowBall.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Wall.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

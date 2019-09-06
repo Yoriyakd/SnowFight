@@ -41,7 +41,8 @@ void Stage::SetStageMap(void)
 	wallPos = new D3DXVECTOR3[wallNum];
 	enemyPos = new D3DXVECTOR3[enemyNum];			//“®“IŠm•Û‚·‚é
 
-	int enemyIte = 0;
+	int WallIte = 0;
+	int EnemyIte = 0;
 
 	//printf_s("%d", &wallNum);
 
@@ -51,12 +52,14 @@ void Stage::SetStageMap(void)
 		{
 			switch (StageMap[i][j])
 			{
-			case WALL:				//•Ç‚ÍŒã‰ñ‚µ
+			case WALL:
+				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				WallIte++;
 				break;
 
 			case ENEMY:
-				enemyPos[enemyIte] = D3DXVECTOR3((float)((STAGE_X - j) * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
-				enemyIte++;
+				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				EnemyIte++;
 				break;
 
 			EMPTY:					//‰½‚à‚µ‚È‚¢
@@ -85,11 +88,16 @@ void Stage::SetStageMap(void)
 
 
 
-Stage::Stage(int stageNo)
+Stage::Stage(int StageNo)
 {
-	nowStageNo = stageNo;
+	nowStageNo = StageNo;
 	SetStageMap();
 	ground = new Ground;
+
+	for (int i = 0; i < wallNum; i++)
+	{
+		wall.push_back(new Wall(wallPos[i]));
+	}
 	for (int i = 0; i < enemyNum; i++)
 	{
 		enemy.push_back(new Enemy(enemyPos[i]));
@@ -100,6 +108,12 @@ Stage::~Stage()
 {
 	delete wallPos;
 	delete enemyPos;
+	for (unsigned int i = 0; i < wall.size(); i++)
+	{
+		delete wall[i];
+
+	}
+	wall.clear();
 	for (unsigned int i = 0; i < enemy.size(); i++)
 	{
 		delete enemy[i];
@@ -111,6 +125,10 @@ Stage::~Stage()
 void Stage::Draw()
 {
 	ground->Draw();
+	for (unsigned int i = 0; i < wall.size(); i++)
+	{
+		wall[i]->Draw();
+	}
 	for (unsigned int i = 0; i < enemy.size(); i++)
 	{
 		enemy[i]->Draw();
