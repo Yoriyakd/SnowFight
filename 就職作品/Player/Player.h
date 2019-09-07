@@ -1,5 +1,6 @@
 #pragma once
 #include<d3dx9.h>
+#include<vector>
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBall.h"
 
@@ -22,7 +23,7 @@ private:
 	void Move(void);
 	int ShootSnowball(void);
 
-	SnowBall *snowBall;
+	std::vector <SnowBall*> snowBall_P;
 	bool ballF = false;
 
 public:

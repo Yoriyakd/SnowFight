@@ -61,10 +61,9 @@ int Player::ShootSnowball(void)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		snowBall = new SnowBall(pos);
-		snowBall->Draw();
+		snowBall_P.push_back(new SnowBall(pos));
 	}
-	return 0;
+	return 0;		//c’e”‚ğ“n‚·
 }
 
 //=====================================
@@ -89,22 +88,34 @@ Player::Player()
 
 	ClientToScreen(hwnd, &basePt);
 	SetCursorPos(basePt.x, basePt.y);
+
+	
 }
 
 Player::~Player()
 {
-
+	for (unsigned int i = 0; i < snowBall_P.size(); i++)
+	{
+		delete snowBall_P[i];
+	}
+	snowBall_P.clear();
 }
 
 bool Player::Update(void)
 {
 	Move();
+	ShootSnowball();
 	//D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);		//‰¼
 	//D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		//‰¼
 	//mat = transMat * mat;		//‡¬‚·‚é‚Æ(0, 0, 10)‚Ì‚â‚Â‚ğ‡¬‚µ‘±‚¯‚é‚æ‚¤‚ÈŒ`‚É‚È‚é	•Ï‰»‚ª‚ ‚Á‚½‚Ì‚İ‡¬‚Æ‚©‚Å‚à‚¢‚¯‚é‚©‚à
 	
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		
+	
+	for (unsigned int i = 0; i < snowBall_P.size(); i++)
+	{
+		snowBall_P[i]->Update();
+	}
 
 	return true;
 }
@@ -165,5 +176,8 @@ void Player::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
-	
+	for (unsigned int i = 0; i < snowBall_P.size(); i++)
+	{
+		snowBall_P[i]->Draw();
+	}
 }

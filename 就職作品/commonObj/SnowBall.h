@@ -5,6 +5,7 @@ class SnowBall {
 private:
 	XFILE mesh;
 	D3DXMATRIX mat;
+	int deleteTime;
 	float power;
 	static const float radius;
 public:

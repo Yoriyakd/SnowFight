@@ -23,6 +23,8 @@ private:
 
 	std::vector <Wall*> wall;
 	std::vector <Enemy*> enemy;
+
+	Ground* ground;
 	
 	void SetStageMap(void);				//textファイルを開いてマップを作る
 			

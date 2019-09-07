@@ -19,6 +19,8 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	delete player;
+	delete stage;
 	
 }
 

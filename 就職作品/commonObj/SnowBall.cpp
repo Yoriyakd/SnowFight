@@ -4,8 +4,10 @@ const float SnowBall::radius = 1.5;
 
 SnowBall::SnowBall(D3DXVECTOR3 Pos)
 {
-	mesh = resourceManager->GetXFILE("SnowBall.x");
-	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
+	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
+	D3DXMatrixTranslation(&mat, Pos.x, Pos.y + 3 , Pos.z + 2);			//”­ËˆÊ’u‚Ì‰¼‚Ì’l
+	deleteTime = 5 * 60;
+	power = 0;
 }
 
 SnowBall::~SnowBall()
@@ -14,12 +16,16 @@ SnowBall::~SnowBall()
 
 bool SnowBall::Update(void)
 {
-	static float powerTest = 5;	//test	•ú•¨ü‚ğ•`‚­ˆ—‚É’u‚«Š·‚¦‚é
-	powerTest -= 0.8;			//test
+	if (deleteTime-- < 0)
+	{
+		return false;
+	}
+
+	power -= 0;		//•ú•¨ü‚ğ•`‚­
 
 	D3DXMATRIX tmpMat;
 	
-	D3DXMatrixTranslation(&tmpMat, 0, powerTest, 0.5f);
+	D3DXMatrixTranslation(&tmpMat, 0, power, 0.1f);
 	mat = tmpMat * mat;
 
 	if (mat._43 < 0.0f)

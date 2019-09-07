@@ -1,6 +1,5 @@
 #include "Stage.h"
 
-Ground* ground;
 
 const float Stage:: TILE_SIZE = 6.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
 
