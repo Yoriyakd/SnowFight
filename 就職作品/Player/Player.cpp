@@ -61,7 +61,7 @@ int Player::ShootSnowball(void)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		snowBall_P.push_back(new SnowBall(pos, camAngY));
+		snowBall_P.push_back(new SnowBall(pos, (camAngX * -1), camAngY, 1));
 	}
 	return 0;		//écíeêîÇìnÇ∑
 }

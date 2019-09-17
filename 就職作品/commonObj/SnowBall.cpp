@@ -2,14 +2,18 @@
 
 const float SnowBall::radius = 1.5;
 
-SnowBall::SnowBall(D3DXVECTOR3 Pos, float AngY)
+SnowBall::SnowBall(D3DXVECTOR3 Pos, float AngX, float AngY, float Power)
 {
 	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
+
 	D3DXMatrixTranslation(&mat, Pos.x, Pos.y + 3 , Pos.z);			//î≠éÀà íuÇÃâºÇÃíl
+
+	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(AngX))) , (Power * cos(D3DXToRadian(AngX))));
+
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(AngY));
 	mat = rotMat * mat;
+
 	deleteTime = 5 * 60;
-	power = 0;
 }
 
 SnowBall::~SnowBall()
@@ -23,14 +27,15 @@ bool SnowBall::Update(void)
 		return false;
 	}
 
-	power -= 0;		//ï˙ï®ê¸Çï`Ç≠
+	
 
 	D3DXMATRIX tmpMat;
+	moveVec.y += -0.01;
 	
-	D3DXMatrixTranslation(&tmpMat, 0, power, 0.1f);
+	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
 
-	if (mat._43 < 0.0f)
+	if (mat._42 < 0.0f)
 	{
 		return false;
 	}
