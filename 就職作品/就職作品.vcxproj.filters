@@ -60,6 +60,9 @@
     <ClCompile Include="Map\Wall.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\PlayerCamera.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Map\Wall.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\PlayerCamera.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

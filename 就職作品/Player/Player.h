@@ -3,6 +3,7 @@
 #include<vector>
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBall.h"
+#include"../commonObj/PlayerCamera.h"
 
 //ワールド座標で管理
 
@@ -17,8 +18,9 @@ private:
 	//============================================================
 	//カメラの変数
 	//============================================================
-	float camAngY, camAngX;			//傾きの量を入れる	回転軸で名前付け
-	D3DXMATRIX camRotMatY, camRotMatX, camRotMat;
+	static const float camHight;
+
+	PlayerCamera *playerCam;
 
 	void Move(void);
 	int ShootSnowball(void);

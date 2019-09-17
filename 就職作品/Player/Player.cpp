@@ -1,5 +1,6 @@
 #include "Player.h"
-
+ 
+const float Player::camHight = 5.0f;
 extern ResourceManager *resourceManager;
 //=====================================
 //privateメソッド
@@ -13,7 +14,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY()));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -22,7 +23,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY + 180));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() + 180));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -31,7 +32,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY - 90));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() - 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -40,7 +41,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(camAngY + 90));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() + 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -61,7 +62,7 @@ int Player::ShootSnowball(void)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		snowBall_P.push_back(new SnowBall(pos, (camAngX * -1), camAngY, 1));
+		snowBall_P.push_back(new SnowBall(pos, (playerCam->GetCamAngX() * -1), playerCam->GetCamAngY(), 1));
 	}
 	return 0;		//残弾数を渡す
 }
@@ -75,7 +76,7 @@ Player::Player()
 	moveSpeed = 0.5;		//test
 	mesh = resourceManager->GetXFILE("Player/player.x");
 	
-	camAngX = 0, camAngY = 0;		//初期化
+	
 
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXMatrixIdentity(&mat);
@@ -83,12 +84,8 @@ Player::Player()
 	//--------------------------------------------------------------
 	//カメラ回りの初期化
 	//--------------------------------------------------------------
-	basePt.x = SCRW / 2;
-	basePt.y = SCRH / 2;
-
-	ClientToScreen(hwnd, &basePt);
-	SetCursorPos(basePt.x, basePt.y);
-
+	
+	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	
 }
 
@@ -105,9 +102,6 @@ bool Player::Update(void)
 {
 	Move();
 	ShootSnowball();
-	//D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);		//仮
-	//D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		//仮
-	//mat = transMat * mat;		//合成すると(0, 0, 10)のやつを合成し続けるような形になる	変化があった時のみ合成とかでもいけるかも
 	
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		
@@ -122,59 +116,14 @@ bool Player::Update(void)
 		}
 	}
 
+	playerCam->SetCamPos(&D3DXVECTOR3 (pos.x, pos.y + camHight, pos.z));
 	return true;
 }
 
 void Player::SetCamera(void)
 {
-	D3DXMATRIX mView, mProj;
-
-	/*if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-	{
-		AngY++;
-	}*/
-
+	playerCam->SetCamera();
 	
-
-	POINT Pt;					
-	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
-	camAngY += (Pt.x - basePt.x) / 4.0f;	//最初の位置との差を求め、移動量を調整している
-	
-	camAngX += (Pt.y - basePt.y) / 4.0f;
-	SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット
-
-	if (camAngX >= 70)
-	{
-		camAngX = 70;
-	}
-	
-	if (camAngX <= -70)
-	{
-		camAngX = -70;
-	}
-
-	D3DXMatrixRotationY(&camRotMatY, D3DXToRadian(camAngY));				//傾いた分だけ回転させる
-	
-	D3DXMatrixRotationX(&camRotMatX, D3DXToRadian(camAngX));				//傾いた分だけ回転させる
-
-	camRotMat = camRotMatX * camRotMatY;
-
-	D3DXVECTOR3 camTmpVec;
-
-	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &camRotMat);	//最初の向きと傾いた分のベクトルを合わせる
-
-	// 視点行列の設定
-	D3DXMatrixLookAtLH(&mView,
-		&D3DXVECTOR3(pos.x, pos.y + 5, pos.z ),	// カメラの位置						//カメラの変数を用意した方がいい
-		&(D3DXVECTOR3(pos.x, pos.y + 5, pos.z) + camTmpVec),	// カメラの視点		//カメラの変数を用意した方がいい	
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
-	);
-	// 投影行列の設定
-	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 1000.0f);
-
-	//行列設定
-	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
-	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
 }
 
 void Player::Draw(void)
