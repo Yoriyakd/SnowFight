@@ -61,7 +61,7 @@ int Player::ShootSnowball(void)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		snowBall_P.push_back(new SnowBall(pos));
+		snowBall_P.push_back(new SnowBall(pos, camAngY));
 	}
 	return 0;		//écíeêîÇìnÇ∑
 }
@@ -114,7 +114,12 @@ bool Player::Update(void)
 	
 	for (unsigned int i = 0; i < snowBall_P.size(); i++)
 	{
-		snowBall_P[i]->Update();
+		if (snowBall_P[i]->Update() == false)
+		{
+			delete snowBall_P[i];
+			snowBall_P.erase(snowBall_P.begin() + i);
+			i--;
+		}
 	}
 
 	return true;
