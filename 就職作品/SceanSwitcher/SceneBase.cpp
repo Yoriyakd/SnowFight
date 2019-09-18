@@ -3,6 +3,7 @@
 
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 
+
 SceneBase::~SceneBase()
 {
 }
@@ -26,6 +27,28 @@ void SceneBase::SetCamera(void)
 
 void SceneBase::Frame(void)
 {
+	//---------------------------------------------------------------------------
+	//60FPS制限処理
+	NTlmt = timeGetTime();
+
+	if (NTlmt - BTlmt <= 1000.0f / 60.0f)			//1 / 60秒　経っていなかったらリターンでとばすことで60FPS上限をつける
+	{
+		return;
+	}
+	BTlmt = NTlmt;
+	//---------------------------------------------------------------------------
+
+	NTlmt = timeGetTime();
+	cntFPS++;
+	
+	if ((NTcnt - BTcnt) >= 1000)
+	{
+		FPS = cntFPS;
+		cntFPS = 0;				//リセット
+		BTcnt = NTcnt;		//基準時間を変更
+	}
+	//---------------------------------------------------------------------------
+
 	if (Update() == false)											//これまでのTitleFrameやGameFrameとほぼ同じ内容
 	{
 		return;

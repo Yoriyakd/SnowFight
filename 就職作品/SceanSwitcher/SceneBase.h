@@ -2,6 +2,10 @@
 #include"../ResourceManager.h"
 class SceneBase
 {
+private:
+	DWORD NTlmt, BTlmt, NTcnt, BTcnt;
+	int cntFPS;
+
 public:
 	virtual ~SceneBase();
 	virtual bool Update(void);

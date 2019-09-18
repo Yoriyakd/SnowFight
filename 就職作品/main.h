@@ -6,10 +6,10 @@ extern LPDIRECT3D9				lpD3D;		// Direct3Dインターフェイス
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern D3DPRESENT_PARAMETERS d3dpp;
 extern HWND hwnd;
+extern int FPS;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
-#define FPS         60		//フレームレート		FPS値固定後変数にかえる 
 
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)

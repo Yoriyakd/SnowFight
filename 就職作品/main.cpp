@@ -27,6 +27,7 @@ LPD3DXFONT lpFont;		// フォント
 
 bool gameFullScreen;	// フルスクリーン（true,false)
 HWND hwnd;
+int FPS;
 
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
@@ -167,6 +168,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	//ﾊﾞｯｸﾊﾞｯﾌｧをﾛｯｸ可能にする(GetDCも可能になる)
 	d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
 
+	//FPS制限解除
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+
 	// デバイスの作成 - T&L HAL
 	if (FAILED(lpD3D->CreateDevice(adapter, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &lpD3DDevice)))
 	{
@@ -225,6 +229,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	// ゲームに関する初期化処理 ---------------------------
 	resourceManager = new ResourceManager();
+	FPS = 60;
 
 
 
@@ -257,7 +262,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	}
 
 	// ゲームに関する終了処理 ---------------------------
-
+	delete resourceManager;
 
 
 	lpSprite->Release();	// スプライト
