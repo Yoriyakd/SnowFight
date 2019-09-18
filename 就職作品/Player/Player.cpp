@@ -60,9 +60,25 @@ void Player::Move(void)
 
 int Player::ShootSnowball(void)
 {
+	static bool KyeFlag = false;
+	static int TimeCnt = 0;
+
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		snowBall_P.push_back(new SnowBall(pos, (playerCam->GetCamAngX() * -1), playerCam->GetCamAngY(), 1));
+		KyeFlag = true;
+		TimeCnt++;
+	}
+	else
+	{
+		if (KyeFlag == true)
+		{
+			float PowerPCT;
+			if (TimeCnt > 5 * FPS)TimeCnt = 5 * FPS;
+			PowerPCT = (float)TimeCnt / (float)(5 * FPS) * 100.0f;
+			snowBall_P.push_back(new SnowBall(pos, (playerCam->GetCamAngX() * -1), playerCam->GetCamAngY(), PowerPCT));		//ƒJƒƒ‰‚ÌX²Šp“x‚ğ‚»‚Ì‚Ü‚Ü“n‚·‚ÆãŒü‚«‚ª-‚È‚Ì‚Å”½“]‚³‚¹‚Ä‚é
+			TimeCnt = 0;
+			KyeFlag = false;
+		}
 	}
 	return 0;		//c’e”‚ğ“n‚·
 }

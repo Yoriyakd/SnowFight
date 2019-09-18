@@ -10,7 +10,7 @@ private:
 	
 	static const float radius;
 public:
-	SnowBall(D3DXVECTOR3 Pos, float AngX, float AngY, float Power);			//発射位置、発射角度、発射方向、発射パワー
+	SnowBall(D3DXVECTOR3 Pos, float AngX, float AngY, float PowerPCT);			//発射位置、発射角度、発射方向、発射パワー
 	~SnowBall();
 	bool Update(void);
 	void Draw(void);

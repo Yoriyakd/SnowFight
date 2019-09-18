@@ -9,6 +9,7 @@ extern HWND hwnd;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
+#define FPS         60		//フレームレート		FPS値固定後変数にかえる 
 
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
