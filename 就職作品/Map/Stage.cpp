@@ -92,14 +92,17 @@ Stage::Stage(int StageNo)
 	nowStageNo = StageNo;
 	SetStageMap();
 	ground = new Ground;
+	enemyManager = new EnemyManager;
 
 	for (int i = 0; i < wallNum; i++)
 	{
 		wall.push_back(new Wall(wallPos[i]));
 	}
+
 	for (int i = 0; i < enemyNum; i++)
 	{
-		enemy.push_back(new Enemy(enemyPos[i]));
+		enemyManager->SetEnemy(enemyPos[i]);			//enemyManagerがインスタンスを作成する
+
 	}
 }
 
@@ -113,12 +116,13 @@ Stage::~Stage()
 
 	}
 	wall.clear();
-	for (unsigned int i = 0; i < enemy.size(); i++)
-	{
-		delete enemy[i];
+	
+	delete enemyManager;
+}
 
-	}
-		enemy.clear();
+void Stage::Update()
+{
+	enemyManager->Update();
 }
 
 void Stage::Draw()
@@ -128,8 +132,6 @@ void Stage::Draw()
 	{
 		wall[i]->Draw();
 	}
-	for (unsigned int i = 0; i < enemy.size(); i++)
-	{
-		enemy[i]->Draw();
-	}
+
+	enemyManager->Draw();
 }

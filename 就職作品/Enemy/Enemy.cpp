@@ -6,8 +6,9 @@ extern ResourceManager *resourceManager;
 //privateÉÅÉ\ÉbÉh
 //=====================================
 
-void Enemy::ShootSnowBall(D3DXVECTOR3)
+void Enemy::ShootSnowBall(void)
 {
+	//snowBall_E.push_back(new SnowBall(D3DXVECTOR3(mat._41, mat._42, mat._43), 0, 180, 50));
 }
 
 //=====================================
@@ -26,6 +27,7 @@ Enemy::~Enemy()
 
 bool Enemy::Update(void)
 {
+	ShootSnowBall();
 	return true;
 }
 
