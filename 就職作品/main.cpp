@@ -244,7 +244,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	lpFont->OnResetDevice();
 
-	sceneSwitcher.SwitchScene(new GameScene);
+	sceneSwitcher.SwitchScene(new GameScene(1));
 
 	
 	while (1) {
