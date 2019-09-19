@@ -1,16 +1,21 @@
 #pragma once
+#include<vector>
 #include"../main.h"
 #include"../ResourceManager.h"
+#include"../commonObj/SnowBall.h"
 class Enemy {
 private:
 	XFILE mesh;
 	D3DXMATRIX mat;
+	virtual void ShootSnowBall(void);
+protected:
+	//static std::vector <SnowBall*> snowBall_E;
 
-	void ShootSnowBall(D3DXVECTOR3);
+	
 
 public:
 	Enemy(D3DXVECTOR3);
 	~Enemy();
-	bool Update(void);
-	void Draw(void);
+	virtual bool Update(void);
+	virtual void Draw(void);
 };

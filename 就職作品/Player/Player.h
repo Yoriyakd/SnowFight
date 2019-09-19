@@ -15,18 +15,20 @@ private:
 	static int remainingBalls;
 	POINT basePt;
 	float moveSpeed;
+	std::vector <SnowBall*> snowBall_P;
+
 	//============================================================
 	//ÉJÉÅÉâÇÃïœêî
 	//============================================================
 	static const float camHight;
 
 	PlayerCamera *playerCam;
+	//------------------------------------------------------------
 
 	void Move(void);
 	int ShootSnowball(void);
 
-	std::vector <SnowBall*> snowBall_P;
-	bool ballF = false;
+	
 
 public:
 	Player();

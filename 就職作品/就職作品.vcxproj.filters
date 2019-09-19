@@ -63,6 +63,9 @@
     <ClCompile Include="commonObj\PlayerCamera.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\EnemyManager.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="commonObj\PlayerCamera.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyManager.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

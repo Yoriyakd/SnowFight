@@ -1,8 +1,10 @@
 #pragma once
+#include<vector>
 #include"Ground.h"
 #include"Wall.h"
 #include"../Enemy/Enemy.h"
-#include<vector>
+#include"../Enemy/EnemyManager.h"
+
 
 enum objType { EMPTY, WALL, ENEMY = 5 };
 
@@ -22,9 +24,9 @@ private:
 	D3DXVECTOR3 *enemyPos;				
 
 	std::vector <Wall*> wall;
-	std::vector <Enemy*> enemy;
 
-	Ground* ground;
+	EnemyManager *enemyManager;
+	Ground *ground;
 	
 	void SetStageMap(void);				//textファイルを開いてマップを作る
 			
@@ -33,5 +35,6 @@ private:
 public:
 	Stage(int);		//stageNoを入れる
 	~Stage();
+	void Update();
 	void Draw();
 };

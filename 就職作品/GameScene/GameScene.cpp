@@ -11,7 +11,7 @@ Stage *stage;
 GameScene::GameScene()
 {
 	player = new Player();
-	stage = new Stage(1);
+	stage = new Stage(1);		//読み込むステージを引き数で渡す
 	//TestMesh = resourceManager->GetXFILE("XFiles/EnemyBody.x");
 
 	
@@ -41,6 +41,7 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
+	stage->Update();
 	player->Update();
 	
 	return true;
