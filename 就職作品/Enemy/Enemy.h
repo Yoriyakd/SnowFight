@@ -18,4 +18,5 @@ public:
 	~Enemy();
 	virtual bool Update(void);
 	virtual void Draw(void);
+	virtual D3DXVECTOR3 GetPos(void);
 };

@@ -4,13 +4,15 @@
 class EnemyManager {
 private:
 	
-	std::vector <SnowBall*> snowBall_E;
-	std::vector<Enemy*> enemy;		//パブリックにして直接触らせるのはよくない
+	
+	
 public:
+	std::vector <SnowBall*> snowBall_E;
+	std::vector<Enemy*> enemy;
+
 	EnemyManager();
 	~EnemyManager();
 
+
 	void SetEnemy(D3DXVECTOR3 Pos);
-	void Update();
-	void Draw();
 };

@@ -36,3 +36,8 @@ void Enemy::Draw(void)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 }
+
+D3DXVECTOR3 Enemy::GetPos(void)
+{
+	return D3DXVECTOR3(mat._41, mat._42, mat._43);
+}

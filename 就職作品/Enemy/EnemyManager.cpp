@@ -18,18 +18,18 @@ void EnemyManager::SetEnemy(D3DXVECTOR3 Pos)
 	enemy.push_back(new Enemy(Pos));
 }
 
-void EnemyManager::Update()
-{
-	for (unsigned int i = 0; i < enemy.size(); i++)
-	{
-		enemy[i]->Update();
-	}
-}
-
-void EnemyManager::Draw()
-{
-	for (unsigned int i = 0; i < enemy.size(); i++)
-	{
-		enemy[i]->Draw();
-	}
-}
+//void EnemyManager::Update()
+//{
+//	for (unsigned int i = 0; i < enemy.size(); i++)
+//	{
+//		enemy[i]->Update();
+//	}
+//}
+//
+//void EnemyManager::Draw()
+//{
+//	for (unsigned int i = 0; i < enemy.size(); i++)
+//	{
+//		enemy[i]->Draw();
+//	}
+//}

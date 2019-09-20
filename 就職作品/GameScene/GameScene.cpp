@@ -2,7 +2,7 @@
 
 
 
-Player *player;
+
 
 const float GameScene::TILE_SIZE = 6.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
 
@@ -69,6 +69,28 @@ void GameScene::SetStageMap(void)
 	}
 }
 
+void GameScene::CollisionDetectionS_PtoE(void)
+{
+	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
+	{
+		for (unsigned int j = 0; j < player->snowBall_P.size(); j++)
+		{
+			D3DXVECTOR3 EnemyPosTmp = enemyManager->enemy[i]->GetPos(), SnowBall_PPosTmp = player->snowBall_P[j]->GetPos();
+
+			if (CollisionDetection(EnemyPosTmp, 3, SnowBall_PPosTmp, 1.5))		//”¼Œa‚ ‚Æ‚Å•Ï”‰»
+			{
+				delete enemyManager->enemy[i];
+				delete player->snowBall_P[j];
+				player->snowBall_P.erase(player->snowBall_P.begin() + j);
+				enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
+				j--;
+				i--;
+			}
+
+		}
+	}
+}
+
 GameScene::GameScene(int StageNo)
 {
 	player = new Player();
@@ -112,8 +134,12 @@ void GameScene::Render3D(void)
 		wall[i]->Draw();
 	}
 
-	enemyManager->Draw();
+	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
+	{
+		enemyManager->enemy[i]->Draw();
+	}
 	player->Draw();
+
 }
 
 void GameScene::SetCamera(void)
@@ -127,8 +153,12 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	enemyManager->Update();
+	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
+	{
+		enemyManager->enemy[i]->Update();
+	}
 	player->Update();
 	
+	CollisionDetectionS_PtoE();
 	return true;
 }

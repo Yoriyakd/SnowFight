@@ -14,4 +14,5 @@ public:
 	~SnowBall();
 	bool Update(void);
 	void Draw(void);
+	D3DXVECTOR3 GetPos();
 };

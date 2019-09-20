@@ -15,7 +15,7 @@ private:
 	static int remainingBalls;
 	POINT basePt;
 	float moveSpeed;
-	std::vector <SnowBall*> snowBall_P;
+	
 
 	//============================================================
 	//ƒJƒƒ‰‚Ì•Ï”
@@ -31,6 +31,8 @@ private:
 	
 
 public:
+	std::vector <SnowBall*> snowBall_P;
+
 	Player();
 	~Player();
 	bool Update(void);

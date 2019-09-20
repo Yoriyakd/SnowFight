@@ -33,3 +33,5 @@ struct XFILE {
 };
 
 void DrawMesh(XFILE *XFile);
+
+bool CollisionDetection(D3DXVECTOR3 PosA, float radiusA, D3DXVECTOR3 PosB, float radiusB);

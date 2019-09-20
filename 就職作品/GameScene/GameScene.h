@@ -25,15 +25,20 @@ private:
 
 	FILE *fp;
 
+	//--------------------------------------------------
+	//ファイルから読み込んだ情報から作った座標を入れる変数
 	D3DXVECTOR3 *wallPos;
 	D3DXVECTOR3 *enemyPos;
+	//--------------------------------------------------
 
 	std::vector <Wall*> wall;
 
 	EnemyManager *enemyManager;
 	Ground *ground;
+	Player *player;
 
 	void SetStageMap(void);				//textファイルを開いてマップを作る
+	void CollisionDetectionS_PtoE(void);
 
 
 
@@ -43,5 +48,5 @@ public:
 	void Render3D(void);
 	void SetCamera(void);
 	void Render2D(void);
-	bool Update();
+	bool Update(void);
 };
