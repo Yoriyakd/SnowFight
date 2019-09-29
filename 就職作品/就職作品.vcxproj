@@ -118,6 +118,9 @@
     <ClCompile Include="commonObj\PlayerCamera.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="commonObj\SkyBox.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="commonObj\SnowBall.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -154,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonObj\PlayerCamera.h" />
+    <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />

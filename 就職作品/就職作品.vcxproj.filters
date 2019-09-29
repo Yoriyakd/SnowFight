@@ -63,6 +63,9 @@
     <ClCompile Include="Enemy\EnemyManager.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\SkyBox.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\EnemyManager.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\SkyBox.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

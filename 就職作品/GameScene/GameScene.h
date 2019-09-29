@@ -9,6 +9,7 @@
 #include"../Map/Wall.h"
 #include"../Enemy/Enemy.h"
 #include"../Enemy/EnemyManager.h"
+#include"../commonObj/SkyBox.h"
 
 
 enum objType { EMPTY, WALL, ENEMY = 5 };
@@ -36,6 +37,7 @@ private:
 	EnemyManager *enemyManager;
 	Ground *ground;
 	Player *player;
+	SkyBox *skyBox;
 
 	void SetStageMap(void);				//textファイルを開いてマップを作る
 	void CollisionDetectionS_PtoE(void);

@@ -4,7 +4,7 @@
 
 
 
-const float GameScene::TILE_SIZE = 6.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
+const float GameScene::TILE_SIZE = 18.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
 
 
 
@@ -93,11 +93,12 @@ void GameScene::CollisionDetectionS_PtoE(void)
 
 GameScene::GameScene(int StageNo)
 {
-	player = new Player();
 	nowStageNo = StageNo;
 	SetStageMap();
+	player = new Player;
 	ground = new Ground;
 	enemyManager = new EnemyManager;
+	skyBox = new SkyBox;
 
 	for (int i = 0; i < wallNum; i++)
 	{
@@ -128,6 +129,7 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
+	skyBox->Draw();
 	ground->Draw();
 	for (unsigned int i = 0; i < wall.size(); i++)
 	{
