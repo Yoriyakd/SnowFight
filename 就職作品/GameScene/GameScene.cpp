@@ -44,25 +44,26 @@ void GameScene::SetStageMap(void)
 	int WallIte = 0;
 	int EnemyIte = 0;
 
-	//printf_s("%d", &wallNum);
+	
 
-	for (int i = 0; i < STAGE_Y; i++)
+	for (int i = 0; i < STAGE_Y; i++)		//¶‰œ‚©‚çÝ’è‚µ‚Ä‚¢‚­
 	{
 		for (int j = 0; j < STAGE_X; j++)
 		{
 			switch (StageMap[i][j])
 			{
 			case WALL:
-				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//¶‰º‚ð0, 0, 0‚É‚·‚é‚½‚ß‚Ì’²® (STAGE_Y - (i + 1)
+				
 				WallIte++;
 				break;
 
 			case ENEMY:
-				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//¶‰º‚ð0, 0, 0‚É‚·‚é‚½‚ß‚Ì’²® (STAGE_Y - (i + 1)
 				EnemyIte++;
 				break;
 
-			EMPTY:					//‰½‚à‚µ‚È‚¢
+			case EMPTY:					//‰½‚à‚µ‚È‚¢
 				break;
 			}
 		}
@@ -99,6 +100,7 @@ GameScene::GameScene(int StageNo)
 	ground = new Ground;
 	enemyManager = new EnemyManager;
 	skyBox = new SkyBox;
+	fenceManager = new FenceManager(15, 15, -15.0f, -15.0f);
 
 	for (int i = 0; i < wallNum; i++)
 	{
@@ -131,6 +133,7 @@ void GameScene::Render3D(void)
 {
 	skyBox->Draw();
 	ground->Draw();
+	fenceManager->Draw();
 	for (unsigned int i = 0; i < wall.size(); i++)
 	{
 		wall[i]->Draw();
@@ -141,7 +144,7 @@ void GameScene::Render3D(void)
 		enemyManager->enemy[i]->Draw();
 	}
 	player->Draw();
-
+	
 }
 
 void GameScene::SetCamera(void)
@@ -163,4 +166,10 @@ bool GameScene::Update()
 	
 	CollisionDetectionS_PtoE();
 	return true;
+}
+
+void GameScene::GetStageSize(float *X, float *Z)
+{
+	*X = STAGE_X * TILE_SIZE;
+	*Z = STAGE_Y * TILE_SIZE;
 }

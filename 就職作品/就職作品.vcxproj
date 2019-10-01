@@ -136,7 +136,13 @@
     <ClCompile Include="main.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\FenceManager.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="Map\Ground.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <ClCompile Include="Map\StageFence.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Map\Wall.cpp">
@@ -163,7 +169,9 @@
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Map\FenceManager.h" />
     <ClInclude Include="Map\Ground.h" />
+    <ClInclude Include="Map\StageFence.h" />
     <ClInclude Include="Map\Wall.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="ResourceManager.h" />

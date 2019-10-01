@@ -10,7 +10,7 @@ class ResourceManager
 private:
 	std::map<std::string, XFILE> XFILEList;
 	std::map<std::string, LPDIRECT3DTEXTURE9> TextureList;
-
+	void AllDelete(void);
 public:
 	
 	~ResourceManager();
@@ -21,7 +21,6 @@ public:
 	//ファイル名を指定,  横幅,   高さ,  カラーキー
 	LPDIRECT3DTEXTURE9 GetTexture(std::string FileName, int width, int hight, D3DCOLOR ColorKey);
 	
-	void AllDelete(void);
 };
 
 extern ResourceManager *resourceManager;		//mainで宣言

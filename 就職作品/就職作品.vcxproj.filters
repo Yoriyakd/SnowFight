@@ -66,6 +66,12 @@
     <ClCompile Include="commonObj\SkyBox.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="Map\StageFence.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\FenceManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -106,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="commonObj\SkyBox.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\StageFence.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\FenceManager.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

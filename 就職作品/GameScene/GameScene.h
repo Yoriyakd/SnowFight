@@ -10,7 +10,7 @@
 #include"../Enemy/Enemy.h"
 #include"../Enemy/EnemyManager.h"
 #include"../commonObj/SkyBox.h"
-
+#include"../Map/FenceManager.h"
 
 enum objType { EMPTY, WALL, ENEMY = 5 };
 
@@ -38,6 +38,7 @@ private:
 	Ground *ground;
 	Player *player;
 	SkyBox *skyBox;
+	FenceManager *fenceManager;
 
 	void SetStageMap(void);				//textファイルを開いてマップを作る
 	void CollisionDetectionS_PtoE(void);
@@ -51,4 +52,5 @@ public:
 	void SetCamera(void);
 	void Render2D(void);
 	bool Update(void);
+	static void GetStageSize(float *X, float *Z);		//内部クラスでアクセスするため
 };
