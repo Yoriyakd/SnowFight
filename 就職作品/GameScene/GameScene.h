@@ -5,6 +5,7 @@
 #include"../ResourceManager.h"
 #include"../Player/Player.h"
 #include<vector>
+#include"../Map/SetStageData.h"
 #include"../Map/Ground.h"
 #include"../Map/Wall.h"
 #include"../Enemy/Enemy.h"
@@ -12,35 +13,23 @@
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
 
-enum objType { EMPTY, WALL, ENEMY = 5 };
+//enum objType { EMPTY, WALL, ENEMY = 5 };
 
 class GameScene : public SceneBase {
 private:
-	static const int STAGE_X = 11;		//マップのサイズの横幅(値は仮のもの)
-	static const int STAGE_Y = 11;		//マップのサイズの縦幅(値は仮のもの)
-	static const float TILE_SIZE;		//ここで初期化できない?
+	
+	
 
-	objType StageMap[STAGE_Y][STAGE_X];		//ステージのオブジェクトの番号を入れてマップを作りたい		[Y][X]
-	int enemyNum, wallNum;				//ステージ内のオブジェクトの数を入れる
-	int nowStageNo;						//ステージNo.を参照するときに使う
+	std::vector <Wall*> wall;		//wallマネージャー作る
 
-	FILE *fp;
-
-	//--------------------------------------------------
-	//ファイルから読み込んだ情報から作った座標を入れる変数
-	D3DXVECTOR3 *wallPos;
-	D3DXVECTOR3 *enemyPos;
-	//--------------------------------------------------
-
-	std::vector <Wall*> wall;
-
+	SetStageData *setStageData;
 	EnemyManager *enemyManager;
 	Ground *ground;
 	Player *player;
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
 
-	void SetStageMap(void);				//textファイルを開いてマップを作る
+	
 	void CollisionDetectionS_PtoE(void);
 
 
@@ -52,5 +41,4 @@ public:
 	void SetCamera(void);
 	void Render2D(void);
 	bool Update(void);
-	static void GetStageSize(float *X, float *Z);		//内部クラスでアクセスするため
 };

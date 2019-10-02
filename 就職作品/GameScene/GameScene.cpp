@@ -1,75 +1,6 @@
 #include "GameScene.h"
 
 
-
-
-
-const float GameScene::TILE_SIZE = 18.0f;				//宣言時初期化できないのでここで初期化
-
-
-
-void GameScene::SetStageMap(void)
-{
-	char FileName[16];
-	//=================================================================================
-	//ファイルオープン
-	//=================================================================================
-
-	sprintf_s(FileName, sizeof(FileName), "Map/stage%d.txt", nowStageNo);		//ファイルパス作成
-
-	fopen_s(&fp, FileName, "r");	//fopenのセキュリティ強化版らしい
-
-
-	//=================================================================================
-	//読み取った値をセット
-	//=================================================================================
-	fscanf_s(fp, "壁:%d\n", &wallNum);
-	fscanf_s(fp, "敵:%d\n", &enemyNum);
-	fscanf_s(fp, "map\n");					//空読み
-
-	for (int i = 0; i < STAGE_Y; i++)
-	{
-		for (int j = 0; j < STAGE_X; j++)
-		{
-			fscanf_s(fp, "%1d ", &StageMap[i][j]);
-		}
-		fscanf_s(fp, "\n");					//空読み
-	}
-
-	fclose(fp);
-
-	wallPos = new D3DXVECTOR3[wallNum];
-	enemyPos = new D3DXVECTOR3[enemyNum];			//動的確保する
-
-	int WallIte = 0;
-	int EnemyIte = 0;
-
-	
-
-	for (int i = 0; i < STAGE_Y; i++)		//左奥から設定していく
-	{
-		for (int j = 0; j < STAGE_X; j++)
-		{
-			switch (StageMap[i][j])
-			{
-			case WALL:
-				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//左下を0, 0, 0にするための調整 (STAGE_Y - (i + 1)
-				
-				WallIte++;
-				break;
-
-			case ENEMY:
-				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//左下を0, 0, 0にするための調整 (STAGE_Y - (i + 1)
-				EnemyIte++;
-				break;
-
-			case EMPTY:					//何もしない
-				break;
-			}
-		}
-	}
-}
-
 void GameScene::CollisionDetectionS_PtoE(void)
 {
 	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
@@ -94,22 +25,28 @@ void GameScene::CollisionDetectionS_PtoE(void)
 
 GameScene::GameScene(int StageNo)
 {
-	nowStageNo = StageNo;
-	SetStageMap();
+	
+	setStageData = new SetStageData(StageNo);
 	player = new Player;
 	ground = new Ground;
 	enemyManager = new EnemyManager;
 	skyBox = new SkyBox;
-	fenceManager = new FenceManager(15, 15, -15.0f, -15.0f);
+	fenceManager = new FenceManager(15, 15, 15.0f, 15.0f);
 
-	for (int i = 0; i < wallNum; i++)
+	float stageXtmp, stageZtmp;
+
+	setStageData->GetStageSize(&stageXtmp, &stageZtmp);		//インスタンス間のやり取りはこうするしかない？
+	fenceManager->SetStageSize(stageXtmp, stageZtmp);
+	fenceManager->SetFence();
+
+	for (int i = 0; i < setStageData->GetWallNum(); i++)
 	{
-		wall.push_back(new Wall(wallPos[i]));
+		wall.push_back(new Wall(setStageData->GetWallData(i)));
 	}
 
-	for (int i = 0; i < enemyNum; i++)
+	for (int i = 0; i < setStageData->GetEnemyNum(); i++)
 	{
-		enemyManager->SetEnemy(enemyPos[i]);			//enemyManagerがインスタンスを作成する
+		enemyManager->SetEnemy(setStageData->GetEnemyData(i));			//enemyManagerがインスタンスを作成する
 
 	}
 }
@@ -117,8 +54,7 @@ GameScene::GameScene(int StageNo)
 GameScene::~GameScene()
 {
 	delete player;
-	delete wallPos;
-	delete enemyPos;
+	
 	for (unsigned int i = 0; i < wall.size(); i++)
 	{
 		delete wall[i];
@@ -127,6 +63,7 @@ GameScene::~GameScene()
 	wall.clear();
 
 	delete enemyManager;
+	delete setStageData;
 }
 
 void GameScene::Render3D(void)
@@ -166,10 +103,4 @@ bool GameScene::Update()
 	
 	CollisionDetectionS_PtoE();
 	return true;
-}
-
-void GameScene::GetStageSize(float *X, float *Z)
-{
-	*X = STAGE_X * TILE_SIZE;
-	*Z = STAGE_Y * TILE_SIZE;
 }

@@ -72,6 +72,9 @@
     <ClCompile Include="Map\FenceManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Map\SetStageData.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -117,6 +120,9 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Map\FenceManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\SetStageData.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
