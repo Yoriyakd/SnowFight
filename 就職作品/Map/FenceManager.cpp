@@ -7,7 +7,7 @@ FenceManager::FenceManager(int CntX, int CntZ, float OffSetX, float OffSetZ)
 	fenceData.cntX = CntX;
 	fenceData.cntZ = CntZ;
 	fenceData.offSetX = OffSetX;
-	fenceData.offSetX = OffSetZ;
+	fenceData.offSetZ = OffSetZ;
 }
 
 FenceManager::~FenceManager()

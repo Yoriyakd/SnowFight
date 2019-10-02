@@ -51,12 +51,13 @@ void SetStageData::SetStageMap(void)
 			switch (StageMap[i][j])
 			{
 			case WALL:
-				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				wallPos[WallIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//ç∂â∫Ç0, 0, 0Ç…Ç∑ÇÈÇΩÇﬂÇÃí≤êÆ (STAGE_Y - (i + 1)
+
 				WallIte++;
 				break;
 
 			case ENEMY:
-				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - i) * TILE_SIZE));
+				enemyPos[EnemyIte] = D3DXVECTOR3((float)(j * TILE_SIZE), 0, (float)((STAGE_Y - (i + 1)) * TILE_SIZE));	//ç∂â∫Ç0, 0, 0Ç…Ç∑ÇÈÇΩÇﬂÇÃí≤êÆ (STAGE_Y - (i + 1)
 				EnemyIte++;
 				break;
 
