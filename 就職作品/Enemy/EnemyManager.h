@@ -14,4 +14,7 @@ public:
 
 
 	void SetEnemy(D3DXVECTOR3 Pos);
+	
+	void Draw();
+	void Update();
 };

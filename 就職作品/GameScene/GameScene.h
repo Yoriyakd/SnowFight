@@ -5,9 +5,9 @@
 #include"../ResourceManager.h"
 #include"../Player/Player.h"
 #include<vector>
-#include"../Map/SetStageData.h"
+#include"../Map/LoadStageData.h"
 #include"../Map/Ground.h"
-#include"../Map/Wall.h"
+#include"../Map/WallManager.h"
 #include"../Enemy/EnemyManager.h"
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
@@ -21,15 +21,16 @@ private:
 	
 	
 
-	std::vector <Wall*> wall;		//wallマネージャー作る
+	//std::vector <Wall*> wall;		//wallマネージャー作る
 
-	SetStageData *setStageData;
+	LoadStageData *loadStageData;
 	EnemyManager *enemyManager;
 	Ground *ground;
 	Player *player;
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
+	WallManager *wallManager;
 	CollisionObserver *collisionObserver;
 	
 

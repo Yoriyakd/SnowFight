@@ -1,12 +1,12 @@
-#include "SetStageData.h"
+#include "LoadStageData.h"
 
-const float SetStageData::TILE_SIZE = 18.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
+const float LoadStageData::TILE_SIZE = 18.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
 
 //===============================================
 //private
 //===============================================
 
-void SetStageData::SetStageMap(void)
+void LoadStageData::SetStageMap(void)
 {
 	char FileName[16];
 	//=================================================================================
@@ -87,39 +87,39 @@ void SetStageData::SetStageMap(void)
 
 
 
-SetStageData::SetStageData(int StageNo)
+LoadStageData::LoadStageData(int StageNo)
 {
 	nowStageNo = StageNo;
 	SetStageMap();	
 }
 
-SetStageData::~SetStageData()
+LoadStageData::~LoadStageData()
 {
 	delete wallPos;
 	delete enemyPos;
 }
 
-int SetStageData::GetWallNum()
+int LoadStageData::GetWallNum()
 {
 	return wallNum;
 }
 
-int SetStageData::GetEnemyNum()
+int LoadStageData::GetEnemyNum()
 {
 	return enemyNum;
 }
 
-D3DXVECTOR3 SetStageData::GetWallData(int WallIte)
+D3DXVECTOR3 LoadStageData::GetWallData(int WallIte)
 {
 	return D3DXVECTOR3(wallPos[WallIte]);
 }
 
-D3DXVECTOR3 SetStageData::GetEnemyData(int EnemyIte)
+D3DXVECTOR3 LoadStageData::GetEnemyData(int EnemyIte)
 {
 	return D3DXVECTOR3(enemyPos[EnemyIte]);
 }
 
-void SetStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
+void LoadStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
 {
 	*StageSizeX = STAGE_X * TILE_SIZE;
 	*StageSizeZ = STAGE_Y * TILE_SIZE;

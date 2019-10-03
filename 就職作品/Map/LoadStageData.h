@@ -5,7 +5,7 @@
 
 enum objType { EMPTY, WALL, ENEMY = 5 };
 
-class SetStageData {
+class LoadStageData {
 private:
 	static const int STAGE_X = 11;		//マップのサイズの横幅(値は仮のもの)
 	static const int STAGE_Y = 11;		//マップのサイズの縦幅(値は仮のもの)
@@ -21,8 +21,8 @@ private:
 	D3DXVECTOR3 *enemyPos;		//将来的に構造体にするかも
 	void SetStageMap(void);
 public:
-	SetStageData(int StageNo);
-	~SetStageData();
+	LoadStageData(int StageNo);
+	~LoadStageData();
 
 	int GetWallNum();
 	int GetEnemyNum();

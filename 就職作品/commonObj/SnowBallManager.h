@@ -1,6 +1,5 @@
 #pragma once
 #include"../main.h"
-#include"../ResourceManager.h"
 #include<vector>
 #include"SnowBall.h"
 class SnowBallManager {
@@ -10,4 +9,6 @@ public:
 	SnowBallManager();
 	~SnowBallManager();
 	void SetSnowBall(SnowBallInitValue *snowBallInitValue);
+	void Draw(void);
+	void Update(void);
 };

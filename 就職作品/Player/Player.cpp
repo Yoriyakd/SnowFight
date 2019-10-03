@@ -61,7 +61,7 @@ void Player::Move(void)
 int Player::ShootSnowball(SnowBallManager *snowBallManager)
 {
 	static bool KyeFlag = false;
-	static int TimeCnt = 0;
+	static float TimeCnt = 0;
 	static const float MaxPowerTime = 3;
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)

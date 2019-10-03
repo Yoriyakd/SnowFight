@@ -72,14 +72,17 @@
     <ClCompile Include="Map\FenceManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\SetStageData.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="commonObj\SnowBallManager.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
     <ClCompile Include="CollisionObserver.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\WallManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\LoadStageData.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,14 +131,17 @@
     <ClInclude Include="Map\FenceManager.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\SetStageData.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="commonObj\SnowBallManager.h">
       <Filter>commonObj</Filter>
     </ClInclude>
     <ClInclude Include="CollisionObserver.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\WallManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\LoadStageData.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
