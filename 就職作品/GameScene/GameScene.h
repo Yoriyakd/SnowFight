@@ -12,6 +12,7 @@
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
 #include"../commonObj/SnowBallManager.h"
+#include"../CollisionObserver.h"
 
 //enum objType { EMPTY, WALL, ENEMY = 5 };
 
@@ -29,8 +30,8 @@ private:
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
+	CollisionObserver *collisionObserver;
 	
-	void CollisionDetectionS_PtoE(void);
 
 
 

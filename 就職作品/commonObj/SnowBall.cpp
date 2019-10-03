@@ -33,7 +33,7 @@ bool SnowBall::Update(void)
 	
 
 	D3DXMATRIX tmpMat;
-	moveVec.y += -0.02;
+	moveVec.y += -0.02f;
 	
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
@@ -54,4 +54,9 @@ void SnowBall::Draw(void)
 D3DXVECTOR3 SnowBall::GetPos()
 {
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
+}
+
+ID SnowBall::GetID()
+{
+	return id;
 }

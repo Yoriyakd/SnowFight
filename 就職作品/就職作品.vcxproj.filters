@@ -78,6 +78,9 @@
     <ClCompile Include="commonObj\SnowBallManager.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionObserver.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="commonObj\SnowBallManager.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionObserver.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

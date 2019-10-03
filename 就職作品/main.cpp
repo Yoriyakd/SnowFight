@@ -55,6 +55,27 @@ bool CollisionDetection(D3DXVECTOR3 PosA, float radiusA, D3DXVECTOR3 PosB, float
 	return false;
 }
 
+bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis)
+{
+	D3DXMATRIX InvMat;
+	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
+
+	D3DXVECTOR3 LocalPos, LocalVec;
+
+	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//ƒŒƒC”­ŽËˆÊ’u
+	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//ƒŒƒC”­ŽË•ûŒü
+
+	BOOL Hit;
+	
+	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &*MeshDis, NULL, NULL);
+	if (Hit == FALSE)
+	{
+		*MeshDis = -1;
+		return false;
+	}
+	return true;
+}
+
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
