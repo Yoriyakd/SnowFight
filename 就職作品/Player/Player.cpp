@@ -58,10 +58,11 @@ void Player::Move(void)
 	}
 }
 
-int Player::ShootSnowball(void)
+int Player::ShootSnowball(SnowBallManager *snowBallManager)
 {
 	static bool KyeFlag = false;
 	static int TimeCnt = 0;
+	static const float MaxPowerTime = 3;
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
@@ -73,9 +74,17 @@ int Player::ShootSnowball(void)
 		if (KyeFlag == true)
 		{
 			float PowerPCT;
-			if (TimeCnt > 5 * FPS)TimeCnt = 5 * FPS;
-			PowerPCT = (float)TimeCnt / (float)(5 * FPS) * 100.0f;
-			snowBall_P.push_back(new SnowBall(pos, (playerCam->GetCamAngX() * -1), playerCam->GetCamAngY(), PowerPCT));		//ƒJƒƒ‰‚ÌXŽ²Šp“x‚ð‚»‚Ì‚Ü‚Ü“n‚·‚ÆãŒü‚«‚ª-‚È‚Ì‚Å”½“]‚³‚¹‚Ä‚é
+			if (TimeCnt > MaxPowerTime * FPS)TimeCnt = MaxPowerTime * FPS;
+			PowerPCT = (float)TimeCnt / (float)(MaxPowerTime * FPS) * 100.0f;	//Š„‡‚ð‹‚ß‚é
+
+			SnowBallInitValue ValueTmp;
+			ValueTmp.shootPos = pos;
+			ValueTmp.XAxisAng = playerCam->GetCamAngX() * -1;	//ƒJƒƒ‰‚ÌXŽ²Šp“x‚ð‚»‚Ì‚Ü‚Ü“n‚·‚ÆãŒü‚«‚ª-‚È‚Ì‚Å”½“]‚³‚¹‚Ä‚é
+			ValueTmp.YAxisAng = playerCam->GetCamAngY();
+			ValueTmp.powerRate = PowerPCT;
+			ValueTmp.id = PLAYER_ID;
+			
+			snowBallManager->SetSnowBall(&ValueTmp);
 			TimeCnt = 0;
 			KyeFlag = false;
 		}
@@ -107,30 +116,18 @@ Player::Player()
 
 Player::~Player()
 {
-	for (unsigned int i = 0; i < snowBall_P.size(); i++)
-	{
-		delete snowBall_P[i];
-	}
-	snowBall_P.clear();
+	
 }
 
-bool Player::Update(void)
+bool Player::Update(SnowBallManager *snowBallManager)
 {
 	Move();
-	ShootSnowball();
+	ShootSnowball(snowBallManager);
 	
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);		
 	
-	for (unsigned int i = 0; i < snowBall_P.size(); i++)
-	{
-		if (snowBall_P[i]->Update() == false)
-		{
-			delete snowBall_P[i];
-			snowBall_P.erase(snowBall_P.begin() + i);
-			i--;
-		}
-	}
+	
 
 	playerCam->SetCamPos(&D3DXVECTOR3 (pos.x, pos.y + camHight, pos.z));
 	return true;
@@ -146,8 +143,4 @@ void Player::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
-	for (unsigned int i = 0; i < snowBall_P.size(); i++)
-	{
-		snowBall_P[i]->Draw();
-	}
 }

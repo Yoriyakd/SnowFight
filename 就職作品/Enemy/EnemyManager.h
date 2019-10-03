@@ -7,7 +7,6 @@ private:
 	
 	
 public:
-	std::vector <SnowBall*> snowBall_E;
 	std::vector<Enemy*> enemy;
 
 	EnemyManager();

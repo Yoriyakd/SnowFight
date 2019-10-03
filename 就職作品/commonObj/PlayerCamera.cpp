@@ -55,7 +55,7 @@ void PlayerCamera::SetCamera(void)
 		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// ƒJƒƒ‰‚Ì“ª‚Ì•ûŒü
 	);
 	// “Š‰es—ñ‚ÌÝ’è
-	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRw / (float)SCRh, 1.0f, 1000.0f);
+	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRw / (float)SCRh, 1.0f, 2000.0f);
 
 	//s—ñÝ’è
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);

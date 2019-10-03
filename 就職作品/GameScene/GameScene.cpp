@@ -1,19 +1,19 @@
 #include "GameScene.h"
 
 
-void GameScene::CollisionDetectionS_PtoE(void)
+void GameScene::CollisionDetectionS_PtoE(void)		//当たり判定用のクラスに引数でデータを渡す
 {
 	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
 	{
-		for (unsigned int j = 0; j < player->snowBall_P.size(); j++)
+		for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
 		{
-			D3DXVECTOR3 EnemyPosTmp = enemyManager->enemy[i]->GetPos(), SnowBall_PPosTmp = player->snowBall_P[j]->GetPos();
+			D3DXVECTOR3 EnemyPosTmp = enemyManager->enemy[i]->GetPos(), SnowBall_PPosTmp = snowBallManager->snowBall[j]->GetPos();
 
 			if (CollisionDetection(EnemyPosTmp, 3, SnowBall_PPosTmp, 1.5))		//半径あとで変数化
 			{
 				delete enemyManager->enemy[i];
-				delete player->snowBall_P[j];
-				player->snowBall_P.erase(player->snowBall_P.begin() + j);
+				delete snowBallManager->snowBall[j];
+				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
 				enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
 				j--;
 				i--;
@@ -32,6 +32,7 @@ GameScene::GameScene(int StageNo)
 	enemyManager = new EnemyManager;
 	skyBox = new SkyBox;
 	fenceManager = new FenceManager(15, 15, 15.0f, 15.0f);
+	snowBallManager = new SnowBallManager();
 
 	float stageXtmp, stageZtmp;
 
@@ -64,6 +65,8 @@ GameScene::~GameScene()
 
 	delete enemyManager;
 	delete setStageData;
+	delete fenceManager;
+	delete snowBallManager;
 }
 
 void GameScene::Render3D(void)
@@ -82,6 +85,10 @@ void GameScene::Render3D(void)
 	}
 	player->Draw();
 	
+	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
+	{
+		snowBallManager->snowBall[i]->Draw();
+	}
 }
 
 void GameScene::SetCamera(void)
@@ -99,8 +106,18 @@ bool GameScene::Update()
 	{
 		enemyManager->enemy[i]->Update();
 	}
-	player->Update();
-	
+	player->Update(snowBallManager);
+
+	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
+	{
+		if (snowBallManager->snowBall[i]->Update() == false)
+		{
+			delete snowBallManager->snowBall[i];
+			snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
+			i--;
+		}
+	}
+
 	CollisionDetectionS_PtoE();
 	return true;
 }

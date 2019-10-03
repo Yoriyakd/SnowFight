@@ -124,6 +124,9 @@
     <ClCompile Include="commonObj\SnowBall.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="commonObj\SnowBallManager.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="Enemy\Enemy.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -168,6 +171,7 @@
     <ClInclude Include="commonObj\PlayerCamera.h" />
     <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />
+    <ClInclude Include="commonObj\SnowBallManager.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="GameScene\GameScene.h" />

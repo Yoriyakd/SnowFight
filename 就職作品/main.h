@@ -32,6 +32,16 @@ struct XFILE {
 	LPDIRECT3DTEXTURE9 *Tex;	//Textureの内容 * グループ数分		
 };
 
+enum ID{PLAYER_ID, ENEMY_ID};
+
+struct SnowBallInitValue {
+	D3DXVECTOR3 shootPos;
+	float XAxisAng;
+	float YAxisAng;
+	float powerRate;
+	ID id;
+};
+
 void DrawMesh(XFILE *XFile);
 
 bool CollisionDetection(D3DXVECTOR3 PosA, float radiusA, D3DXVECTOR3 PosB, float radiusB);

@@ -3,6 +3,7 @@
 #include<vector>
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBall.h"
+#include"../commonObj/SnowBallManager.h"
 #include"../commonObj/PlayerCamera.h"
 
 //ワールド座標で管理
@@ -13,7 +14,6 @@ private:
 	D3DXMATRIX mat, transMat, rotMat;
 	D3DXVECTOR3 pos;
 	static int remainingBalls;
-	POINT basePt;
 	float moveSpeed;
 	
 
@@ -21,21 +21,22 @@ private:
 	//カメラの変数
 	//============================================================
 	static const float camHight;
+	POINT basePt;
 
 	PlayerCamera *playerCam;
 	//------------------------------------------------------------
 
 	void Move(void);
-	int ShootSnowball(void);
+	int ShootSnowball(SnowBallManager *snowBallManager);
 
 	
 
 public:
-	std::vector <SnowBall*> snowBall_P;
+	//std::vector <SnowBall*> snowBall_P;
 
 	Player();
 	~Player();
-	bool Update(void);
+	bool Update(SnowBallManager *snowBallManager);
 	void SetCamera(void);
 	void Draw(void);
 };

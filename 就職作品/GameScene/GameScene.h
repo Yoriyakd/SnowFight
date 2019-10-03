@@ -8,10 +8,10 @@
 #include"../Map/SetStageData.h"
 #include"../Map/Ground.h"
 #include"../Map/Wall.h"
-#include"../Enemy/Enemy.h"
 #include"../Enemy/EnemyManager.h"
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
+#include"../commonObj/SnowBallManager.h"
 
 //enum objType { EMPTY, WALL, ENEMY = 5 };
 
@@ -28,7 +28,7 @@ private:
 	Player *player;
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
-
+	SnowBallManager *snowBallManager;
 	
 	void CollisionDetectionS_PtoE(void);
 

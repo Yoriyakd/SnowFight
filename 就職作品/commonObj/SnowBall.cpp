@@ -2,20 +2,21 @@
 
 const float SnowBall::radius = 1.5;
 //発射位置、発射角度、発射方向、発射パワー(パワー 0~100)
-SnowBall::SnowBall(D3DXVECTOR3 Pos, float AngX, float AngY, float PowerPCT)
+SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 {
 	float Power;
-	Power = ((PowerPCT / 100)) * 5;
+	Power = ((snowBallInitValue.powerRate / 100)) * 5;
 	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
 
-	D3DXMatrixTranslation(&mat, Pos.x, Pos.y + 3 , Pos.z);			//発射位置の仮の値
+	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y + 3 , snowBallInitValue.shootPos.z);			//発射位置の仮の値
 
-	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(AngX))) , (Power * cos(D3DXToRadian(AngX))));
+	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue.XAxisAng))) , (Power * cos(D3DXToRadian(snowBallInitValue.XAxisAng))));
 
-	D3DXMatrixRotationY(&rotMat, D3DXToRadian(AngY));
+	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));
 	mat = rotMat * mat;
 
 	deleteTime = 5 * FPS;
+	id = snowBallInitValue.id;
 }
 
 SnowBall::~SnowBall()

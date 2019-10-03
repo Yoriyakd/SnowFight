@@ -75,6 +75,9 @@
     <ClCompile Include="Map\SetStageData.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\SnowBallManager.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="Map\SetStageData.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\SnowBallManager.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
