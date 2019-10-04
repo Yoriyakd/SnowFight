@@ -61,7 +61,7 @@ void LoadStageData::SetStageMap(void)
 				EnemyIte++;
 				break;
 
-			EMPTY:					//‰½‚à‚µ‚È‚¢
+			case EMPTY:					//‰½‚à‚µ‚È‚¢
 				break;
 			}
 		}
