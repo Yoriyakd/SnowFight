@@ -11,5 +11,6 @@ public:
 	Wall(D3DXVECTOR3);
 	~Wall();
 	void Draw(void);
-	D3DXVECTOR3 GetWallPos();
+	D3DXMATRIX GetWallMat();
+	XFILE GetMesh();
 };

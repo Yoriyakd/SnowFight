@@ -14,15 +14,9 @@
 #include"../commonObj/SnowBallManager.h"
 #include"../CollisionObserver.h"
 
-//enum objType { EMPTY, WALL, ENEMY = 5 };
 
 class GameScene : public SceneBase {
 private:
-	
-	
-
-	//std::vector <Wall*> wall;		//wallマネージャー作る
-
 	LoadStageData *loadStageData;
 	EnemyManager *enemyManager;
 	Ground *ground;
@@ -32,10 +26,6 @@ private:
 	SnowBallManager *snowBallManager;
 	WallManager *wallManager;
 	CollisionObserver *collisionObserver;
-	
-
-
-
 public:
 	GameScene(int);
 	~GameScene();

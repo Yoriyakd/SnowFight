@@ -16,6 +16,7 @@ public:
 	bool Update(void);
 	void Draw(void);
 	D3DXVECTOR3 GetPos();
+	D3DXVECTOR3 GetMoveVec();
 	ID GetID();
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 };

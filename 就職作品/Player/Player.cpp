@@ -79,6 +79,7 @@ int Player::ShootSnowball(SnowBallManager *snowBallManager)
 
 			SnowBallInitValue ValueTmp;
 			ValueTmp.shootPos = pos;
+			ValueTmp.shootPos.y + 3;							//”­ŽËˆÊ’u’²®(•Ï”‰»)
 			ValueTmp.XAxisAng = playerCam->GetCamAngX() * -1;	//ƒJƒƒ‰‚ÌXŽ²Šp“x‚ð‚»‚Ì‚Ü‚Ü“n‚·‚ÆãŒü‚«‚ª-‚È‚Ì‚Å”½“]‚³‚¹‚Ä‚é
 			ValueTmp.YAxisAng = playerCam->GetCamAngY();
 			ValueTmp.powerRate = PowerPCT;

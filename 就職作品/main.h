@@ -49,6 +49,8 @@ struct CollisionSphere {
 
 void DrawMesh(XFILE *XFile);
 
+//‹…“¯m‚Ì“–‚½‚è”»’è
 bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
 
+//ƒƒbƒVƒ…‚É‘Î‚µ‚Ä‚ÌƒŒƒC”»’è
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis);

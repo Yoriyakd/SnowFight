@@ -8,7 +8,7 @@ SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 	Power = ((snowBallInitValue.powerRate / 100)) * 5;
 	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
 
-	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y + 3 , snowBallInitValue.shootPos.z);			//発射位置の仮の値
+	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y , snowBallInitValue.shootPos.z);			//発射位置
 
 	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue.XAxisAng))) , (Power * cos(D3DXToRadian(snowBallInitValue.XAxisAng))));
 
@@ -25,7 +25,7 @@ SnowBall::~SnowBall()
 
 bool SnowBall::Update(void)
 {
-	if (deleteTime-- < 0)
+	if (deleteTime-- < 0)			//5秒経過で消滅
 	{
 		return false;
 	}
@@ -38,7 +38,7 @@ bool SnowBall::Update(void)
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
 
-	if (mat._42 < 0.0f)
+	if (mat._42 < 0.0f)				//地面に衝突で消滅
 	{
 		return false;
 	}
@@ -54,6 +54,11 @@ void SnowBall::Draw(void)
 D3DXVECTOR3 SnowBall::GetPos()
 {
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
+}
+
+D3DXVECTOR3 SnowBall::GetMoveVec()
+{
+	return moveVec;
 }
 
 ID SnowBall::GetID()

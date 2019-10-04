@@ -71,5 +71,6 @@ bool GameScene::Update()
 	snowBallManager->Update();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
+	collisionObserver->SnowBalltoWall(snowBallManager, wallManager);
 	return true;
 }

@@ -18,7 +18,12 @@ void Wall::Draw(void)
 	DrawMesh(&mesh);
 }
 
-D3DXVECTOR3 Wall::GetWallPos()
+D3DXMATRIX Wall::GetWallMat()
 {
-	return D3DXVECTOR3(pos);
+	return mat;
+}
+
+XFILE Wall::GetMesh()
+{
+	return mesh;
 }
