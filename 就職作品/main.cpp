@@ -44,11 +44,11 @@ void DrawMesh(XFILE *XFile)
 
 //座標、半径、座標、半径
 //戻り値　HIT == true 当たってなかったら == falsle
-bool CollisionDetection(D3DXVECTOR3 PosA, float radiusA, D3DXVECTOR3 PosB, float radiusB)
+bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
 {
 	float targetLengh;
-	targetLengh = D3DXVec3Length(&(PosA - PosB));
-	if (targetLengh <= radiusA + radiusB)
+	targetLengh = D3DXVec3Length(&(dataA->pos - dataB->pos));
+	if (targetLengh <= dataA->radius + dataB->radius)
 	{
 		return true;
 	}

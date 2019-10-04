@@ -41,3 +41,11 @@ D3DXVECTOR3 Enemy::GetPos(void)
 {
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
 }
+
+void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
+{
+	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);		//YÀ•W—v’²®
+	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 5, mat._43);
+	CollisionSphereA->radius = 3;
+	CollisionSphereB->radius = 3;
+}

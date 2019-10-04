@@ -16,10 +16,15 @@ bool CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 		{
 			if (snowBallManager->snowBall[j]->GetID() == PLAYER_ID)		//ƒvƒŒƒCƒ„[‚Ì‹…‚È‚çŽÀs
 			{
-				D3DXVECTOR3 EnemyPosTmp = enemyManager->enemy[i]->GetPos(),
-					SnowBall_PPosTmp = snowBallManager->snowBall[j]->GetPos();
+				/*D3DXVECTOR3 EnemyPosTmp = enemyManager->enemy[i]->GetPos(),
+					SnowBall_PPosTmp = snowBallManager->snowBall[j]->GetPos();*/
 
-				if (CollisionDetection(SnowBall_PPosTmp, 1.5, EnemyPosTmp, 3))		//”¼Œa‚ ‚Æ‚Å•Ï”‰»
+				CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;
+
+				enemyManager->enemy[i]->GetCollisionSphere(&EnemySphreA, &EnemySphreB);
+				snowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);
+
+				if (CollisionDetection(&SnowBallSphre, &EnemySphreA) || CollisionDetection(&SnowBallSphre, &EnemySphreB))		//”¼Œa‚ ‚Æ‚Å•Ï”‰»
 				{
 					delete enemyManager->enemy[i];
 					delete snowBallManager->snowBall[j];

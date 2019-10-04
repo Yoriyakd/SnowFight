@@ -42,8 +42,13 @@ struct SnowBallInitValue {
 	ID id;
 };
 
+struct CollisionSphere {
+	D3DXVECTOR3 pos;
+	float radius;
+};
+
 void DrawMesh(XFILE *XFile);
 
-bool CollisionDetection(D3DXVECTOR3 PosA, float radiusA, D3DXVECTOR3 PosB, float radiusB);
+bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
 
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis);
