@@ -49,7 +49,7 @@ void SceneBase::Frame(void)
 	}
 	//---------------------------------------------------------------------------
 
-	if (Update() == false)											//これまでのTitleFrameやGameFrameとほぼ同じ内容
+	if (Update() == false)											//falseを返さないと消したシーンをが実行されるので注意
 	{
 		return;
 	}

@@ -1,8 +1,7 @@
 #pragma once
 #include<d3d9.h>
 #include"../main.h"
-//#include"../ResourceManager.h"
-//#include"../GameScene/GameScene.h"
+#include"../SceanSwitcher/SceneSwitcher.h"
 
 class TitleScene : public SceneBase {
 

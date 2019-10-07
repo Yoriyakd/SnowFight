@@ -35,12 +35,15 @@ GameScene::GameScene(int StageNo)
 
 GameScene::~GameScene()
 {
-	delete player;
-	delete wallManager;
-	delete enemyManager;
 	delete loadStageData;
+	delete player;
+	delete ground;
+	delete enemyManager;
+	delete skyBox;
 	delete fenceManager;
 	delete snowBallManager;
+	delete wallManager;
+	delete collisionObserver;
 }
 
 void GameScene::Render3D(void)

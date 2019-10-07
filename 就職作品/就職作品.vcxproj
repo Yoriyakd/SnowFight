@@ -172,6 +172,9 @@
     <ClCompile Include="SceanSwitcher\SceneSwitcher.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="TitleScene\TitleScene.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
+    <ClInclude Include="TitleScene\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

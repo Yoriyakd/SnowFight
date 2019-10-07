@@ -4,6 +4,7 @@
 #include"main.h"
 #include"SceanSwitcher/SceneSwitcher.h"
 #include"GameScene/GameScene.h"
+#include"TitleScene/TitleScene.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -277,7 +278,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	lpFont->OnResetDevice();
 
-	sceneSwitcher.SwitchScene(new GameScene(1));
+	sceneSwitcher.SwitchScene(new TitleScene());
 
 	
 	while (1) {
