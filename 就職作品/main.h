@@ -34,14 +34,16 @@ struct XFILE {
 
 enum ID{PLAYER_ID, ENEMY_ID};
 
+//雪玉を発射するときに渡すデータの構造体
 struct SnowBallInitValue {
-	D3DXVECTOR3 shootPos;
-	float XAxisAng;
-	float YAxisAng;
-	float powerRate;
-	ID id;
+	D3DXVECTOR3 shootPos;		//打ち出す位置
+	float XAxisAng;				//X軸の回転角度	*Degreeで渡す
+	float YAxisAng;				//Y軸の回転角度	*Degreeで渡す
+	float powerRate;			//打ち出すパワーの割合	*0~100
+	ID id;						//発射したキャラをenumで定義したIDを入れる
 };
 
+//当たり判定の球の情報を渡す時に使う構造体
 struct CollisionSphere {
 	D3DXVECTOR3 pos;
 	float radius;

@@ -27,6 +27,7 @@ private:
 	//------------------------------------------------------------
 
 	void Move(void);
+	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
 	int ShootSnowball(SnowBallManager *snowBallManager);
 
 	

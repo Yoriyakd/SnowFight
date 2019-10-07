@@ -28,7 +28,6 @@ void FenceManager::SetFence()
 		stageFence[stageFence.size() - 1]->SetMat(D3DXVECTOR3((fenceData.offSetX * -1), 0.0f, (j * blockInterval)), 90);
 	}
 
-	//GameScene::GetStageSize(&StageSizeX, &StageSizeY);
 	for (int i = 0; i < fenceData.cntX; i++)	//X
 	{
 		stageFence.push_back(new StageFence());
