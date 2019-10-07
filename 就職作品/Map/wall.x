@@ -1399,7 +1399,7 @@ Frame Root {
          0.314462; 0.378709;;
       } // End of Cube UV coordinates
       MeshMaterialList { // Cube material list
-        2;
+        1;
         122;
         0,
         0,
@@ -1528,13 +1528,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.000000; 0.000000; 0.000000;;
-          TextureFilename {"TexturesCom_Plastic0034_S.jpg";}
-        }
-        Material ƒ}ƒeƒŠƒAƒ‹ {
-           0.640000; 0.640000; 0.640000; 1.000000;;
-           96.078431;
-           0.500000; 0.500000; 0.500000;;
-           0.000000; 0.000000; 0.000000;;
+          TextureFilename {"Map/WallTex.jpg";}
         }
       } // End of Cube material list
     } // End of Cube mesh
