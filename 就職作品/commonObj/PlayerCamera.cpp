@@ -10,10 +10,12 @@ PlayerCamera::PlayerCamera(int Scrw, int Scrh, HWND Hwnd)
 	angX = 0, angY = 0;		//初期化
 	ClientToScreen(hwnd, &basePt);
 	SetCursorPos(basePt.x, basePt.y);
+	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 }
 
 PlayerCamera::~PlayerCamera()
 {
+	ShowCursor(TRUE);			//カーソルを表示する	※FTRUEの回数をカウントしているので必要以上に呼ばない
 }
 
 void PlayerCamera::SetCamera(void)
