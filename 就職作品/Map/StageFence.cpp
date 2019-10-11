@@ -29,6 +29,7 @@ void StageFence::SetMat(D3DXVECTOR3 Pos, float Ang)
 
 void StageFence::Draw(void)
 {
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	lpD3DDevice->SetTransform(D3DTS_WORLD ,&mat);
 	DrawMesh(&mesh);
 }

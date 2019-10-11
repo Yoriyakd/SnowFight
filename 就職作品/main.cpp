@@ -248,7 +248,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
 
 	//裏面カリング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	// フィルタ設定
 	lpD3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
@@ -256,7 +256,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	lpD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	// ライト
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	lpD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	// 頂点フォーマットの設定

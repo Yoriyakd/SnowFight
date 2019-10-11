@@ -1,6 +1,6 @@
 #include "GameScene.h"
 
-
+D3DLIGHT9 Light;
 
 
 GameScene::GameScene(int StageNo)
@@ -31,6 +31,29 @@ GameScene::GameScene(int StageNo)
 	{
 		enemyManager->SetEnemy(loadStageData->GetEnemyData(i));			//enemyManagerがインスタンスを作成する
 	}
+
+	//-----------------------------k
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
+	Light.Type = D3DLIGHT_DIRECTIONAL;
+
+	Light.Direction = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
+	Light.Diffuse.a = 1.0f;
+	Light.Diffuse.r = 1.0f;
+	Light.Diffuse.g = 1.0f;
+	Light.Diffuse.b = 1.0f;
+
+	Light.Ambient.r = 0.3f;
+	Light.Ambient.g = 0.3f;
+	Light.Ambient.b = 0.3f;
+
+	Light.Range = 1000.0f;
+
+	lpD3DDevice->SetLight(0, &Light);
+	lpD3DDevice->LightEnable(0, TRUE);
+	//-----------------------------
 }
 
 GameScene::~GameScene()
