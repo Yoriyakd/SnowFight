@@ -13,31 +13,34 @@ private:
 	XFILE mesh;
 	D3DXMATRIX mat, transMat, rotMat;
 	D3DXVECTOR3 pos;
-	static int remainingBalls;
+	int remainingBalls;
 	float moveSpeed;
+
+	XFILE ballMesh;
+	D3DXMATRIX ballMat, ballScalMat;
 	
 
 	//============================================================
 	//カメラの変数
 	//============================================================
 	static const float camHight;
-	POINT basePt;
 
 	PlayerCamera *playerCam;
 	//------------------------------------------------------------
 
 	void Move(void);
 	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
-	int ShootSnowball(SnowBallManager *snowBallManager);
+	void ShootSnowball(SnowBallManager *snowBallManager);
+
+	void MakeBall();
 
 	
 
 public:
-	//std::vector <SnowBall*> snowBall_P;
-
 	Player();
 	~Player();
 	bool Update(SnowBallManager *snowBallManager);
 	void SetCamera(void);
 	void Draw(void);
+	int GetRemainingBalls();			//残弾数を返す
 };
