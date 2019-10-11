@@ -2,6 +2,7 @@
 #include"../main.h"
 #include<vector>
 #include"SnowBall.h"
+#include"../Effect/EffectManager.h"
 class SnowBallManager {
 private:
 public:

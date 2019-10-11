@@ -5,6 +5,8 @@
 #include"SceanSwitcher/SceneSwitcher.h"
 #include"GameScene/GameScene.h"
 #include"TitleScene/TitleScene.h"
+#include"ResourceManager.h"
+#include"Effect/EffectManager.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -28,10 +30,11 @@ LPD3DXFONT lpFont;		// フォント
 
 bool gameFullScreen;	// フルスクリーン（true,false)
 HWND hwnd;
-int FPS;
+const int GameFPS = 60;		//ゲームのFPS指定
 
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
+EffectManager *effectManager;
 
 void DrawMesh(XFILE *XFile)
 {
@@ -263,7 +266,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	// ゲームに関する初期化処理 ---------------------------
 	resourceManager = new ResourceManager();
-	FPS = 60;
+	effectManager = new EffectManager();
 
 
 

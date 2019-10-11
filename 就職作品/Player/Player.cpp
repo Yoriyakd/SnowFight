@@ -74,8 +74,8 @@ int Player::ShootSnowball(SnowBallManager *snowBallManager)
 		if (KyeFlag == true)
 		{
 			float PowerPCT;
-			if (TimeCnt > MaxPowerTime * FPS)TimeCnt = MaxPowerTime * FPS;
-			PowerPCT = (float)TimeCnt / (float)(MaxPowerTime * FPS) * 100.0f;	//äÑçáÇãÅÇﬂÇÈ
+			if (TimeCnt > MaxPowerTime * GameFPS)TimeCnt = MaxPowerTime * GameFPS;
+			PowerPCT = (float)TimeCnt / (float)(MaxPowerTime * GameFPS) * 100.0f;	//äÑçáÇãÅÇﬂÇÈ
 
 			SnowBallInitValue ValueTmp;
 			ValueTmp.shootPos = pos;

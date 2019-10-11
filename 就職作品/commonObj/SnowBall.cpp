@@ -15,7 +15,7 @@ SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));
 	mat = rotMat * mat;
 
-	deleteTime = 5 * FPS;
+	deleteTime = 5 * GameFPS;
 	id = snowBallInitValue.id;
 }
 

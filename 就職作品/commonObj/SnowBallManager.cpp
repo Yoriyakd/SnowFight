@@ -30,8 +30,13 @@ void SnowBallManager::Update(void)
 {
 	for (unsigned int i = 0; i < snowBall.size(); i++)
 	{
-		if (snowBall[i]->Update() == false)
+		if (snowBall[i]->Update() == false)		//Updateがfalseなら
 		{
+			//SnowFragエフェクト呼ぶ
+			effectManager->snowFrag.push_back(new SnowFrag(snowBall[i]->GetPos()));
+
+
+			//インスタンス削除
 			delete snowBall[i];
 			snowBall.erase(snowBall.begin() + i);
 			i--;

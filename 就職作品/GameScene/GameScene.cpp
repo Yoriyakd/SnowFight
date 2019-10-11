@@ -55,6 +55,7 @@ void GameScene::Render3D(void)
 	enemyManager->Draw();
 	player->Draw();
 	snowBallManager->Draw();
+	effectManager->Draw();
 }
 
 void GameScene::SetCamera(void)
@@ -72,6 +73,7 @@ bool GameScene::Update()
 	enemyManager->Update();
 	player->Update(snowBallManager);
 	snowBallManager->Update();
+	effectManager->Update();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoWall(snowBallManager, wallManager);

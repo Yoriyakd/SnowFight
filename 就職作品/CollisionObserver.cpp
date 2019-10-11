@@ -28,6 +28,10 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 
 				if (CollisionDetection(&SnowBallSphre, &EnemySphreA) || CollisionDetection(&SnowBallSphre, &EnemySphreB))
 				{
+					//SnowFragエフェクト呼ぶ
+					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+
+					//死んだインスタンス削除
 					delete enemyManager->enemy[i];
 					delete snowBallManager->snowBall[j];
 					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
@@ -69,6 +73,10 @@ void CollisionObserver::SnowBalltoWall(SnowBallManager * snowBallManager, WallMa
 
 					if (MeshDis < SnowBallSphere.radius)										//距離が半径以下なら
 					{
+						//SnowFragエフェクト呼ぶ
+						effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[i]->GetPos()));
+
+						//死んだインスタンス削除
 						delete snowBallManager->snowBall[i];
 						snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
 						i--;				//きえた分詰める

@@ -3,6 +3,7 @@
 #include"commonObj/SnowBallManager.h"
 #include"Enemy/EnemyManager.h"
 #include"Map/WallManager.h"
+#include"Effect/EffectManager.h"
 class CollisionObserver {
 public:
 	CollisionObserver();

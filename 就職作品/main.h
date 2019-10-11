@@ -8,7 +8,7 @@ extern LPD3DXSPRITE lpSprite;	// スプライト
 extern LPD3DXFONT lpFont;		// フォント
 extern D3DPRESENT_PARAMETERS d3dpp;
 extern HWND hwnd;
-extern int FPS;
+extern const int GameFPS;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height

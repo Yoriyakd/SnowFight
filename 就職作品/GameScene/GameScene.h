@@ -13,6 +13,7 @@
 #include"../Map/FenceManager.h"
 #include"../commonObj/SnowBallManager.h"
 #include"../CollisionObserver.h"
+#include"../Effect/EffectManager.h"
 
 
 class GameScene : public SceneBase {

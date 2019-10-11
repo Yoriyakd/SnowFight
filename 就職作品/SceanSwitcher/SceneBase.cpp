@@ -31,7 +31,7 @@ void SceneBase::Frame(void)
 	//60FPS制限処理
 	NTlmt = timeGetTime();
 
-	if (NTlmt - BTlmt <= 1000.0f / 60.0f)			//1 / 60秒　経っていなかったらリターンでとばすことで60FPS上限をつける
+	if (NTlmt - BTlmt <= 1000.0f / GameFPS)			//1 / 60秒　経っていなかったらリターンでとばすことで60FPS上限をつける
 	{
 		return;
 	}
@@ -43,7 +43,6 @@ void SceneBase::Frame(void)
 	
 	if ((NTcnt - BTcnt) >= 1000)
 	{
-		FPS = cntFPS;
 		cntFPS = 0;				//リセット
 		BTcnt = NTcnt;		//基準時間を変更
 	}
