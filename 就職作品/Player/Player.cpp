@@ -119,9 +119,15 @@ void Player::MakeBall()
 	{
 		if (RKyeFlag == true)
 		{
-			if (MakeingTimeCnt >= MakeTime * GameFPS)
+			if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
 			{
 				remainingBalls++;
+			}
+			else
+			{
+				//足りなければ壊れる
+				//SnowFragエフェクト呼ぶ
+				effectManager->snowFrag.push_back(new SnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43))));
 			}
 			RKyeFlag = false;
 			MakeingTimeCnt = 0;		//リセット
@@ -182,13 +188,15 @@ void Player::SetCamera(void)
 
 void Player::Draw(void)
 {
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
 	//--------------------------------------------------------------
-
+	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	D3DXMatrixTranslation(&ballMat, 0, 2, 3);		//プレイヤーとどれぐらい離れているか
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(playerCam->GetCamAngY()));
 	ballMat = ballScalMat * ballMat * rotMat * mat;
