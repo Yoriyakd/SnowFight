@@ -1,7 +1,9 @@
 #include "Player.h"
-
+#include"../Map/LoadStageData.h"
+//#include"../GameScene/GameScene.h"
 const float Player::camHight = 5.0f;
 extern ResourceManager *resourceManager;
+
 //=====================================
 //privateメソッド
 //=====================================
@@ -55,6 +57,27 @@ void Player::Move(void)
 	if (moveFlag)
 	{
 		pos += movePos;
+	}
+
+	//ステージ境界の処理
+	if (pos.z > stageBorder.Top)
+	{
+		pos.z += stageBorder.Top - pos.z;
+	}
+
+	if (pos.z < stageBorder.Bottom)
+	{
+		pos.z += stageBorder.Bottom - pos.z;
+	}
+
+	if (pos.x < stageBorder.Left)
+	{
+		pos.x += stageBorder.Left - pos.x;
+	}
+
+	if (pos.x > stageBorder.Right)
+	{
+		pos.x += stageBorder.Right - pos.x;
 	}
 }
 
@@ -207,4 +230,9 @@ void Player::Draw(void)
 int Player::GetRemainingBalls()
 {
 	return remainingBalls;
+}
+
+void Player::SetStageBorder(StageBorder StageBorder)
+{
+	stageBorder = StageBorder;
 }

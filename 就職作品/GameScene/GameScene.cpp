@@ -1,26 +1,36 @@
 #include "GameScene.h"
 
 D3DLIGHT9 Light;
-
+float StageBorderOffsetX = 15.0f;			//外周までの距離
+float StageBorderOffsetZ = 15.0f;			//外周までの距離
 
 GameScene::GameScene(int StageNo)
 {
-	
 	loadStageData = new LoadStageData(StageNo);
 	player = new Player;
 	ground = new Ground;
 	enemyManager = new EnemyManager;
 	skyBox = new SkyBox;
-	fenceManager = new FenceManager(15, 15, 15.0f, 15.0f);
 	snowBallManager = new SnowBallManager();
 	wallManager = new WallManager();
 	collisionObserver = new CollisionObserver();
 
-	float stageXtmp, stageZtmp;
+	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする
+	float StageSizeX, StageSizeZ;
+	loadStageData->GetStageSize(&StageSizeX, &StageSizeZ);
 
-	loadStageData->GetStageSize(&stageXtmp, &stageZtmp);		//インスタンス間のやり取りはこうするしかない？
-	fenceManager->SetStageSize(stageXtmp, stageZtmp);
-	fenceManager->SetFence();
+	stageBorder.Top = StageSizeZ + StageBorderOffsetZ;
+	stageBorder.Bottom = -1 * StageBorderOffsetZ;
+	stageBorder.Left = -1 * StageBorderOffsetX;
+	stageBorder.Right = StageSizeX + StageBorderOffsetX;
+
+	fenceManager = new FenceManager(FenceCntX, FenceCntY, StageBorderOffsetX, StageBorderOffsetZ);		//ステージの境界データをもらうよう変更する
+	fenceManager->SetStageSize(StageSizeX, StageSizeZ);
+	fenceManager->SetFence();		//フェンスを配置
+
+	player->SetStageBorder(stageBorder);
+
+	
 
 	for (int i = 0; i < loadStageData->GetWallNum(); i++)
 	{

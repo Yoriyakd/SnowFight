@@ -2,7 +2,7 @@
 #include<vector>
 #include"../Map/StageFence.h"
 
-struct FenceData {
+struct FenceManagerData {
 	int cntX;
 	int cntZ;
 	float offSetX;
@@ -14,7 +14,7 @@ private:
 	const float blockInterval = 15.0;
 	float stageSizeX, stageSizeZ;
 	std::vector<StageFence*> stageFence;
-	FenceData fenceData;
+	FenceManagerData fenceData;
 public:
 	
 

@@ -51,6 +51,15 @@ struct CollisionSphere {
 	float radius;
 };
 
+//ステージの境界構造体
+struct StageBorder
+{
+	float Top;
+	float Bottom;
+	float Left;
+	float Right;
+};
+
 void DrawMesh(XFILE *XFile);
 
 //球同士の当たり判定

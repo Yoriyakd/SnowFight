@@ -27,6 +27,8 @@ private:
 	SnowBallManager *snowBallManager;
 	WallManager *wallManager;
 	CollisionObserver *collisionObserver;
+
+	StageBorder stageBorder;
 public:
 	GameScene(int);
 	~GameScene();

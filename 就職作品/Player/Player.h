@@ -18,6 +18,8 @@ private:
 
 	XFILE ballMesh;
 	D3DXMATRIX ballMat, ballScalMat;
+
+	StageBorder stageBorder;
 	
 
 	//============================================================
@@ -43,4 +45,5 @@ public:
 	void SetCamera(void);
 	void Draw(void);
 	int GetRemainingBalls();			//écíeêîÇï‘Ç∑
+	void SetStageBorder(StageBorder StageBorder);
 };
