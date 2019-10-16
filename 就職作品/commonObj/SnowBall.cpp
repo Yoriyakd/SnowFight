@@ -15,7 +15,7 @@ SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));
 	mat = rotMat * mat;
 
-	deleteTime = 5 * GameFPS;
+	deleteTime = 10 * GameFPS;
 	id = snowBallInitValue.id;
 }
 
@@ -38,10 +38,13 @@ bool SnowBall::Update(void)
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
 
-	if (mat._42 < 0.0f)				//地面に衝突で消滅
+	if (mat._42 < 0.0f)				//地面に衝突でエフェクト発生
 	{
-		return false;
+		//SnowFragエフェクト呼ぶ
+		effectManager->snowFrag.push_back(new SnowFrag(D3DXVECTOR3(mat._41, mat._42, mat._43)));
 	}
+
+	effectManager->snowLocus.push_back(new SnowLocus(mat));
 	return true;
 }
 
@@ -55,6 +58,11 @@ void SnowBall::Draw(void)
 D3DXVECTOR3 SnowBall::GetPos()
 {
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
+}
+
+D3DXMATRIX SnowBall::GetMat()
+{
+	return mat;
 }
 
 D3DXVECTOR3 SnowBall::GetMoveVec()

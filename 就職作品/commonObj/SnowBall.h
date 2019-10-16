@@ -2,6 +2,7 @@
 #include<d3dx9.h>
 #include"../main.h"
 #include"../ResourceManager.h"
+#include"../Effect/EffectManager.h"
 class SnowBall {
 private:
 	XFILE mesh;
@@ -16,7 +17,8 @@ public:
 	bool Update(void);
 	void Draw(void);
 	D3DXVECTOR3 GetPos();
-	D3DXVECTOR3 GetMoveVec();
+	D3DXMATRIX GetMat();
+	D3DXVECTOR3 GetMoveVec();				//ƒŒƒC”»’è‚ÉŽg‚¤
 	ID GetID();
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 };

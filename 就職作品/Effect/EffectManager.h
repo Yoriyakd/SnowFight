@@ -2,12 +2,14 @@
 #include"../main.h"
 #include<vector>
 #include"../ResourceManager.h"
-#include"../Effect/SnowFrag.h"
+#include"SnowFrag.h"
+#include"Locus.h"
 
 class EffectManager {
 private:
 public:
 	std::vector<SnowFrag*> snowFrag;
+	std::vector<SnowLocus*> snowLocus;
 
 	EffectManager();
 	~EffectManager();

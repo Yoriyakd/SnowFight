@@ -300,6 +300,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	// ゲームに関する終了処理 ---------------------------
 	delete resourceManager;
+	delete effectManager;
 
 
 	lpSprite->Release();	// スプライト

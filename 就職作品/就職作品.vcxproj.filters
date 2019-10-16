@@ -96,6 +96,9 @@
     <ClCompile Include="Effect\EffectManager.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\Locus.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -162,6 +165,9 @@
       <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="Effect\EffectManager.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\Locus.h">
       <Filter>Effect</Filter>
     </ClInclude>
   </ItemGroup>
