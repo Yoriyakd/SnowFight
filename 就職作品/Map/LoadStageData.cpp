@@ -44,6 +44,7 @@ void LoadStageData::SetStageMap(void)
 
 	//printf_s("%d", &wallNum);
 
+	//¶ã‚©‚ç“Ç‚İ‚Ş
 	for (int i = 0; i < STAGE_Y; i++)
 	{
 		for (int j = 0; j < STAGE_X; j++)

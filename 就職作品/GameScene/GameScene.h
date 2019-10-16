@@ -9,6 +9,7 @@
 #include"../Map/Ground.h"
 #include"../Map/WallManager.h"
 #include"../Enemy/EnemyManager.h"
+#include"../Enemy/SetEnemies.h"
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
 #include"../commonObj/SnowBallManager.h"
@@ -19,7 +20,7 @@
 class GameScene : public SceneBase {
 private:
 	LoadStageData *loadStageData;
-	EnemyManager *enemyManager;
+	;
 	Ground *ground;
 	Player *player;
 	SkyBox *skyBox;
@@ -27,8 +28,11 @@ private:
 	SnowBallManager *snowBallManager;
 	WallManager *wallManager;
 	CollisionObserver *collisionObserver;
+	SetEnemies *setEnemies;
 
 	StageBorder stageBorder;
+
+	float stageSizeX, stageSizeZ;
 public:
 	GameScene(int);
 	~GameScene();
@@ -37,3 +41,5 @@ public:
 	void Render2D(void);
 	bool Update(void);
 };
+
+extern EnemyManager *enemyManager;

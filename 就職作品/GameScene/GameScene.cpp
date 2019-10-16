@@ -1,35 +1,38 @@
 #include "GameScene.h"
 
+EnemyManager *enemyManager;
 D3DLIGHT9 Light;
 float StageBorderOffsetX = 15.0f;			//外周までの距離
 float StageBorderOffsetZ = 15.0f;			//外周までの距離
 
 GameScene::GameScene(int StageNo)
 {
+	srand(timeGetTime());
 	loadStageData = new LoadStageData(StageNo);
 	player = new Player;
 	ground = new Ground;
 	enemyManager = new EnemyManager;
+	setEnemies = new SetEnemies();
 	skyBox = new SkyBox;
 	snowBallManager = new SnowBallManager();
 	wallManager = new WallManager();
 	collisionObserver = new CollisionObserver();
 
 	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする
-	float StageSizeX, StageSizeZ;
-	loadStageData->GetStageSize(&StageSizeX, &StageSizeZ);
 
-	stageBorder.Top = StageSizeZ + StageBorderOffsetZ;
+	loadStageData->GetStageSize(&stageSizeX, &stageSizeZ);
+
+	stageBorder.Top = stageSizeZ + StageBorderOffsetZ;
 	stageBorder.Bottom = -1 * StageBorderOffsetZ;
 	stageBorder.Left = -1 * StageBorderOffsetX;
-	stageBorder.Right = StageSizeX + StageBorderOffsetX;
+	stageBorder.Right = stageSizeX + StageBorderOffsetX;
 
 	fenceManager = new FenceManager(FenceCntX, FenceCntY, StageBorderOffsetX, StageBorderOffsetZ);		//ステージの境界データをもらうよう変更する
-	fenceManager->SetStageSize(StageSizeX, StageSizeZ);
+	fenceManager->SetStageSize(stageSizeX, stageSizeZ);
 	fenceManager->SetFence();		//フェンスを配置
 
 	player->SetStageBorder(stageBorder);
-
+	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
 
 	for (int i = 0; i < loadStageData->GetWallNum(); i++)
@@ -102,7 +105,10 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-
+	if (GetAsyncKeyState('P') & 0x8000)		//条件を変えて本実装
+	{
+		setEnemies->SetEnemy();
+	}
 	enemyManager->Update();
 	player->Update(snowBallManager);
 	snowBallManager->Update();

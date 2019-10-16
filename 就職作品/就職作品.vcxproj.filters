@@ -99,6 +99,9 @@
     <ClCompile Include="Effect\Locus.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\SetEnemies.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Effect\Locus.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\SetEnemies.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

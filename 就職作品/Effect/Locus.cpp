@@ -28,6 +28,7 @@ void SnowLocus::Draw()
 	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
+	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
 
 	lpD3DDevice->SetTexture(0, tex);
 	D3DXMATRIX IdenMat;
@@ -38,6 +39,7 @@ void SnowLocus::Draw()
 
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
+	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
 }
 
 bool SnowLocus::Update()
