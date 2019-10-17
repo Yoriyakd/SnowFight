@@ -45,11 +45,11 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 	}
 }
 
-void CollisionObserver::SnowBalltoWall(SnowBallManager * snowBallManager, WallManager * wallManager)
+void CollisionObserver::SnowBalltoObj(SnowBallManager * snowBallManager, MapObjManager * wallManager)
 {
 	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
 	{
-		for (unsigned int j = 0; j < wallManager->wall.size(); j++)
+		for (unsigned int j = 0; j < wallManager->mapObj.size(); j++)
 		{
 			//---------------------------------------------------------------
 			//必要な値を用意
@@ -59,8 +59,8 @@ void CollisionObserver::SnowBalltoWall(SnowBallManager * snowBallManager, WallMa
 			D3DXVECTOR3 RayVec, RayPos;
 			float MeshDis;
 
-			MeshTmp = wallManager->wall[j]->GetMesh();
-			MeshMat = wallManager->wall[j]->GetWallMat();
+			MeshTmp = wallManager->mapObj[j]->GetMesh();
+			MeshMat = wallManager->mapObj[j]->GetMat();
 			RayPos = snowBallManager->snowBall[i]->GetPos();
 			RayVec = snowBallManager->snowBall[i]->GetMoveVec();
 

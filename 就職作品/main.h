@@ -34,6 +34,7 @@ struct XFILE {
 	LPDIRECT3DTEXTURE9 *Tex;	//Textureの内容 * グループ数分		
 };
 
+//飛ばした雪玉に付与
 enum ID{PLAYER_ID, ENEMY_ID};
 
 //雪玉を発射するときに渡すデータの構造体

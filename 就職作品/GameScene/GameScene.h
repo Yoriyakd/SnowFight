@@ -7,7 +7,7 @@
 #include<vector>
 #include"../Map/LoadStageData.h"
 #include"../Map/Ground.h"
-#include"../Map/WallManager.h"
+#include"../Map/MapObjManager.h"
 #include"../Enemy/EnemyManager.h"
 #include"../Enemy/SetEnemies.h"
 #include"../commonObj/SkyBox.h"
@@ -26,7 +26,7 @@ private:
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
-	WallManager *wallManager;
+	MapObjManager *mapObjManager;
 	CollisionObserver *collisionObserver;
 	SetEnemies *setEnemies;
 

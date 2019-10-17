@@ -1,3 +1,4 @@
+
 #include "GameScene.h"
 
 EnemyManager *enemyManager;
@@ -15,7 +16,7 @@ GameScene::GameScene(int StageNo)
 	setEnemies = new SetEnemies();
 	skyBox = new SkyBox;
 	snowBallManager = new SnowBallManager();
-	wallManager = new WallManager();
+	mapObjManager = new MapObjManager();
 	collisionObserver = new CollisionObserver();
 
 	int FenceCntX = 15, FenceCntY = 15;		//é©ìÆìIÇ…ãÅÇﬂÇÁÇÍÇÈÇÊÇ§Ç…Ç∑ÇÈ
@@ -37,8 +38,10 @@ GameScene::GameScene(int StageNo)
 
 	for (int i = 0; i < loadStageData->GetWallNum(); i++)
 	{
-		wallManager->SetWall(loadStageData->GetWallData(i));
+		mapObjManager->SetWall(loadStageData->GetWallData(i));
 	}
+
+	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));
 
 	for (int i = 0; i < loadStageData->GetEnemyNum(); i++)
 	{
@@ -78,7 +81,7 @@ GameScene::~GameScene()
 	delete skyBox;
 	delete fenceManager;
 	delete snowBallManager;
-	delete wallManager;
+	delete mapObjManager;
 	delete collisionObserver;
 }
 
@@ -87,7 +90,7 @@ void GameScene::Render3D(void)
 	skyBox->Draw();
 	ground->Draw();
 	fenceManager->Draw();
-	wallManager->Draw();
+	mapObjManager->Draw();
 	enemyManager->Draw();
 	player->Draw();
 	snowBallManager->Draw();
@@ -115,6 +118,6 @@ bool GameScene::Update()
 	effectManager->Update();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
-	collisionObserver->SnowBalltoWall(snowBallManager, wallManager);
+	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
 	return true;
 }

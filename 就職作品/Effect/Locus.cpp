@@ -67,4 +67,5 @@ bool SnowLocus::Update()
 	vertex[1].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
 	vertex[2].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
 	vertex[3].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
+	return true;
 }

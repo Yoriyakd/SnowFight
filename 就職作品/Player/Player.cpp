@@ -173,7 +173,7 @@ void Player::MakeBall()
 
 Player::Player()
 {
-	int StartBallCnt = 5;	//スタート時のボールの数 プレイヤーの強化のデータを拾ってきて入れるようにする
+	int StartBallCnt = 10;	//スタート時のボールの数 プレイヤーの強化のデータを拾ってきて入れるようにする
 
 	moveSpeed = 0.5;		//移動速度
 	mesh = resourceManager->GetXFILE("Player/player.x");

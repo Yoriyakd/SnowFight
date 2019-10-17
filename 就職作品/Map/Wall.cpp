@@ -11,20 +11,3 @@ Wall::~Wall()
 {
 
 }
-
-void Wall::Draw(void)
-{
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	DrawMesh(&mesh);
-}
-
-D3DXMATRIX Wall::GetWallMat()
-{
-	return mat;
-}
-
-XFILE Wall::GetMesh()
-{
-	return mesh;
-}

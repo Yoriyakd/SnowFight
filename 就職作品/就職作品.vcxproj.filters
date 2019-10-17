@@ -81,9 +81,6 @@
     <ClCompile Include="CollisionObserver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Map\WallManager.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Map\LoadStageData.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -101,6 +98,15 @@
     </ClCompile>
     <ClCompile Include="Enemy\SetEnemies.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapObj.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Tree.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapObjManager.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +158,6 @@
     <ClInclude Include="commonObj\SnowBallManager.h">
       <Filter>commonObj</Filter>
     </ClInclude>
-    <ClInclude Include="Map\WallManager.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="Map\LoadStageData.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -175,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="Enemy\SetEnemies.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapObj.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Tree.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapObjManager.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
