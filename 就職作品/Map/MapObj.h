@@ -10,5 +10,5 @@ public:
 	~MapObj();
 	virtual void Draw();
 	D3DXMATRIX GetMat();
-	XFILE GetMesh();
+	virtual XFILE GetMesh();
 };

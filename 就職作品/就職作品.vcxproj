@@ -171,6 +171,9 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\Bench.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="Map\FenceManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -237,6 +240,7 @@
     <ClInclude Include="Enemy\SetEnemies.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Map\Bench.h" />
     <ClInclude Include="Map\FenceManager.h" />
     <ClInclude Include="Map\Ground.h" />
     <ClInclude Include="Map\LoadStageData.h" />

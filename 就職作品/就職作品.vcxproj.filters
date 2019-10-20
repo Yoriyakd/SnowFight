@@ -108,6 +108,9 @@
     <ClCompile Include="Map\MapObjManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Map\Bench.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -186,6 +189,9 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapObjManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Bench.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>

@@ -42,7 +42,8 @@ GameScene::GameScene(int StageNo)
 		mapObjManager->SetWall(loadStageData->GetWallData(i));
 	}
 
-	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));
+	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test
+	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test
 
 	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)
 	{

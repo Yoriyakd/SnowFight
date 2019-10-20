@@ -3,6 +3,7 @@
 #include"MapObj.h"
 #include"Wall.h"
 #include"Tree.h"
+#include"Bench.h"
 
 class MapObjManager {
 private:
@@ -14,6 +15,7 @@ public:
 
 	void SetWall(D3DXVECTOR3 Pos);
 	void SetTree(D3DXVECTOR3 Pos);
+	void SetBench(D3DXVECTOR3 Pos);
 
 	void Draw();
 	void Update();

@@ -23,6 +23,11 @@ void MapObjManager::SetTree(D3DXVECTOR3 Pos)
 	mapObj.push_back(new Tree(Pos));
 }
 
+void MapObjManager::SetBench(D3DXVECTOR3 Pos)
+{
+	mapObj.push_back(new Bench(Pos));
+}
+
 void MapObjManager::Draw()
 {
 	for (unsigned int i = 0; i < mapObj.size(); i++)
