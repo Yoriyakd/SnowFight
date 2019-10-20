@@ -244,3 +244,8 @@ void Player::SetStageBorder(StageBorder StageBorder)
 {
 	stageBorder = StageBorder;
 }
+
+D3DXVECTOR3 Player::GetPlayerPos(void)
+{
+	return pos;
+}

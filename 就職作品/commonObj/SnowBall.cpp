@@ -38,10 +38,11 @@ bool SnowBall::Update(void)
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
 
-	if (mat._42 < 0.0f)				//地面に衝突でエフェクト発生
+	if (mat._42 < 0.0f)				//地面に衝突でエフェクト発生 インスタンス削除
 	{
 		//SnowFragエフェクト呼ぶ
 		effectManager->snowFrag.push_back(new SnowFrag(D3DXVECTOR3(mat._41, mat._42, mat._43)));
+		return false;
 	}
 
 	effectManager->snowLocus.push_back(new SnowLocus(mat));

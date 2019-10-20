@@ -26,10 +26,10 @@ void EnemyManager::Draw()
 	}
 }
 
-void EnemyManager::Update()
+void EnemyManager::Update(SnowBallManager *SnowBallManager)
 {
 	for (unsigned int i = 0; i < enemy.size(); i++)
 	{
-		enemy[i]->Update();
+		enemy[i]->Update(SnowBallManager);
 	}
 }

@@ -20,9 +20,7 @@
 class GameScene : public SceneBase {
 private:
 	LoadStageData *loadStageData;
-	;
 	Ground *ground;
-	Player *player;
 	SkyBox *skyBox;
 	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
@@ -43,3 +41,4 @@ public:
 };
 
 extern EnemyManager *enemyManager;
+extern Player *player;

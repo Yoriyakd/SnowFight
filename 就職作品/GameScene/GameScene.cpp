@@ -2,6 +2,7 @@
 #include "GameScene.h"
 
 EnemyManager *enemyManager;
+Player *player;
 D3DLIGHT9 Light;
 float StageBorderOffsetX = 15.0f;			//外周までの距離
 float StageBorderOffsetZ = 15.0f;			//外周までの距離
@@ -43,7 +44,7 @@ GameScene::GameScene(int StageNo)
 
 	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));
 
-	for (int i = 0; i < loadStageData->GetEnemyNum(); i++)
+	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)
 	{
 		enemyManager->SetEnemy(loadStageData->GetEnemyData(i));			//enemyManagerがインスタンスを作成する
 	}
@@ -112,7 +113,7 @@ bool GameScene::Update()
 	{
 		setEnemies->SetEnemy();
 	}
-	enemyManager->Update();
+	enemyManager->Update(snowBallManager);
 	player->Update(snowBallManager);
 	snowBallManager->Update();
 	effectManager->Update();

@@ -46,4 +46,5 @@ public:
 	void Draw(void);
 	int GetRemainingBalls();			//c’e”‚ğ•Ô‚·
 	void SetStageBorder(StageBorder StageBorder);
+	D3DXVECTOR3 GetPlayerPos(void);
 };

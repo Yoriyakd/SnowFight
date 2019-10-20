@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include"Enemy.h"
+#include"../commonObj/SnowBallManager.h"
 class EnemyManager {
 private:
 	
@@ -16,5 +17,5 @@ public:
 	void SetEnemy(D3DXVECTOR3 Pos);
 	
 	void Draw();
-	void Update();
+	void Update(SnowBallManager *SnowBallManager);
 };
