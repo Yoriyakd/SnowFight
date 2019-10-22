@@ -28,7 +28,7 @@ private:
 	CollisionObserver *collisionObserver;
 	SetEnemies *setEnemies;
 
-	StageBorder stageBorder;
+	
 
 	float stageSizeX, stageSizeZ;
 public:
@@ -42,3 +42,4 @@ public:
 
 extern EnemyManager *enemyManager;
 extern Player *player;
+extern StageBorder stageBorder;

@@ -1,7 +1,6 @@
 #include "Enemy.h"
 #include"../GameScene/GameScene.h"
 
-extern ResourceManager *resourceManager;
 
 //=====================================
 //privateメソッド
@@ -11,13 +10,13 @@ void Enemy::ShootSnowBall(float TragetAng)
 {
 	SnowBallInitValue ValueTmp;
 	ValueTmp.shootPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)
-	ValueTmp.XAxisAng = 30;
-	ValueTmp.YAxisAng = TragetAng;
-	ValueTmp.powerRate = 20.0f;
+	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)	手の位置から発射するようにする
+	ValueTmp.XAxisAng = 30;								/*要調整*/
+	ValueTmp.YAxisAng = TragetAng;						/*要調整*/
+	ValueTmp.powerRate = 20.0f;							/*要調整*/
 	ValueTmp.id = ENEMY_ID;
 
-	static int CoolTime = 3 * GameFPS;
+	static int CoolTime = 3 * GameFPS;					//雪玉発射のクールタイム※要調整
 	if (CoolTime < 0)
 	{
 		snowBallManager->SetSnowBall(&ValueTmp);
@@ -31,8 +30,6 @@ void Enemy::EngagingMode(void)
 	//------------------------------------------------------
 	//現在の角度を求める
 	//------------------------------------------------------
-
-
 
 	D3DXVECTOR3 NowFrontVec, DefaultVec(0, 0, 1);
 
@@ -60,6 +57,9 @@ void Enemy::EngagingMode(void)
 	}
 
 	//------------------------------------------------------
+	//プレイヤーとの角度を求める
+	//------------------------------------------------------
+
 	D3DXVECTOR3 TragetVec, TragetPos;
 
 	TragetPos = player->GetPlayerPos();
@@ -86,8 +86,10 @@ void Enemy::EngagingMode(void)
 		TragetAng *= -1;									//角度は負(反時計回り)
 	}
 
-
 	//------------------------------------------------------
+	//角度の差を求める
+	//------------------------------------------------------
+
 	float MoveAng;
 
 	MoveAng = TragetAng - NowAng;							//初期の角度と今の角度の差を求める
@@ -102,6 +104,9 @@ void Enemy::EngagingMode(void)
 		MoveAng += 360;
 	}
 
+	//---------------------------------------------------
+	//必要回転量が一回の回転量より小さい場合回転しすぎないようにする
+	//---------------------------------------------------
 
 	if (MoveAng >= 0)
 	{
@@ -122,13 +127,79 @@ void Enemy::EngagingMode(void)
 		}
 		D3DXMatrixRotationY(&rotMat, D3DXToRadian(RotSpeed));
 	}
+
 	mat = rotMat * mat;
+	//---------------------------------------------------
+	//移動処理
+	//---------------------------------------------------
+
+	D3DXMATRIX MoveMat;
+
+	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める	上で正規化仕手しまっているのでもう一度求める
+
+	float TragetLength, LimitLength = 30.0f;
+	TragetLength = D3DXVec3Length(&TragetVec);		//プレイヤーとの距離を求める
+
+	if (TragetLength < LimitLength)
+	{
+		D3DXMatrixTranslation(&MoveMat, 0, 0, -0.2);
+	}
+	else
+	{
+		D3DXMatrixTranslation(&MoveMat, 0.1, 0, 0.2);		//右に移動するようにしてみた理由は特にない
+	}
+	
+	mat = MoveMat * mat;
 
 	ShootSnowBall(TragetAng);
 }
 
 void Enemy::FreeMode(void)
 {
+	D3DXMATRIX MoveMat;
+	static float MoveInterval = 0;		//動くまでの時間初期値は0		//静的変数にするとすべてのインスタンスで共有されてしまう？上のクールタイムはそうではなさそうだが
+	static const int MaxInterval = 21;			//間隔の最大値
+	static const int MinInterval = 5;			//間隔の最大値
+
+	if (MoveInterval < 0)
+	{
+		static float MoveCnt = 3 * GameFPS;
+		D3DXMatrixTranslation(&MoveMat, 0.0, 0, 0.2);
+		mat = MoveMat * mat;
+		MoveCnt--;
+		if (MoveCnt < 0)				//規定の時間動いたら次動くまでの時間を再設定
+		{
+			MoveInterval = (rand() % (MaxInterval + MinInterval) + MinInterval) * GameFPS;			//ランダムで次動くまでの時間を決める
+			MoveCnt = 3 * GameFPS;
+		}
+	}
+
+	MoveInterval--;
+
+}
+
+void Enemy::StageBorderProcessing(void)
+{
+	//ステージ境界の処理
+	if (mat._43 > stageBorder.Top)
+	{
+		mat._43 += stageBorder.Top - mat._43;
+	}
+
+	if (mat._43 < stageBorder.Bottom)
+	{
+		mat._43 += stageBorder.Bottom - mat._43;
+	}
+
+	if (mat._41 < stageBorder.Left)
+	{
+		mat._41 += stageBorder.Left - mat._41;
+	}
+
+	if (mat._41 > stageBorder.Right)
+	{
+		mat._41 += stageBorder.Right - mat._41;
+	}
 }
 
 //=====================================
@@ -139,6 +210,14 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 {
 	mesh = resourceManager->GetXFILE("Enemy/EnemyBody.x");
 	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
+
+	D3DXMATRIX InitRotMat;
+	float TmpRndAng;
+
+	TmpRndAng = rand() % 360;
+	D3DXMatrixRotationY(&InitRotMat ,D3DXToRadian(TmpRndAng));
+
+	mat = InitRotMat * mat;
 }
 
 Enemy::~Enemy()
@@ -160,6 +239,12 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 	{
 		EngagingMode();
 	}
+	else
+	{
+		FreeMode();						//範囲外で即追跡終了は変えたい
+	}
+
+	StageBorderProcessing();			//移動処理のあとに呼ぶ
 	
 	return true;
 }

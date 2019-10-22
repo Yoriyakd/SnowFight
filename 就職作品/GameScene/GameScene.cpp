@@ -4,6 +4,7 @@
 EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
+StageBorder stageBorder;
 float StageBorderOffsetX = 15.0f;			//ŠOŽü‚Ü‚Å‚Ì‹——£
 float StageBorderOffsetZ = 15.0f;			//ŠOŽü‚Ü‚Å‚Ì‹——£
 
