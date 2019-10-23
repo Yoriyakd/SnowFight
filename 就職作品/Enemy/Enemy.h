@@ -12,6 +12,9 @@ private:
 	virtual void FreeMode(void);			//未発見時の行動
 	virtual void StageBorderProcessing(void);
 
+	int ShootCoolTime;					//雪玉発射のクールタイム
+	float MoveInterval;						//freeMode時動くまでの時間
+	float freeMoveCnt;							//freeMode時動く必要のある時間の時間
 	SnowBallManager *snowBallManager;		//snowBallManagerのポインタを保存する
 protected:
 

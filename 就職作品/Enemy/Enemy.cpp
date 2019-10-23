@@ -16,13 +16,13 @@ void Enemy::ShootSnowBall(float TragetAng)
 	ValueTmp.powerRate = 20.0f;							/*要調整*/
 	ValueTmp.id = ENEMY_ID;
 
-	static int CoolTime = 3 * GameFPS;					//雪玉発射のクールタイム※要調整
-	if (CoolTime < 0)
+	
+	if (ShootCoolTime < 0)
 	{
 		snowBallManager->SetSnowBall(&ValueTmp);
-		CoolTime = 3 * GameFPS;
+		ShootCoolTime = 3 * GameFPS;
 	}
-	CoolTime--;
+	ShootCoolTime--;
 }
 
 void Enemy::EngagingMode(void)
@@ -142,11 +142,11 @@ void Enemy::EngagingMode(void)
 
 	if (TragetLength < LimitLength)
 	{
-		D3DXMatrixTranslation(&MoveMat, 0, 0, -0.2);
+		D3DXMatrixTranslation(&MoveMat, 0.0f, 0.0f, -0.2f);
 	}
 	else
 	{
-		D3DXMatrixTranslation(&MoveMat, 0.1, 0, 0.2);		//右に移動するようにしてみた理由は特にない
+		D3DXMatrixTranslation(&MoveMat, 0.1f, 0.0f, 0.2f);		//右に移動するようにしてみた理由は特にない
 	}
 	
 	mat = MoveMat * mat;
@@ -157,20 +157,19 @@ void Enemy::EngagingMode(void)
 void Enemy::FreeMode(void)
 {
 	D3DXMATRIX MoveMat;
-	static float MoveInterval = 0;		//動くまでの時間初期値は0		//静的変数にするとすべてのインスタンスで共有されてしまう？上のクールタイムはそうではなさそうだが
-	static const int MaxInterval = 21;			//間隔の最大値
+	static const int MaxInterval = 10;			//間隔の最大値
 	static const int MinInterval = 5;			//間隔の最大値
 
 	if (MoveInterval < 0)
 	{
-		static float MoveCnt = 3 * GameFPS;
-		D3DXMatrixTranslation(&MoveMat, 0.0, 0, 0.2);
+		
+		D3DXMatrixTranslation(&MoveMat, 0.0f, 0.0f, 0.2f);
 		mat = MoveMat * mat;
-		MoveCnt--;
-		if (MoveCnt < 0)				//規定の時間動いたら次動くまでの時間を再設定
+		freeMoveCnt--;
+		if (freeMoveCnt < 0)				//規定の時間動いたら次動くまでの時間を再設定
 		{
-			MoveInterval = (rand() % (MaxInterval + MinInterval) + MinInterval) * GameFPS;			//ランダムで次動くまでの時間を決める
-			MoveCnt = 3 * GameFPS;
+			MoveInterval = (float)(rand() % (MaxInterval + MinInterval) + MinInterval) * GameFPS;			//ランダムで次動くまでの時間を決める
+			freeMoveCnt = (float)(rand() % 3) * GameFPS;
 		}
 	}
 
@@ -214,10 +213,13 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	D3DXMATRIX InitRotMat;
 	float TmpRndAng;
 
-	TmpRndAng = rand() % 360;
+	TmpRndAng = (float)(rand() % 360);		//生まれたときランダムな角度に (かまくらから生まれるときはこれじゃダメだから変える
 	D3DXMatrixRotationY(&InitRotMat ,D3DXToRadian(TmpRndAng));
 
 	mat = InitRotMat * mat;
+
+	MoveInterval = 0;	//初期値は0(すぐ動く)
+	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//初期化
 }
 
 Enemy::~Enemy()

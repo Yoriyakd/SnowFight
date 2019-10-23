@@ -111,6 +111,9 @@
     <ClCompile Include="Map\Bench.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Kamakura.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="Map\Bench.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Kamakura.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
