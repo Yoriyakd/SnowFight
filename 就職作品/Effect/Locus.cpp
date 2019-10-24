@@ -9,7 +9,7 @@ SnowLocus::SnowLocus(D3DXMATRIX Mat)
 	vertex[3].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 
-	tex = resourceManager->GetTexture("Effect/Locus.png", 64, 64, NULL);
+	tex = resourceManager->GetTexture("Effect/FallingSnow.png", 250, 250, NULL);
 }
 
 SnowLocus::~SnowLocus()
@@ -33,7 +33,8 @@ void SnowLocus::Draw()
 	lpD3DDevice->SetTexture(0, tex);
 	D3DXMATRIX IdenMat;
 	D3DXMatrixIdentity(&IdenMat);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
+	//lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 
 	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
 
@@ -49,10 +50,17 @@ bool SnowLocus::Update()
 	vertex[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
 	vertex[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
 
-	D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &mat);
-	D3DXVec3TransformCoord(&vertex[1].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &mat);
-	D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 0.0f, 3.0f), &mat);
-	D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 3.0f), &mat);
+	//D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &mat);
+	//D3DXVec3TransformCoord(&vertex[1].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &mat);
+	//D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 3.0f, 0.0f), &mat);
+	//D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 3.0f, 0.0f), &mat);
+
+	vertex[0].Pos = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+	vertex[1].Pos = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+	vertex[2].Pos = D3DXVECTOR3(1.0f, 3.0f, 0.0f);
+	vertex[3].Pos = D3DXVECTOR3(-1.0f, 3.0f, 0.0f);
+
+	mat * billBoardMat;			//Ç≈Ç´Ç»Ç¢
 
 	//íiÅXÇ∆îñÇ≠ÇµÇƒÇ¢Ç≠
 	alpha -= 5;
@@ -68,4 +76,9 @@ bool SnowLocus::Update()
 	vertex[2].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
 	vertex[3].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
 	return true;
+}
+
+void SnowLocus::SetBillBoardMat(D3DXMATRIX BillBoardMat)
+{
+	billBoardMat = BillBoardMat;
 }

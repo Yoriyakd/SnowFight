@@ -8,10 +8,12 @@ private:
 	D3DXMATRIX mat;
 	VERTEX vertex[4];
 	int alpha = 255;
+	D3DXMATRIX billBoardMat;
 public:
 	SnowLocus(D3DXMATRIX SnowBallMat);
 	~SnowLocus();
 	void SetMat(D3DXMATRIX SnowBallMat);		//ê·ã ÇÃçsóÒÇìnÇ∑	Ç¢ÇÁÇ»Ç¢Ç©Ç‡
 	void Draw();
 	bool Update();
+	void SetBillBoardMat(D3DXMATRIX BillBoardMat);
 };

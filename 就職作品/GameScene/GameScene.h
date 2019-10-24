@@ -28,7 +28,10 @@ private:
 	CollisionObserver *collisionObserver;
 	SetEnemies *setEnemies;
 
-	
+
+	static const float camHight;
+
+	PlayerCamera *playerCam;
 
 	float stageSizeX, stageSizeZ;
 public:

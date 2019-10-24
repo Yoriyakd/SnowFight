@@ -1,7 +1,7 @@
 #include "Player.h"
 #include"../Map/LoadStageData.h"
 //#include"../GameScene/GameScene.h"
-const float Player::camHight = 5.0f;
+
 extern ResourceManager *resourceManager;
 
 //=====================================
@@ -16,7 +16,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY()));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY()));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -25,7 +25,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() + 180));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() + 180));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -34,7 +34,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() - 90));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() - 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -43,7 +43,7 @@ void Player::Move(void)
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
 		D3DXMATRIX RotMat;
-		D3DXMatrixRotationY(&RotMat, D3DXToRadian(playerCam->GetCamAngY() + 90));
+		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() + 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
 		movePos += Vec;
@@ -112,8 +112,8 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 				SnowBallInitValue ValueTmp;
 				ValueTmp.shootPos = pos;
 				ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)
-				ValueTmp.XAxisAng = playerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
-				ValueTmp.YAxisAng = playerCam->GetCamAngY();
+				ValueTmp.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+				ValueTmp.YAxisAng = pPlayerCam->GetCamAngY();
 				ValueTmp.powerRate = PowerPCT;
 				ValueTmp.id = PLAYER_ID;
 
@@ -186,12 +186,6 @@ Player::Player()
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
 	D3DXMatrixIdentity(&mat);
 
-	//--------------------------------------------------------------
-	//カメラ回りの初期化
-	//--------------------------------------------------------------
-
-	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
-
 }
 
 Player::~Player()
@@ -207,13 +201,13 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
 
-	playerCam->SetCamPos(&D3DXVECTOR3(pos.x, pos.y + camHight, pos.z));		//カメラの更新		※プレイヤーが移動した後に呼ぶ
+	
 	return true;
 }
 
 void Player::SetCamera(void)
 {
-	playerCam->SetCamera();
+	
 
 }
 
@@ -229,7 +223,7 @@ void Player::Draw(void)
 	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	D3DXMatrixTranslation(&ballMat, 0, 2, 3);		//プレイヤーとどれぐらい離れているか
-	D3DXMatrixRotationY(&rotMat, D3DXToRadian(playerCam->GetCamAngY()));
+	D3DXMatrixRotationY(&rotMat, D3DXToRadian(pPlayerCam->GetCamAngY()));
 	ballMat = ballScalMat * ballMat * rotMat * mat;
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
 	DrawMesh(&ballMesh);
@@ -248,4 +242,9 @@ void Player::SetStageBorder(StageBorder StageBorder)
 D3DXVECTOR3 Player::GetPlayerPos(void)
 {
 	return pos;
+}
+
+void Player::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
+{
+	pPlayerCam = PPlayerCam;
 }

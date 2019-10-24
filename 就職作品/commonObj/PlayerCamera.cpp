@@ -11,6 +11,7 @@ PlayerCamera::PlayerCamera(int Scrw, int Scrh, HWND Hwnd)
 	ClientToScreen(hwnd, &basePt);
 	SetCursorPos(basePt.x, basePt.y);
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
+	D3DXMatrixIdentity(&billBoardMat);
 }
 
 PlayerCamera::~PlayerCamera()
@@ -56,6 +57,15 @@ void PlayerCamera::SetCamera(void)
 		&(D3DXVECTOR3(pos.x, pos.y, pos.z) + camTmpVec),	// カメラの視点
 		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
 	);
+
+	D3DXMatrixLookAtLH(&billBoardMat,
+		&D3DXVECTOR3(0, 0, 0),	// カメラの位置	
+		&(D3DXVECTOR3(pos.x, pos.y, pos.z) + camTmpVec),	// カメラの視点
+		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
+	);
+
+	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);
+
 	// 投影行列の設定
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRw / (float)SCRh, 1.0f, 2000.0f);
 
@@ -67,6 +77,7 @@ void PlayerCamera::SetCamera(void)
 void PlayerCamera::SetCamPos(D3DXVECTOR3* pPos)
 {
 	pos = *pPos;
+	pos.y = camHight;
 }
 
 float PlayerCamera::GetCamAngX(void)
@@ -78,3 +89,10 @@ float PlayerCamera::GetCamAngY(void)
 {
 	return angY;
 }
+
+D3DXMATRIX PlayerCamera::GetbillBoardMat(void)
+{
+	return billBoardMat;
+}
+
+

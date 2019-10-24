@@ -35,6 +35,8 @@ void EffectManager::Draw(void)
 
 void EffectManager::Update(void)
 {
+	billBoardMat = pPlayerCam->GetbillBoardMat();		//ビルボードの回転行列をセット
+
 	for (unsigned int i = 0; i < snowFrag.size(); i++)
 	{
 		if (snowFrag[i]->Update() == false)	//falseが帰ってきたら削除
@@ -48,6 +50,7 @@ void EffectManager::Update(void)
 	//アルファ値を下げて見えなくなったらインスタンス削除
 	for (unsigned int i = 0; i < snowLocus.size(); i++)
 	{
+		snowLocus[i]->SetBillBoardMat(billBoardMat);
 		if (snowLocus[i]->Update() == false)
 		{
 			delete snowLocus[i];
@@ -55,4 +58,9 @@ void EffectManager::Update(void)
 			i--;
 		}
 	}
+}
+
+void EffectManager::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
+{
+	pPlayerCam = PPlayerCam;
 }

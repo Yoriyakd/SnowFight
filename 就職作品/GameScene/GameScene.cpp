@@ -20,6 +20,7 @@ GameScene::GameScene(int StageNo)
 	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
 	collisionObserver = new CollisionObserver();
+	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 
 	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする
 
@@ -34,7 +35,9 @@ GameScene::GameScene(int StageNo)
 	fenceManager->SetStageSize(stageSizeX, stageSizeZ);
 	fenceManager->SetFence();		//フェンスを配置
 
-	player->SetStageBorder(stageBorder);
+	player->SetStageBorder(stageBorder);		//ステージの境界データをセット
+	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
+	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
 
@@ -102,7 +105,7 @@ void GameScene::Render3D(void)
 
 void GameScene::SetCamera(void)
 {
-	player->SetCamera();
+	playerCam->SetCamera();
 }
 
 void GameScene::Render2D(void)
@@ -117,6 +120,7 @@ bool GameScene::Update()
 	}
 	enemyManager->Update(snowBallManager);
 	player->Update(snowBallManager);
+	playerCam->SetCamPos((D3DXVECTOR3*)&player->GetPlayerPos());		//カメラの更新		※プレイヤーが移動した後に呼ぶ
 	snowBallManager->Update();
 	effectManager->Update();
 

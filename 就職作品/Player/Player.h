@@ -21,14 +21,7 @@ private:
 
 	StageBorder stageBorder;
 	
-
-	//============================================================
-	//カメラの変数
-	//============================================================
-	static const float camHight;
-
-	PlayerCamera *playerCam;
-	//------------------------------------------------------------
+	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
 	void Move(void);
 	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
@@ -47,4 +40,5 @@ public:
 	int GetRemainingBalls();			//残弾数を返す
 	void SetStageBorder(StageBorder StageBorder);
 	D3DXVECTOR3 GetPlayerPos(void);
+	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
 };
