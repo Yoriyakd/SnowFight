@@ -227,6 +227,8 @@ void Player::Draw(void)
 	ballMat = ballScalMat * ballMat * rotMat * mat;
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
 	DrawMesh(&ballMesh);
+
+	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 }
 
 int Player::GetRemainingBalls()

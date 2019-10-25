@@ -3,6 +3,7 @@
 #include"../main.h"
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBallManager.h"
+#include<vector>
 class Enemy {
 private:
 	XFILE mesh;
@@ -22,7 +23,6 @@ private:
 	float limitLength;		//Œğíæ‚é‹——£
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//Œğí‚ÌˆÚ“®		‹…”­Ë‚Í~‚Ü‚é‚æ‚¤‚É‚·‚é
 protected:
-
 	
 
 public:
@@ -32,4 +32,5 @@ public:
 	virtual void Draw(void);
 	virtual D3DXVECTOR3 GetPos(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
+	D3DXVECTOR3 CheckOverlapEnemies(D3DXVECTOR3*);
 };
