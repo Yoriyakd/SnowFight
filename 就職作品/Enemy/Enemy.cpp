@@ -48,12 +48,10 @@ void Enemy::EngagingMode(void)
 
 	NowAng = D3DXToDegree(acos(NowDot));
 
-	D3DXVECTOR3 RotAxis;
-	D3DXVec3Cross(&RotAxis, &DefaultVec, &NowFrontVec);			//外積を求め
 
-	if (RotAxis.y < 0)											//外積の方向が負なら
+	if (NowFrontVec.x < 0)			//角度の正負チェック	(外積を使わない方法で求めている)
 	{
-		NowAng *= -1;											//角度は負(反時計回り)
+		NowAng *= -1;
 	}
 
 	//------------------------------------------------------
@@ -78,14 +76,13 @@ void Enemy::EngagingMode(void)
 	float TragetAng;
 
 	TragetAng = D3DXToDegree(acos(TragetDot));				//プレイヤーと初期の角度を求める
-
-	D3DXVec3Cross(&RotAxis, &DefaultVec, &TragetVec);		//外積を求める
-
-	if (RotAxis.y < 0)										//外積の方向が負なら
+	
+	if (TragetVec.x < 0)									//角度の正負チェック	(外積を使わない方法で求めている)
 	{
-		TragetAng *= -1;									//角度は負(反時計回り)
+		TragetAng *= -1;
 	}
 
+	
 	//------------------------------------------------------
 	//角度の差を求める
 	//------------------------------------------------------
@@ -93,7 +90,7 @@ void Enemy::EngagingMode(void)
 	float MoveAng;
 
 	MoveAng = TragetAng - NowAng;							//初期の角度と今の角度の差を求める
-
+	
 	if (MoveAng > 180)			//鋭角への変換
 	{
 		MoveAng -= 360;
@@ -135,18 +132,45 @@ void Enemy::EngagingMode(void)
 
 	D3DXMATRIX MoveMat;
 
-	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める	上で正規化仕手しまっているのでもう一度求める
+	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める	上で正規化してしまっているのでもう一度求める
 
-	float TragetLength, LimitLength = 30.0f;
+	float TragetLength;
+
+	if (rand() % 1000 < 1)		//0.1%の確立で再抽選
+	{
+		limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//最大値がmaxLengthになるように + 1している
+	}
+
 	TragetLength = D3DXVec3Length(&TragetVec);		//プレイヤーとの距離を求める
 
-	if (TragetLength < LimitLength)
+
+	if (rand() % 100 < 1)
 	{
-		D3DXMatrixTranslation(&MoveMat, 0.0f, 0.0f, -0.2f);
+		int RandCase;
+		switch (RandCase = rand() % 3)
+		{
+		case 0:
+			moveVec.x = 0.0f;
+			break;
+		case 1:
+			moveVec.x = 0.2f;
+			break;
+		case 2:
+			moveVec.x = -0.2f;
+			break;
+		}
+
+	}
+
+	if (TragetLength < limitLength)
+	{
+		moveVec.z = -0.2f;
+		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 	}
 	else
 	{
-		D3DXMatrixTranslation(&MoveMat, 0.1f, 0.0f, 0.2f);		//右に移動するようにしてみた理由は特にない
+		moveVec.z = 0.2f;
+		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 	}
 	
 	mat = MoveMat * mat;
@@ -168,7 +192,7 @@ void Enemy::FreeMode(void)
 		freeMoveCnt--;
 		if (freeMoveCnt < 0)				//規定の時間動いたら次動くまでの時間を再設定
 		{
-			MoveInterval = (float)(rand() % (MaxInterval + MinInterval) + MinInterval) * GameFPS;			//ランダムで次動くまでの時間を決める
+			MoveInterval = (float)(rand() % (MaxInterval + 1 - MinInterval) + MinInterval) * GameFPS;			//ランダムで次動くまでの時間を決める	最大値がMaxIntervalになるように+1している
 			freeMoveCnt = (float)(rand() % 3) * GameFPS;
 		}
 	}
@@ -220,6 +244,7 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 
 	MoveInterval = 0;	//初期値は0(すぐ動く)
 	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//初期化
+	limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//minLength~maxLengthの間で初期化	最大値がmaxLengthになるように+1している
 }
 
 Enemy::~Enemy()

@@ -16,6 +16,11 @@ private:
 	float MoveInterval;						//freeMode時動くまでの時間
 	float freeMoveCnt;							//freeMode時動く必要のある時間の時間
 	SnowBallManager *snowBallManager;		//snowBallManagerのポインタを保存する
+
+	float searchRange;						//索敵範囲
+	const float maxLength = 40.0f, minLength = 15.0f;						//交戦時の距離の最大最小範囲
+	float limitLength;		//交戦時取る距離
+	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//交戦時の移動		球発射時は止まるようにする
 protected:
 
 	
