@@ -41,10 +41,10 @@ GameScene::GameScene(int StageNo)
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
 
-	for (int i = 0; i < loadStageData->GetWallNum(); i++)
+	/*for (int i = 0; i < loadStageData->GetWallNum(); i++)
 	{
 		mapObjManager->SetWall(loadStageData->GetWallData(i));
-	}
+	}*/
 
 	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test
 	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test

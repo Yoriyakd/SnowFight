@@ -92,6 +92,29 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 		{
 			LKyeFlag = true;
 			TimeCnt++;
+			//--------------------------------------------------
+			//雪玉軌跡表示処理
+			//--------------------------------------------------
+			float PowerPCT;
+			if (TimeCnt > MaxPowerTime * GameFPS)
+			{
+				PowerPCT = 100;		//最大溜めの速さ
+			}
+			else
+			{
+				PowerPCT = 30;		//最大溜めいがいの速さ
+			}
+			
+			SnowBallInitValue GhostTmp;
+			GhostTmp.shootPos = pos;
+			GhostTmp.shootPos.y += 3;							//発射位置調整(変数化)
+			GhostTmp.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+			GhostTmp.YAxisAng = pPlayerCam->GetCamAngY();
+			GhostTmp.powerRate = PowerPCT;
+			GhostTmp.id = PLAYER_ID;
+
+			ghostMat = MakeGhostMat(&GhostTmp, ghostMat);
+
 		}
 		else
 		{
@@ -167,6 +190,34 @@ void Player::MakeBall()
 	}
 }
 
+std::vector<D3DXMATRIX*> Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue, std::vector<D3DXMATRIX*> ghostMat)
+{
+	float Power;
+	D3DXVECTOR3 moveVec;
+	D3DXMATRIX TmpMat, TmpRot;
+	Power = ((snowBallInitValue->powerRate / 100)) * 5;
+
+	D3DXMatrixTranslation(&TmpMat, snowBallInitValue->shootPos.x, snowBallInitValue->shootPos.y, snowBallInitValue->shootPos.z);			//発射位置
+
+	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue->XAxisAng))), (Power * cos(D3DXToRadian(snowBallInitValue->XAxisAng))));
+
+	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(snowBallInitValue->YAxisAng));
+	TmpMat = TmpRot * TmpMat;
+	//----------------------------------
+	//while文で地面衝突まで回す
+	//----------------------------------
+	while (moveVec.y < 0.0f)
+	{
+		D3DXMATRIX MoveMat;			//移動が終わった後の行列
+		moveVec.y += -0.02f;
+
+		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
+		TmpMat = MoveMat * TmpMat;
+		ghostMat.push_back(&TmpMat);
+	}
+	return ghostMat;
+}
+
 //=====================================
 //publicメソッド
 //=====================================
@@ -229,6 +280,26 @@ void Player::Draw(void)
 	DrawMesh(&ballMesh);
 
 	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
+
+	//--------------------------------------------------------------
+	//軌道の表示
+	//--------------------------------------------------------------
+	lpD3DDevice->SetFVF(FVF_VERTEX);
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
+	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
+	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
+
+	for (unsigned int i = 0; i < ghostMat.size(); i++)
+	{
+
+	}
+
+	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
+	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
+
 }
 
 int Player::GetRemainingBalls()
