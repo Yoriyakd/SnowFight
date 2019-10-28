@@ -1,0 +1,20 @@
+﻿  CollisionObserver.cpp
+  main.cpp
+c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(126): error C2440: '=': 'char [24]' から 'LPCWSTR' に変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(126): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(130): error C2664: 'HWND CreateWindowExW(DWORD,LPCWSTR,LPCWSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': 引数 2 を 'char [24]' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(139): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(165): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': 引数 2 を 'const char [32]' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(165): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(221): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': 引数 2 を 'const char [60]' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(221): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(279): error C2664: 'HRESULT D3DXCreateFontW(LPDIRECT3DDEVICE9,INT,UINT,UINT,UINT,BOOL,DWORD,DWORD,DWORD,DWORD,LPCWSTR,LPD3DXFONT *)': 引数 11 を 'const char [14]' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\main.cpp(280): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+  Bench.cpp
+  ResourceManager.cpp
+c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(78): error C2664: 'HRESULT D3DXCreateTextureFromFileExW(LPDIRECT3DDEVICE9,LPCWSTR,UINT,UINT,UINT,DWORD,D3DFORMAT,D3DPOOL,DWORD,DWORD,D3DCOLOR,D3DXIMAGE_INFO *,PALETTEENTRY *,LPDIRECT3DTEXTURE9 *)': 引数 2 を 'const char []' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(78): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(87): error C2664: 'HRESULT D3DXLoadMeshFromXW(LPCWSTR,DWORD,LPDIRECT3DDEVICE9,LPD3DXBUFFER *,LPD3DXBUFFER *,LPD3DXBUFFER *,DWORD *,LPD3DXMESH *)': 引数 1 を 'const char []' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(87): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(98): error C2664: 'HRESULT D3DXCreateTextureFromFileW(LPDIRECT3DDEVICE9,LPCWSTR,LPDIRECT3DTEXTURE9 *)': 引数 2 を 'LPSTR' から 'LPCWSTR' へ変換できません。
+  c:\users\yukimasa\documents\snowfight\就職作品\resourcemanager.cpp(98): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。

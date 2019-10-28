@@ -23,14 +23,15 @@ private:
 	
 	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
-	std::vector<D3DXMATRIX*> ghostMat;			//飛ぶ軌道の行列
+	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列			//ポインタ型で宣言しなかったら動く　なぜ？
+	LPDIRECT3DTEXTURE9 GhostTex;
 
 	void Move(void);
 	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
 	void ShootSnowball(SnowBallManager *snowBallManager);
 
 	void MakeBall();
-
+	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
 	
 
 public:
@@ -43,5 +44,4 @@ public:
 	void SetStageBorder(StageBorder StageBorder);
 	D3DXVECTOR3 GetPlayerPos(void);
 	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
-	std::vector<D3DXMATRIX*> MakeGhostMat(SnowBallInitValue *snowBallInitValue, std::vector<D3DXMATRIX*> ghostMat);
 };
