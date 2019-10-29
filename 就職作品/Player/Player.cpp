@@ -113,12 +113,11 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			GhostTmp.powerRate = PowerPCT;
 			GhostTmp.id = PLAYER_ID;
 
-			MakeGhostMat(&GhostTmp);
+			ghostMat = MakeGhostMat(&GhostTmp, ghostMat);
 
 		}
 		else
 		{
-			ghostMat.clear();	//押してないときは非表示
 			if (LKyeFlag == true)
 			{
 				float PowerPCT;
@@ -130,6 +129,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 				{
 					PowerPCT = 30;		//最大溜めいがいの速さ
 				}
+				//PowerPCT = (float)TimeCnt / (float)(MaxPowerTime * GameFPS) * 100.0f;	//割合を求める
 				
 
 				SnowBallInitValue ValueTmp;
@@ -190,9 +190,8 @@ void Player::MakeBall()
 	}
 }
 
-void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
+std::vector<D3DXMATRIX*> Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue, std::vector<D3DXMATRIX*> ghostMat)
 {
-	ghostMat.clear();	//初期化
 	float Power;
 	D3DXVECTOR3 moveVec;
 	D3DXMATRIX TmpMat, TmpRot;
@@ -204,21 +203,19 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 
 	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(snowBallInitValue->YAxisAng));
 	TmpMat = TmpRot * TmpMat;
-
-	ghostMat.push_back(TmpMat);
 	//----------------------------------
 	//while文で地面衝突まで回す
 	//----------------------------------
-	while (1)
+	while (moveVec.y < 0.0f)
 	{
 		D3DXMATRIX MoveMat;			//移動が終わった後の行列
 		moveVec.y += -0.02f;
 
 		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 		TmpMat = MoveMat * TmpMat;
-		ghostMat.push_back(TmpMat);
-		if (TmpMat._42 < 0)break;
+		ghostMat.push_back(&TmpMat);
 	}
+	return ghostMat;
 }
 
 //=====================================
@@ -240,7 +237,6 @@ Player::Player()
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
 	D3DXMatrixIdentity(&mat);
 
-	GhostTex = resourceManager->GetTexture("Player/Locus.png", 64, 64, NULL);
 }
 
 Player::~Player()
@@ -269,12 +265,8 @@ void Player::SetCamera(void)
 void Player::Draw(void)
 {
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
-
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
@@ -299,39 +291,10 @@ void Player::Draw(void)
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
 
-	VERTEX vertex[4];
-
-	vertex[0].Color = D3DCOLOR_ARGB(128, 255, 255, 255);
-	vertex[1].Color = D3DCOLOR_ARGB(128, 255, 255, 255);
-	vertex[2].Color = D3DCOLOR_ARGB(128, 255, 255, 255);
-	vertex[3].Color = D3DCOLOR_ARGB(128, 255, 255, 255);
-
-	for (unsigned int i = 0; i < (ghostMat.size() - 1); i++)
+	for (unsigned int i = 0; i < ghostMat.size(); i++)
 	{
-		if (ghostMat.size() == 0)
-		{
-			break;
-		}
-		vertex[0].Tex = D3DXVECTOR2(0.0f, (float)i / (ghostMat.size() - 1));
-		vertex[1].Tex = D3DXVECTOR2(1.0f, (float)i / (ghostMat.size() - 1));
-		vertex[2].Tex = D3DXVECTOR2(1.0f, (float)(i + 1) / (ghostMat.size() - 1));
-		vertex[3].Tex = D3DXVECTOR2(0.0f, (float)(i + 1) / (ghostMat.size() - 1));
 
-
-		D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f),&ghostMat[i]);		//ポインタ型で宣言していたらPosぼ値がnanになっていた
-		D3DXVec3TransformCoord(&vertex[1].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i]);
-		D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
-		D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
-
-		lpD3DDevice->SetTexture(0, GhostTex);
-		D3DXMATRIX IdenMat;
-		D3DXMatrixIdentity(&IdenMat);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
-
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
 	}
-
-
 
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
