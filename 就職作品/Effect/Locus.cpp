@@ -2,7 +2,8 @@
 
 SnowLocus::SnowLocus(D3DXMATRIX Mat)
 {
-	mat = Mat;
+	D3DXMatrixTranslation(&mat, Mat._41, Mat._42, Mat._43);
+
 	vertex[0].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	vertex[1].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	vertex[2].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -31,10 +32,8 @@ void SnowLocus::Draw()
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
 
 	lpD3DDevice->SetTexture(0, tex);
-	D3DXMATRIX IdenMat;
-	D3DXMatrixIdentity(&IdenMat);
-	//lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &billBoardMat);
 
 	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
 
@@ -55,12 +54,12 @@ bool SnowLocus::Update()
 	//D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 3.0f, 0.0f), &mat);
 	//D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 3.0f, 0.0f), &mat);
 
-	vertex[0].Pos = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
-	vertex[1].Pos = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-	vertex[2].Pos = D3DXVECTOR3(1.0f, 3.0f, 0.0f);
-	vertex[3].Pos = D3DXVECTOR3(-1.0f, 3.0f, 0.0f);
+	vertex[0].Pos = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);
+	vertex[1].Pos = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
+	vertex[2].Pos = D3DXVECTOR3(0.5f, -0.5f, 0.0f);
+	vertex[3].Pos = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);
 
-	mat * billBoardMat;			//できない
+	//mat * billBoardMat;			//できない
 
 	//段々と薄くしていく
 	alpha -= 5;
@@ -80,5 +79,5 @@ bool SnowLocus::Update()
 
 void SnowLocus::SetBillBoardMat(D3DXMATRIX BillBoardMat)
 {
-	billBoardMat = BillBoardMat;
+	billBoardMat = BillBoardMat*mat;
 }

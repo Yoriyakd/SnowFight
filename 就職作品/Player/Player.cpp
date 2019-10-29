@@ -269,9 +269,12 @@ void Player::SetCamera(void)
 void Player::Draw(void)
 {
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
 	//--------------------------------------------------------------

@@ -47,21 +47,23 @@ void PlayerCamera::SetCamera(void)
 
 	rotMat = rotMatX * rotMatY;
 
-	D3DXVECTOR3 camTmpVec;
+	D3DXVECTOR3 camTmpVec,camHead;
 
 	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
+	D3DXVec3TransformCoord(&camHead, &D3DXVECTOR3(0, 1, 0), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
+
 
 	// 視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
 		&D3DXVECTOR3(pos.x, pos.y, pos.z),	// カメラの位置	
 		&(D3DXVECTOR3(pos.x, pos.y, pos.z) + camTmpVec),	// カメラの視点
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
+		&camHead	// カメラの頭の方向
 	);
 
 	D3DXMatrixLookAtLH(&billBoardMat,
 		&D3DXVECTOR3(0, 0, 0),	// カメラの位置	
-		&(D3DXVECTOR3(pos.x, pos.y, pos.z) + camTmpVec),	// カメラの視点
-		&D3DXVECTOR3(0.0f, 1.0f, 0.0f)	// カメラの頭の方向
+		&camTmpVec,	// カメラの視点
+		&camHead	// カメラの頭の方向
 	);
 
 	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);
