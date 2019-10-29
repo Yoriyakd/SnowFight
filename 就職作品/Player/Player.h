@@ -20,7 +20,7 @@ private:
 	D3DXMATRIX ballMat, ballScalMat;
 
 	StageBorder stageBorder;
-
+	
 	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列			//ポインタ型で宣言しなかったら動く　なぜ？
@@ -32,7 +32,7 @@ private:
 
 	void MakeBall();
 	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
-
+	
 
 public:
 	Player();

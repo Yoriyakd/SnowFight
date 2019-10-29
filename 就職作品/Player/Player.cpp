@@ -104,7 +104,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			{
 				PowerPCT = 30;		//最大溜めいがいの速さ
 			}
-
+			
 			SnowBallInitValue GhostTmp;
 			GhostTmp.shootPos = pos;
 			GhostTmp.shootPos.y += 3;							//発射位置調整(変数化)
@@ -130,7 +130,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 				{
 					PowerPCT = 30;		//最大溜めいがいの速さ
 				}
-
+				
 
 				SnowBallInitValue ValueTmp;
 				ValueTmp.shootPos = pos;
@@ -256,25 +256,21 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
 
-
+	
 	return true;
 }
 
 void Player::SetCamera(void)
 {
-
+	
 
 }
 
 void Player::Draw(void)
 {
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
-
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
@@ -318,7 +314,7 @@ void Player::Draw(void)
 		vertex[3].Tex = D3DXVECTOR2(0.0f, (float)(i + 1) / (ghostMat.size() - 1));
 
 
-		D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &ghostMat[i]);		//ポインタ型で宣言していたらPosぼ値がnanになっていた
+		D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f),&ghostMat[i]);		//ポインタ型で宣言していたらPosぼ値がnanになっていた
 		D3DXVec3TransformCoord(&vertex[1].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i]);
 		D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
 		D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
