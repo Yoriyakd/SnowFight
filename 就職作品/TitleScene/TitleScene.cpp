@@ -3,10 +3,10 @@
 
 TitleScene::TitleScene()
 {
-	logoTex = resourceManager->GetTexture("TitleScene/TitleLogo.png", logoTexX, 170, NULL);
+	logoTex = resourceManager->GetTexture("TitleLogo.png", logoTexX, 170, NULL);
 	D3DXMatrixTranslation(&logoMat, SCRW / 2, 0, 0);
 
-	backTex = resourceManager->GetTexture("TitleScene/BackTex.jpg", SCRW, SCRH, NULL);		//仮の背景サイズが大きすぎる
+	backTex = resourceManager->GetTexture("BackTex.jpg", SCRW, SCRH, NULL);		//仮の背景サイズが大きすぎる
 	D3DXMatrixTranslation(&backMat, 0, 0, 0);
 }
 

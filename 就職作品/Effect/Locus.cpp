@@ -10,7 +10,7 @@ SnowLocus::SnowLocus(D3DXMATRIX Mat)
 	vertex[3].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 
-	tex = resourceManager->GetTexture("Effect/FallingSnow.png", 250, 250, NULL);
+	tex = resourceManager->GetTexture("FallingSnow.png", 250, 250, NULL);
 }
 
 SnowLocus::~SnowLocus()

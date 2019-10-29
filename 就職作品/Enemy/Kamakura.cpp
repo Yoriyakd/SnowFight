@@ -7,7 +7,7 @@ void Kamakura::SpawnEnemise(void)
 
 Kamakura::Kamakura()
 {
-	mesh = resourceManager->GetXFILE("Map/Kamakura.x");
+	mesh = resourceManager->GetXFILE("Kamakura.x");
 }
 
 Kamakura::~Kamakura()

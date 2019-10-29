@@ -7,7 +7,7 @@ SnowFrag::SnowFrag(D3DXVECTOR3 Pos)
 		fragPos[i] = Pos;
 	}
 	srand(timeGetTime());
-	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
+	mesh = resourceManager->GetXFILE("SnowBall.x");
 	for (int i = 0; i < FRAG_NUM; i++)
 	{
 		D3DXMatrixScaling(&scalMat[i], 0.25f, 0.25f, 0.25f);		//ランダムに少しサイズが変化する　ようにする

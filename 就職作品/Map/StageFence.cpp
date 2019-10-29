@@ -2,7 +2,7 @@
 
 StageFence::StageFence(void)
 {
-	mesh = resourceManager->GetXFILE("Map/Fence.x");
+	mesh = resourceManager->GetXFILE("Fence.x");
 }
 
 StageFence::~StageFence()

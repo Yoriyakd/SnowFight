@@ -6,7 +6,7 @@ SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 {
 	float Power;
 	Power = ((snowBallInitValue.powerRate / 100)) * 5;
-	mesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
+	mesh = resourceManager->GetXFILE("SnowBall.x");
 
 	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y , snowBallInitValue.shootPos.z);			//”­ŽËˆÊ’u
 

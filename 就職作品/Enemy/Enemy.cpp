@@ -231,7 +231,7 @@ void Enemy::StageBorderProcessing(void)
 
 Enemy::Enemy(D3DXVECTOR3 Pos)
 {
-	mesh = resourceManager->GetXFILE("Enemy/EnemyBody.x");
+	mesh = resourceManager->GetXFILE("EnemyBody.x");
 	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
 
 	D3DXMATRIX InitRotMat;

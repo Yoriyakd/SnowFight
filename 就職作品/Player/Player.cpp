@@ -230,17 +230,17 @@ Player::Player()
 	int StartBallCnt = 10;	//スタート時のボールの数 プレイヤーの強化のデータを拾ってきて入れるようにする
 
 	moveSpeed = 0.5;		//移動速度
-	mesh = resourceManager->GetXFILE("Player/player.x");
+	mesh = resourceManager->GetXFILE("player.x");
 
 	remainingBalls = StartBallCnt;
-	ballMesh = resourceManager->GetXFILE("commonObj/SnowBall.x");
+	ballMesh = resourceManager->GetXFILE("SnowBall.x");
 
 
 
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
 	D3DXMatrixIdentity(&mat);
 
-	GhostTex = resourceManager->GetTexture("Player/Locus.png", 64, 64, NULL);
+	GhostTex = resourceManager->GetTexture("Locus.png", 64, 64, NULL);
 }
 
 Player::~Player()
