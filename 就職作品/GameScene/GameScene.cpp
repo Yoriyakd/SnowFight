@@ -26,10 +26,14 @@ GameScene::GameScene(int StageNo)
 
 	loadStageData->GetStageSize(&stageSizeX, &stageSizeZ);
 
+	//-------------------------------------------------------
+	//ステージの境界を求める
+	//-------------------------------------------------------
 	stageBorder.Top = stageSizeZ + StageBorderOffsetZ;
 	stageBorder.Bottom = -1 * StageBorderOffsetZ;
 	stageBorder.Left = -1 * StageBorderOffsetX;
 	stageBorder.Right = stageSizeX + StageBorderOffsetX;
+	//-------------------------------------------------------
 
 	fenceManager = new FenceManager(FenceCntX, FenceCntY, StageBorderOffsetX, StageBorderOffsetZ);		//ステージの境界データをもらうよう変更する
 	fenceManager->SetStageSize(stageSizeX, stageSizeZ);
@@ -40,14 +44,8 @@ GameScene::GameScene(int StageNo)
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
-
-	/*for (int i = 0; i < loadStageData->GetWallNum(); i++)
-	{
-		mapObjManager->SetWall(loadStageData->GetWallData(i));
-	}*/
-
-	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test
-	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test
+	//mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
+	//mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test　☆
 
 	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)
 	{

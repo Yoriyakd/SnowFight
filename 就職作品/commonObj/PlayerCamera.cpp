@@ -60,13 +60,14 @@ void PlayerCamera::SetCamera(void)
 		&camHead	// カメラの頭の方向
 	);
 
+	//移動成分を抜いて視点行列作成
 	D3DXMatrixLookAtLH(&billBoardMat,
 		&D3DXVECTOR3(0, 0, 0),	// カメラの位置	
 		&camTmpVec,	// カメラの視点
 		&camHead	// カメラの頭の方向
 	);
 
-	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);
+	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);		//ビルボード用視点行列
 
 	// 投影行列の設定
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRw / (float)SCRh, 1.0f, 2000.0f);
