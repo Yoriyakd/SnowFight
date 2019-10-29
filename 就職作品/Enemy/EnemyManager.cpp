@@ -31,10 +31,12 @@ void EnemyManager::Update(SnowBallManager *SnowBallManager)
 	for (unsigned int i = 0; i < enemy.size(); i++)
 	{
 		enemy[i]->Update(SnowBallManager);
-		D3DXVECTOR3 PushOutVec;
+		//D3DXVECTOR3 PushOutVec;		//押されたときに移動するベクトル ☆
 		for (unsigned int j = 0; j < enemy.size(); j++)
 		{
-			PushOutVec = enemy[i]->CheckOverlapEnemies(&enemy[j]->GetPos());				//敵同士が重ならないようにする処理
+			if (j == i)continue;		//同じ敵ならスキップ
+			//PushOutVec = enemy[i]->CheckOverlapEnemies(&enemy[j]->GetPos());				//敵同士が重ならないようにする処理　☆両方押されるようにするときつかう
+			enemy[i]->CheckOverlapEnemies(&enemy[j]->GetPos());				//敵同士が重ならないようにする処理
 		}
 	}
 

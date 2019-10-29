@@ -78,6 +78,6 @@ ID SnowBall::GetID()
 
 void SnowBall::GetCollisionSphere(CollisionSphere * CollisionSphere)
 {
-	CollisionSphere->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);
+	CollisionSphere->pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	CollisionSphere->radius = radius;
 }
