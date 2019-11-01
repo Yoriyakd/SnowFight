@@ -11,7 +11,7 @@ void Enemy::ShootSnowBall(float TragetAng)
 	SnowBallInitValue ValueTmp;
 	ValueTmp.shootPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)	手の位置から発射するようにする
-	ValueTmp.XAxisAng = 30;								/*要調整*/
+	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
 	ValueTmp.YAxisAng = TragetAng;						/*要調整*/
 	ValueTmp.powerRate = 20.0f;							/*要調整*/
 	ValueTmp.id = ENEMY_ID;
@@ -182,7 +182,7 @@ void Enemy::FreeMode(void)
 {
 	D3DXMATRIX MoveMat;
 	static const int MaxInterval = 10;			//間隔の最大値
-	static const int MinInterval = 5;			//間隔の最大値
+	static const int MinInterval = 5;			//間隔の最小値
 
 	if (MoveInterval < 0)
 	{
@@ -232,7 +232,8 @@ void Enemy::StageBorderProcessing(void)
 Enemy::Enemy(D3DXVECTOR3 Pos)
 {
 	mesh = resourceManager->GetXFILE("EnemyBody.x");
-	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixTranslation(&transMat, Pos.x, Pos.y, Pos.z);
 
 	D3DXMATRIX InitRotMat;
 	float TmpRndAng;
@@ -240,7 +241,7 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	TmpRndAng = (float)(rand() % 360);		//生まれたときランダムな角度に (かまくらから生まれるときはこれじゃダメだから変える
 	D3DXMatrixRotationY(&InitRotMat ,D3DXToRadian(TmpRndAng));
 
-	mat = InitRotMat * mat;
+	mat = InitRotMat * transMat;
 
 	MoveInterval = 0;	//初期値は0(すぐ動く)
 	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//初期化
@@ -259,7 +260,7 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 	TragetPos = player->GetPlayerPos();
 	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める
 
-	float TragetLength, LimitLength = 80.0f;
+	float TragetLength, LimitLength = 50.0f;
 	TragetLength = D3DXVec3Length(&TragetVec);		//プレイヤーとの距離を求める
 
 	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
@@ -278,7 +279,6 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 
 void Enemy::Draw(void)
 {
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 
@@ -289,11 +289,22 @@ D3DXVECTOR3 Enemy::GetPos(void)
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
 }
 
+D3DXMATRIX Enemy::GetMat(void)
+{
+	return mat;
+}
+
+XFILE Enemy::GetMesh(void)
+{
+	return mesh;
+}
+
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
 {
-	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);		//Y座標要調整
+	
+	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);		//Y座標要調整☆	
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 5, mat._43);
-	CollisionSphereA->radius = 3;		//変数化
+	CollisionSphereA->radius = 3;		//変数化☆
 	CollisionSphereB->radius = 3;
 }
 

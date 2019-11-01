@@ -1,6 +1,6 @@
 #include "Player.h"
 #include"../Map/LoadStageData.h"
-//#include"../GameScene/GameScene.h"
+#include"../GameScene/GameScene.h"
 
 extern ResourceManager *resourceManager;
 
@@ -85,7 +85,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 {
 	static bool LKyeFlag = false;
 	static float TimeCnt = 0;
-	static const float MaxPowerTime = 3;		//最大溜めまでにかかる時間
+	static const float MaxPowerTime = 1.5;		//最大溜めまでにかかる時間
 
 	if (remainingBalls > 0) {
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
@@ -212,7 +212,7 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 	while (1)
 	{
 		D3DXMATRIX MoveMat;			//移動が終わった後の行列
-		moveVec.y += -0.02f;
+		moveVec.y += Gravity;
 
 		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 		TmpMat = MoveMat * TmpMat;
@@ -256,6 +256,10 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
 
+	if (GetAsyncKeyState('O') & 0x8000)		//デバッグ ☆
+	{
+		remainingBalls += 10;
+	}
 	
 	return true;
 }

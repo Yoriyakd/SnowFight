@@ -1,4 +1,5 @@
 #include "SnowBall.h"
+#include"../GameScene/GameScene.h"
 
 const float SnowBall::radius = 1.5;
 //発射位置、発射角度、発射方向、発射パワー(パワー 0~100)
@@ -33,7 +34,7 @@ bool SnowBall::Update(void)
 	
 
 	D3DXMATRIX tmpMat;
-	moveVec.y += -0.02f;
+	moveVec.y += Gravity;
 	
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;
@@ -45,7 +46,11 @@ bool SnowBall::Update(void)
 		return false;
 	}
 
-	effectManager->snowLocus.push_back(new SnowLocus(mat));
+	effectManager->snowLocus.push_back(new SnowLocus(mat));		//毎フレーム雪の軌跡を作る
+
+	globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
+
+	memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	return true;
 }
 
@@ -68,7 +73,7 @@ D3DXMATRIX SnowBall::GetMat()
 
 D3DXVECTOR3 SnowBall::GetMoveVec()
 {
-	return moveVec;
+	return globalMoveVec;
 }
 
 ID SnowBall::GetID()

@@ -46,3 +46,4 @@ public:
 extern EnemyManager *enemyManager;
 extern Player *player;
 extern StageBorder stageBorder;
+extern const float Gravity;

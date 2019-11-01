@@ -5,8 +5,9 @@ EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
 StageBorder stageBorder;
-float StageBorderOffsetX = 15.0f;			//外周までの距離
-float StageBorderOffsetZ = 15.0f;			//外周までの距離
+const float StageBorderOffsetX = 15.0f;			//外周までの距離
+const float StageBorderOffsetZ = 15.0f;			//外周までの距離
+const float Gravity = 0.05f;						//重力
 
 GameScene::GameScene(int StageNo)
 {
@@ -44,7 +45,7 @@ GameScene::GameScene(int StageNo)
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
-	//mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
+	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
 	//mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test　☆
 
 	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)

@@ -53,4 +53,6 @@ void Ground::Draw()
 	D3DXMatrixTranslation(&mat, 150, 0, -300);
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
+
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }

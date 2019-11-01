@@ -20,7 +20,7 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 				//---------------------------------------------------------------
 				//必要な値を用意
 
-				CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;
+				CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;//Aが上Bが下
 
 				enemyManager->enemy[i]->GetCollisionSphere(&EnemySphreA, &EnemySphreB);		/*当たり判定の球のデータ取得*/
 				snowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
@@ -30,6 +30,21 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 				{
 					//SnowFragエフェクト呼ぶ
 					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+
+					//-------------------------------------------------------------
+					//EnemyDeathAnime再生開始
+					//-------------------------------------------------------------
+					//引数として渡す変数を一時的に宣言
+					D3DXMATRIX TmpAnimeMat;
+					XFILE TmpAnimeMesh;
+					D3DXVECTOR3 SnowBallVec;
+
+					TmpAnimeMat = enemyManager->enemy[i]->GetMat();		//行列
+					TmpAnimeMesh = enemyManager->enemy[i]->GetMesh();	//Mesh
+					SnowBallVec = snowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
+
+					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
+					//-------------------------------------------------------------
 
 					//死んだインスタンス削除
 					delete enemyManager->enemy[i];
@@ -63,6 +78,7 @@ void CollisionObserver::SnowBalltoObj(SnowBallManager * snowBallManager, MapObjM
 			MeshMat = mapObjManager->mapObj[j]->GetMat();
 			RayPos = snowBallManager->snowBall[i]->GetPos();
 			RayVec = snowBallManager->snowBall[i]->GetMoveVec();
+			D3DXVec3Normalize(&RayVec, &RayVec);
 
 			//---------------------------------------------------------------
 			

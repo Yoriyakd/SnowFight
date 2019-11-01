@@ -7,7 +7,7 @@ class SnowBall {
 private:
 	XFILE mesh;
 	D3DXMATRIX mat, rotMat, transMat;
-	D3DXVECTOR3 moveVec;
+	D3DXVECTOR3 moveVec, memoryPos, globalMoveVec;
 	int deleteTime;
 	ID id;
 	static const float radius;
@@ -18,7 +18,7 @@ public:
 	void Draw(void);
 	D3DXVECTOR3 GetPos();
 	D3DXMATRIX GetMat();
-	D3DXVECTOR3 GetMoveVec();				//レイ判定に使う
+	D3DXVECTOR3 GetMoveVec();				//グローバルの移動ベクトルを渡す
 	ID GetID();
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 };

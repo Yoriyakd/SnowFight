@@ -5,6 +5,7 @@
 #include"SnowFrag.h"
 #include"Locus.h"
 #include"../commonObj/PlayerCamera.h"
+#include"EnemyDeathAnime.h"
 
 class EffectManager {
 private:
@@ -13,6 +14,7 @@ private:
 public:
 	std::vector<SnowFrag*> snowFrag;
 	std::vector<SnowLocus*> snowLocus;
+	std::vector<EnemyDeathAnime*> enemyDeathAnime;
 
 	EffectManager();
 	~EffectManager();

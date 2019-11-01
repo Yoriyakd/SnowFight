@@ -7,7 +7,7 @@
 class Enemy {
 private:
 	XFILE mesh;
-	D3DXMATRIX mat, rotMat;
+	D3DXMATRIX mat, rotMat, transMat;
 	virtual void ShootSnowBall(float TragetAng);
 	virtual void EngagingMode(void);		//åêÌíÜÇÃçsìÆ
 	virtual void FreeMode(void);			//ñ¢î≠å©éûÇÃçsìÆ
@@ -31,6 +31,8 @@ public:
 	virtual bool Update(SnowBallManager *snowBallManager);
 	virtual void Draw(void);
 	virtual D3DXVECTOR3 GetPos(void);
+	virtual D3DXMATRIX GetMat(void);
+	virtual XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
 	D3DXVECTOR3 CheckOverlapEnemies(D3DXVECTOR3*);
 };

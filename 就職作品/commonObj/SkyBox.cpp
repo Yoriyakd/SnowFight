@@ -17,4 +17,6 @@ void SkyBox::Draw()
 
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
+
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }
