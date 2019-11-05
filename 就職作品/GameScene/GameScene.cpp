@@ -7,7 +7,7 @@ D3DLIGHT9 Light;
 StageBorder stageBorder;
 const float StageBorderOffsetX = 15.0f;			//外周までの距離
 const float StageBorderOffsetZ = 15.0f;			//外周までの距離
-const float Gravity = 0.05f;						//重力
+const float Gravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
 {

@@ -50,6 +50,7 @@ void EffectManager::Update(void)
 
 	for (unsigned int i = 0; i < snowFrag.size(); i++)
 	{
+		snowFrag[i]->SetBillBoardMat(billBoardMat);		//ビルボードの回転行列をセット
 		if (snowFrag[i]->Update() == false)	//falseが帰ってきたら削除
 		{
 			delete snowFrag[i];
@@ -61,7 +62,7 @@ void EffectManager::Update(void)
 	//アルファ値を下げて見えなくなったらインスタンス削除
 	for (unsigned int i = 0; i < snowLocus.size(); i++)
 	{
-		snowLocus[i]->SetBillBoardMat(billBoardMat);
+		snowLocus[i]->SetBillBoardMat(billBoardMat);	//ビルボードの回転行列をセット
 		if (snowLocus[i]->Update() == false)
 		{
 			delete snowLocus[i];
