@@ -13,9 +13,26 @@ private:
 	XFILE mesh;
 	D3DXMATRIX mat, transMat, rotMat;
 	D3DXVECTOR3 pos;
+	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, 3.0f, 0.0f);
 	int remainingBalls;
 	float moveSpeed;
+	//-----------------------------
+	//雪玉投擲関連
+	//-----------------------------
+	//SnowBallInitValue snowBallInitValue;
+	float timeCnt = 0, shootPowerPCT;
+	static const float MaxPowerTime;		//最大溜めまでにかかる時間
 
+	//-----------------------------
+	//腕
+	//-----------------------------
+	XFILE armMeshR;
+	D3DXMATRIX armOffsetMatR, armRotMatR, armMatR;
+	float armAng;
+
+	//-----------------------------
+	//作成中の雪玉
+	//-----------------------------
 	XFILE ballMesh;
 	D3DXMATRIX ballMat, ballScalMat;
 
@@ -26,13 +43,17 @@ private:
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列			//ポインタ型で宣言しなかったら動く　なぜ？
 	LPDIRECT3DTEXTURE9 GhostTex;
 
+	//-----------------------------
+	//privateメソッド
+	//-----------------------------
 	void Move(void);
 	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
 	void ShootSnowball(SnowBallManager *snowBallManager);
 
 	void MakeBall();
 	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
-	
+	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
+	SnowBallInitValue MakeSnowBallInitValue(void);
 
 public:
 	Player();

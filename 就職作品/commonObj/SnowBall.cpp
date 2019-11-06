@@ -6,14 +6,14 @@ const float SnowBall::radius = 1.5;
 SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
 {
 	float Power;
-	Power = ((snowBallInitValue.powerRate / 100)) * 5;
+	Power = ((snowBallInitValue.powerRate / 100)) * 3;	//飛距離調整のための3
 	mesh = resourceManager->GetXFILE("SnowBall.x");
 
 	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y , snowBallInitValue.shootPos.z);			//発射位置
 
-	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue.XAxisAng))) , (Power * cos(D3DXToRadian(snowBallInitValue.XAxisAng))));
+	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue.XAxisAng))) , (Power * cos(D3DXToRadian(snowBallInitValue.XAxisAng))));		//発射のベクトルを求める
 
-	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));
+	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));		//発射元の角度から行列作成
 	mat = rotMat * mat;
 
 	deleteTime = 10 * GameFPS;
