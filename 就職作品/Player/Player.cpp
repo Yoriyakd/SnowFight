@@ -176,9 +176,6 @@ void Player::MakeBall()
 void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 {
 	ghostMat.clear();	//初期化
-	//-------------------------------------------------------------
-	//雪玉を打ち出す処理と同じ	向こうを変えたらこちらも変える必要あり	設計が悪い
-	//-------------------------------------------------------------
 
 	D3DXVECTOR3 moveVec;
 	D3DXMATRIX TmpMat, TmpRot;
@@ -228,24 +225,35 @@ SnowBallInitValue Player::MakeSnowBallInitValue()
 
 Player::Player()
 {
+	//--------------------------------------------------------------
+	//プレイヤー初期化
+	//--------------------------------------------------------------
 	int StartBallCnt = 10;	//スタート時のボールの数 プレイヤーの強化のデータを拾ってきて入れるようにする
 
 	moveSpeed = 0.5;		//移動速度
 	mesh = resourceManager->GetXFILE("player.x");
 
 	remainingBalls = StartBallCnt;
-	ballMesh = resourceManager->GetXFILE("SnowBall.x");
-
-	//armMeshR = resourceManager->GetXFILE("ArmR.x");
-	//D3DXMatrixTranslation(&armOffsetMatR, 1.0f, 4.0f, 0.0f);		//プレイヤーの原点からの距離		//カメラを親にする
 	
-	/*armAng = 0.0f;
-	D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));*/
-
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
 	D3DXMatrixIdentity(&mat);
 
 	GhostTex = resourceManager->GetTexture("Locus.png", 64, 64, NULL);
+
+	//--------------------------------------------------------------
+	//腕
+	//--------------------------------------------------------------
+	//armMeshR = resourceManager->GetXFILE("ArmR.x");
+	//D3DXMatrixTranslation(&armOffsetMatR, 1.0f, -2.0f, 0.0f);		//プレイヤーの原点からの距離
+	
+	/*armAng = 0.0f;
+	D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));*/
+
+	//--------------------------------------------------------------
+	//雪玉
+	//--------------------------------------------------------------
+	ballMesh = resourceManager->GetXFILE("SnowBall.x");
+	D3DXMatrixTranslation(&ballOffsetMat, 0, 2, 3);		//プレイヤーとどれぐらい離れているか
 }
 
 Player::~Player()
@@ -269,9 +277,20 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	//-------------------------------------------------------
 	//腕の行列作成
 	//-------------------------------------------------------
-	//D3DXMATRIX TmpMat;
-	//D3DXMatrixRotationX(&TmpMat, D3DXToRadian(pPlayerCam->GetCamAngX()));
-	//armMatR = armRotMatXR * armOffsetMatR * mat;		//カメラの上下に合わせて動かす	matにプレイヤーのY軸回転が入っている
+	/*D3DXMATRIX ParentMat, ParentRotX, ParentRotY, pRot, camTrans;
+	camTrans = transMat;
+	camTrans._42 += 5;
+	
+	D3DXMatrixRotationX(&ParentRotX, D3DXToRadian(pPlayerCam->GetCamAngX()));
+	D3DXMatrixRotationY(&ParentRotY, D3DXToRadian(pPlayerCam->GetCamAngY()));
+
+	D3DXVECTOR3 armOffsetVec(1.0f, -2.0f, 0.0f);
+	pRot = ParentRotX * ParentRotY;
+	D3DXVec3TransformNormal(&armOffsetVec, &armOffsetVec, &pRot);
+	D3DXMatrixTranslation(&armOffsetMatR, armOffsetVec.x, armOffsetVec.y, armOffsetVec.z);
+
+	armMatR = armOffsetMatR * pRot * camTrans;*/
+	 
 
 
 
@@ -302,19 +321,19 @@ void Player::Draw(void)
 
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-	////--------------------------------------------------------------
-	////腕表示
-	////--------------------------------------------------------------
-	//lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
-	//DrawMesh(&armMeshR);
+	//--------------------------------------------------------------
+	//腕表示
+	//--------------------------------------------------------------
+	/*lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
+	DrawMesh(&armMeshR);*/
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
 	//--------------------------------------------------------------
 	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	D3DXMatrixTranslation(&ballMat, 0, 2, 3);		//プレイヤーとどれぐらい離れているか
-	ballMat = ballScalMat * ballMat * rotMat * mat;
+
+	ballMat = ballScalMat * ballOffsetMat * mat;
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
 	DrawMesh(&ballMesh);
 

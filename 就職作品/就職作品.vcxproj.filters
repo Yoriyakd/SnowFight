@@ -117,9 +117,6 @@
     <ClCompile Include="Player\PlayerCamera.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Player\PlayerArm.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -207,9 +204,6 @@
       <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerCamera.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\PlayerArm.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>

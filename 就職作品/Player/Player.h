@@ -26,15 +26,15 @@ private:
 	//-----------------------------
 	//òr
 	//-----------------------------
-	/*XFILE armMeshR;
+	XFILE armMeshR;
 	D3DXMATRIX armOffsetMatR, armRotMatXR, armMatR;
-	float armAng;*/
+	float armAng;
 
 	//-----------------------------
 	//çÏê¨íÜÇÃê·ã 
 	//-----------------------------
 	XFILE ballMesh;
-	D3DXMATRIX ballMat, ballScalMat;
+	D3DXMATRIX ballMat, ballScalMat, ballOffsetMat;
 
 	StageBorder stageBorder;
 	

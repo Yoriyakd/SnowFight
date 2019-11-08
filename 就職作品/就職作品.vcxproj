@@ -206,7 +206,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Player\PlayerArm.cpp" />
     <ClCompile Include="Player\Player.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -254,7 +253,6 @@
     <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\Wall.h" />
     <ClInclude Include="Map\MapObjManager.h" />
-    <ClInclude Include="Player\PlayerArm.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\PlayerCamera.h" />
     <ClInclude Include="ResourceManager.h" />
