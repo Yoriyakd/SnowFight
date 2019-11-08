@@ -113,7 +113,7 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	if (GetAsyncKeyState('P') & 0x8000)		//ğŒ‚ğ•Ï‚¦‚Ä–{À‘•
+	if (GetAsyncKeyState('P') & 0x8000)		//ğŒ‚ğ•Ï‚¦‚Ä–{À‘•™
 	{
 		setEnemies->SetEnemy();
 	}

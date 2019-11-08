@@ -68,3 +68,6 @@ bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
 
 //メッシュに対してのレイ判定
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis);
+
+//SnowBallInitValueを渡すと移動ベクトルが返ってきて発射位置の行列作成ができる
+D3DXVECTOR3 SnowBallInit(SnowBallInitValue* SnowBallInitValue, D3DXMATRIX *Mat);

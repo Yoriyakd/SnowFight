@@ -16,7 +16,7 @@ PlayerCamera::PlayerCamera(int Scrw, int Scrh, HWND Hwnd)
 
 PlayerCamera::~PlayerCamera()
 {
-	ShowCursor(TRUE);			//カーソルを表示する	※FTRUEの回数をカウントしているので必要以上に呼ばない
+	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 }
 
 void PlayerCamera::SetCamera(void)

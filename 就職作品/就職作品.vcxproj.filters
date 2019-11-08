@@ -60,9 +60,6 @@
     <ClCompile Include="Map\Wall.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="commonObj\PlayerCamera.cpp">
-      <Filter>commonObj</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnemyManager.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -117,6 +114,12 @@
     <ClCompile Include="Effect\EnemyDeathAnime.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Player\PlayerCamera.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerArm.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -148,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="Map\Wall.h">
       <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="commonObj\PlayerCamera.h">
-      <Filter>commonObj</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnemyManager.h">
       <Filter>Enemy</Filter>
@@ -205,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="Effect\EnemyDeathAnime.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerCamera.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerArm.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,9 +17,7 @@ XFILE ResourceManager::GetXFILE(std::string FileName)
 {
 	XFILE Tmp;
 
-	Tmp = XFILEList[FileName];
-
-	if (Tmp.lpMesh == nullptr)		//見つからなかったら
+	if (TextureList.find(FileName) == TextureList.end())		//最後まで検索する
 	{
 		std::string FilePath = "data/";
 		FilePath += FileName;		//パスの作成
@@ -29,6 +27,10 @@ XFILE ResourceManager::GetXFILE(std::string FileName)
 		//リストに登録する
 		XFILEList[FileName] = Tmp;
 	}
+	else
+	{
+		Tmp = XFILEList[FileName];
+	}
 	return Tmp;
 }
 
@@ -36,10 +38,8 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, 
 {
 	LPDIRECT3DTEXTURE9 Tmp;
 
-	//Tmp にmapの値(図の右側)を入れる			Filenameがキーの指定
-	Tmp = TextureList[FileName];
 
-	if (Tmp == nullptr)		//Tmpが空(見つからなかったら)
+	if (TextureList.find(FileName) == TextureList.end())		//最後まで検索する
 	{
 		std::string FilePath = "data/";
 		FilePath += FileName;		//パスの作成
@@ -49,6 +49,10 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, 
 		//引数で渡されたFileNameのところにTmpに入ったテクスチャを入れる
 		TextureList[FileName] = Tmp;
 		
+	}
+	else
+	{
+		Tmp = TextureList[FileName];	
 	}
 	return Tmp;
 }

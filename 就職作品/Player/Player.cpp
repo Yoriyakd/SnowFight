@@ -108,13 +108,13 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			
 			MakeGhostMat(&MakeSnowBallInitValue());
 
-			//--------------------------------------------------
-			//腕回転処理
-			//--------------------------------------------------
-			static const float MaxAng = 120;
-			armAng = MaxAng * (timeCnt / (MaxPowerTime * GameFPS));
+			////--------------------------------------------------
+			////腕回転処理
+			////--------------------------------------------------
+			//static const float MaxAng = 120;
+			//armAng = MaxAng * (timeCnt / (MaxPowerTime * GameFPS));
 
-			D3DXMatrixRotationX(&armRotMatR, D3DXToRadian(-armAng));
+			//D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));
 
 		}
 		else
@@ -179,14 +179,14 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 	//-------------------------------------------------------------
 	//雪玉を打ち出す処理と同じ	向こうを変えたらこちらも変える必要あり	設計が悪い
 	//-------------------------------------------------------------
-	float Power;
+
 	D3DXVECTOR3 moveVec;
 	D3DXMATRIX TmpMat, TmpRot;
-	Power = ((snowBallInitValue->powerRate / 100)) * 3;		//飛距離調整のための3
+
+
+	moveVec = SnowBallInit(snowBallInitValue, &TmpMat);
 
 	D3DXMatrixTranslation(&TmpMat, snowBallInitValue->shootPos.x, snowBallInitValue->shootPos.y, snowBallInitValue->shootPos.z);			//発射位置
-
-	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue->XAxisAng))), (Power * cos(D3DXToRadian(snowBallInitValue->XAxisAng))));	//発射のベクトルを求める
 
 	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(snowBallInitValue->YAxisAng));		//発射元の角度から行列作成
 	TmpMat = TmpRot * TmpMat;
@@ -236,9 +236,11 @@ Player::Player()
 	remainingBalls = StartBallCnt;
 	ballMesh = resourceManager->GetXFILE("SnowBall.x");
 
-	armMeshR = resourceManager->GetXFILE("ArmR.x");
-	D3DXMatrixTranslation(&armOffsetMatR, 1.3f, 4.0f, 0.0f);		//プレイヤーの原点からの距離
-	armAng = 0.0f;
+	//armMeshR = resourceManager->GetXFILE("ArmR.x");
+	//D3DXMatrixTranslation(&armOffsetMatR, 1.0f, 4.0f, 0.0f);		//プレイヤーの原点からの距離		//カメラを親にする
+	
+	/*armAng = 0.0f;
+	D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));*/
 
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
 	D3DXMatrixIdentity(&mat);
@@ -262,11 +264,16 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	//-------------------------------------------------------
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(pPlayerCam->GetCamAngY()));
-	mat = rotMat * transMat;
+	mat = rotMat * transMat;		//Y軸のみ
+
 	//-------------------------------------------------------
 	//腕の行列作成
 	//-------------------------------------------------------
-	armMatR = armRotMatR * armOffsetMatR * mat;
+	//D3DXMATRIX TmpMat;
+	//D3DXMatrixRotationX(&TmpMat, D3DXToRadian(pPlayerCam->GetCamAngX()));
+	//armMatR = armRotMatXR * armOffsetMatR * mat;		//カメラの上下に合わせて動かす	matにプレイヤーのY軸回転が入っている
+
+
 
 	if (GetAsyncKeyState('O') & 0x8000)		//デバッグ ☆
 	{
@@ -295,11 +302,11 @@ void Player::Draw(void)
 
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-	//--------------------------------------------------------------
-	//腕表示
-	//--------------------------------------------------------------
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
-	DrawMesh(&armMeshR);
+	////--------------------------------------------------------------
+	////腕表示
+	////--------------------------------------------------------------
+	//lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
+	//DrawMesh(&armMeshR);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示

@@ -4,7 +4,7 @@
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBall.h"
 #include"../commonObj/SnowBallManager.h"
-#include"../commonObj/PlayerCamera.h"
+#include"PlayerCamera.h"
 
 //ƒ[ƒ‹ƒhÀ•W‚ÅŠÇ—
 
@@ -26,9 +26,9 @@ private:
 	//-----------------------------
 	//˜r
 	//-----------------------------
-	XFILE armMeshR;
-	D3DXMATRIX armOffsetMatR, armRotMatR, armMatR;
-	float armAng;
+	/*XFILE armMeshR;
+	D3DXMATRIX armOffsetMatR, armRotMatXR, armMatR;
+	float armAng;*/
 
 	//-----------------------------
 	//ì¬’†‚Ìá‹Ê

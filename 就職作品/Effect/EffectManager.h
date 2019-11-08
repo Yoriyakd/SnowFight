@@ -4,7 +4,7 @@
 #include"../ResourceManager.h"
 #include"SnowFrag.h"
 #include"Locus.h"
-#include"../commonObj/PlayerCamera.h"
+#include"../Player/PlayerCamera.h"
 #include"EnemyDeathAnime.h"
 
 class EffectManager {
