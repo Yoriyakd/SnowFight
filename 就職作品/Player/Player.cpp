@@ -11,7 +11,7 @@ const float Player::MaxPowerTime = 1.5f;
 
 void Player::Move(void)
 {
-	D3DXVECTOR3 movePos(0, 0, 0);
+	moveVec = D3DXVECTOR3(0, 0, 0);
 	bool moveFlag = false;
 
 	if (GetAsyncKeyState('W') & 0x8000)
@@ -20,7 +20,7 @@ void Player::Move(void)
 		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY()));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
-		movePos += Vec;
+		moveVec += Vec;
 		moveFlag = true;
 	}
 	if (GetAsyncKeyState('S') & 0x8000)
@@ -29,7 +29,7 @@ void Player::Move(void)
 		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() + 180));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
-		movePos += Vec;
+		moveVec += Vec;
 		moveFlag = true;
 	}
 	if (GetAsyncKeyState('A') & 0x8000)
@@ -38,7 +38,7 @@ void Player::Move(void)
 		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() - 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
-		movePos += Vec;
+		moveVec += Vec;
 		moveFlag = true;
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
@@ -47,17 +47,17 @@ void Player::Move(void)
 		D3DXMatrixRotationY(&RotMat, D3DXToRadian(pPlayerCam->GetCamAngY() + 90));
 		D3DXVECTOR3 Vec;
 		D3DXVec3TransformCoord(&Vec, &D3DXVECTOR3(0, 0, 1), &RotMat);
-		movePos += Vec;
+		moveVec += Vec;
 		moveFlag = true;
 	}
 
-	D3DXVec3Normalize(&movePos, &movePos);			//移動量正規化
+	D3DXVec3Normalize(&moveVec, &moveVec);			//移動量正規化
 
-	movePos *= moveSpeed;		//移動スピード調整
+	moveVec *= moveSpeed;		//移動スピード調整
 
 	if (moveFlag)
 	{
-		pos += movePos;
+		pos += moveVec;
 	}
 
 	//ステージ境界の処理
@@ -407,4 +407,14 @@ D3DXVECTOR3 Player::GetPlayerPos(void)
 void Player::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
 {
 	pPlayerCam = PPlayerCam;
+}
+
+D3DXVECTOR3 Player::GetMoveVec(void)
+{
+	return moveVec;
+}
+
+void Player::PushPlayer(D3DXVECTOR3 * PushVec)
+{
+	pos += *PushVec;
 }

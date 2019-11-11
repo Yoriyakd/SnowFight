@@ -16,6 +16,7 @@ private:
 	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, 3.0f, 0.0f);
 	int remainingBalls;
 	float moveSpeed;
+	D3DXVECTOR3 moveVec;
 	//-----------------------------
 	//ê·ã ìäù±ä÷òA
 	//-----------------------------
@@ -65,4 +66,6 @@ public:
 	void SetStageBorder(StageBorder StageBorder);
 	D3DXVECTOR3 GetPlayerPos(void);
 	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
+	D3DXVECTOR3 GetMoveVec(void);
+	void PushPlayer(D3DXVECTOR3 *PushVec);
 };

@@ -46,7 +46,7 @@ GameScene::GameScene(int StageNo)
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
 	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ™
-	//mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test@™
+	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test@™
 
 	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)
 	{
@@ -125,5 +125,6 @@ bool GameScene::Update()
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
+	collisionObserver->PlayertoObj(player, mapObjManager);
 	return true;
 }

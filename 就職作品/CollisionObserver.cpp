@@ -16,7 +16,7 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 		{
 			if (snowBallManager->snowBall[j]->GetID() == PLAYER_ID)		//プレイヤーの球なら実行
 			{
-				
+
 				//---------------------------------------------------------------
 				//必要な値を用意
 
@@ -85,24 +85,105 @@ void CollisionObserver::SnowBalltoObj(SnowBallManager * snowBallManager, MapObjM
 			D3DXVec3Normalize(&RayVec, &RayVec);
 
 			//---------------------------------------------------------------
-			
+
 			if (MeshCollisionDetection(&MeshTmp, &MeshMat, &RayPos, &RayVec, &MeshDis))			//メッシュに対してレイ判定
 			{
 				CollisionSphere SnowBallSphere;
 				snowBallManager->snowBall[i]->GetCollisionSphere(&SnowBallSphere);
 
-					if (MeshDis < SnowBallSphere.radius)										//距離が半径以下なら
-					{
-						//SnowFragエフェクト呼ぶ
-						effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[i]->GetPos()));
+				if (MeshDis < SnowBallSphere.radius)										//距離が半径以下なら
+				{
+					//SnowFragエフェクト呼ぶ
+					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[i]->GetPos()));
 
-						//死んだインスタンス削除
-						delete snowBallManager->snowBall[i];
-						snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
-						i--;				//きえた分詰める
-						break;
-					}
+					//死んだインスタンス削除
+					delete snowBallManager->snowBall[i];
+					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
+					i--;				//きえた分詰める
+					break;
+				}
 			}
+		}
+	}
+}
+
+void CollisionObserver::PlayertoObj(Player * Player, MapObjManager * MapObjManager)
+{
+	D3DXVECTOR3 PlayerPos, MoveVec;
+	PlayerPos = Player->GetPlayerPos();
+	MoveVec = Player->GetMoveVec();
+	
+	for (unsigned int i = 0; i < MapObjManager->mapObj.size(); i++)
+	{
+		D3DXMATRIX invMat, ObjMat;
+		ObjMat = MapObjManager->mapObj[i]->GetMat();
+
+
+		D3DXMatrixInverse(&invMat, NULL, &ObjMat);
+
+		D3DXVECTOR3 LocalPos, LocalVec;
+
+		D3DXVec3TransformCoord(&LocalPos, &PlayerPos, &invMat);		//それぞれの逆行列を作る
+		D3DXVec3TransformNormal(&LocalVec, &MoveVec, &invMat);
+		D3DXVec3Normalize(&LocalVec, &LocalVec);
+
+		BOOL hit;
+
+		float meshDis;
+		DWORD PolyNo;
+
+		XFILE ObjMesh;
+
+		ObjMesh = MapObjManager->mapObj[i]->GetMesh();
+
+		D3DXIntersect(ObjMesh.lpMesh, &LocalPos, &LocalVec, &hit, &PolyNo, NULL, NULL, &meshDis, NULL, NULL);
+		if (hit == TRUE)
+		{
+			WORD *pI;
+			ObjMesh.lpMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+			DWORD vertexNo[3];
+			vertexNo[0] = *(pI + PolyNo * 3 + 0);		//PolyNo番目の構成する1つめのインデックス
+			vertexNo[1] = *(pI + PolyNo * 3 + 1);
+			vertexNo[2] = *(pI + PolyNo * 3 + 2);
+
+			CLONEVERTEX *pV;
+
+			ObjMesh.lpMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+
+			D3DXVECTOR3 vPos[3];
+
+			vPos[0] = (pV + vertexNo[0])->Pos;			//上で手に入れたインデックスを用いてその頂点の座標を得る
+			vPos[1] = (pV + vertexNo[1])->Pos;
+			vPos[2] = (pV + vertexNo[2])->Pos;
+
+			ObjMesh.lpMesh->UnlockVertexBuffer();
+
+			D3DXVECTOR3 Vec1, Vec2;
+
+			Vec1 = vPos[1] - vPos[0];			//2辺用意
+			Vec2 = vPos[2] - vPos[0];
+
+			D3DXVECTOR3 ObjNormal;
+
+			D3DXVec3Cross(&ObjNormal, &Vec1, &Vec2);	//ポリゴンの2辺の外積を求め法線を求める
+			D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMat);		//表示に使う行列を使ってグローバル座標をを求めている
+			D3DXVec3Normalize(&ObjNormal, &ObjNormal);	//正規化
+
+			float Dot;
+			Dot = D3DXVec3Dot(&ObjNormal, &-MoveVec);		//内積を求める	両方長さ1なのでコサインθになる
+			float Limit;					//三角形の斜辺の長さ
+			Limit = 3 / Dot;				//3は壁から離したい距離
+			if (Limit < 0)Limit *= -1;		//逆から壁に接近した場合-になるので反転
+
+			if (meshDis < Limit)
+			{
+				D3DXVECTOR3 PushVec;
+				PushVec = ObjNormal * ((Limit - meshDis) * Dot);	//法線方向に押し出し
+				PushVec.y = 0;									//斜めの壁にぶつかると地面に埋まるのでy方向の移動を0にしている
+				Player->PushPlayer(&PushVec);
+			}
+
+			
 		}
 	}
 }

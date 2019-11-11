@@ -15,23 +15,30 @@ ResourceManager::~ResourceManager()
 
 XFILE ResourceManager::GetXFILE(std::string FileName)
 {
-	XFILE Tmp;
+	XFILE TmpXFILE;
 
 	if (TextureList.find(FileName) == TextureList.end())		//最後まで検索する
 	{
 		std::string FilePath = "data/";
 		FilePath += FileName;		//パスの作成
 		//ロードする
-		LoadMesh(&Tmp, &FilePath[0]);
+		LoadMesh(&TmpXFILE, &FilePath[0]);
+
+		LPD3DXMESH TmpMesh;
+		TmpXFILE.lpMesh->CloneMeshFVF(D3DXMESH_NPATCHES | D3DXMESH_MANAGED, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, lpD3DDevice, &TmpMesh);	//Meshデータを扱いやすい形に変換
+
+		TmpXFILE.lpMesh->Release();
+
+		TmpXFILE.lpMesh = TmpMesh;
 
 		//リストに登録する
-		XFILEList[FileName] = Tmp;
+		XFILEList[FileName] = TmpXFILE;
 	}
 	else
 	{
-		Tmp = XFILEList[FileName];
+		TmpXFILE = XFILEList[FileName];
 	}
-	return Tmp;
+	return TmpXFILE;
 }
 
 LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, int hight, D3DCOLOR ColorKey)

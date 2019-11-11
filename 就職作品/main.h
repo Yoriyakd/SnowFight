@@ -34,6 +34,14 @@ struct XFILE {
 	LPDIRECT3DTEXTURE9 *Tex;	//Textureの内容 * グループ数分		
 };
 
+//メッシュの形式簡易化の定義
+struct CLONEVERTEX
+{
+	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 Normal;
+	D3DXVECTOR2 Tex;
+};
+
 //飛ばした雪玉に付与
 enum ID{PLAYER_ID, ENEMY_ID};
 
