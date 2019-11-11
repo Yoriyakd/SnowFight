@@ -246,6 +246,8 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	MoveInterval = 0;	//‰Šú’l‚Í0(‚·‚®“®‚­)
 	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//‰Šú‰»
 	limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//minLength~maxLength‚ÌŠÔ‚Å‰Šú‰»	Å‘å’l‚ªmaxLength‚É‚È‚é‚æ‚¤‚É+1‚µ‚Ä‚¢‚é
+
+	HP = 5;
 }
 
 Enemy::~Enemy()
@@ -333,4 +335,14 @@ D3DXVECTOR3 Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
 	{
 		return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
+}
+
+bool Enemy::TakeDamage(int Damage)
+{
+	HP -= Damage;
+	if (HP <= 0)
+	{
+		return false;
+	}
+	return true;
 }

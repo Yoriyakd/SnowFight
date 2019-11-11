@@ -23,7 +23,7 @@ private:
 	float limitLength;		//Œğíæ‚é‹——£
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//Œğí‚ÌˆÚ“®		‹…”­Ë‚Í~‚Ü‚é‚æ‚¤‚É‚·‚é
 protected:
-	
+	int HP;		//‘Ì—Í	á‹Ê1”­‚Å1Œ¸­
 
 public:
 	Enemy(D3DXVECTOR3);
@@ -35,4 +35,5 @@ public:
 	virtual XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
 	D3DXVECTOR3 CheckOverlapEnemies(D3DXVECTOR3*);
+	bool TakeDamage(int Damage);
 };

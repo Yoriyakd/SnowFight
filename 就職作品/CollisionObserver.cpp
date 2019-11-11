@@ -31,28 +31,32 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 					//SnowFragエフェクト呼ぶ
 					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
 
-					//-------------------------------------------------------------
-					//EnemyDeathAnime再生開始
-					//-------------------------------------------------------------
-					//引数として渡す変数を一時的に宣言
-					D3DXMATRIX TmpAnimeMat;
-					XFILE TmpAnimeMesh;
-					D3DXVECTOR3 SnowBallVec;
+					if (enemyManager->enemy[i]->TakeDamage(1) == false)		//falseが返ってきたら
+					{
+						//-------------------------------------------------------------
+						//EnemyDeathAnime再生開始
+						//-------------------------------------------------------------
+						//引数として渡す変数を一時的に宣言
+						D3DXMATRIX TmpAnimeMat;
+						XFILE TmpAnimeMesh;
+						D3DXVECTOR3 SnowBallVec;
 
-					TmpAnimeMat = enemyManager->enemy[i]->GetMat();		//行列
-					TmpAnimeMesh = enemyManager->enemy[i]->GetMesh();	//Mesh
-					SnowBallVec = snowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
+						TmpAnimeMat = enemyManager->enemy[i]->GetMat();		//行列
+						TmpAnimeMesh = enemyManager->enemy[i]->GetMesh();	//Mesh
+						SnowBallVec = snowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
 
-					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
-					//-------------------------------------------------------------
+						effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
+						//-------------------------------------------------------------
 
-					//死んだインスタンス削除
-					delete enemyManager->enemy[i];
+						//死んだインスタンス削除
+						delete enemyManager->enemy[i];
+						enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
+						i--;						//きえた分詰める
+					}
+
 					delete snowBallManager->snowBall[j];
 					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
-					enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
 					j--;						//きえた分詰める
-					i--;						//きえた分詰める
 					break;
 				}
 			}
