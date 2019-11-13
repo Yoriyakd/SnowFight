@@ -64,7 +64,7 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 	}
 }
 
-void CollisionObserver::SnowBalltoObj(SnowBallManager * snowBallManager, MapObjManager * mapObjManager)
+void CollisionObserver::SnowBalltoObj(SnowBallManager *snowBallManager, MapObjManager *mapObjManager)
 {
 	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
 	{
@@ -107,11 +107,11 @@ void CollisionObserver::SnowBalltoObj(SnowBallManager * snowBallManager, MapObjM
 	}
 }
 
-void CollisionObserver::PlayertoObj(Player * Player, MapObjManager * MapObjManager)
+void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObjManager * MapObjManager)
 {
 	D3DXVECTOR3 PlayerPos, MoveVec;
-	PlayerPos = Player->GetPlayerPos();
-	MoveVec = Player->GetMoveVec();
+	PlayerPos = PlayerCam->GetPos();
+	MoveVec = PlayerCam->GetmoveVec();
 	
 	for (unsigned int i = 0; i < MapObjManager->mapObj.size(); i++)
 	{
@@ -180,7 +180,7 @@ void CollisionObserver::PlayertoObj(Player * Player, MapObjManager * MapObjManag
 				D3DXVECTOR3 PushVec;
 				PushVec = ObjNormal * ((Limit - meshDis) * Dot);	//–@ü•ûŒü‚É‰Ÿ‚µo‚µ
 				PushVec.y = 0;									//ŽÎ‚ß‚Ì•Ç‚É‚Ô‚Â‚©‚é‚Æ’n–Ê‚É–„‚Ü‚é‚Ì‚Åy•ûŒü‚ÌˆÚ“®‚ð0‚É‚µ‚Ä‚¢‚é
-				Player->PushPlayer(&PushVec);
+				PlayerCam->PushPos(&PushVec);
 			}
 
 			

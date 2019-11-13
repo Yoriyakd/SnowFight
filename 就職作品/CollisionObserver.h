@@ -5,6 +5,7 @@
 #include"Map/MapObjManager.h"
 #include"Effect/EffectManager.h"
 #include"Player/Player.h"
+#include"Player/PlayerCamera.h"
 class CollisionObserver {
 public:
 	CollisionObserver();
@@ -14,5 +15,5 @@ public:
 	//雪玉とMapオブジェの当たり判定	SnowBallManagerとMapObjManagerをポインタで渡す
 	void SnowBalltoObj(SnowBallManager *snowBallManager, MapObjManager *MapObjManager);
 	//playerのマップオブジェクトに対する当たり判定
-	void PlayertoObj(Player *Player, MapObjManager *MapObjManager);
+	void PlayertoObj(PlayerCamera *PlayerCam, MapObjManager *MapObjManager);
 };

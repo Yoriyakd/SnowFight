@@ -23,7 +23,7 @@ GameScene::GameScene(int StageNo)
 	collisionObserver = new CollisionObserver();
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 
-	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする
+	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
 
 	loadStageData->GetStageSize(&stageSizeX, &stageSizeZ);
 
@@ -40,7 +40,7 @@ GameScene::GameScene(int StageNo)
 	fenceManager->SetStageSize(stageSizeX, stageSizeZ);
 	fenceManager->SetFence();		//フェンスを配置
 
-	player->SetStageBorder(stageBorder);		//ステージの境界データをセット
+	playerCam->SetStageBorder(stageBorder);		//ステージの境界データをセット
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
@@ -53,7 +53,7 @@ GameScene::GameScene(int StageNo)
 		enemyManager->SetEnemy(loadStageData->GetEnemyData(i));			//enemyManagerがインスタンスを作成する
 	}
 
-	//-----------------------------k
+	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
@@ -118,13 +118,13 @@ bool GameScene::Update()
 		setEnemies->SetEnemy();
 	}
 	enemyManager->Update(snowBallManager);
-	player->Update(snowBallManager);
-	playerCam->SetCamPos((D3DXVECTOR3*)&player->GetPlayerPos());		//カメラの更新		※プレイヤーが移動した後に呼ぶ
+	playerCam->Update();
+	player->Update(snowBallManager);		//カメラを更新してから
 	snowBallManager->Update();
 	effectManager->Update();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
-	collisionObserver->PlayertoObj(player, mapObjManager);
+	collisionObserver->PlayertoObj(playerCam, mapObjManager);
 	return true;
 }

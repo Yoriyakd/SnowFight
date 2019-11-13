@@ -18,6 +18,14 @@
 
 
 class GameScene : public SceneBase {
+public:
+	GameScene(int);
+	~GameScene();
+	void Render3D(void);
+	void SetCamera(void);
+	void Render2D(void);
+	bool Update(void);
+
 private:
 	LoadStageData *loadStageData;
 	Ground *ground;
@@ -27,20 +35,9 @@ private:
 	MapObjManager *mapObjManager;
 	CollisionObserver *collisionObserver;
 	SetEnemies *setEnemies;
-
-
-	static const float camHight;
-
 	PlayerCamera *playerCam;
 
-	float stageSizeX, stageSizeZ;
-public:
-	GameScene(int);
-	~GameScene();
-	void Render3D(void);
-	void SetCamera(void);
-	void Render2D(void);
-	bool Update(void);
+	float stageSizeX, stageSizeZ;		//ステージのサイズ	stageボーダーだけでよさそう
 };
 
 extern EnemyManager *enemyManager;
