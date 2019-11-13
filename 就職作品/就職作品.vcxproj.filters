@@ -117,6 +117,12 @@
     <ClCompile Include="Player\PlayerCamera.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Player\ArmRAnimeFront.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ArmRAnimeMid.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -204,6 +210,15 @@
       <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerCamera.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmRAnimeBase.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmRAnimeFront.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmRAnimeMid.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,23 +5,13 @@
 #include"../commonObj/SnowBall.h"
 #include"../commonObj/SnowBallManager.h"
 #include"PlayerCamera.h"
+#include"ArmRAnimeBase.h"
+#include"ArmRAnimeMid.h"
+#include"ArmRAnimeFront.h"
 
 //ワールド座標で管理
 
 class Player {
-
-
-	//-----------------------------
-	//privateメソッド
-	//-----------------------------
-	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
-	void ShootSnowball(SnowBallManager *snowBallManager);
-
-	void MakeBall();
-	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
-	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
-	SnowBallInitValue MakeSnowBallInitValue(void);
-
 public:
 	Player();
 	~Player();
@@ -34,10 +24,9 @@ public:
 	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
 
 private:
-	XFILE shoesMesh;
-	D3DXMATRIX mat, transMat, rotMat;
+	D3DXMATRIX transMat, rotMatY, rotMatX;
 	D3DXVECTOR3 pos;
-	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, 3.0f, 0.0f);
+	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, -2.0f, 0.0f);		//カメラの位置からの距離
 	int remainingBalls;		//残弾数
 	//-----------------------------
 	//雪玉投擲関連
@@ -46,11 +35,17 @@ private:
 	static const float MaxPowerTime;		//最大溜めまでにかかる時間
 
 	//-----------------------------
+	//靴
+	//-----------------------------
+	XFILE shoesMesh;
+	D3DXMATRIX shoesMat, shoesOffsetMat;
+
+	//-----------------------------
 	//腕
 	//-----------------------------
 	XFILE armMeshR;
 	D3DXMATRIX armOffsetMatR, armRotMatXR, armMatR;
-	float armAng;
+	ArmRAnimeBase *ArmRAnime;
 
 	//-----------------------------
 	//作成中の雪玉
@@ -63,4 +58,15 @@ private:
 
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列			//ポインタ型で宣言しなかったら動く　なぜ？
 	LPDIRECT3DTEXTURE9 GhostTex;
+
+	//-----------------------------
+	//privateメソッド
+	//-----------------------------
+	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
+	void ShootSnowball(SnowBallManager *snowBallManager);
+
+	void MakeBall();
+	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
+	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
+	SnowBallInitValue MakeSnowBallInitValue(void);
 };

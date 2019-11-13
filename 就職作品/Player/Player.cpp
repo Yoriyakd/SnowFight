@@ -5,8 +5,6 @@
 extern ResourceManager *resourceManager;
 const float Player::MaxPowerTime = 1.5f;
 
-
-
 //=====================================
 //publicメソッド
 //=====================================
@@ -16,73 +14,75 @@ Player::Player()
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
-	int StartBallCnt = 10;	//スタート時のボールの数 プレイヤーの強化のデータを拾ってきて入れるようにする
+	int StartBallCnt = 10;	//スタート時のボールの数
 
-	//moveSpeed = 0.5;		//移動速度
-	shoesMesh = resourceManager->GetXFILE("player.x");
 
 	remainingBalls = StartBallCnt;
-	
-	//pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//スタートポイント
-	D3DXMatrixIdentity(&mat);
 
 	GhostTex = resourceManager->GetTexture("Locus.png", 64, 64, NULL);
 
 	//--------------------------------------------------------------
+	//靴
+	//--------------------------------------------------------------
+	shoesMesh = resourceManager->GetXFILE("Shoes.x");
+	D3DXMatrixTranslation(&shoesOffsetMat, 0, -5, 0);			//プレイヤーといくら離すか
+
+	//--------------------------------------------------------------
 	//腕
 	//--------------------------------------------------------------
-	//armMeshR = resourceManager->GetXFILE("ArmR.x");
-	//D3DXMatrixTranslation(&armOffsetMatR, 1.0f, -2.0f, 0.0f);		//プレイヤーの原点からの距離
+	armMeshR = resourceManager->GetXFILE("ArmR.x");
+	D3DXMatrixTranslation(&armOffsetMatR, 1.5f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
+	ArmRAnime = new ArmRAnimeFront(&armOffsetMatR);
 	
-	/*armAng = 0.0f;
-	D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));*/
-
 	//--------------------------------------------------------------
 	//雪玉
 	//--------------------------------------------------------------
 	ballMesh = resourceManager->GetXFILE("SnowBall.x");
-	D3DXMatrixTranslation(&ballOffsetMat, 0, 2, 3);		//プレイヤーとどれぐらい離れているか
+	D3DXMatrixTranslation(&ballOffsetMat, 0, -3, 3);		//プレイヤーといくら離すか
 }
 
 Player::~Player()
 {
-
+	delete ArmRAnime;
 }
 
 bool Player::Update(SnowBallManager *snowBallManager)
 {
-	pos = pPlayerCam->GetPos();
-	pos.y = 0;
+	pos = pPlayerCam->GetPos();		//カメラの座標をセット
+	//pos = D3DXVECTOR3(0, 5, 0);		//デバック用☆
+	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
+	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(pPlayerCam->GetCamAngY()));		//カメラの回転から行列作成
+	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
+
 
 	ShootSnowball(snowBallManager);
 	MakeBall();
 
 	//-------------------------------------------------------
-	//プレイヤーの行列作成
+	//靴の行列作成
 	//-------------------------------------------------------
-	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
-	D3DXMatrixRotationY(&rotMat, D3DXToRadian(pPlayerCam->GetCamAngY()));
-	mat = rotMat * transMat;		//Y軸のみ
+	shoesMat = shoesOffsetMat * rotMatY * transMat;		//Y軸のみ回転
 
 	//-------------------------------------------------------
 	//腕の行列作成
 	//-------------------------------------------------------
-	/*D3DXMATRIX ParentMat, ParentRotX, ParentRotY, pRot, camTrans;
-	camTrans = transMat;
-	camTrans._42 += 5;
+	if (ArmRAnime != nullptr)
+	{
+		ArmRAnimeBase *NextAnime;
+		NextAnime = ArmRAnime->Anime(&armOffsetMatR);
+		if (NextAnime != nullptr)
+		{
+			delete ArmRAnime;
+			ArmRAnime = NextAnime;
+		}
+	}
 	
-	D3DXMatrixRotationX(&ParentRotX, D3DXToRadian(pPlayerCam->GetCamAngX()));
-	D3DXMatrixRotationY(&ParentRotY, D3DXToRadian(pPlayerCam->GetCamAngY()));
-
-	D3DXVECTOR3 armOffsetVec(1.0f, -2.0f, 0.0f);
-	pRot = ParentRotX * ParentRotY;
-	D3DXVec3TransformNormal(&armOffsetVec, &armOffsetVec, &pRot);
-	D3DXMatrixTranslation(&armOffsetMatR, armOffsetVec.x, armOffsetVec.y, armOffsetVec.z);
-
-	armMatR = armOffsetMatR * pRot * camTrans;*/
+	armMatR = armOffsetMatR * rotMatX * rotMatY * transMat;
 	 
-
-
+	//-------------------------------------------------------
+	//作成中の雪玉行列作成
+	//-------------------------------------------------------
+	ballMat = ballScalMat * ballOffsetMat * rotMatY * transMat;
 
 	if (GetAsyncKeyState('O') & 0x8000)		//デバッグ ☆
 	{
@@ -101,12 +101,12 @@ void Player::SetCamera(void)
 void Player::Draw(void)
 {
 	//--------------------------------------------------------------
-	//プレイヤー表示
+	//靴表示
 	//--------------------------------------------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &shoesMat);
 	DrawMesh(&shoesMesh);
 
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -114,8 +114,8 @@ void Player::Draw(void)
 	//--------------------------------------------------------------
 	//腕表示
 	//--------------------------------------------------------------
-	/*lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
-	DrawMesh(&armMeshR);*/
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
+	DrawMesh(&armMeshR);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
@@ -123,7 +123,6 @@ void Player::Draw(void)
 	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 
-	ballMat = ballScalMat * ballOffsetMat * mat;
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
 	DrawMesh(&ballMesh);
 
@@ -148,7 +147,7 @@ void Player::Draw(void)
 
 	for (unsigned int i = 0; i < (ghostMat.size() - 1); i++)
 	{
-		if (ghostMat.size() == 0)
+		if (ghostMat.size() == 0)		//軌跡が作られていない時は描画しない
 		{
 			break;
 		}
@@ -158,7 +157,7 @@ void Player::Draw(void)
 		vertex[3].Tex = D3DXVECTOR2(0.0f, (float)(i + 1) / (ghostMat.size() - 1));
 
 
-		D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f),&ghostMat[i]);		//ポインタ型で宣言していたらPosぼ値がnanになっていた
+		D3DXVec3TransformCoord(&vertex[0].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f),&ghostMat[i]);
 		D3DXVec3TransformCoord(&vertex[1].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i]);
 		D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
 		D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
@@ -218,20 +217,10 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 				shootPowerPCT = 30 + 50 * (timeCnt / (MaxPowerTime * GameFPS));		//30や50は何となくで決めている
 			}
 
-
 			//--------------------------------------------------
 			//雪玉軌跡表示処理
 			//--------------------------------------------------
-
 			MakeGhostMat(&MakeSnowBallInitValue());
-
-			////--------------------------------------------------
-			////腕回転処理
-			////--------------------------------------------------
-			//static const float MaxAng = 120;
-			//armAng = MaxAng * (timeCnt / (MaxPowerTime * GameFPS));
-
-			//D3DXMatrixRotationX(&armRotMatXR, D3DXToRadian(-armAng));
 
 		}
 		else
@@ -326,7 +315,7 @@ SnowBallInitValue Player::MakeSnowBallInitValue()
 	D3DXVECTOR3 ShootOffset;	//回転を考慮した座標を入れる
 	SnowBallInitValue _SnowBallInitValue;
 
-	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMat);	//回転を考慮したベクトル作成
+	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 	_SnowBallInitValue.shootPos = pos + ShootOffset;
 	_SnowBallInitValue.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
