@@ -22,6 +22,13 @@ private:
 	const float maxLength = 40.0f, minLength = 15.0f;						//交戦時の距離の最大最小範囲
 	float limitLength;		//交戦時取る距離
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//交戦時の移動		球発射時は止まるようにする
+
+	//---------------------------------------
+	//被弾エフェクト用
+	//---------------------------------------
+	D3DCOLORVALUE color;
+	bool damageFlag;
+	int damageEffectCnt;
 protected:
 	int HP;		//体力	雪玉1発で1減少
 

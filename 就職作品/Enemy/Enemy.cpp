@@ -248,6 +248,12 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//minLength~maxLength‚ÌŠÔ‚Å‰Šú‰»	Å‘å’l‚ªmaxLength‚É‚È‚é‚æ‚¤‚É+1‚µ‚Ä‚¢‚é
 
 	HP = 5;
+
+	color.a = 255;
+	color.r = 255;
+	color.g = 0;
+	color.b = 0;
+	damageFlag = false;
 }
 
 Enemy::~Enemy()
@@ -275,6 +281,17 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 	}
 
 	StageBorderProcessing();			//ˆÚ“®ˆ—‚Ì‚ ‚Æ‚ÉŒÄ‚Ô
+
+	if (damageFlag == true)
+	{
+		damageEffectCnt--;
+		{
+			if (damageEffectCnt < 0)
+			{
+				damageFlag = false;
+			}
+		}
+	}
 	
 	return true;
 }
@@ -282,8 +299,14 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 void Enemy::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	DrawMesh(&mesh);
-
+	if (damageFlag == true)
+	{
+		DrawMesh(&mesh, color);
+	}
+	else
+	{
+		DrawMesh(&mesh);
+	}
 }
 
 D3DXVECTOR3 Enemy::GetPos(void)
@@ -339,6 +362,8 @@ D3DXVECTOR3 Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
 
 bool Enemy::TakeDamage(int Damage)
 {
+	damageFlag = true;
+	damageEffectCnt = 10;	//10ƒtƒŒ[ƒ€
 	HP -= Damage;
 	if (HP <= 0)
 	{

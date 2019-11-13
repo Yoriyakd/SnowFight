@@ -2,32 +2,20 @@ Metasequoia Document
 Format Text Ver 1.0
 
 Scene {
-	pos 185.8039 -223.8286 1500.0000
+	pos -22.0372 156.1841 1500.0000
 	lookat 0.0000 0.0000 0.0000
-	head 0.0000
-	pich 0.0000
-	bank 0.0000
+	head -6.7100
+	pich 0.4100
 	ortho 0
-	zoom2 1.8001
+	zoom2 0.2747
 	amb 0.250 0.250 0.250
-	dirlights 1 {
-		light {
-			dir 0.408 0.408 0.816
-			color 1.000 1.000 1.000
-		}
-	}
 }
 Material 3 {
-	"mat1" shader(3) col(0.000 0.000 0.000 1.000) dif(0.800) amb(0.600) emi(0.400) spc(0.700) power(11.00)
-	"mat2" shader(3) col(1.000 0.549 0.000 0.950) dif(0.800) amb(0.600) emi(0.630) spc(0.800) power(5.00)
-	"mat3" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.700) spc(0.120) power(23.00)
+	"mat1" col(0.000 0.000 0.000 1.000) dif(0.800) amb(0.600) emi(0.400) spc(0.700) power(11.00)
+	"mat2" col(1.000 0.549 0.000 0.950) dif(0.800) amb(0.600) emi(0.630) spc(0.800) power(5.00)
+	"mat3" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.700) spc(0.120) power(23.00)
 }
 Object "body" {
-	depth 0
-	folding 0
-	scale 1.000000 1.000000 1.000000
-	rotation 0.000000 0.000000 0.000000
-	translation 0.000000 0.000000 0.000000
 	visible 15
 	locking 0
 	shading 1
@@ -681,11 +669,6 @@ Object "body" {
 	}
 }
 Object "arm" {
-	depth 0
-	folding 0
-	scale 1.000000 1.000000 1.000000
-	rotation 0.000000 0.000000 0.000000
-	translation 0.000000 0.000000 0.000000
 	visible 15
 	locking 0
 	shading 1

@@ -70,6 +70,7 @@ struct StageBorder
 };
 
 void DrawMesh(XFILE *XFile);
+void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color);
 
 //‹…“¯Žm‚Ì“–‚½‚è”»’è
 bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);

@@ -46,6 +46,21 @@ void DrawMesh(XFILE *XFile)
 	}
 }
 
+void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color)
+{
+	for (DWORD i = 0; i < XFile->NumMaterial; i++)
+	{
+		//XFILE  TmpXFILE;
+		D3DMATERIAL9 TmpMat;
+		TmpMat = *XFile->Mat;
+		TmpMat.Emissive = Color;
+
+		lpD3DDevice->SetMaterial(&(TmpMat));
+		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
+		XFile->lpMesh->DrawSubset(i);
+	}
+}
+
 //座標、半径、座標、半径
 //戻り値　HIT == true 当たってなかったら == falsle
 bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)

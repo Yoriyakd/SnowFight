@@ -6,9 +6,12 @@ Scene {
 	lookat 0.0000 0.0000 0.0000
 	head -12.7901
 	pich 0.5208
-	ortho 1
+	ortho 0
 	zoom2 1.3166
 	amb 0.250 0.250 0.250
+}
+Material 1 {
+	"mat1" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 }
 Object "obj1" {
 	visible 15
