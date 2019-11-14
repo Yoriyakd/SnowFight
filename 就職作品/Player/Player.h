@@ -5,9 +5,10 @@
 #include"../commonObj/SnowBall.h"
 #include"../commonObj/SnowBallManager.h"
 #include"PlayerCamera.h"
-#include"ArmRAnimeBase.h"
+#include"ArmAnimeBase.h"
 #include"ArmRAnimeMid.h"
-#include"ArmRAnimeFront.h"
+#include"ThrowRAnime.h"
+#include"WindUpRAnime.h"
 
 //ÉèÅ[ÉãÉhç¿ïWÇ≈ä«óù
 
@@ -45,7 +46,7 @@ private:
 	//-----------------------------
 	XFILE armMeshR;
 	D3DXMATRIX armOffsetMatR, armRotMatXR, armMatR;
-	ArmRAnimeBase *ArmRAnime;
+	ArmAnimeBase *ArmRAnime;
 
 	//-----------------------------
 	//çÏê¨íÜÇÃê·ã 

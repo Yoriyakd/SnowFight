@@ -1,10 +1,10 @@
 #pragma once
-#include"ArmRAnimeBase.h"
-class ArmRAnimeMid :public ArmRAnimeBase {
+#include"ArmAnimeBase.h"
+class ArmRAnimeMid :public ArmAnimeBase {
 private:
 	const static float AnimeSpeed;
 public:
 	ArmRAnimeMid(D3DXMATRIX *StartMat);
 	~ArmRAnimeMid();
-	ArmRAnimeBase* Anime(D3DXMATRIX *NowMat);
+	ArmAnimeBase* Anime(D3DXMATRIX *NowMat);
 };

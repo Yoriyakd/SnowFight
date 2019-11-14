@@ -123,6 +123,12 @@
     <ClCompile Include="Player\ArmRAnimeMid.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Player\ThrowRAnime.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\WindUpRAnime.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -212,13 +218,19 @@
     <ClInclude Include="Player\PlayerCamera.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player\ArmRAnimeBase.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Player\ArmRAnimeFront.h">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\ArmRAnimeMid.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmAnimeBase.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ThrowRAnime.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\WindUpRAnime.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>

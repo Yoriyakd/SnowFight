@@ -80,3 +80,6 @@ bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPo
 
 //SnowBallInitValueを渡すと移動ベクトルが返ってきて発射位置の行列作成ができる
 D3DXVECTOR3 SnowBallInit(SnowBallInitValue* SnowBallInitValue, D3DXMATRIX *Mat);
+
+//クオータニオンでアニメーションする関数	第一引数に加工した行列が入る
+void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float AnimeFrame);

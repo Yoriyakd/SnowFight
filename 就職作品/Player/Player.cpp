@@ -32,7 +32,6 @@ Player::Player()
 	//--------------------------------------------------------------
 	armMeshR = resourceManager->GetXFILE("ArmR.x");
 	D3DXMatrixTranslation(&armOffsetMatR, 1.5f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
-	ArmRAnime = new ArmRAnimeFront(&armOffsetMatR);
 	
 	//--------------------------------------------------------------
 	//雪玉
@@ -68,7 +67,7 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	//-------------------------------------------------------
 	if (ArmRAnime != nullptr)
 	{
-		ArmRAnimeBase *NextAnime;
+		ArmAnimeBase *NextAnime;
 		NextAnime = ArmRAnime->Anime(&armOffsetMatR);
 		if (NextAnime != nullptr)
 		{
@@ -201,6 +200,7 @@ void Player::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
 void Player::ShootSnowball(SnowBallManager *snowBallManager)
 {
 	static bool LKyeFlag = false;
+	static bool AnimeFlag = false;
 
 	if (remainingBalls > 0) {
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
@@ -221,6 +221,13 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			//雪玉軌跡表示処理
 			//--------------------------------------------------
 			MakeGhostMat(&MakeSnowBallInitValue());
+		
+			//腕アニメーション
+			if (AnimeFlag == false)
+			{
+				AnimeFlag = true;
+				ArmRAnime = new WindUpRAnime(&armOffsetMatR);
+			}
 
 		}
 		else
@@ -233,6 +240,10 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 				timeCnt = 0;
 				LKyeFlag = false;
 				remainingBalls--;		//発射したら残数を1減らす
+
+				//腕アニメーション
+				AnimeFlag = false;
+				ArmRAnime = new ThrowRAnime(&armOffsetMatR);
 			}
 		}
 	}

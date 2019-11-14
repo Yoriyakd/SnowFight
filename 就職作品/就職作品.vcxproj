@@ -213,6 +213,8 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp" />
+    <ClCompile Include="Player\ThrowRAnime.cpp" />
+    <ClCompile Include="Player\WindUpRAnime.cpp" />
     <ClCompile Include="ResourceManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -258,8 +260,10 @@
     <ClInclude Include="Player\ArmRAnimeFront.h" />
     <ClInclude Include="Player\ArmRAnimeMid.h" />
     <ClInclude Include="Player\Player.h" />
-    <ClInclude Include="Player\ArmRAnimeBase.h" />
+    <ClInclude Include="Player\ArmAnimeBase.h" />
     <ClInclude Include="Player\PlayerCamera.h" />
+    <ClInclude Include="Player\ThrowRAnime.h" />
+    <ClInclude Include="Player\WindUpRAnime.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />

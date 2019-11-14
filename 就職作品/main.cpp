@@ -108,6 +108,32 @@ D3DXVECTOR3 SnowBallInit(SnowBallInitValue* snowBallInitValue, D3DXMATRIX *Mat)
 	return moveVec;
 }
 
+void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float AnimeFrame)
+{
+	D3DXQUATERNION StartQua, NowQua, EndQua;
+
+	//行列をクオータニオンに変換
+
+	D3DXQuaternionRotationMatrix(&NowQua, NowMat);
+	D3DXQuaternionRotationMatrix(&StartQua, StartMat);
+	D3DXQuaternionRotationMatrix(&EndQua, EndMat);
+
+	D3DXQuaternionSlerp(&NowQua, &StartQua, &EndQua, AnimeFrame);
+
+	D3DXMatrixRotationQuaternion(OutMat, &NowQua);
+
+	D3DXVECTOR3 StartPos, NowPos, EndPos;
+
+	StartPos = D3DXVECTOR3(StartMat->_41, StartMat->_42, StartMat->_43);
+	EndPos = D3DXVECTOR3(EndMat->_41, EndMat->_42, EndMat->_43);
+
+	D3DXVec3Lerp(&NowPos, &StartPos, &EndPos, AnimeFrame);
+
+	OutMat->_41 = NowPos.x;
+	OutMat->_42 = NowPos.y;
+	OutMat->_43 = NowPos.z;
+}
+
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 

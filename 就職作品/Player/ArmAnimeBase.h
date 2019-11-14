@@ -1,9 +1,10 @@
 #pragma once
 #include"../main.h"
-class ArmRAnimeBase {
+class ArmAnimeBase {
 protected:
 	D3DXMATRIX endMat, startMat;
 	float animeFrame;
+	float animeSpeed;
 public:
-	virtual ArmRAnimeBase* Anime(D3DXMATRIX *NowMat) = 0;
+	virtual ArmAnimeBase* Anime(D3DXMATRIX *NowMat) = 0;
 };
