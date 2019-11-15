@@ -15,6 +15,7 @@
 #include"../commonObj/SnowBallManager.h"
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
+#include"EventManager.h"
 
 
 class GameScene : public SceneBase {
@@ -33,9 +34,9 @@ private:
 	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
 	MapObjManager *mapObjManager;
-	CollisionObserver *collisionObserver;
-	SetEnemies *setEnemies;
+	CollisionObserver *collisionObserver;	
 	PlayerCamera *playerCam;
+	EventManager *eventManager;
 
 	float stageSizeX, stageSizeZ;		//ステージのサイズ	stageボーダーだけでよさそう
 };
@@ -43,4 +44,5 @@ private:
 extern EnemyManager *enemyManager;
 extern Player *player;
 extern StageBorder stageBorder;
+extern SetEnemies *setEnemies;
 extern const float Gravity;

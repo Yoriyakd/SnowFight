@@ -5,8 +5,7 @@ EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
 StageBorder stageBorder;
-const float StageBorderOffsetX = 15.0f;			//外周までの距離
-const float StageBorderOffsetZ = 15.0f;			//外周までの距離
+SetEnemies *setEnemies;
 const float Gravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
@@ -22,6 +21,7 @@ GameScene::GameScene(int StageNo)
 	mapObjManager = new MapObjManager();
 	collisionObserver = new CollisionObserver();
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
+	eventManager = new EventManager();
 
 	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
 
@@ -30,15 +30,15 @@ GameScene::GameScene(int StageNo)
 	//-------------------------------------------------------
 	//ステージの境界を求める
 	//-------------------------------------------------------
-	stageBorder.Top = stageSizeZ + StageBorderOffsetZ;
-	stageBorder.Bottom = -1 * StageBorderOffsetZ;
-	stageBorder.Left = -1 * StageBorderOffsetX;
-	stageBorder.Right = stageSizeX + StageBorderOffsetX;
+	stageBorder.Top = stageSizeZ;
+	stageBorder.Bottom = 0;
+	stageBorder.Left = 0;
+	stageBorder.Right = stageSizeX ;
 	//-------------------------------------------------------
 
-	fenceManager = new FenceManager(FenceCntX, FenceCntY, StageBorderOffsetX, StageBorderOffsetZ);		//ステージの境界データをもらうよう変更する
-	fenceManager->SetStageSize(stageSizeX, stageSizeZ);
-	fenceManager->SetFence();		//フェンスを配置
+	//fenceManager = new FenceManager(FenceCntX, FenceCntY, stageSizeX, stageSizeZ);		//ステージの境界データをもらうよう変更する
+	//fenceManager->SetStageSize(stageSizeX, stageSizeZ);
+	//fenceManager->SetFence();		//フェンスを配置
 
 	playerCam->SetStageBorder(stageBorder);		//ステージの境界データをセット
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
@@ -48,10 +48,6 @@ GameScene::GameScene(int StageNo)
 	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
 	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test　☆
 
-	for (int i = 0; i <  loadStageData->GetEnemyNum(); i++)
-	{
-		enemyManager->SetEnemy(loadStageData->GetEnemyData(i));			//enemyManagerがインスタンスを作成する
-	}
 
 	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -88,6 +84,7 @@ GameScene::~GameScene()
 	delete snowBallManager;
 	delete mapObjManager;
 	delete collisionObserver;
+	delete eventManager;
 }
 
 void GameScene::Render3D(void)
@@ -117,11 +114,13 @@ bool GameScene::Update()
 	{
 		setEnemies->SetEnemy();
 	}
+
 	enemyManager->Update(snowBallManager);
 	playerCam->Update();
 	player->Update(snowBallManager);		//カメラを更新してから
 	snowBallManager->Update();
 	effectManager->Update();
+	eventManager->Update();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
