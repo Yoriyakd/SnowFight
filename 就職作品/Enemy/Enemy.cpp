@@ -249,11 +249,11 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 
 	HP = 5;
 
-	color.a = 255;
+	/*color.a = 255;	☆
 	color.r = 255;
 	color.g = 0;
 	color.b = 0;
-	damageFlag = false;
+	damageFlag = false;*/
 }
 
 Enemy::~Enemy()
@@ -282,7 +282,7 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 
 	StageBorderProcessing();			//移動処理のあとに呼ぶ
 
-	if (damageFlag == true)
+	/*if (damageFlag == true)		☆
 	{
 		damageEffectCnt--;
 		{
@@ -291,7 +291,7 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 				damageFlag = false;
 			}
 		}
-	}
+	}*/
 	
 	return true;
 }
@@ -299,14 +299,7 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 void Enemy::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	if (damageFlag == true)
-	{
-		DrawMesh(&mesh, color);
-	}
-	else
-	{
-		DrawMesh(&mesh);
-	}
+	DrawMesh(&mesh);
 }
 
 D3DXVECTOR3 Enemy::GetPos(void)
@@ -362,8 +355,8 @@ D3DXVECTOR3 Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
 
 bool Enemy::TakeDamage(int Damage)
 {
-	damageFlag = true;
-	damageEffectCnt = 10;	//10フレーム
+	//damageFlag = true;
+	//damageEffectCnt = 10;	//10フレーム
 	HP -= Damage;
 	if (HP <= 0)
 	{

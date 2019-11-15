@@ -26,9 +26,8 @@ private:
 	//---------------------------------------
 	//被弾エフェクト用
 	//---------------------------------------
-	D3DCOLORVALUE color;
-	bool damageFlag;
-	int damageEffectCnt;
+	//bool damageFlag;		☆
+	//int damageEffectCnt;
 protected:
 	int HP;		//体力	雪玉1発で1減少
 
