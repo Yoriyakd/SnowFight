@@ -111,6 +111,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObjManager * Ma
 {
 	D3DXVECTOR3 PlayerPos, MoveVec;
 	PlayerPos = PlayerCam->GetPos();
+	PlayerPos.y = 0;				//YÀ•W‚ª“ª‚ÌˆÊ’u‚È‚Ì‚Å•ÏX
 	MoveVec = PlayerCam->GetmoveVec();
 	
 	for (unsigned int i = 0; i < MapObjManager->mapObj.size(); i++)
