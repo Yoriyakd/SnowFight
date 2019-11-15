@@ -1,30 +1,28 @@
 #include "ThrowRAnime.h"
 #include"ArmRAnimeMid.h"
 
-ThrowRAnime::ThrowRAnime(D3DXMATRIX *StartMat)
+ThrowRAnime::ThrowRAnime()
 {
-	startMat = *StartMat;
-	animeSpeed = 0.2;		//Ä¶‘¬“x
-	animeFrame = 0.0f;
-
-	D3DXMATRIX EndRotXTmp, EndTransTmp;
-
-	D3DXMatrixRotationX(&EndRotXTmp, D3DXToRadian(30));
-	
-	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -3.0f, 3.0f);		//ƒJƒƒ‰‚©‚ç‚Ì‹——£
-
-	endMat = EndRotXTmp * EndTransTmp;
+	atOneceRot = -11;
+	nowAng = 0;
+	endAng = -150;
 }
 
 ArmAnimeBase *ThrowRAnime::Anime(D3DXMATRIX *NowMat)
 {
-	animeFrame += animeSpeed;
+	NowMat->_42 += -0.05;
+	NowMat->_43 = 2.5f;
+	
+	nowAng += atOneceRot;
 
-	QuaternionAnime(NowMat, NowMat, &startMat, &endMat, animeFrame);
+	D3DXMATRIX RotXTmp;
 
-	if (animeFrame >= 1)
+	D3DXMatrixRotationX(&RotXTmp, D3DXToRadian(atOneceRot));
+
+	*NowMat = RotXTmp * *NowMat;
+
+	if (nowAng <= endAng)
 	{
-		animeFrame = 1;
 		return new ArmRAnimeMid(NowMat);
 	}
 	return nullptr;

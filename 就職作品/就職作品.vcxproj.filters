@@ -129,6 +129,12 @@
     <ClCompile Include="Player\WindUpRAnime.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Player\ArmLWalkAnime.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\WindUpLAnime.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -231,6 +237,12 @@
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\WindUpRAnime.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmLWalkAnime.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\WindUpLAnime.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>

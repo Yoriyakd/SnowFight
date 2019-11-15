@@ -7,7 +7,7 @@ ArmRAnimeMid::ArmRAnimeMid(D3DXMATRIX *StartMat)
 	animeFrame = 0.0f;
 	D3DXMATRIX EndRotTmp, EndTransTmp;
 
-	D3DXMatrixRotationX(&EndRotTmp, D3DXToRadian(0));
+	D3DXMatrixRotationZ(&EndRotTmp, D3DXToRadian(30));
 	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -1.5f, 3.0f);		//カメラからの距離
 	
 	endMat = EndRotTmp * EndTransTmp;		//歩きモーションの終わり

@@ -30,8 +30,17 @@ Player::Player()
 	//--------------------------------------------------------------
 	//腕
 	//--------------------------------------------------------------
-	armMeshR = resourceManager->GetXFILE("ArmR.x");
-	D3DXMatrixTranslation(&armOffsetMatR, 1.5f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
+	armRMesh = resourceManager->GetXFILE("ArmR.x");
+
+	D3DXMATRIX TmpRotZ, TmpTransMat;
+	D3DXMatrixTranslation(&TmpTransMat, 1.5f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
+	
+
+	D3DXMatrixRotationZ(&TmpRotZ, D3DXToRadian(30));
+	armROffsetMat = TmpRotZ * TmpTransMat;
+
+	armLMesh = resourceManager->GetXFILE("ArmL.x");
+	D3DXMatrixTranslation(&armLOffsetMat, -2.5, -1.0, 0.0f);
 	
 	//--------------------------------------------------------------
 	//雪玉
@@ -47,8 +56,23 @@ Player::~Player()
 
 bool Player::Update(SnowBallManager *snowBallManager)
 {
-	pos = pPlayerCam->GetPos();		//カメラの座標をセット
+	D3DXVECTOR3 NewPos;
+	NewPos = pPlayerCam->GetPos();		//カメラの座標をセット
+
+	if (pos == NewPos)		//動いているかどうか判定
+	{
+		pos = NewPos;
+		walkFlag = true;
+		//ArmLAnime = new ArmLWalkAnime()
+	}
+	else
+	{
+		pos = NewPos;
+		walkFlag = false;
+	}
+
 	//pos = D3DXVECTOR3(0, 5, 0);		//デバック用☆
+
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(pPlayerCam->GetCamAngY()));		//カメラの回転から行列作成
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
@@ -68,7 +92,7 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	if (ArmRAnime != nullptr)
 	{
 		ArmAnimeBase *NextAnime;
-		NextAnime = ArmRAnime->Anime(&armOffsetMatR);
+		NextAnime = ArmRAnime->Anime(&armROffsetMat);
 		if (NextAnime != nullptr)
 		{
 			delete ArmRAnime;
@@ -76,7 +100,8 @@ bool Player::Update(SnowBallManager *snowBallManager)
 		}
 	}
 	
-	armMatR = armOffsetMatR * rotMatX * rotMatY * transMat;
+	armRMat = armROffsetMat * rotMatX * rotMatY * transMat;		//カメラからの距離の距離の行列にカメラの行列から作った行列を合成してプレイヤーについていかせる
+	armLMat = armLOffsetMat * rotMatY * transMat;
 	 
 	//-------------------------------------------------------
 	//作成中の雪玉行列作成
@@ -113,8 +138,11 @@ void Player::Draw(void)
 	//--------------------------------------------------------------
 	//腕表示
 	//--------------------------------------------------------------
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armMatR);
-	DrawMesh(&armMeshR);
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &armRMat);
+	DrawMesh(&armRMesh);
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
+	DrawMesh(&armLMesh);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
@@ -226,7 +254,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			if (AnimeFlag == false)
 			{
 				AnimeFlag = true;
-				ArmRAnime = new WindUpRAnime(&armOffsetMatR);
+				ArmRAnime = new WindUpRAnime(&armROffsetMat);
 			}
 
 		}
@@ -243,7 +271,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 
 				//腕アニメーション
 				AnimeFlag = false;
-				ArmRAnime = new ThrowRAnime(&armOffsetMatR);
+				ArmRAnime = new ThrowRAnime();
 			}
 		}
 	}

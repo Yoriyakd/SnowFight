@@ -9,6 +9,7 @@
 #include"ArmRAnimeMid.h"
 #include"ThrowRAnime.h"
 #include"WindUpRAnime.h"
+#include"ArmLWalkAnime.h"
 
 //ワールド座標で管理
 
@@ -44,9 +45,15 @@ private:
 	//-----------------------------
 	//腕
 	//-----------------------------
-	XFILE armMeshR;
-	D3DXMATRIX armOffsetMatR, armRotMatXR, armMatR;
-	ArmAnimeBase *ArmRAnime;
+	XFILE armRMesh;
+	D3DXMATRIX armROffsetMat, armRMat;
+	ArmAnimeBase *ArmRAnime;		//右腕のアニメーション
+
+	XFILE armLMesh;
+	D3DXMATRIX armLOffsetMat, armLMat;
+	ArmAnimeBase *ArmLAnime;		//左腕のアニメーション
+
+	bool walkFlag;
 
 	//-----------------------------
 	//作成中の雪玉

@@ -3,14 +3,14 @@
 WindUpRAnime::WindUpRAnime(D3DXMATRIX *StartMat)
 {
 	startMat = *StartMat;
-	animeSpeed = 0.01;		//再生速度
+	animeSpeed = 0.2;		//再生速度
 	animeFrame = 0.0f;
 
 	D3DXMATRIX EndRotXTmp, EndRotYTmp, EndTransTmp;
 
 	D3DXMatrixRotationX(&EndRotXTmp, D3DXToRadian(-90));
-	D3DXMatrixRotationY(&EndRotYTmp, D3DXToRadian(120));
-	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -1.5f, 2.0f);		//カメラからの距離
+	D3DXMatrixRotationY(&EndRotYTmp, D3DXToRadian(150));
+	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -1.5f, 0.0f);		//カメラからの距離
 
 	endMat = EndRotXTmp * EndRotYTmp * EndTransTmp;		//前振りの終端
 }
