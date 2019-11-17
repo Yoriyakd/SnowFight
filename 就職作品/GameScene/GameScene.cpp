@@ -23,7 +23,7 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	eventManager = new EventManager();
 
-	int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
+	//int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
 
 	loadStageData->GetStageSize(&stageSizeX, &stageSizeZ);
 
@@ -80,7 +80,7 @@ GameScene::~GameScene()
 	delete ground;
 	delete enemyManager;
 	delete skyBox;
-	delete fenceManager;
+	//delete fenceManager;
 	delete snowBallManager;
 	delete mapObjManager;
 	delete collisionObserver;
@@ -91,7 +91,7 @@ void GameScene::Render3D(void)
 {
 	skyBox->Draw();
 	ground->Draw();
-	fenceManager->Draw();
+	//fenceManager->Draw();
 	mapObjManager->Draw();
 	enemyManager->Draw();
 	player->Draw();

@@ -8,7 +8,7 @@
 class ResourceManager
 {
 private:
-	std::map<std::string, XFILE> XFILEList;
+	std::map<std::string, XFILE> XFILEList;				//ポインタ型で宣言するように変える		ポインタ型で宣言した場合そのポインタ変数の削除が必要
 	std::map<std::string, LPDIRECT3DTEXTURE9> TextureList;
 	void AllDelete(void);
 public:

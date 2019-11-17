@@ -28,6 +28,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{9d425ce3-b490-4421-989a-612def3fbc0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{62b90d34-d5a7-4598-b8a4-d4f17a6a79e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,9 +40,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SceanSwitcher\SceneBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene\GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
@@ -93,9 +93,6 @@
     <ClCompile Include="Effect\Locus.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\SetEnemies.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapObj.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -135,15 +132,24 @@
     <ClCompile Include="Player\WindUpLAnime.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\GameScene.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\WavePattern1.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\EventManager.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\SetEnemies.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SceanSwitcher\SceneBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -200,9 +206,6 @@
     <ClInclude Include="Effect\Locus.h">
       <Filter>Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\SetEnemies.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapObj.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -244,6 +247,21 @@
     </ClInclude>
     <ClInclude Include="Player\WindUpLAnime.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\GameScene.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\EventManager.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\WavePatternBase.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\WavePattern1.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\SetEnemies.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

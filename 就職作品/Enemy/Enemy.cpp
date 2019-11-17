@@ -326,7 +326,7 @@ void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphe
 	CollisionSphereB->radius = 3;
 }
 
-D3DXVECTOR3 Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
+void Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
 {
 
 	D3DXVECTOR3 TargetVec;
@@ -346,10 +346,6 @@ D3DXVECTOR3 Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
 		D3DXMatrixTranslation(&TmpMat, TargetVec.x, TargetVec.y, TargetVec.z);
 
 		mat = mat * TmpMat;
-	}
-	else
-	{
-		return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 }
 
