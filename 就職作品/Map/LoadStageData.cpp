@@ -13,7 +13,7 @@ void LoadStageData::SetStageMap(void)
 	//ファイルオープン
 	//=================================================================================
 
-	sprintf_s(FileName, sizeof(FileName), "Map/stage%d.txt", nowStageNo);		//ファイルパス作成
+	sprintf_s(FileName, sizeof(FileName), "data/stage%d.txt", nowStageNo);		//ファイルパス作成
 
 	fopen_s(&fp, FileName, "r");	//fopenのセキュリティ強化版らしい
 

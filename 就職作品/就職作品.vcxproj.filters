@@ -57,9 +57,6 @@
     <ClCompile Include="commonObj\SnowBall.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
-    <ClCompile Include="Map\Wall.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnemyManager.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -169,9 +166,6 @@
     </ClInclude>
     <ClInclude Include="commonObj\SnowBall.h">
       <Filter>commonObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Wall.h">
-      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnemyManager.h">
       <Filter>Enemy</Filter>

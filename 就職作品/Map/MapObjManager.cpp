@@ -13,10 +13,6 @@ MapObjManager::~MapObjManager()
 	mapObj.clear();
 }
 
-void MapObjManager::SetWall(D3DXVECTOR3 Pos)
-{
-	mapObj.push_back(new Wall(Pos));
-}
 
 void MapObjManager::SetTree(D3DXVECTOR3 Pos)
 {

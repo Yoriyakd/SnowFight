@@ -200,10 +200,6 @@
     <ClCompile Include="Map\Tree.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\Wall.cpp">
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
     <ClCompile Include="Map\MapObjManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -262,7 +258,6 @@
     <ClInclude Include="Map\MapObj.h" />
     <ClInclude Include="Map\StageFence.h" />
     <ClInclude Include="Map\Tree.h" />
-    <ClInclude Include="Map\Wall.h" />
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Player\ArmLWalkAnime.h" />
     <ClInclude Include="Player\ArmRAnimeFront.h" />
