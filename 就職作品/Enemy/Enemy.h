@@ -40,6 +40,6 @@ public:
 	virtual D3DXMATRIX GetMat(void);
 	virtual XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
-	void CheckOverlapEnemies(D3DXVECTOR3*);
+	D3DXVECTOR3 CheckOverlapEnemies(D3DXVECTOR3*);
 	bool TakeDamage(int Damage);
 };
