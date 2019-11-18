@@ -44,7 +44,7 @@ void TitleScene::Render2D(void)
 
 bool TitleScene::Update(void)
 {
-	if (GetAsyncKeyState('P') & 0x8000)
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
 		sceneSwitcher.SwitchScene(new GameScene(1));
 		return false;
