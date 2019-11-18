@@ -11,7 +11,7 @@ public:
 	EventManager();
 	~EventManager();
 	void Update();
-	WavePatternBase *wavePatternBase;
+	WavePatternBase *wavePattern;
 private:
 	
 };

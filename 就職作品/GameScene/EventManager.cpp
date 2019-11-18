@@ -2,15 +2,25 @@
 
 EventManager::EventManager()
 {
-	wavePatternBase = new WavePattern1();
+	wavePattern = new WavePattern1();
 }
 
 EventManager::~EventManager()
 {
-	delete wavePatternBase;
+	delete wavePattern;
 }
 
 void EventManager::Update()
 {
-	wavePatternBase->WaveProcessing();
+	if (wavePattern != nullptr)
+	{
+		WavePatternBase *NextPattern;
+		NextPattern = wavePattern->WaveProcessing();
+		if (NextPattern != nullptr)
+		{
+			delete wavePattern;
+			wavePattern = NextPattern;
+		}
+	}
+	
 }

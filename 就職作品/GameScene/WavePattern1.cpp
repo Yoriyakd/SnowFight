@@ -4,19 +4,19 @@
 WavePattern1::WavePattern1()
 {
 	nowWaveTime = 0;
-	waveLimit = 30 * GameFPS;
+	waveLimit = 10 * GameFPS;
 }
 
 WavePatternBase * WavePattern1::WaveProcessing(void)
 {
 	nowWaveTime++;
 
-	if (nowWaveTime % 100 == 0)
+	if (nowWaveTime == 5 * GameFPS)
 	{
 		int EnemyCnt = 5;
 		D3DXVECTOR3 SpownPoint;
 
-		//SpownPoint = D3DXVECTOR3(rand() % (int)stageSizeX, 0.0f, rand() % (int)stageSizeZ);
+		SpownPoint = D3DXVECTOR3(rand() % (int)stageBorder->Right, 0.0f, rand() % (int)stageBorder->Top);
 
 
 
@@ -28,5 +28,10 @@ WavePatternBase * WavePattern1::WaveProcessing(void)
 		}
 	}
 	
+	if (nowWaveTime >= waveLimit)
+	{
+		return new WavePattern1();
+	}
+
 	return nullptr;
 }
