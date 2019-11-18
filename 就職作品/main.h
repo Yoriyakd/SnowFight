@@ -69,6 +69,8 @@ struct StageBorder
 	float Right;
 };
 
+enum CollisionDetectionType{Ray, Circles};
+
 void DrawMesh(XFILE *XFile);
 void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color);
 

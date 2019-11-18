@@ -6,8 +6,4 @@ class Tree : public MapObj
 public:
 	Tree(D3DXVECTOR3 Pos);		//’u‚­À•W‚ğ“n‚·
 	~Tree();
-private:
-	D3DXVECTOR3 pos;
 };
-
-
