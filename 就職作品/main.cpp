@@ -198,7 +198,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	SetFocus(hwnd);
 
 	gameFullScreen = false;	// ウィンドウモード
-	if (MessageBox(NULL, "フルスクリーンで起動しますか?", "起動確認", MB_YESNO | MB_ICONQUESTION) == IDYES)
+	if (MessageBox(NULL, "フルスクリーンで起動しますか?", "起動確認", MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION) == IDYES)
 	{
 		gameFullScreen = true;
 	}
