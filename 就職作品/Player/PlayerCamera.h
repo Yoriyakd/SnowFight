@@ -18,7 +18,6 @@ public:
 	//--------------------------------------------------
 	//Setter
 	//--------------------------------------------------
-	void SetStageBorder(StageBorder StageBorder);
 	void PushPos(D3DXVECTOR3 *PushVec);
 
 private:
@@ -39,7 +38,6 @@ private:
 
 	D3DXMATRIX billBoardMat;		//作ったビルボードの行列を入れておく
 	D3DXVECTOR3 moveVec;		//移動ベクトルを保存しておき判定時に渡す
-	StageBorder stageBorder;	//ステージの境界を保存しておく
 	//--------------------------------------------------
 	//メソッド
 	//--------------------------------------------------

@@ -1,6 +1,30 @@
 #include "LoadStageData.h"
 
 //const float LoadStageData::TILE_SIZE = 18.0f;				//éŒ¾‰Šú‰»‚Å‚«‚È‚¢‚Ì‚Å‚±‚±‚Å‰Šú‰»
+//===============================================
+//public
+//===============================================
+
+
+
+LoadStageData::LoadStageData(int StageNo)
+{
+	nowStageNo = StageNo;
+	SetStageMap();
+}
+
+LoadStageData::~LoadStageData()
+{
+
+}
+
+
+void LoadStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
+{
+	*StageSizeX = stageSizeX;
+	*StageSizeZ = stageSizeZ;
+}
+
 
 //===============================================
 //private
@@ -40,27 +64,3 @@ void LoadStageData::SetStageMap(void)
 
 
 
-
-//===============================================
-//public
-//===============================================
-
-
-
-LoadStageData::LoadStageData(int StageNo)
-{
-	nowStageNo = StageNo;
-	SetStageMap();	
-}
-
-LoadStageData::~LoadStageData()
-{
-	
-}
-
-
-void LoadStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
-{
-	*StageSizeX = stageSizeX;
-	*StageSizeZ = stageSizeZ;
-}

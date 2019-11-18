@@ -5,7 +5,6 @@
 #include"Bench.h"
 
 class MapObjManager {
-private:
 public:
 	std::vector<MapObj*> mapObj;
 

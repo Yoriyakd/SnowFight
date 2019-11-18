@@ -10,17 +10,17 @@ struct FenceManagerData {
 };
 
 class FenceManager{
-private:
-	const float blockInterval = 15.0;
-	float stageSizeX, stageSizeZ;
-	std::vector<StageFence*> stageFence;
-	FenceManagerData fenceData;
 public:
-	
-
 	FenceManager(int CntX, int CntZ, float OffSetX, float OffSetZ);
 	~FenceManager();
 	void SetFence();
 	void Draw(void);
 	void SetStageSize(float, float);
+
+private:
+	const float blockInterval = 15.0;
+	float stageSizeX, stageSizeZ;
+	std::vector<StageFence*> stageFence;
+	FenceManagerData fenceData;
+
 };

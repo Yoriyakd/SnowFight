@@ -5,6 +5,21 @@
 #include"../commonObj/SnowBallManager.h"
 #include<vector>
 class Enemy {
+public:
+	Enemy(D3DXVECTOR3);
+	~Enemy();
+	virtual bool Update(SnowBallManager *snowBallManager);
+	virtual void Draw(void);
+	virtual D3DXVECTOR3 GetPos(void);
+	virtual D3DXMATRIX GetMat(void);
+	virtual XFILE GetMesh(void);
+	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
+	void CheckOverlapEnemies(D3DXVECTOR3*);
+	bool TakeDamage(int Damage);
+
+protected:
+	int HP;		//ëÃóÕ	ê·ã 1î≠Ç≈1å∏è≠
+
 private:
 	XFILE mesh;
 	D3DXMATRIX mat, rotMat, transMat;
@@ -28,18 +43,4 @@ private:
 	//---------------------------------------
 	//bool damageFlag;		Åô
 	//int damageEffectCnt;
-protected:
-	int HP;		//ëÃóÕ	ê·ã 1î≠Ç≈1å∏è≠
-
-public:
-	Enemy(D3DXVECTOR3);
-	~Enemy();
-	virtual bool Update(SnowBallManager *snowBallManager);
-	virtual void Draw(void);
-	virtual D3DXVECTOR3 GetPos(void);
-	virtual D3DXMATRIX GetMat(void);
-	virtual XFILE GetMesh(void);
-	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
-	void CheckOverlapEnemies(D3DXVECTOR3*);
-	bool TakeDamage(int Damage);
 };

@@ -4,7 +4,23 @@ void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3
 void LoadMesh(struct XFILE *XFile, const char FName[]);
 void ReleaseMesh(struct XFILE *XFile);
 
+void ResourceManager::AllDelete(void)
+{
+	for (auto ite = XFILEList.begin(); ite != XFILEList.end(); ite++)
+	{
+		ReleaseMesh(&ite->second);
+	}
 
+	XFILEList.clear();
+
+	//型推論 auto
+	for (auto ite = TextureList.begin(); ite != TextureList.end(); ite++)
+	{
+		ite->second->Release();
+		//その項目の値(図の右側)
+	}
+	TextureList.clear();
+}
 
 ResourceManager::~ResourceManager()
 {
@@ -63,28 +79,6 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, 
 	}
 	return Tmp;
 }
-
-void ResourceManager::AllDelete(void)
-{
-	for (auto ite = XFILEList.begin()  ; ite != XFILEList.end()  ; ite++)
-	{
-		ReleaseMesh(&ite->second);
-	}
-
-	XFILEList.clear();
-
-	//型推論 auto
-	for (auto ite = TextureList.begin(); ite != TextureList.end(); ite++)
-	{
-		ite->second->Release();
-		//その項目の値(図の右側)
-	}
-	TextureList.clear();
-}
-
-
-
-
 
 void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color)
 {

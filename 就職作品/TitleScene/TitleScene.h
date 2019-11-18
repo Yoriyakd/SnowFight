@@ -5,14 +5,6 @@
 #include"../ResourceManager.h"
 
 class TitleScene : public SceneBase {
-private:
-	LPDIRECT3DTEXTURE9 logoTex;
-	D3DXMATRIX logoMat;
-	const int logoTexX = 832;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
-
-	LPDIRECT3DTEXTURE9 backTex;
-	D3DXMATRIX backMat;
-
 public:
 	TitleScene();
 	~TitleScene();
@@ -22,4 +14,11 @@ public:
 	void Render2D(void);
 	bool Update(void);
 
+private:
+	LPDIRECT3DTEXTURE9 logoTex;
+	D3DXMATRIX logoMat;
+	const int logoTexX = 832;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
+
+	LPDIRECT3DTEXTURE9 backTex;
+	D3DXMATRIX backMat;
 };

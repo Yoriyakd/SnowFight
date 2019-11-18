@@ -3,10 +3,6 @@
 #include"Enemy.h"
 #include"../commonObj/SnowBallManager.h"
 class EnemyManager {
-private:
-	
-	
-	
 public:
 	std::vector<Enemy*> enemy;
 

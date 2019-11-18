@@ -9,7 +9,6 @@
 #include"../Map/Ground.h"
 #include"../Map/MapObjManager.h"
 #include"../Enemy/EnemyManager.h"
-#include"../Enemy/SetEnemies.h"
 #include"../commonObj/SkyBox.h"
 #include"../Map/FenceManager.h"
 #include"../commonObj/SnowBallManager.h"
@@ -37,12 +36,9 @@ private:
 	CollisionObserver *collisionObserver;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
-
-	float stageSizeX, stageSizeZ;		//ステージのサイズ	stageボーダーだけでよさそう
 };
 
 extern EnemyManager *enemyManager;
 extern Player *player;
-extern StageBorder stageBorder;
-extern SetEnemies *setEnemies;
+extern StageBorder *stageBorder;
 extern const float Gravity;

@@ -1,4 +1,5 @@
 #include "PlayerCamera.h"
+#include"../GameScene/GameScene.h"		//ステージサイズの情報共有のため
 
 //=====================================
 //publicメソッド
@@ -114,11 +115,6 @@ D3DXVECTOR3 PlayerCamera::GetPos(void)
 	return pos;
 }
 
-void PlayerCamera::SetStageBorder(StageBorder StageBorder)
-{
-	stageBorder = StageBorder;
-}
-
 void PlayerCamera::PushPos(D3DXVECTOR3 *PushVec)
 {
 	pos += *PushVec;
@@ -180,24 +176,24 @@ void PlayerCamera::Move(void)
 	}
 
 	//ステージ境界の処理
-	if (pos.z > stageBorder.Top)
+	if (pos.z > stageBorder->Top)
 	{
-		pos.z += stageBorder.Top - pos.z;
+		pos.z += stageBorder->Top - pos.z;
 	}
 
-	if (pos.z < stageBorder.Bottom)
+	if (pos.z < stageBorder->Bottom)
 	{
-		pos.z += stageBorder.Bottom - pos.z;
+		pos.z += stageBorder->Bottom - pos.z;
 	}
 
-	if (pos.x < stageBorder.Left)
+	if (pos.x < stageBorder->Left)
 	{
-		pos.x += stageBorder.Left - pos.x;
+		pos.x += stageBorder->Left - pos.x;
 	}
 
-	if (pos.x > stageBorder.Right)
+	if (pos.x > stageBorder->Right)
 	{
-		pos.x += stageBorder.Right - pos.x;
+		pos.x += stageBorder->Right - pos.x;
 	}
 
 }

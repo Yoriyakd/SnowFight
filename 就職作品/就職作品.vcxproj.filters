@@ -138,9 +138,6 @@
     <ClCompile Include="GameScene\EventManager.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\SetEnemies.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -252,9 +249,6 @@
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\WavePattern1.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\SetEnemies.h">
       <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>

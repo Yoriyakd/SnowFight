@@ -4,8 +4,7 @@
 EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
-StageBorder stageBorder;
-SetEnemies *setEnemies;
+StageBorder *stageBorder;							
 const float Gravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
@@ -15,7 +14,6 @@ GameScene::GameScene(int StageNo)
 	player = new Player;
 	ground = new Ground;
 	enemyManager = new EnemyManager;
-	setEnemies = new SetEnemies();
 	skyBox = new SkyBox;
 	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
@@ -25,25 +23,27 @@ GameScene::GameScene(int StageNo)
 
 	//int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
 
-	loadStageData->GetStageSize(&stageSizeX, &stageSizeZ);
+	
 
 	//-------------------------------------------------------
 	//ステージの境界を求める
 	//-------------------------------------------------------
-	stageBorder.Top = stageSizeZ;
-	stageBorder.Bottom = 0;
-	stageBorder.Left = 0;
-	stageBorder.Right = stageSizeX ;
+	float StageSizeX, StageSizeZ;		//ステージのサイズ	stageボーダーだけでよさそう
+	loadStageData->GetStageSize(&StageSizeX, &StageSizeZ);
+	stageBorder = new StageBorder;
+
+	stageBorder->Top = StageSizeZ;
+	stageBorder->Bottom = 0;
+	stageBorder->Left = 0;
+	stageBorder->Right = StageSizeX ;
 	//-------------------------------------------------------
 
 	//fenceManager = new FenceManager(FenceCntX, FenceCntY, stageSizeX, stageSizeZ);		//ステージの境界データをもらうよう変更する
 	//fenceManager->SetStageSize(stageSizeX, stageSizeZ);
 	//fenceManager->SetFence();		//フェンスを配置
 
-	playerCam->SetStageBorder(stageBorder);		//ステージの境界データをセット
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
-	setEnemies->SetStageSize(stageSizeX, stageSizeZ);
 	
 	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
 	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test　☆
@@ -110,11 +110,6 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	if (GetAsyncKeyState('P') & 0x8000)		//条件を変えて本実装☆
-	{
-		setEnemies->SetEnemy();
-	}
-
 	enemyManager->Update(snowBallManager);
 	playerCam->Update();
 	player->Update(snowBallManager);		//カメラを更新してから

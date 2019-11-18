@@ -1,9 +1,6 @@
 #include "Kamakura.h"
 #include"../GameScene/GameScene.h"
 
-void Kamakura::SpawnEnemise(void)
-{
-}
 
 Kamakura::Kamakura()
 {
@@ -38,7 +35,7 @@ void Kamakura::Update(void)
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
 }
 
-void Kamakura::DoDamage(int DamageCnt)
+void Kamakura::TakeDamage(int DamageCnt)
 {
 	HP -= DamageCnt;
 }

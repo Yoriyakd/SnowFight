@@ -162,9 +162,6 @@
     <ClCompile Include="Enemy\Kamakura.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Enemy\SetEnemies.cpp">
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
     <ClCompile Include="GameScene\EventManager.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
@@ -245,7 +242,6 @@
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\Kamakura.h" />
-    <ClInclude Include="Enemy\SetEnemies.h" />
     <ClInclude Include="GameScene\EventManager.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameScene\WavePattern1.h" />
