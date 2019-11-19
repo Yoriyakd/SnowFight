@@ -8,6 +8,9 @@ TitleScene::TitleScene()
 
 	backTex = resourceManager->GetTexture("BackTex.jpg", SCRW, SCRH, NULL);		//‰¼‚Ì”wŒiƒTƒCƒY‚ª‘å‚«‚·‚¬‚é
 	D3DXMatrixTranslation(&backMat, 0, 0, 0);
+
+	kyeInstructionTex = resourceManager->GetTexture("PushSpase.png", kyeInstructionX, 108, NULL);
+	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 }
 
 TitleScene::~TitleScene()
@@ -30,13 +33,17 @@ void TitleScene::Render2D(void)
 	// •`‰æŠJn
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	RECT rcBack = { 0, 0, SCRW, SCRH };
+	RECT RcBack = { 0, 0, SCRW, SCRH };
 	lpSprite->SetTransform(&backMat);
-	lpSprite->Draw(backTex, &rcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	RECT rcLogo = { 0, 0, logoTexX, 170 };
+	RECT RcLogo = { 0, 0, logoTexX, 170 };
 	lpSprite->SetTransform(&logoMat);
-	lpSprite->Draw(logoTex, &rcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	lpSprite->Draw(logoTex, &RcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	RECT RcKyeInstruction = { 0, 0, 486, 108 };
+	lpSprite->SetTransform(&kyeInstructionMat);
+	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	// •`‰æI—¹
 	lpSprite->End();

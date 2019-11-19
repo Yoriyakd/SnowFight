@@ -15,9 +15,9 @@ public:
 	bool Update(void);
 
 private:
-	LPDIRECT3DTEXTURE9 logoTex;
-	D3DXMATRIX logoMat;
-	const int logoTexX = 832;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
+	LPDIRECT3DTEXTURE9 logoTex, kyeInstructionTex;
+	D3DXMATRIX logoMat, kyeInstructionMat;
+	const int logoTexX = 832, kyeInstructionX = 486;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
 
 	LPDIRECT3DTEXTURE9 backTex;
 	D3DXMATRIX backMat;
