@@ -201,7 +201,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObjManager * Ma
 
 				TargetLength = D3DXVec3Length(&TargetVec);
 
-				const float PlayerRadius = 2.0f, ObjRadius = 3.0f;
+				const float PlayerRadius = 2.0f, ObjRadius = MapObjManager->mapObj[i]->GetRadius();
 
 				if (TargetLength < PlayerRadius + ObjRadius)		//‰¼™
 				{
