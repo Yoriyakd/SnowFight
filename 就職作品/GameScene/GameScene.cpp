@@ -21,10 +21,8 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	eventManager = new EventManager();
 
-	//int FenceCntX = 15, FenceCntY = 15;		//自動的に求められるようにする		そもそもフェンス以外を設置する☆
 
-	
-
+	loadStageData->SetStageMap(mapObjManager);
 	//-------------------------------------------------------
 	//ステージの境界を求める
 	//-------------------------------------------------------
@@ -37,6 +35,7 @@ GameScene::GameScene(int StageNo)
 	stageBorder->Left = 0;
 	stageBorder->Right = StageSizeX ;
 	//-------------------------------------------------------
+	playerCam->SetPos(&D3DXVECTOR3(StageSizeX / 2, 0, 10.0f));				//プレイヤーの初期位置
 
 	//fenceManager = new FenceManager(FenceCntX, FenceCntY, stageSizeX, stageSizeZ);		//ステージの境界データをもらうよう変更する
 	//fenceManager->SetStageSize(stageSizeX, stageSizeZ);
@@ -45,10 +44,6 @@ GameScene::GameScene(int StageNo)
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	
-	mapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test ☆
-	mapObjManager->SetBench(D3DXVECTOR3(30, 0, 80));		//test　☆
-
-
 	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 

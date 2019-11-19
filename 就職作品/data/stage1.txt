@@ -1,2 +1,8 @@
-StageSizeX:198
-StageSizeY:198
+StageSizeX:256
+StageSizeY:256
+Bench:3
+30,0,80
+35,0,80
+40,0,80
+XmasTree:1
+100,0,30

@@ -6,8 +6,6 @@
 //=====================================
 PlayerCamera::PlayerCamera(int Scrw, int Scrh, HWND Hwnd)
 {
-	pos = D3DXVECTOR3(0, camHight, 0);
-
 	hwnd = Hwnd;
 	SCRw = Scrw;
 	SCRh = Scrh;
@@ -118,6 +116,12 @@ D3DXVECTOR3 PlayerCamera::GetPos(void)
 void PlayerCamera::PushPos(D3DXVECTOR3 *PushVec)
 {
 	pos += *PushVec;
+}
+
+void PlayerCamera::SetPos(D3DXVECTOR3 * SetPos)
+{
+	pos = *SetPos;
+	pos.y = camHight;
 }
 
 //=====================================

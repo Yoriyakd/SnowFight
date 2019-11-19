@@ -19,6 +19,7 @@ public:
 	//Setter
 	//--------------------------------------------------
 	void PushPos(D3DXVECTOR3 *PushVec);
+	void SetPos(D3DXVECTOR3 *SetPos);
 
 private:
 	//--------------------------------------------------

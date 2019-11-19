@@ -138,6 +138,9 @@
     <ClCompile Include="GameScene\EventManager.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="Map\XmasTree.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\WavePattern1.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\XmasTree.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
