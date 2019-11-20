@@ -16,7 +16,7 @@ WavePatternBase * WavePattern1::WaveProcessing(void)
 		int EnemyCnt = 5;
 		D3DXVECTOR3 SpownPoint;
 
-		SpownPoint = D3DXVECTOR3(rand() % (int)stageBorder->Right, 0.0f, rand() % (int)stageBorder->Top);
+		SpownPoint = D3DXVECTOR3(float(rand() % (int)stageBorder->Right), 0.0f, float(rand() % (int)stageBorder->Top));
 
 
 

@@ -4,7 +4,7 @@
 ArmRAnimeFront::ArmRAnimeFront(D3DXMATRIX *StartMat)
 {
 	startMat = *StartMat;
-	animeSpeed = 0.05;
+	animeSpeed = 0.05f;
 	animeFrame = 0.0f;
 	D3DXMATRIX EndRotTmp, EndTransTmp;
 

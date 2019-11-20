@@ -3,7 +3,7 @@
 WindUpRAnime::WindUpRAnime(D3DXMATRIX *StartMat)
 {
 	startMat = *StartMat;
-	animeSpeed = 0.2;		//çƒê∂ë¨ìx
+	animeSpeed = 0.2f;		//çƒê∂ë¨ìx
 	animeFrame = 0.0f;
 
 	D3DXMATRIX EndRotXTmp, EndRotYTmp, EndTransTmp;

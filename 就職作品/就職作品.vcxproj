@@ -205,6 +205,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Map\XmasTree.cpp" />
+    <ClCompile Include="PickUpInstructions.cpp" />
     <ClCompile Include="Player\ArmLWalkAnime.cpp" />
     <ClCompile Include="Player\ArmRAnimeFront.cpp" />
     <ClCompile Include="Player\ArmRAnimeMid.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />
+    <ClInclude Include="PickUpInstructions.h" />
     <ClInclude Include="Player\ArmLWalkAnime.h" />
     <ClInclude Include="Player\ArmRAnimeFront.h" />
     <ClInclude Include="Player\ArmRAnimeMid.h" />

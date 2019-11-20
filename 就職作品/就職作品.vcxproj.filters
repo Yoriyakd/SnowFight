@@ -34,6 +34,9 @@
     <Filter Include="Item">
       <UniqueIdentifier>{1b6b834e-558b-4a44-a28b-daabac8e33ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameScene\UI">
+      <UniqueIdentifier>{95fa5787-5ebe-4241-a210-39929930c37b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="Item\ItemManager.cpp">
       <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PickUpInstructions.cpp">
+      <Filter>GameScene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Item\ItemManager.h">
       <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PickUpInstructions.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
