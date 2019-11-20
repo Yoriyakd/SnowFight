@@ -71,6 +71,15 @@ bool Player::Update(SnowBallManager *snowBallManager)
 		walkFlag = false;
 	}
 
+	//-----------------------------------------------------
+	
+	itemManager->CheckForCanPicUp(&pos);			//拾えるかのチェックだけ		//拾える時画面に指示を表示
+
+	if (GetAsyncKeyState('F') & 0x8000)
+	{
+		itemManager->PickUpItem(&pos);				//拾う		2回チェックなの無駄があるような気がする		近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう☆
+	}
+
 	//pos = D3DXVECTOR3(0, 5, 0);		//デバック用☆
 
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
@@ -198,7 +207,7 @@ void Player::Draw(void)
 	}
 
 
-
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン

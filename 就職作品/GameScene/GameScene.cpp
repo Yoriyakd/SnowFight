@@ -1,10 +1,10 @@
-
 #include "GameScene.h"
 
 EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
-StageBorder *stageBorder;							
+StageBorder *stageBorder;
+ItemManager *itemManager;
 const float Gravity = -0.05f;						//d—Í	¦•K‚¸•‰‚Ì’l‚Ì‚·‚é
 
 GameScene::GameScene(int StageNo)
@@ -20,7 +20,11 @@ GameScene::GameScene(int StageNo)
 	collisionObserver = new CollisionObserver();
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	eventManager = new EventManager();
+	itemManager = new ItemManager();
 
+
+	itemManager->decoration.push_back(new Decoration_Ball());		//test™
+	itemManager->decoration[0]->SetPos(&D3DXVECTOR3(0, 0, 0));
 
 	loadStageData->SetStageMap(mapObjManager);
 	//-------------------------------------------------------
@@ -92,6 +96,7 @@ void GameScene::Render3D(void)
 	player->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
+	itemManager->Draw();
 }
 
 void GameScene::SetCamera(void)
@@ -111,6 +116,7 @@ bool GameScene::Update()
 	snowBallManager->Update();
 	effectManager->Update();
 	eventManager->Update();
+	itemManager->Updata();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);

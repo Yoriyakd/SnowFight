@@ -15,6 +15,7 @@
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
 #include"EventManager.h"
+#include"../Item/ItemManager.h"
 
 
 class GameScene : public SceneBase {
@@ -41,4 +42,5 @@ private:
 extern EnemyManager *enemyManager;
 extern Player *player;
 extern StageBorder *stageBorder;
+extern ItemManager *itemManager;
 extern const float Gravity;
