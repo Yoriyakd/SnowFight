@@ -6,7 +6,7 @@ void DecorationBase::Draw()
 	DrawMesh(&mesh);
 }
 
-DecorationID DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
+bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
 	D3DXVECTOR3 TargetVec;
 	TargetVec = pos - *_Pos;		//2点のベクトルを求める
@@ -16,9 +16,10 @@ DecorationID DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 	if (TargetLength < picUpDistans)		//2点の距離が拾うことができる距離より小さかったら
 	{
-		return decorationID;
+		picUpFlag = true;
+		return true;
 	}
-	return NUM_ITEM;
+	return false;
 }
 
 void DecorationBase::Updata()
@@ -34,4 +35,14 @@ D3DXVECTOR3 DecorationBase::GetPos()
 void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
 {
 	pos = *_Pos;
+}
+
+bool DecorationBase::GetPicUpFlag(void)
+{
+	return picUpFlag;
+}
+
+DecorationID DecorationBase::GetID(void)
+{
+	return decorationID;
 }

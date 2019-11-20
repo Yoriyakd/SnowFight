@@ -63,7 +63,7 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	{
 		pos = NewPos;
 		walkFlag = true;
-		//ArmLAnime = new ArmLWalkAnime()
+		//ArmLAnime = new ArmLWalkAnime()		//☆
 	}
 	else
 	{
@@ -73,13 +73,17 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	//-----------------------------------------------------
 	
-	if (itemManager->CheckForCanPicUp(&pos) == true)
+	if (itemManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		//拾える時画面に指示を表示		setUI
 	{
-		//拾えるかのチェックだけ		//拾える時画面に指示を表示		setUI
+		pickUpInstructions->TurnOnDisplay();
 		if (GetAsyncKeyState('F') & 0x8000)
 		{
 			itemManager->PickUpItem(&pos);				//拾う		2回チェックなの無駄があるような気がする		近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう☆
 		}
+	}
+	else
+	{
+		pickUpInstructions->TurnOffDisplay();
 	}
 
 

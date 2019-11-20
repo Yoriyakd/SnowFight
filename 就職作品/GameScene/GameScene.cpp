@@ -5,6 +5,7 @@ Player *player;
 D3DLIGHT9 Light;
 StageBorder *stageBorder;
 ItemManager *itemManager;
+PickUpInstructions *pickUpInstructions;
 const float Gravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
@@ -21,6 +22,7 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	eventManager = new EventManager();
 	itemManager = new ItemManager();
+	pickUpInstructions = new PickUpInstructions();
 
 
 	itemManager->decoration.push_back(new Decoration_Ball());		//test☆
@@ -84,6 +86,7 @@ GameScene::~GameScene()
 	delete mapObjManager;
 	delete collisionObserver;
 	delete eventManager;
+	delete pickUpInstructions;
 }
 
 void GameScene::Render3D(void)
@@ -106,6 +109,14 @@ void GameScene::SetCamera(void)
 
 void GameScene::Render2D(void)
 {
+	//////////////////////////////////////////////////
+	///	スプライトの描画処理
+	//////////////////////////////////////////////////
+	// 描画開始
+	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	pickUpInstructions->Draw();
+	// 描画終了
+	lpSprite->End();
 }
 
 bool GameScene::Update()

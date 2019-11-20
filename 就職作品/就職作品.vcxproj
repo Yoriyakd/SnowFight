@@ -205,7 +205,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Map\XmasTree.cpp" />
-    <ClCompile Include="PickUpInstructions.cpp" />
     <ClCompile Include="Player\ArmLWalkAnime.cpp" />
     <ClCompile Include="Player\ArmRAnimeFront.cpp" />
     <ClCompile Include="Player\ArmRAnimeMid.cpp" />
@@ -234,6 +233,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="UI\PickUpInstructions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
@@ -264,7 +264,6 @@
     <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />
-    <ClInclude Include="PickUpInstructions.h" />
     <ClInclude Include="Player\ArmLWalkAnime.h" />
     <ClInclude Include="Player\ArmRAnimeFront.h" />
     <ClInclude Include="Player\ArmRAnimeMid.h" />
@@ -278,6 +277,7 @@
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
+    <ClInclude Include="UI\PickUpInstructions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

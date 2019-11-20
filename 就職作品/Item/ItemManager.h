@@ -11,4 +11,5 @@ public:
 	DecorationID PickUpItem(const D3DXVECTOR3 *_Pos);
 	void Draw(void);
 	void Updata(void);
+private:
 };

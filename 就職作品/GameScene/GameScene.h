@@ -16,6 +16,7 @@
 #include"../Effect/EffectManager.h"
 #include"EventManager.h"
 #include"../Item/ItemManager.h"
+#include"../UI/PickUpInstructions.h"
 
 
 class GameScene : public SceneBase {
@@ -43,4 +44,5 @@ extern EnemyManager *enemyManager;
 extern Player *player;
 extern StageBorder *stageBorder;
 extern ItemManager *itemManager;
+extern PickUpInstructions *pickUpInstructions;
 extern const float Gravity;
