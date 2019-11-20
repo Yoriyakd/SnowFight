@@ -73,12 +73,16 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	//-----------------------------------------------------
 	
-	itemManager->CheckForCanPicUp(&pos);			//拾えるかのチェックだけ		//拾える時画面に指示を表示
-
-	if (GetAsyncKeyState('F') & 0x8000)
+	if (itemManager->CheckForCanPicUp(&pos) == true)
 	{
-		itemManager->PickUpItem(&pos);				//拾う		2回チェックなの無駄があるような気がする		近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう☆
+		//拾えるかのチェックだけ		//拾える時画面に指示を表示		setUI
+		if (GetAsyncKeyState('F') & 0x8000)
+		{
+			itemManager->PickUpItem(&pos);				//拾う		2回チェックなの無駄があるような気がする		近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう☆
+		}
 	}
+
+
 
 	//pos = D3DXVECTOR3(0, 5, 0);		//デバック用☆
 
@@ -290,7 +294,7 @@ void Player::MakeBall()
 {
 	static bool RKyeFlag = false;
 	static float MakeingTimeCnt = 0;
-	static const float MakeTime = 3;		//作成に必要な時間
+	static const float MakeTime = 1.5;		//作成に必要な時間
 	static float ballSize = 0;
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
@@ -305,21 +309,21 @@ void Player::MakeBall()
 		ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;
 
 		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
+
+		if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
+		{
+			remainingBalls++;
+			MakeingTimeCnt = 0;		//リセット
+			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+		}
 	}
 	else
 	{
 		if (RKyeFlag == true)
 		{
-			if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
-			{
-				remainingBalls++;
-			}
-			else
-			{
-				//足りなければ壊れる
-				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43))));
-			}
+			//SnowFragエフェクト呼ぶ
+			effectManager->snowFrag.push_back(new SnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43))));
+
 			RKyeFlag = false;
 			MakeingTimeCnt = 0;		//リセット
 			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
