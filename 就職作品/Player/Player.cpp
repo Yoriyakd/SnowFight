@@ -73,18 +73,35 @@ bool Player::Update(SnowBallManager *snowBallManager)
 
 	//-----------------------------------------------------
 	
-	if (itemManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		//拾える時画面に指示を表示		setUI
-	{
-		pickUpInstructions->TurnOnDisplay();
+	if (decorationManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
+	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
+		pickUpInstructions->TurnOnDisplay();		//拾える時画面に指示を表示
 		if (GetAsyncKeyState('F') & 0x8000)
 		{
-			itemManager->PickUpItem(&pos);				//拾う		2回チェックなの無駄があるような気がする		近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう☆
+			carryDecorationID = decorationManager->PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまうと思う☆
+			carryFlag = true;
 		}
 	}
 	else
 	{
 		pickUpInstructions->TurnOffDisplay();
 	}
+
+	if (carryFlag == true)
+	{
+		if (GetAsyncKeyState('Q') & 0x8000)		//Fでもいいような
+		{
+			carryFlag = false;
+
+			D3DXVECTOR3 DropPoinOffset;
+
+			DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
+			D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
+
+			decorationManager->Drop(&(pos + DropPoinOffset), carryDecorationID);
+		}
+	}
+
 
 
 
@@ -357,7 +374,7 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 	while (1)
 	{
 		D3DXMATRIX MoveMat;			//移動が終わった後の行列
-		moveVec.y += Gravity;
+		moveVec.y += SnowBallGravity;
 
 		D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 		TmpMat = MoveMat * TmpMat;

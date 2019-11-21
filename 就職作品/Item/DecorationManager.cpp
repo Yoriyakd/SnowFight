@@ -1,10 +1,10 @@
-#include "ItemManager.h"
+#include "DecorationManager.h"
 
-ItemManager::ItemManager()
+DecorationManager::DecorationManager()
 {
 }
 
-ItemManager::~ItemManager()
+DecorationManager::~DecorationManager()
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
@@ -13,7 +13,7 @@ ItemManager::~ItemManager()
 	decoration.clear();
 }
 
-bool ItemManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
+bool DecorationManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
@@ -25,7 +25,7 @@ bool ItemManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 	return false;
 }
 
-DecorationID ItemManager::PickUpItem(const D3DXVECTOR3 * _Pos)
+DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
@@ -42,7 +42,22 @@ DecorationID ItemManager::PickUpItem(const D3DXVECTOR3 * _Pos)
 	return NUM_ITEM;
 }
 
-void ItemManager::Draw(void)
+void DecorationManager::Drop(const D3DXVECTOR3 * _Pos, DecorationID ID)
+{
+	switch (ID)
+	{
+	case RED_BALL:
+		decoration.push_back(new Decoration_Ball(_Pos));		//ˆø‚«”‚ÅF‚ðŽw’è‚·‚é‚æ‚¤‚É‚·‚é
+		break;
+	case NUM_ITEM:
+		break;
+	default:
+		break;
+	}
+	
+}
+
+void DecorationManager::Draw(void)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
@@ -50,7 +65,7 @@ void ItemManager::Draw(void)
 	}
 }
 
-void ItemManager::Updata(void)
+void DecorationManager::Updata(void)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{

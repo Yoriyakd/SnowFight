@@ -138,9 +138,6 @@
     <ClCompile Include="Item\Decoration_Ball.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="Item\ItemManager.cpp">
-      <Filter>Item</Filter>
-    </ClCompile>
     <ClCompile Include="UI\PickUpInstructions.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="Player\WindUpRAnime.cpp">
       <Filter>Player\Anime</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\DecorationManager.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,9 +263,6 @@
     <ClInclude Include="Item\DecorationBase.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="Item\ItemManager.h">
-      <Filter>Item</Filter>
-    </ClInclude>
     <ClInclude Include="UI\PickUpInstructions.h">
       <Filter>GameScene\UI</Filter>
     </ClInclude>
@@ -289,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="Player\WindUpRAnime.h">
       <Filter>Player\Anime</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\DecorationManager.h">
+      <Filter>Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

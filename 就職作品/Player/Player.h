@@ -10,6 +10,7 @@
 #include"ThrowRAnime.h"
 #include"WindUpRAnime.h"
 #include"ArmLWalkAnime.h"
+#include"../Item/DecorationManager.h"
 
 //ワールド座標で管理
 
@@ -30,6 +31,9 @@ private:
 	D3DXVECTOR3 pos;
 	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, -2.0f, 0.0f);		//カメラの位置からの距離
 	int remainingBalls;		//残弾数
+
+	bool carryFlag;			//デコレーションを運んでいるか
+	DecorationID carryDecorationID;		//運んでいるデコレーションの内容
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------

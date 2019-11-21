@@ -31,7 +31,7 @@ bool SnowBall::Update(void)
 	
 
 	D3DXMATRIX tmpMat;
-	moveVec.y += Gravity;
+	moveVec.y += SnowBallGravity;
 	
 	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = tmpMat * mat;

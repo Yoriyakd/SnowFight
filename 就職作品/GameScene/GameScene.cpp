@@ -4,9 +4,9 @@ EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
 StageBorder *stageBorder;
-ItemManager *itemManager;
+DecorationManager *decorationManager;
 PickUpInstructions *pickUpInstructions;
-const float Gravity = -0.05f;						//重力	※必ず負の値のする
+const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
 {
@@ -21,12 +21,11 @@ GameScene::GameScene(int StageNo)
 	collisionObserver = new CollisionObserver();
 	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
 	eventManager = new EventManager();
-	itemManager = new ItemManager();
+	decorationManager = new DecorationManager();
 	pickUpInstructions = new PickUpInstructions();
 
 
-	itemManager->decoration.push_back(new Decoration_Ball());		//test☆
-	itemManager->decoration[0]->SetPos(&D3DXVECTOR3(0, 0, 0));
+	decorationManager->decoration.push_back(new Decoration_Ball(&D3DXVECTOR3(80, 0, 50)));		//test☆
 
 	loadStageData->SetStageMap(mapObjManager);
 	//-------------------------------------------------------
@@ -99,7 +98,7 @@ void GameScene::Render3D(void)
 	player->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
-	itemManager->Draw();
+	decorationManager->Draw();
 }
 
 void GameScene::SetCamera(void)
@@ -127,7 +126,7 @@ bool GameScene::Update()
 	snowBallManager->Update();
 	effectManager->Update();
 	eventManager->Update();
-	itemManager->Updata();
+	decorationManager->Updata();
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);

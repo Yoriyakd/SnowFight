@@ -24,6 +24,12 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 void DecorationBase::Updata()
 {
+	static const float Gravity = -0.1f;
+	pos.y += Gravity;
+	if (pos.y <= 0)		//’n–Ê‚É–„‚à‚ê‚È‚¢
+	{
+		pos.y = 0;
+	}
 	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
 }
 

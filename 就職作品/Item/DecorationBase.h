@@ -14,11 +14,10 @@ public:
 	DecorationID GetID(void);
 protected:
 	float picUpDistans;		//E‚¤‚±‚Æ‚ª‚Å‚«‚é‚æ‚¤‚É‚È‚é‚Ü‚Å‚Ì‹——£
+	D3DXVECTOR3 pos;
 	XFILE mesh;
 	DecorationID decorationID;
 private:
-	
 	D3DXMATRIX mat;
-	D3DXVECTOR3 pos;
 	bool picUpFlag;			//E‚¦‚éó‘Ô‚©
 };

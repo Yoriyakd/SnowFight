@@ -15,7 +15,7 @@
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
 #include"EventManager.h"
-#include"../Item/ItemManager.h"
+#include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 
 
@@ -43,6 +43,6 @@ private:
 extern EnemyManager *enemyManager;
 extern Player *player;
 extern StageBorder *stageBorder;
-extern ItemManager *itemManager;
+extern DecorationManager *decorationManager;
 extern PickUpInstructions *pickUpInstructions;
-extern const float Gravity;
+extern const float SnowBallGravity;
