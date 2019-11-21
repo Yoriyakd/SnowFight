@@ -69,6 +69,16 @@ struct StageBorder
 	float Right;
 };
 
+//ボールデコレーションの色		//main.cppで値を初期化
+struct Decoration_BallColor
+{
+	D3DCOLORVALUE RED_BALL_COLOR;
+	D3DCOLORVALUE BLUE_BALL_COLOR;
+	D3DCOLORVALUE GREEN_BALL_COLOR;
+};
+
+extern Decoration_BallColor decoration_BallColor;		//main.cppで宣言
+
 enum CollisionDetectionType{Ray, Circles};
 
 void DrawMesh(XFILE *XFile);

@@ -47,9 +47,13 @@ void DecorationManager::Drop(const D3DXVECTOR3 * _Pos, DecorationID ID)
 	switch (ID)
 	{
 	case RED_BALL:
-		decoration.push_back(new Decoration_Ball(_Pos));		//à¯Ç´êîÇ≈êFÇéwíËÇ∑ÇÈÇÊÇ§Ç…Ç∑ÇÈ
+		decoration.push_back(new Decoration_Ball(_Pos, ID));
 		break;
-	case NUM_ITEM:
+	case BLUE_BALL:
+		decoration.push_back(new Decoration_Ball(_Pos, ID));
+		break;
+	case GREEN_BALL:
+		decoration.push_back(new Decoration_Ball(_Pos, ID));
 		break;
 	default:
 		break;

@@ -25,7 +25,7 @@ GameScene::GameScene(int StageNo)
 	pickUpInstructions = new PickUpInstructions();
 
 
-	decorationManager->decoration.push_back(new Decoration_Ball(&D3DXVECTOR3(80, 0, 50)));		//test™
+	decorationManager->decoration.push_back(new Decoration_Ball(&D3DXVECTOR3(80, 0, 50), RED_BALL));		//test™
 
 	loadStageData->SetStageMap(mapObjManager);
 	//-------------------------------------------------------
