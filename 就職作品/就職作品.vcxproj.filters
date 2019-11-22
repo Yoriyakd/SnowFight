@@ -162,6 +162,9 @@
     <ClCompile Include="Item\DecorationManager.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="UI\RemainingBallUI.cpp">
+      <Filter>GameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="Item\DecorationManager.h">
       <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\RemainingBallUI.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

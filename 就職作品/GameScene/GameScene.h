@@ -17,6 +17,7 @@
 #include"EventManager.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
+#include"../UI/RemainingBallUI.h"
 
 
 class GameScene : public SceneBase {
@@ -38,6 +39,7 @@ private:
 	CollisionObserver *collisionObserver;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
+	RemainingBallUI *remainingBallUI;
 };
 
 extern EnemyManager *enemyManager;

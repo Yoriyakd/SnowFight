@@ -146,6 +146,11 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	{
 		remainingBalls += 10;
 	}
+
+	if (remainingBalls > 999)
+	{
+		remainingBalls = 999;			//カンストチェック
+	}
 	
 	return true;
 }

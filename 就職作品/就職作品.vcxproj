@@ -234,6 +234,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="UI\PickUpInstructions.cpp" />
+    <ClCompile Include="UI\RemainingBallUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
@@ -278,6 +279,7 @@
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="UI\PickUpInstructions.h" />
+    <ClInclude Include="UI\RemainingBallUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

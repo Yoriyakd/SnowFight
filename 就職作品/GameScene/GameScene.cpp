@@ -23,6 +23,7 @@ GameScene::GameScene(int StageNo)
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
 	pickUpInstructions = new PickUpInstructions();
+	remainingBallUI = new RemainingBallUI();
 
 
 	decorationManager->decoration.push_back(new Decoration_Ball(&D3DXVECTOR3(80, 0, 50), RED_BALL));		//test☆
@@ -61,6 +62,11 @@ GameScene::GameScene(int StageNo)
 	Light.Diffuse.r = 1.0f;
 	Light.Diffuse.g = 1.0f;
 	Light.Diffuse.b = 1.0f;
+
+	Light.Specular.a = 0.8f;
+	Light.Specular.r = 0.8f;
+	Light.Specular.g = 0.8f;
+	Light.Specular.b = 0.8f;
 
 	Light.Ambient.r = 0.3f;
 	Light.Ambient.g = 0.3f;
@@ -113,7 +119,10 @@ void GameScene::Render2D(void)
 	//////////////////////////////////////////////////
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+
 	pickUpInstructions->Draw();
+	remainingBallUI->Draw();
+
 	// 描画終了
 	lpSprite->End();
 }
@@ -123,6 +132,7 @@ bool GameScene::Update()
 	enemyManager->Update(snowBallManager);
 	playerCam->Update();
 	player->Update(snowBallManager);		//カメラを更新してから
+	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
 	snowBallManager->Update();
 	effectManager->Update();
 	eventManager->Update();
