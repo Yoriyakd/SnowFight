@@ -1,7 +1,10 @@
 #pragma once
 #include<vector>
 #include"DecorationBase.h"
-#include"Decoration_Ball.h"
+#include"Decoration_RedBall.h"
+#include"Decoration_BlueBall.h"
+#include"Decoration_YellowBall.h"
+
 class DecorationManager {
 public:
 	DecorationManager();

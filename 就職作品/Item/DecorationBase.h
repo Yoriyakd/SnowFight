@@ -1,7 +1,7 @@
 #pragma once
 #include"../main.h"
 
-enum DecorationID{RED_BALL, BLUE_BALL, GREEN_BALL, NUM_ITEM};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
+enum DecorationID{RED_BALL, BLUE_BALL, YELLOW_BALL, NUM_ITEM};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
 
 class DecorationBase {
 public:

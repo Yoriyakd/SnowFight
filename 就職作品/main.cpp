@@ -35,7 +35,6 @@ const int GameFPS = 60;		//ゲームのFPS指定
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
 EffectManager *effectManager;
-Decoration_BallColor decoration_BallColor;
 
 void DrawMesh(XFILE *XFile)
 {
@@ -315,6 +314,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	// ライト
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	//スペキュラー
+	lpD3DDevice->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
+
 	lpD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	// 頂点フォーマットの設定
 	lpD3DDevice->SetFVF(FVF_VERTEX);
@@ -325,20 +327,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	resourceManager = new ResourceManager();
 	effectManager = new EffectManager();
 
-	decoration_BallColor.RED_BALL_COLOR.r = 0.558167f;			//指定する色を初期化
-	decoration_BallColor.RED_BALL_COLOR.g = 0.032945f;
-	decoration_BallColor.RED_BALL_COLOR.b = 0.003366f;
-	decoration_BallColor.RED_BALL_COLOR.a = 1.000000f;
-
-	decoration_BallColor.BLUE_BALL_COLOR.r = 0.003366f;			//指定する色を初期化
-	decoration_BallColor.BLUE_BALL_COLOR.g = 0.032945f;
-	decoration_BallColor.BLUE_BALL_COLOR.b = 0.558167f;
-	decoration_BallColor.BLUE_BALL_COLOR.a = 1.000000f;
-
-	decoration_BallColor.GREEN_BALL_COLOR.r = 0.003366f;			//指定する色を初期化
-	decoration_BallColor.GREEN_BALL_COLOR.g = 0.558167f;
-	decoration_BallColor.GREEN_BALL_COLOR.b = 0.032945f;
-	decoration_BallColor.GREEN_BALL_COLOR.a = 1.000000f;
 
 
 	// スプライト作成

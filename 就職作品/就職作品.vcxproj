@@ -169,8 +169,10 @@
     </ClCompile>
     <ClCompile Include="GameScene\WavePattern1.cpp" />
     <ClCompile Include="Item\DecorationBase.cpp" />
-    <ClCompile Include="Item\Decoration_Ball.cpp" />
     <ClCompile Include="Item\DecorationManager.cpp" />
+    <ClCompile Include="Item\Decoration_BlueBall.cpp" />
+    <ClCompile Include="Item\Decoration_RedBall.cpp" />
+    <ClCompile Include="Item\Decoration_YellowBall.cpp" />
     <ClCompile Include="main.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -253,8 +255,10 @@
     <ClInclude Include="GameScene\WavePattern1.h" />
     <ClInclude Include="GameScene\WavePatternBase.h" />
     <ClInclude Include="Item\DecorationBase.h" />
-    <ClInclude Include="Item\Decoration_Ball.h" />
     <ClInclude Include="Item\DecorationManager.h" />
+    <ClInclude Include="Item\Decoration_BlueBall.h" />
+    <ClInclude Include="Item\Decoration_RedBall.h" />
+    <ClInclude Include="Item\Decoration_YellowBall.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Bench.h" />
     <ClInclude Include="Map\FenceManager.h" />

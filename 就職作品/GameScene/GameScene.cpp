@@ -26,7 +26,9 @@ GameScene::GameScene(int StageNo)
 	remainingBallUI = new RemainingBallUI();
 
 
-	decorationManager->decoration.push_back(new Decoration_Ball(&D3DXVECTOR3(80, 0, 50), RED_BALL));		//test™
+	decorationManager->decoration.push_back(new Decoration_RedBall(&D3DXVECTOR3(80, 0, 50)));		//test™
+	decorationManager->decoration.push_back(new Decoration_BlueBall(&D3DXVECTOR3(80, 0, 60)));		//test™
+	decorationManager->decoration.push_back(new Decoration_YellowBall(&D3DXVECTOR3(80, 0, 70)));		//test™
 
 	loadStageData->SetStageMap(mapObjManager);
 	//-------------------------------------------------------

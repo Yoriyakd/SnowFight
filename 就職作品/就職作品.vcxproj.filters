@@ -135,9 +135,6 @@
     <ClCompile Include="Item\DecorationBase.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="Item\Decoration_Ball.cpp">
-      <Filter>Item</Filter>
-    </ClCompile>
     <ClCompile Include="UI\PickUpInstructions.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
@@ -164,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="UI\RemainingBallUI.cpp">
       <Filter>GameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\Decoration_RedBall.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\Decoration_BlueBall.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\Decoration_YellowBall.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +266,6 @@
     <ClInclude Include="Map\XmasTree.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Item\Decoration_Ball.h">
-      <Filter>Item</Filter>
-    </ClInclude>
     <ClInclude Include="Item\DecorationBase.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -295,6 +298,15 @@
     </ClInclude>
     <ClInclude Include="UI\RemainingBallUI.h">
       <Filter>GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Decoration_RedBall.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Decoration_BlueBall.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Decoration_YellowBall.h">
+      <Filter>Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

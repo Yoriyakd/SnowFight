@@ -76,10 +76,13 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	if (decorationManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
 	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
 		pickUpInstructions->TurnOnDisplay();		//拾える時画面に指示を表示
-		if (GetAsyncKeyState('F') & 0x8000)
+		if (carryFlag == false)		//今運んでいないなら
 		{
-			carryDecorationID = decorationManager->PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまうと思う☆
-			carryFlag = true;
+			if (GetAsyncKeyState('F') & 0x8000)
+			{
+				carryDecorationID = decorationManager->PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
+				carryFlag = true;
+			}
 		}
 	}
 	else

@@ -7,14 +7,14 @@ Frame Root {
      0.000000, 1.000000, 0.000000, 0.000000,
      0.000000, 0.000000, 0.000000, 1.000000;;
   }
-  Frame ball {
+  Frame YellowBall {
     FrameTransformMatrix {
        2.095691, 0.000000, 0.000000, 0.000000,
        0.000000, 2.095691, 0.000000, 0.000000,
        0.000000, 0.000000, 2.095691, 0.000000,
        0.000000, 0.000000,-0.072515, 1.000000;;
     }
-    Mesh { // ball mesh
+    Mesh { // YellowBall mesh
       2176;
        0.000000; 0.923879; 0.693337;,
        0.000000; 0.980785; 0.880930;,
@@ -2738,7 +2738,7 @@ Frame Root {
       4;2167,2166,2165,2164;,
       4;2171,2170,2169,2168;,
       4;2175,2174,2173,2172;;
-      MeshNormals { // ball normals
+      MeshNormals { // YellowBall normals
         545;
          0.093833; 0.952718;-0.289005;,
          0.046379; 0.470889; 0.880972;,
@@ -3831,8 +3831,8 @@ Frame Root {
         4;542,542,542,542;,
         4;543,543,543,543;,
         4;544,544,544,544;;
-      } // End of ball normals
-      MeshTextureCoords { // ball UV coordinates
+      } // End of YellowBall normals
+      MeshTextureCoords { // YellowBall UV coordinates
         2176;
          0.000000; 1.000000;,
          1.000000; 1.000000;,
@@ -6010,8 +6010,8 @@ Frame Root {
          0.114940; 0.000000;,
          0.114940; 0.441627;,
          0.156949; 0.441627;;
-      } // End of ball UV coordinates
-      MeshMaterialList { // ball material list
+      } // End of YellowBall UV coordinates
+      MeshMaterialList { // YellowBall material list
         2;
         545;
         0,
@@ -6559,20 +6559,20 @@ Frame Root {
         1,
         1,
         1;
-        Material material1 {
-           0.558167; 0.032945; 0.003366; 1.000000;;
+        Material material1_002 {
+           0.800408; 0.692258; 0.026612; 1.000000;;
            96.078431;
-           0.500255; 0.057812; 0.059476;;
+           0.595956; 0.536651; 0.410870;;
            0.000000; 0.000000; 0.000000;;
         }
-        Material material2 {
+        Material material2_002 {
            1.683086; 1.683086; 1.683086; 1.000000;;
            96.078431;
            0.662839; 0.545861; 0.222369;;
            0.000000; 0.000000; 0.000000;;
           TextureFilename {"data/DecorationBallTex.jpg";}
         }
-      } // End of ball material list
-    } // End of ball mesh
-  } // End of ball
+      } // End of YellowBall material list
+    } // End of YellowBall mesh
+  } // End of YellowBall
 } // End of Root
