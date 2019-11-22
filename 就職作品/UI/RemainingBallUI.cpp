@@ -6,7 +6,7 @@ RemainingBallUI::RemainingBallUI()
 	numberTex = resourceManager->GetTexture("Number.png", 420, 42, NULL);
 
 	D3DXMatrixTranslation(&backMat, 500, 0, 0);
-	D3DXMatrixTranslation(&numberOffsetMat, 120.0f, 15.0f, 0);
+	D3DXMatrixTranslation(&numberOffsetMat, 120.0f, 13.0f, 0);
 }
 
 RemainingBallUI::~RemainingBallUI()
