@@ -215,3 +215,34 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObjManager * Ma
 		}
 	}
 }
+
+void CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBallManager * snowBallManager)
+{
+	for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
+	{
+		if (snowBallManager->snowBall[j]->GetID() == ENEMY_ID)		//敵の球なら実行
+		{
+
+			//---------------------------------------------------------------
+			//必要な値を用意
+
+			CollisionSphere SnowBallSphre, PlayerSphre;
+
+			Player->GetCollisionSphere(&PlayerSphre);									/*当たり判定の球のデータ取得*/
+			snowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
+			//---------------------------------------------------------------
+
+			if (CollisionDetection(&SnowBallSphre, &PlayerSphre))
+			{
+				//SnowFragエフェクト呼ぶ
+				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+				Player->HitSnowBall();			//HIT時のメソッドを呼ぶ
+
+				delete snowBallManager->snowBall[j];
+				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
+				j--;						//きえた分詰める
+				break;
+			}
+		}
+	}
+}

@@ -258,9 +258,27 @@ D3DXVECTOR3 Player::GetPlayerPos(void)
 	return pos;
 }
 
+void Player::GetCollisionSphere(CollisionSphere * CollisionSphere)
+{
+	CollisionSphere->pos = pos;
+	CollisionSphere->radius = CollisionRadius;
+
+}
+
+
 void Player::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
 {
 	pPlayerCam = PPlayerCam;
+}
+
+void Player::HitSnowBall()
+{
+	HP--;
+}
+
+int Player::GetHP()
+{
+	return HP;
 }
 
 //=====================================
@@ -362,6 +380,8 @@ void Player::MakeBall()
 
 void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 {
+	std::vector<D3DXMATRIX>().swap(ghostMat);		//ƒƒ‚ƒŠŠJ•ú
+
 	ghostMat.clear();	//‰Šú‰»
 
 	D3DXVECTOR3 moveVec;

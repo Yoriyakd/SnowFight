@@ -21,19 +21,29 @@ public:
 	bool Update(SnowBallManager *snowBallManager);
 	void SetCamera(void);
 	void Draw(void);
-	int GetRemainingBalls();			//残弾数を返す
 
+	int GetRemainingBalls();			//残弾数を返す
 	D3DXVECTOR3 GetPlayerPos(void);
+	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
+
+	void HitSnowBall();
+	int GetHP();
 
 private:
 	D3DXMATRIX transMat, rotMatY, rotMatX;
 	D3DXVECTOR3 pos;
 	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, -2.0f, 0.0f);		//カメラの位置からの距離
+
+	//-----------------------------
+	//プレイヤーステータス
+	//-----------------------------
 	int remainingBalls;		//残弾数
 
 	bool carryFlag;			//デコレーションを運んでいるか
 	DecorationID carryDecorationID;		//運んでいるデコレーションの内容
+
+	int HP = 10;
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------
@@ -65,10 +75,14 @@ private:
 	XFILE ballMesh;
 	D3DXMATRIX ballMat, ballScalMat, ballOffsetMat;
 
+	//-----------------------------
+	//当たり判定
+	//-----------------------------
+	float CollisionRadius = 1.0f;		//球当たり判定の半径
 
 	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
-	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列			//ポインタ型で宣言しなかったら動く　なぜ？
+	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
 	LPDIRECT3DTEXTURE9 GhostTex;
 
 	//-----------------------------

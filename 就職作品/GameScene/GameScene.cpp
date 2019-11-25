@@ -135,6 +135,7 @@ bool GameScene::Update()
 	playerCam->Update();
 	player->Update(snowBallManager);		//カメラを更新してから
 	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
+	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	snowBallManager->Update();
 	effectManager->Update();
 	eventManager->Update();
@@ -143,5 +144,6 @@ bool GameScene::Update()
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
 	collisionObserver->PlayertoObj(playerCam, mapObjManager);
+	collisionObserver->EnemySnowBalltoPlayer(player, snowBallManager);
 	return true;
 }

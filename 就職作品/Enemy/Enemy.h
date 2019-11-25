@@ -38,9 +38,4 @@ private:
 	float limitLength;		//交戦時取る距離
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//交戦時の移動		球発射時は止まるようにする
 
-	//---------------------------------------
-	//被弾エフェクト用
-	//---------------------------------------
-	//bool damageFlag;		☆
-	//int damageEffectCnt;
 };

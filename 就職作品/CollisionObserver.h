@@ -16,4 +16,6 @@ public:
 	void SnowBalltoObj(SnowBallManager *snowBallManager, MapObjManager *MapObjManager);
 	//playerのマップオブジェクトに対する当たり判定
 	void PlayertoObj(PlayerCamera *PlayerCam, MapObjManager *MapObjManager);
+
+	void EnemySnowBalltoPlayer(Player *Player, SnowBallManager *snowBallManager);
 };

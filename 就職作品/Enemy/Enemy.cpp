@@ -58,16 +58,6 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 
 	StageBorderProcessing();			//移動処理のあとに呼ぶ
 
-	/*if (damageFlag == true)		☆
-	{
-		damageEffectCnt--;
-		{
-			if (damageEffectCnt < 0)
-			{
-				damageFlag = false;
-			}
-		}
-	}*/
 	
 	return true;
 }
@@ -148,7 +138,7 @@ void Enemy::ShootSnowBall(float TragetAng)
 	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)	手の位置から発射するようにする
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
 	ValueTmp.YAxisAng = TragetAng;						/*要調整*/
-	ValueTmp.powerRate = 20.0f;							/*要調整*/
+	ValueTmp.powerRate = 40.0f;							/*要調整*/
 	ValueTmp.id = ENEMY_ID;
 
 
