@@ -40,6 +40,12 @@
     <Filter Include="Player\Anime">
       <UniqueIdentifier>{37d503a4-7c74-4e4c-adfb-d33ea9565084}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TitleScene">
+      <UniqueIdentifier>{0c11a6f9-4291-42c9-b72d-04cfbe5f8b05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuScene">
+      <UniqueIdentifier>{95a291a6-53d9-4927-be17-d6fda6d89012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="Map\LoadStageData.cpp">
       <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene\TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Effect\SnowFrag.cpp">
       <Filter>Effect</Filter>
@@ -171,6 +174,12 @@
     <ClCompile Include="Item\Decoration_YellowBall.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScene\TitleScene.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene\MenuScene.cpp">
+      <Filter>MenuScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -216,9 +225,6 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="CollisionObserver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene\TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Effect\SnowFrag.h">
@@ -307,6 +313,12 @@
     </ClInclude>
     <ClInclude Include="Item\Decoration_YellowBall.h">
       <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene\TitleScene.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene\MenuScene.h">
+      <Filter>MenuScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

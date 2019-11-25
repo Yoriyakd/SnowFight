@@ -1,5 +1,6 @@
 #include "TitleScene.h"
 #include"../GameScene/GameScene.h"
+#include"../MenuScene/MenuScene.h"
 
 TitleScene::TitleScene()
 {
@@ -53,7 +54,7 @@ bool TitleScene::Update(void)
 {
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		sceneSwitcher.SwitchScene(new GameScene(1));
+		sceneSwitcher.SwitchScene(new MenuScene());
 		return false;
 	}
 	return true;
