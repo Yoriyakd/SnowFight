@@ -320,6 +320,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 		}
 		else
 		{
+			std::vector<D3DXMATRIX>().swap(ghostMat);		//ƒƒ‚ƒŠŠJ•ú
 			ghostMat.clear();	//‰Ÿ‚µ‚Ä‚È‚¢‚Æ‚«‚Í”ñ•\¦
 			if (LKyeFlag == true)
 			{
