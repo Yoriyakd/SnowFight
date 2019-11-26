@@ -14,14 +14,14 @@ MapObjManager::~MapObjManager()
 }
 
 
-void MapObjManager::SetTree(D3DXVECTOR3 Pos)
+void MapObjManager::SetTree(D3DXVECTOR3 Pos, float Ang)
 {
-	mapObj.push_back(new Tree(Pos));
+	mapObj.push_back(new Tree(Pos, Ang));
 }
 
-void MapObjManager::SetBench(D3DXVECTOR3 Pos)
+void MapObjManager::SetBench(D3DXVECTOR3 Pos, float Ang)
 {
-	mapObj.push_back(new Bench(Pos));
+	mapObj.push_back(new Bench(Pos, Ang));
 }
 
 void MapObjManager::SetXmasTree(D3DXVECTOR3 Pos)

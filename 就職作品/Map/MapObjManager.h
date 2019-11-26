@@ -12,8 +12,8 @@ public:
 	MapObjManager();
 	~MapObjManager();
 
-	void SetTree(D3DXVECTOR3 Pos);
-	void SetBench(D3DXVECTOR3 Pos);
+	void SetTree(D3DXVECTOR3 Pos, float Ang);
+	void SetBench(D3DXVECTOR3 Pos, float Ang);
 	void SetXmasTree(D3DXVECTOR3 Pos);
 
 	void Draw();

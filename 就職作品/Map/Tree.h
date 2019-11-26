@@ -4,6 +4,6 @@
 class Tree : public MapObj
 {
 public:
-	Tree(D3DXVECTOR3 Pos);		//置く座標を渡す
+	Tree(D3DXVECTOR3 Pos, float Ang);		//置く座標を渡す
 	~Tree();
 };
