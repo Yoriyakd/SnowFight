@@ -46,7 +46,7 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
 	fscanf_s(fp, "StageSizeX:%f\n", &stageSizeX);
 	fscanf_s(fp, "StageSizeY:%f\n", &stageSizeZ);
 
-	int BenchCnt, XmasTreeCnt;
+	int BenchCnt, TreeCnt, XmasTreeCnt;
 
 	fscanf_s(fp, "Bench:%d\n", &BenchCnt);
 
@@ -55,6 +55,15 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
 		D3DXVECTOR3 TmpPos;
 		fscanf_s(fp, "%f,%f,%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z);
 		MapObjManager->SetBench(TmpPos);
+	}
+
+	fscanf_s(fp, "Tree:%d\n", &TreeCnt);
+
+	for (int i = 0; i <= TreeCnt; i++)
+	{
+		D3DXVECTOR3 TmpPos;
+		fscanf_s(fp, "%f,%f,%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z);
+		MapObjManager->SetTree(TmpPos);
 	}
 
 	fscanf_s(fp, "XmasTree:%d\n", &XmasTreeCnt);
@@ -66,7 +75,6 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
 		MapObjManager->SetXmasTree(TmpPos);
 	}
 
-	MapObjManager->SetTree(D3DXVECTOR3(50, 0, 50));		//test Åô
 
 	fclose(fp);
 
