@@ -180,14 +180,11 @@
     <ClCompile Include="Map\Bench.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\FenceManager.cpp">
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
     <ClCompile Include="Map\Ground.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\HedgeManager.cpp" />
     <ClCompile Include="Map\LoadStageData.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -195,10 +192,7 @@
     <ClCompile Include="Map\MapObj.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\StageFence.cpp">
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
+    <ClCompile Include="Map\StageHedge.cpp" />
     <ClCompile Include="Map\Tree.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -262,11 +256,11 @@
     <ClInclude Include="Item\Decoration_YellowBall.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Bench.h" />
-    <ClInclude Include="Map\FenceManager.h" />
     <ClInclude Include="Map\Ground.h" />
+    <ClInclude Include="Map\HedgeManager.h" />
     <ClInclude Include="Map\LoadStageData.h" />
     <ClInclude Include="Map\MapObj.h" />
-    <ClInclude Include="Map\StageFence.h" />
+    <ClInclude Include="Map\StageHedge.h" />
     <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />

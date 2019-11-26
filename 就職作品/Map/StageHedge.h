@@ -1,11 +1,10 @@
 #pragma once
 #include"../main.h"
 #include"../ResourceManager.h"
-class StageFence {
+class StageHedge {
 public:
-	StageFence(D3DXVECTOR3 *Pos);
-	StageFence(D3DXVECTOR3 *Pos, float Ang);
-	~StageFence();
+	StageHedge(D3DXVECTOR3 *Pos);
+	~StageHedge();
 	void Draw(void);
 
 private:
