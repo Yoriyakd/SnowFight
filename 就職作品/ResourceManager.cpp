@@ -33,7 +33,7 @@ XFILE ResourceManager::GetXFILE(std::string FileName)
 {
 	XFILE TmpXFILE;
 
-	if (TextureList.find(FileName) == TextureList.end())		//ÅŒã‚Ü‚ÅŒŸõ‚·‚é
+	if (XFILEList.find(FileName) == XFILEList.end())		//ÅŒã‚Ü‚ÅŒŸõ‚·‚é
 	{
 		std::string FilePath = "data/";
 		FilePath += FileName;		//ƒpƒX‚Ìì¬
