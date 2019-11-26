@@ -12,6 +12,10 @@ TitleScene::TitleScene()
 
 	kyeInstructionTex = resourceManager->GetTexture("PushSpase.png", kyeInstructionX, 128, NULL);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
+
+	sceneSwitchEffectAlpha = 0;
+	switchEffectTex = resourceManager->GetTexture("SceneSwitchEffect.png", 32, 32, NULL);
+	D3DXMatrixTranslation(&switchEffectMat, 0, 0, 0);
 }
 
 TitleScene::~TitleScene()
@@ -46,6 +50,10 @@ void TitleScene::Render2D(void)
 	lpSprite->SetTransform(&kyeInstructionMat);
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
+	RECT RcSwitchEffect = { 0, 0, SCRW, SCRH };
+	lpSprite->SetTransform(&switchEffectMat);
+	lpSprite->Draw(switchEffectTex, &RcSwitchEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(sceneSwitchEffectAlpha, 255, 255, 255));
+
 	// 描画終了
 	lpSprite->End();
 }
@@ -54,8 +62,17 @@ bool TitleScene::Update(void)
 {
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		sceneSwitcher.SwitchScene(new MenuScene());
-		return false;
+		sceneSwitchFlag = true;
+	}
+
+	if (sceneSwitchFlag == true)
+	{
+		sceneSwitchEffectAlpha += 20;
+		if (sceneSwitchEffectAlpha > 255)		//アルファ値が255以上でシーン遷移
+		{
+			sceneSwitcher.SwitchScene(new MenuScene());
+			return false;
+		}
 	}
 	return true;
 }

@@ -19,6 +19,12 @@ private:
 	D3DXMATRIX logoMat, kyeInstructionMat;
 	const int logoTexX = 832, kyeInstructionX = 548;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
 
+	LPDIRECT3DTEXTURE9 switchEffectTex;
+	D3DXMATRIX switchEffectMat;
+	int sceneSwitchEffectAlpha;
+	bool sceneSwitchFlag;
+	
+
 	LPDIRECT3DTEXTURE9 backTex;
 	D3DXMATRIX backMat;
 };

@@ -20,6 +20,7 @@ Player::Player()
 	remainingBalls = StartBallCnt;
 
 	GhostTex = resourceManager->GetTexture("Locus.png", 64, 64, NULL);
+	carryFlag = false;
 
 	//--------------------------------------------------------------
 	//ŒC

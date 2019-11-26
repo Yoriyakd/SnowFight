@@ -12,5 +12,13 @@ public:
 	void Render2D(void);
 	bool Update(void);
 private:
+	bool stageSelectFlag;
 
+	LPDIRECT3DTEXTURE9 switchEffectTex;
+	D3DXMATRIX switchEffectMat;
+	int sceneSwitchEffectAlpha;
+	bool sceneSwitchFlag;
+
+	D3DXMATRIX RightArrowMat, LeftArrowMat;
+	D3DXVECTOR3 RightArrowPos, LeftArrowPos;
 };
