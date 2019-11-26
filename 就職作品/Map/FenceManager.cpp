@@ -2,45 +2,36 @@
 
 
 
-FenceManager::FenceManager(int CntX, int CntZ, float OffSetX, float OffSetZ)
+FenceManager::FenceManager(StageBorder * StageBorder)
 {
-	fenceData.cntX = CntX;
-	fenceData.cntZ = CntZ;
-	fenceData.offSetX = OffSetX;
-	fenceData.offSetZ = OffSetZ;
+	stageBorder = *StageBorder;
+
+	int FenceCnt = 16;		//16 * 16 = 256 ステージサイズに合わせた数
+
+	//for (int i = 0; i < FenceCnt; i++)		//stageTop
+	//{
+	//	stageFence.push_back(new StageFence(&D3DXVECTOR3((16.0f * i) + 8, 4.0f, stageBorder.Top + 2)));		//板ポリの中心点が中央なのでそれに合わせて配置
+	//}
+
+	//for (int i = 0; i < FenceCnt; i++)		//stageBottom
+	//{
+	//	stageFence.push_back(new StageFence(&D3DXVECTOR3((16.0f * i) + 8, 4.0f, stageBorder.Bottom - 2)));
+	//}
+
+	for (int i = 0; i < FenceCnt; i++)		//stageLeft
+	{
+		stageFence.push_back(new StageFence(&D3DXVECTOR3(stageBorder.Left - 2, 4.0f, (16.0f * i) + 8), -90));
+	}
+
+	for (int i = 0; i < FenceCnt; i++)		//stageRight
+	{
+		stageFence.push_back(new StageFence(&D3DXVECTOR3(stageBorder.Right + 2, 4.0f, (16.0f * i) + 8), -90));
+	}
 }
 
 FenceManager::~FenceManager()
 {
 }
-
-void FenceManager::SetFence()
-{
-	for (int i = 0; i < fenceData.cntX; i++)	//X
-	{
-		stageFence.push_back(new StageFence());
-		stageFence[stageFence.size() - 1]->SetMat(D3DXVECTOR3(0 + (i * blockInterval), 0.0f, (fenceData.offSetZ * -1)));		//配列インデックスをステージの配列の最後から-1して求めている
-	}
-
-	for (int j = 0; j < fenceData.cntZ; j++)	//Z
-	{
-		stageFence.push_back(new StageFence());
-		stageFence[stageFence.size() - 1]->SetMat(D3DXVECTOR3((fenceData.offSetX * -1), 0.0f, 0 + (j * blockInterval)), 90);	//配列インデックスをステージの配列の最後から-1して求めている
-	}
-
-	for (int i = 0; i < fenceData.cntX; i++)	//X
-	{
-		stageFence.push_back(new StageFence());				//X = 0からX方向にどんどんのびる									//ここはつまりステージの境界線
-		stageFence[stageFence.size() - 1]->SetMat(D3DXVECTOR3(0 + (i * blockInterval), 0.0f, fenceData.offSetZ + stageSizeZ));		//Stageは2次元だからYが↑	//配列インデックスをステージの配列の最後から-1して求めている
-	}
-
-	for (int j = 0; j < fenceData.cntZ; j++)	//Z
-	{
-		stageFence.push_back(new StageFence());
-		stageFence[stageFence.size() - 1]->SetMat(D3DXVECTOR3(fenceData.offSetX + stageSizeX, 0.0f, 0 + (j * blockInterval)), 90);	//配列インデックスをステージの配列の最後から-1して求めている
-	}
-}
-
 
 void FenceManager::Draw(void)
 {
@@ -50,8 +41,3 @@ void FenceManager::Draw(void)
 	}
 }
 
-void FenceManager::SetStageSize(float StageSizeX, float StageSizeZ)
-{
-	stageSizeX = StageSizeX;
-	stageSizeZ = StageSizeZ;
-}

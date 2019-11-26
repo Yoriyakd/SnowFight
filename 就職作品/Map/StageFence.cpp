@@ -1,35 +1,70 @@
 #include "StageFence.h"
+//=====================================
+//publicメソッド
+//=====================================
 
-StageFence::StageFence(void)
+
+StageFence::StageFence(D3DXVECTOR3 * Pos)
 {
-	mesh = resourceManager->GetXFILE("Fence.x");
+	//左上から時計回り
+	fence[0].Pos = D3DXVECTOR3(-8.0f, 4.0f, 0.0f);
+	fence[1].Pos = D3DXVECTOR3(8.0f, 4.0f, 0.0f);
+	fence[2].Pos = D3DXVECTOR3(8.0f, -4.0f, 0.0f);
+	fence[3].Pos = D3DXVECTOR3(-8.0f, -4.0f, 0.0f);
+
+	fence[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
+	fence[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
+	fence[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
+	fence[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
+
+	fence[0].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[1].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[2].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[3].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	tex = resourceManager->GetTexture("hedge.png", 512, 512, NULL);
+	D3DXMatrixTranslation(&mat, Pos->x, Pos->y, Pos->z);
+}
+
+StageFence::StageFence(D3DXVECTOR3 * Pos, float Ang)
+{
+	//左上から時計回り
+	fence[0].Pos = D3DXVECTOR3(-8.0f, 4.0f, 0.0f);
+	fence[1].Pos = D3DXVECTOR3(8.0f, 4.0f, 0.0f);
+	fence[2].Pos = D3DXVECTOR3(8.0f, -4.0f, 0.0f);
+	fence[3].Pos = D3DXVECTOR3(-8.0f, -4.0f, 0.0f);
+
+	fence[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
+	fence[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
+	fence[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
+	fence[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
+
+	fence[0].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[1].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[2].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	fence[3].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	tex = resourceManager->GetTexture("hedge.png", 512, 512, NULL);
+
+	D3DXMatrixTranslation(&mat, Pos->x, Pos->y, Pos->z);
+	D3DXMATRIX TmpRotMat;
+	D3DXMatrixRotationY(&TmpRotMat, D3DXToRadian(Ang));
+	mat = TmpRotMat * mat;
 }
 
 StageFence::~StageFence()
 {
 }
 
-//=====================================
-//publicメソッド
-//=====================================
-
-
-void StageFence::SetMat(D3DXVECTOR3 Pos)
-{
-	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
-}
-
-void StageFence::SetMat(D3DXVECTOR3 Pos, float Ang)
-{
-	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
-	D3DXMATRIX TmpRotMat;
-	D3DXMatrixRotationY(&TmpRotMat, D3DXToRadian(Ang));
-	mat = TmpRotMat * mat;
-}
-
 void StageFence::Draw(void)
 {
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetTransform(D3DTS_WORLD ,&mat);
-	DrawMesh(&mesh);
+	lpD3DDevice->SetFVF(FVF_VERTEX);
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
+	lpD3DDevice->SetTexture(0, tex);
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, fence, sizeof(VERTEX));
+
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリング
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }

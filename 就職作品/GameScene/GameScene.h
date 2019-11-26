@@ -33,7 +33,7 @@ private:
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;
-	//FenceManager *fenceManager;
+	FenceManager *fenceManager;
 	SnowBallManager *snowBallManager;
 	MapObjManager *mapObjManager;
 	CollisionObserver *collisionObserver;	
