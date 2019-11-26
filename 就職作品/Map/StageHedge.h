@@ -4,6 +4,7 @@
 class StageHedge {
 public:
 	StageHedge(D3DXVECTOR3 *Pos);
+	StageHedge(D3DXVECTOR3 *Pos, float Ang);
 	~StageHedge();
 	void Draw(void);
 
