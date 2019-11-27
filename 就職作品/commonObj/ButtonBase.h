@@ -2,10 +2,13 @@
 #include"../main.h"
 class ButtonBase {
 public:
+	ButtonBase();
 	void Draw();
-	bool CheckState(void);
+	void Update();
+	bool GetState(void);
 protected:
 	LPDIRECT3DTEXTURE9 tex;
 	D3DXMATRIX mat;
-	D3DXVECTOR2 pos, size;		//座標とbuttonのサイズX,Y
+	D3DXVECTOR2 pos, texSize, boxSize;		//座標とbuttonのサイズX,Y	boxSizeはクリック判定のサイズ
+	bool nowStae;		//カーソルが上に乗っかていたらtrue
 };

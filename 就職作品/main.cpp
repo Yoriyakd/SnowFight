@@ -29,7 +29,7 @@ LPD3DXSPRITE lpSprite;	// スプライト
 LPD3DXFONT lpFont;		// フォント
 
 bool gameFullScreen;	// フルスクリーン（true,false)
-HWND hwnd;
+HWND hwnd;		//ウインドウID(みたいなもの)
 const int GameFPS = 60;		//ゲームのFPS指定
 
 SceneSwitcher sceneSwitcher;

@@ -1,26 +1,35 @@
 #include "ButtonBase.h"
 
-void ButtonBase::Draw()
+ButtonBase::ButtonBase()
 {
-	RECT Rc = { 0, 0, size.x, size.y };
-	lpSprite->SetTransform(&mat);
-	lpSprite->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-
 }
 
-bool ButtonBase::CheckState(void)
+void ButtonBase::Draw()
+{
+	RECT Rc = { 0, 0, (long)texSize.x, (long)texSize.y };
+	lpSprite->SetTransform(&mat);
+	lpSprite->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+}
+
+void ButtonBase::Update()
 {
 	POINT Pt;
 
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
+	ScreenToClient(hwnd, &Pt);		//スクリーン座標に変換
 
-	if (Pt.x >= pos.x && Pt.x <= (pos.x + size.x) &&		//矩形と点の当たり判定
-		Pt.y >= pos.y && Pt.y <= (pos.y + size.y))
+	if (Pt.x >= pos.x && Pt.x <= (pos.x + boxSize.x) &&		//矩形と点の当たり判定
+		Pt.y >= pos.y && Pt.y <= (pos.y + boxSize.y))
 	{
-		return true;
+		nowStae = true;
 	}
 	else
 	{
-		return false;
+		nowStae = false;
 	}
+}
+
+bool ButtonBase::GetState(void)
+{
+	return nowStae;
 }
