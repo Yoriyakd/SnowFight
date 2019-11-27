@@ -180,6 +180,9 @@
     <ClCompile Include="Map\HedgeManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\ButtonBase.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="Map\HedgeManager.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\ButtonBase.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

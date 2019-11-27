@@ -19,7 +19,7 @@ GameScene::GameScene(int StageNo)
 	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
 	collisionObserver = new CollisionObserver();
-	playerCam = new PlayerCamera(SCRW, SCRH, hwnd);
+	playerCam = new PlayerCamera(&hwnd);
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
 	pickUpInstructions = new PickUpInstructions();

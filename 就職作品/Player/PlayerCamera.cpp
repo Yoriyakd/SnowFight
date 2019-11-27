@@ -4,15 +4,14 @@
 //=====================================
 //publicメソッド
 //=====================================
-PlayerCamera::PlayerCamera(int Scrw, int Scrh, HWND Hwnd)
+
+PlayerCamera::PlayerCamera(HWND * Hwnd)
 {
 	hwnd = Hwnd;
-	SCRw = Scrw;
-	SCRh = Scrh;
-	basePt.x = SCRw / 2;
-	basePt.y = SCRh / 2;
+	basePt.x = SCRW / 2;
+	basePt.y = SCRH / 2;
 	angX = 0, angY = 0;		//初期化
-	ClientToScreen(hwnd, &basePt);
+	ClientToScreen(*hwnd, &basePt);
 	SetCursorPos(basePt.x, basePt.y);
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 	D3DXMatrixIdentity(&billBoardMat);
@@ -31,9 +30,6 @@ void PlayerCamera::Update(void)
 
 void PlayerCamera::SetCamera(void)
 {
-	D3DXMATRIX mView, mProj;
-
-
 	POINT Pt;
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
 	angY += (Pt.x - basePt.x) / 4.0f;	//最初の位置との差を求め、移動量を調整している
@@ -62,6 +58,7 @@ void PlayerCamera::SetCamera(void)
 	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 	D3DXVec3TransformCoord(&camHead, &D3DXVECTOR3(0, 1, 0), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 
+	D3DXMATRIX mView, mProj;
 
 	// 視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
@@ -80,7 +77,7 @@ void PlayerCamera::SetCamera(void)
 	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);		//ビルボード用視点行列
 
 	// 投影行列の設定
-	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRw / (float)SCRh, 1.0f, 2000.0f);
+	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 2000.0f);
 
 	//行列設定
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
