@@ -5,13 +5,12 @@
 //publicメソッド
 //=====================================
 
-PlayerCamera::PlayerCamera(HWND * Hwnd)
+PlayerCamera::PlayerCamera()
 {
-	hwnd = Hwnd;
 	basePt.x = SCRW / 2;
 	basePt.y = SCRH / 2;
 	angX = 0, angY = 0;		//初期化
-	ClientToScreen(*hwnd, &basePt);
+	ClientToScreen(hwnd, &basePt);		//元がクライアント座標なのでスクリーン座標に変換する(画面の中央に設定される)
 	SetCursorPos(basePt.x, basePt.y);
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 	D3DXMatrixIdentity(&billBoardMat);
@@ -31,6 +30,7 @@ void PlayerCamera::Update(void)
 void PlayerCamera::SetCamera(void)
 {
 	POINT Pt;
+	ClientToScreen(hwnd, &Pt);		//スクリーン座標座標に変換
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
 	angY += (Pt.x - basePt.x) / 4.0f;	//最初の位置との差を求め、移動量を調整している
 

@@ -3,7 +3,7 @@
 #include"../main.h"
 class PlayerCamera {
 public:
-	PlayerCamera(HWND*);
+	PlayerCamera();
 	~PlayerCamera();
 	void Update(void);
 	void SetCamera(void);
@@ -25,7 +25,6 @@ private:
 	//--------------------------------------------------
 	//マウスでカメラを動かす用の変数群
 	//--------------------------------------------------
-	HWND *hwnd;		//ポインタで保存する
 	POINT basePt;
 	//--------------------------------------------------
 	float angX, angY;
