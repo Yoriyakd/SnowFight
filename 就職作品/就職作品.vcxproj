@@ -186,7 +186,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\HedgeManager.cpp" />
     <ClCompile Include="Map\LoadStageData.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -194,7 +193,7 @@
     <ClCompile Include="Map\MapObj.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Map\StageHedge.cpp" />
+    <ClCompile Include="Map\Stage1Enclosure.cpp" />
     <ClCompile Include="Map\Tree.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -261,10 +260,9 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Bench.h" />
     <ClInclude Include="Map\Ground.h" />
-    <ClInclude Include="Map\HedgeManager.h" />
     <ClInclude Include="Map\LoadStageData.h" />
     <ClInclude Include="Map\MapObj.h" />
-    <ClInclude Include="Map\StageHedge.h" />
+    <ClInclude Include="Map\Stage1Enclosure.h" />
     <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />

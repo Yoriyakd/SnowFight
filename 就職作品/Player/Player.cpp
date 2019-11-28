@@ -322,7 +322,6 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 		else
 		{
 			std::vector<D3DXMATRIX>().swap(ghostMat);		//ƒƒ‚ƒŠŠJ•ú
-			ghostMat.clear();	//‰Ÿ‚µ‚Ä‚È‚¢‚Æ‚«‚Í”ñ•\¦
 			if (LKyeFlag == true)
 			{
 				MakeSnowBallInitValue();
@@ -383,8 +382,6 @@ void Player::MakeBall()
 void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 {
 	std::vector<D3DXMATRIX>().swap(ghostMat);		//ƒƒ‚ƒŠŠJ•ú
-
-	ghostMat.clear();	//‰Šú‰»
 
 	D3DXVECTOR3 moveVec;
 	D3DXMATRIX TmpMat, TmpRot;

@@ -45,7 +45,7 @@ GameScene::GameScene(int StageNo)
 	//-------------------------------------------------------
 	playerCam->SetPos(&D3DXVECTOR3(StageSizeX / 2, 0, 10.0f));				//プレイヤーの初期位置
 
-	hedgeManager = new HedgeManager(stageBorder);		//ステージの境界データをもらうよう変更する
+	stage1Enclosure = new Stage1Enclosure(stageBorder);
 
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
@@ -86,7 +86,7 @@ GameScene::~GameScene()
 	delete ground;
 	delete enemyManager;
 	delete skyBox;
-	delete hedgeManager;
+	delete stage1Enclosure;
 	delete snowBallManager;
 	delete mapObjManager;
 	delete collisionObserver;
@@ -98,7 +98,7 @@ void GameScene::Render3D(void)
 {
 	skyBox->Draw();
 	ground->Draw();
-	hedgeManager->Draw();
+	stage1Enclosure->Draw();
 	mapObjManager->Draw();
 	enemyManager->Draw();
 	player->Draw();

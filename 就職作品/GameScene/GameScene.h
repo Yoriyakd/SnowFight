@@ -10,7 +10,7 @@
 #include"../Map/MapObjManager.h"
 #include"../Enemy/EnemyManager.h"
 #include"../commonObj/SkyBox.h"
-#include"../Map/HedgeManager.h"
+#include"../Map/Stage1Enclosure.h"
 #include"../commonObj/SnowBallManager.h"
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
@@ -33,7 +33,7 @@ private:
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;
-	HedgeManager *hedgeManager;
+	Stage1Enclosure *stage1Enclosure;
 	SnowBallManager *snowBallManager;
 	MapObjManager *mapObjManager;
 	CollisionObserver *collisionObserver;	
