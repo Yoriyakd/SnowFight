@@ -19,6 +19,11 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 		picUpFlag = true;
 		return true;
 	}
+	else
+	{
+		picUpFlag = false;
+	}
+
 	return false;
 }
 
