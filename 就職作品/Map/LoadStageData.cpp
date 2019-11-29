@@ -68,6 +68,16 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
 		MapObjManager->SetTree(TmpPos, TmpAng);
 	}
 
+	fscanf_s(fp, "Bobbin_Red:%d\n", &TreeCnt);
+
+	for (int i = 0; i <= TreeCnt; i++)
+	{
+		D3DXVECTOR3 TmpPos;
+		float TmpAng;
+		fscanf_s(fp, "%f,%f,%f:%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z, &TmpAng);
+		MapObjManager->SetBobbin_Red(TmpPos, TmpAng);
+	}
+
 	fscanf_s(fp, "XmasTree:%d\n", &XmasTreeCnt);
 
 	for (int i = 0; i <= XmasTreeCnt; i++)

@@ -189,6 +189,9 @@
     <ClCompile Include="Player\WindUpLAnime.cpp">
       <Filter>Player\Anime\ArmL</Filter>
     </ClCompile>
+    <ClCompile Include="Map\Bobbin_Red.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -331,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="Player\WindUpLAnime.h">
       <Filter>Player\Anime\ArmL</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Bobbin_Red.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

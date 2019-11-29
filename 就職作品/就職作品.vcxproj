@@ -182,6 +182,7 @@
     <ClCompile Include="Map\Bench.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\Bobbin_Red.cpp" />
     <ClCompile Include="Map\Ground.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -259,6 +260,7 @@
     <ClInclude Include="Item\Decoration_YellowBall.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Bench.h" />
+    <ClInclude Include="Map\Bobbin_Red.h" />
     <ClInclude Include="Map\Ground.h" />
     <ClInclude Include="Map\LoadStageData.h" />
     <ClInclude Include="Map\MapObj.h" />
