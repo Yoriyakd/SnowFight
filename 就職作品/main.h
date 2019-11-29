@@ -86,3 +86,6 @@ D3DXVECTOR3 ThrowingInit(ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat);
 
 //クオータニオンでアニメーションする関数	第一引数に加工した行列が入る
 void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float AnimeFrame);
+
+//視点行列を渡してビルボード行列を作成
+void MakeBillBoardMat(D3DXMATRIX *OutMat, const D3DXMATRIX *_mView);

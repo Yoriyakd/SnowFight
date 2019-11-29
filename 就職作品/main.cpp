@@ -134,6 +134,18 @@ void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMAT
 	OutMat->_43 = NowPos.z;
 }
 
+void MakeBillBoardMat(D3DXMATRIX *OutMat, const D3DXMATRIX *_mView)
+{
+	D3DXMATRIX TmpMview;
+	TmpMview = *_mView;
+
+	TmpMview._41 = 0;			//移動成分を削除
+	TmpMview._42 = 0;
+	TmpMview._43 = 0;
+
+	D3DXMatrixInverse(OutMat, NULL, &TmpMview);		//ビルボード用視点行列
+}
+
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 

@@ -46,8 +46,6 @@ void EffectManager::Draw(void)
 
 void EffectManager::Update(void)
 {
-	billBoardMat = pPlayerCam->GetbillBoardMat();		//ビルボードの回転行列をセット
-
 	for (unsigned int i = 0; i < snowFrag.size(); i++)
 	{
 		snowFrag[i]->SetBillBoardMat(billBoardMat);		//ビルボードの回転行列をセット
@@ -84,7 +82,8 @@ void EffectManager::Update(void)
 	}
 }
 
-void EffectManager::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
+void EffectManager::SetBillBoardMat(D3DXMATRIX * BillBoardMat)
 {
-	pPlayerCam = PPlayerCam;
+	billBoardMat = *BillBoardMat;
 }
+

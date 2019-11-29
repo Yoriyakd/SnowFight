@@ -12,7 +12,7 @@ public:
 	//--------------------------------------------------
 	float GetCamAngX(void);
 	float GetCamAngY(void);
-	D3DXMATRIX GetbillBoardMat(void);
+	D3DXMATRIX GetmView(void);
 	D3DXVECTOR3 GetmoveVec(void);
 	D3DXVECTOR3 GetPos(void);
 	//--------------------------------------------------
@@ -37,6 +37,7 @@ private:
 
 	D3DXMATRIX billBoardMat;		//作ったビルボードの行列を入れておく
 	D3DXVECTOR3 moveVec;		//移動ベクトルを保存しておき判定時に渡す
+	D3DXMATRIX mView, mProj;		//視点行列,投影行列
 	//--------------------------------------------------
 	//メソッド
 	//--------------------------------------------------

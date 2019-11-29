@@ -20,7 +20,7 @@ public:
 	~EffectManager();
 	void Draw(void);
 	void Update(void);
-	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);		//playerCamのメソッドにアクセスするためのポインタ
+	void SetBillBoardMat(D3DXMATRIX *BillBoardMat);
 };
 
 extern EffectManager *effectManager;	//mainで宣言

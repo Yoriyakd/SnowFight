@@ -58,8 +58,6 @@ void PlayerCamera::SetCamera(void)
 	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 	D3DXVec3TransformCoord(&camHead, &D3DXVECTOR3(0, 1, 0), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 
-	D3DXMATRIX mView, mProj;
-
 	// 視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
 		&D3DXVECTOR3(pos.x, pos.y, pos.z),	// カメラの位置	
@@ -67,14 +65,6 @@ void PlayerCamera::SetCamera(void)
 		&camHead	// カメラの頭の方向
 	);
 
-	//移動成分を抜いて視点行列作成
-	D3DXMatrixLookAtLH(&billBoardMat,
-		&D3DXVECTOR3(0, 0, 0),	// カメラの位置	
-		&camTmpVec,	// カメラの視点
-		&camHead	// カメラの頭の方向
-	);
-
-	D3DXMatrixInverse(&billBoardMat, NULL, &billBoardMat);		//ビルボード用視点行列
 
 	// 投影行列の設定
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 2000.0f);
@@ -95,9 +85,9 @@ float PlayerCamera::GetCamAngY(void)
 	return angY;
 }
 
-D3DXMATRIX PlayerCamera::GetbillBoardMat(void)
+D3DXMATRIX PlayerCamera::GetmView(void)
 {
-	return billBoardMat;
+	return mView;
 }
 
 D3DXVECTOR3 PlayerCamera::GetmoveVec(void)

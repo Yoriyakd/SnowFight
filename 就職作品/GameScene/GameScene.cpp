@@ -48,7 +48,6 @@ GameScene::GameScene(int StageNo)
 	stage1Enclosure = new Stage1Enclosure(stageBorder);
 
 	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
-	effectManager->SetPlayerCamPointer(playerCam);	//プレイヤーカメラのポインタをセット
 	
 	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -130,13 +129,21 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	enemyManager->Update(snowBallManager);
 	playerCam->Update();
+
+	D3DXMATRIX TmpBillBoardMat;
+	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
+
+	enemyManager->Update(snowBallManager);
+	
 	player->Update(snowBallManager);		//カメラを更新してから
 	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
 	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	snowBallManager->Update();
+
+	effectManager->SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
 	effectManager->Update();
+
 	eventManager->Update();
 	decorationManager->Updata();
 
