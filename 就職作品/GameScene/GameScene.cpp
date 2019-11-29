@@ -101,10 +101,11 @@ void GameScene::Render3D(void)
 	stage1Enclosure->Draw();
 	mapObjManager->Draw();
 	enemyManager->Draw();
-	player->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
 	decorationManager->Draw();
+
+	player->Draw();		//※Zバッファクリアをしているため最後に描画する
 }
 
 void GameScene::SetCamera(void)

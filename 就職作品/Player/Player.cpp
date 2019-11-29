@@ -157,14 +157,6 @@ void Player::Draw(void)
 
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-	//--------------------------------------------------------------
-	//腕表示
-	//--------------------------------------------------------------
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armRMat);
-	DrawMesh(&armRMesh);
-
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
-	DrawMesh(&armLMesh);
 
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
@@ -224,6 +216,18 @@ void Player::Draw(void)
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
+
+
+	//--------------------------------------------------------------
+	//腕表示
+	//--------------------------------------------------------------
+	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※最後に描画する
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &armRMat);
+	DrawMesh(&armRMesh);
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
+	DrawMesh(&armLMesh);
 
 }
 
