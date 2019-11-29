@@ -73,7 +73,8 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	}
 
 	//-----------------------------------------------------
-	
+	//デコレーション周り
+	//-----------------------------------------------------
 	if (decorationManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
 	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
 		pickUpInstructions->TurnOnDisplay();		//拾える時画面に指示を表示
@@ -91,21 +92,22 @@ bool Player::Update(SnowBallManager *snowBallManager)
 		pickUpInstructions->TurnOffDisplay();
 	}
 
-	if (carryFlag == true)
-	{
-		if (GetAsyncKeyState('Q') & 0x8000)		//Fでもいいような
-		{
-			carryFlag = false;
+	//if (carryFlag == true)
+	//{
+	//	if (GetAsyncKeyState('Q') & 0x8000)		//Fでもいいような
+	//	{
+	//		carryFlag = false;
 
-			D3DXVECTOR3 DropPoinOffset;
+	//		D3DXVECTOR3 DropPoinOffset;
 
-			DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
-			D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
+	//		DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
+	//		D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
 
-			decorationManager->Drop(&(pos + DropPoinOffset), carryDecorationID);
-		}
-	}
+	//		decorationManager->Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
+	//	}
+	//}
 
+	//-----------------------------------------------------
 
 
 
@@ -116,7 +118,7 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
 
 
-	ShootSnowball(snowBallManager);
+	Throw(snowBallManager);
 	MakeBall();
 
 	//-------------------------------------------------------
@@ -286,7 +288,7 @@ int Player::GetHP()
 //privateメソッド
 //=====================================
 
-void Player::ShootSnowball(SnowBallManager *snowBallManager)
+void Player::Throw(SnowBallManager *snowBallManager)
 {
 	static bool LKyeFlag = false;
 	static bool AnimeFlag = false;
@@ -309,7 +311,7 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			//--------------------------------------------------
 			//雪玉軌跡表示処理
 			//--------------------------------------------------
-			MakeGhostMat(&MakeSnowBallInitValue());
+			MakeGhostMat(&MakeThrowValue());
 		
 			//腕アニメーション
 			if (AnimeFlag == false)
@@ -324,11 +326,25 @@ void Player::ShootSnowball(SnowBallManager *snowBallManager)
 			std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
 			if (LKyeFlag == true)
 			{
-				MakeSnowBallInitValue();
-				snowBallManager->SetSnowBall(&MakeSnowBallInitValue());
-				timeCnt = 0;
-				LKyeFlag = false;
-				remainingBalls--;		//発射したら残数を1減らす
+				if (carryFlag == true)			//デコレーションを運んでいる状態ではデコレーションを投げる
+				{
+					carryFlag = false;
+
+					D3DXVECTOR3 DropPoinOffset;
+
+					DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
+					D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
+
+					decorationManager->Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
+					LKyeFlag = false;
+				}
+				else
+				{
+					snowBallManager->SetSnowBall(&MakeThrowValue(), PLAYER_ID);
+					timeCnt = 0;
+					LKyeFlag = false;
+					remainingBalls--;		//発射したら残数を1減らす
+				}
 
 				//腕アニメーション
 				AnimeFlag = false;
@@ -379,7 +395,7 @@ void Player::MakeBall()
 	}
 }
 
-void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
+void Player::MakeGhostMat(ThrowingInitValue *ThrowingInitValue)
 {
 	std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
 
@@ -387,11 +403,11 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 	D3DXMATRIX TmpMat, TmpRot;
 
 
-	moveVec = SnowBallInit(snowBallInitValue, &TmpMat);
+	moveVec = ThrowingInit(ThrowingInitValue, &TmpMat);
 
-	D3DXMatrixTranslation(&TmpMat, snowBallInitValue->shootPos.x, snowBallInitValue->shootPos.y, snowBallInitValue->shootPos.z);			//発射位置
+	D3DXMatrixTranslation(&TmpMat, ThrowingInitValue->shootPos.x, ThrowingInitValue->shootPos.y, ThrowingInitValue->shootPos.z);			//発射位置
 
-	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(snowBallInitValue->YAxisAng));		//発射元の角度から行列作成
+	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(ThrowingInitValue->YAxisAng));		//発射元の角度から行列作成
 	TmpMat = TmpRot * TmpMat;
 
 	ghostMat.push_back(TmpMat);
@@ -410,17 +426,16 @@ void Player::MakeGhostMat(SnowBallInitValue *snowBallInitValue)
 	}
 }
 
-SnowBallInitValue Player::MakeSnowBallInitValue()
+ThrowingInitValue Player::MakeThrowValue()
 {
 	D3DXVECTOR3 ShootOffset;	//回転を考慮した座標を入れる
-	SnowBallInitValue _SnowBallInitValue;
+	ThrowingInitValue _ThrowingBallInitValue;
 
 	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMatY);	//回転を考慮したベクトル作成
 
-	_SnowBallInitValue.shootPos = pos + ShootOffset;
-	_SnowBallInitValue.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
-	_SnowBallInitValue.YAxisAng = pPlayerCam->GetCamAngY();
-	_SnowBallInitValue.powerRate = shootPowerPCT;
-	_SnowBallInitValue.id = PLAYER_ID;
-	return _SnowBallInitValue;
+	_ThrowingBallInitValue.shootPos = pos + ShootOffset;
+	_ThrowingBallInitValue.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+	_ThrowingBallInitValue.YAxisAng = pPlayerCam->GetCamAngY();
+	_ThrowingBallInitValue.powerRate = shootPowerPCT;
+	return _ThrowingBallInitValue;
 }

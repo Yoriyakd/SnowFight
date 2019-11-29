@@ -3,18 +3,16 @@
 
 const float SnowBall::radius = 1.5;
 //発射位置、発射角度、発射方向、発射パワー(パワー 0~100)
-SnowBall::SnowBall(SnowBallInitValue snowBallInitValue)
+SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 {
-	moveVec = SnowBallInit(&snowBallInitValue, &mat);
+	moveVec = ThrowingInit(&ThrowingInitValue, &mat);
 	mesh = resourceManager->GetXFILE("SnowBall.x");
 
-	D3DXMatrixTranslation(&mat, snowBallInitValue.shootPos.x, snowBallInitValue.shootPos.y, snowBallInitValue.shootPos.z);			//発射位置
-
-	D3DXMatrixRotationY(&rotMat, D3DXToRadian(snowBallInitValue.YAxisAng));		//発射元の角度から行列作成
+	D3DXMatrixRotationY(&rotMat, D3DXToRadian(ThrowingInitValue.YAxisAng));		//発射元の角度から行列作成
 	mat = rotMat * mat;
 
 	deleteTime = 10 * GameFPS;
-	id = snowBallInitValue.id;
+	id = _ID;
 }
 
 SnowBall::~SnowBall()
@@ -44,7 +42,9 @@ bool SnowBall::Update(void)
 	}
 
 	effectManager->snowLocus.push_back(new SnowLocus(mat));		//毎フレーム雪の軌跡を作る
-
+	//-----------------------------------
+	//グローバル移動ベクトルを求める
+	//-----------------------------------
 	globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
 
 	memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);

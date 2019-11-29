@@ -8,13 +8,13 @@ CollisionObserver::~CollisionObserver()
 {
 }
 
-void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyManager *enemyManager)
+void CollisionObserver::SnowBalltoEnemy(SnowBallManager *SnowBallManager, EnemyManager *EnemyManager)
 {
-	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
+	for (unsigned int i = 0; i < EnemyManager->enemy.size(); i++)
 	{
-		for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
+		for (unsigned int j = 0; j < SnowBallManager->snowBall.size(); j++)
 		{
-			if (snowBallManager->snowBall[j]->GetID() == PLAYER_ID)		//プレイヤーの球なら実行
+			if (SnowBallManager->snowBall[j]->GetID() == PLAYER_ID)		//プレイヤーの球なら実行
 			{
 
 				//---------------------------------------------------------------
@@ -22,16 +22,16 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 
 				CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;//Aが上Bが下
 
-				enemyManager->enemy[i]->GetCollisionSphere(&EnemySphreA, &EnemySphreB);		/*当たり判定の球のデータ取得*/
-				snowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
+				EnemyManager->enemy[i]->GetCollisionSphere(&EnemySphreA, &EnemySphreB);		/*当たり判定の球のデータ取得*/
+				SnowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
 				//---------------------------------------------------------------
 
 				if (CollisionDetection(&SnowBallSphre, &EnemySphreA) || CollisionDetection(&SnowBallSphre, &EnemySphreB))
 				{
 					//SnowFragエフェクト呼ぶ
-					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+					effectManager->snowFrag.push_back(new SnowFrag(SnowBallManager->snowBall[j]->GetPos()));
 
-					if (enemyManager->enemy[i]->TakeDamage(1) == false)		//falseが返ってきたら
+					if (EnemyManager->enemy[i]->TakeDamage(1) == false)		//falseが返ってきたら
 					{
 						//-------------------------------------------------------------
 						//EnemyDeathAnime再生開始
@@ -41,21 +41,21 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 						XFILE TmpAnimeMesh;
 						D3DXVECTOR3 SnowBallVec;
 
-						TmpAnimeMat = enemyManager->enemy[i]->GetMat();		//行列
-						TmpAnimeMesh = enemyManager->enemy[i]->GetMesh();	//Mesh
-						SnowBallVec = snowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
+						TmpAnimeMat = EnemyManager->enemy[i]->GetMat();		//行列
+						TmpAnimeMesh = EnemyManager->enemy[i]->GetMesh();	//Mesh
+						SnowBallVec = SnowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
 
 						effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
 						//-------------------------------------------------------------
 
 						//死んだインスタンス削除
-						delete enemyManager->enemy[i];
-						enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
+						delete EnemyManager->enemy[i];
+						EnemyManager->enemy.erase(EnemyManager->enemy.begin() + i);
 						i--;						//きえた分詰める
 					}
 
-					delete snowBallManager->snowBall[j];
-					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
+					delete SnowBallManager->snowBall[j];
+					SnowBallManager->snowBall.erase(SnowBallManager->snowBall.begin() + j);
 					j--;						//きえた分詰める
 					break;
 				}
@@ -64,11 +64,11 @@ void CollisionObserver::SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyM
 	}
 }
 
-void CollisionObserver::SnowBalltoObj(SnowBallManager *snowBallManager, MapObjManager *mapObjManager)
+void CollisionObserver::SnowBalltoObj(SnowBallManager *SnowBallManager, MapObjManager *MapObjManager)
 {
-	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
+	for (unsigned int i = 0; i < SnowBallManager->snowBall.size(); i++)
 	{
-		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
+		for (unsigned int j = 0; j < MapObjManager->mapObj.size(); j++)
 		{
 			//---------------------------------------------------------------
 			//必要な値を用意
@@ -78,10 +78,10 @@ void CollisionObserver::SnowBalltoObj(SnowBallManager *snowBallManager, MapObjMa
 			D3DXVECTOR3 RayVec, RayPos;
 			float MeshDis;
 
-			MeshTmp = mapObjManager->mapObj[j]->GetMesh();
-			MeshMat = mapObjManager->mapObj[j]->GetMat();
-			RayPos = snowBallManager->snowBall[i]->GetPos();
-			RayVec = snowBallManager->snowBall[i]->GetMoveVec();
+			MeshTmp = MapObjManager->mapObj[j]->GetMesh();
+			MeshMat = MapObjManager->mapObj[j]->GetMat();
+			RayPos = SnowBallManager->snowBall[i]->GetPos();
+			RayVec = SnowBallManager->snowBall[i]->GetMoveVec();
 			D3DXVec3Normalize(&RayVec, &RayVec);
 
 			//---------------------------------------------------------------
@@ -89,16 +89,16 @@ void CollisionObserver::SnowBalltoObj(SnowBallManager *snowBallManager, MapObjMa
 			if (MeshCollisionDetection(&MeshTmp, &MeshMat, &RayPos, &RayVec, &MeshDis))			//メッシュに対してレイ判定
 			{
 				CollisionSphere SnowBallSphere;
-				snowBallManager->snowBall[i]->GetCollisionSphere(&SnowBallSphere);
+				SnowBallManager->snowBall[i]->GetCollisionSphere(&SnowBallSphere);
 
 				if (MeshDis < SnowBallSphere.radius)										//距離が半径以下なら
 				{
 					//SnowFragエフェクト呼ぶ
-					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[i]->GetPos()));
+					effectManager->snowFrag.push_back(new SnowFrag(SnowBallManager->snowBall[i]->GetPos()));
 
 					//死んだインスタンス削除
-					delete snowBallManager->snowBall[i];
-					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
+					delete SnowBallManager->snowBall[i];
+					SnowBallManager->snowBall.erase(SnowBallManager->snowBall.begin() + i);
 					i--;				//きえた分詰める
 					break;
 				}
@@ -216,11 +216,11 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObjManager * Ma
 	}
 }
 
-void CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBallManager * snowBallManager)
+void CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBallManager * SnowBallManager)
 {
-	for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
+	for (unsigned int j = 0; j < SnowBallManager->snowBall.size(); j++)
 	{
-		if (snowBallManager->snowBall[j]->GetID() == ENEMY_ID)		//敵の球なら実行
+		if (SnowBallManager->snowBall[j]->GetID() == ENEMY_ID)		//敵の球なら実行
 		{
 
 			//---------------------------------------------------------------
@@ -229,19 +229,55 @@ void CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBallManager *
 			CollisionSphere SnowBallSphre, PlayerSphre;
 
 			Player->GetCollisionSphere(&PlayerSphre);									/*当たり判定の球のデータ取得*/
-			snowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
+			SnowBallManager->snowBall[j]->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
 			//---------------------------------------------------------------
 
 			if (CollisionDetection(&SnowBallSphre, &PlayerSphre))
 			{
 				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+				effectManager->snowFrag.push_back(new SnowFrag(SnowBallManager->snowBall[j]->GetPos()));
 				Player->HitSnowBall();			//HIT時のメソッドを呼ぶ
 
-				delete snowBallManager->snowBall[j];
-				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
+				delete SnowBallManager->snowBall[j];
+				SnowBallManager->snowBall.erase(SnowBallManager->snowBall.begin() + j);
 				j--;						//きえた分詰める
 				break;
+			}
+		}
+	}
+}
+
+void CollisionObserver::DecorationToMapObj(DecorationManager * DecorationManager, MapObjManager * MapObjManager)
+{
+	for (unsigned int i = 0; i < DecorationManager->decoration.size(); i++)
+	{
+		for (unsigned int j = 0; j < MapObjManager->mapObj.size(); j++)
+		{
+			//---------------------------------------------------------------
+			//必要な値を用意
+
+			XFILE MeshTmp;
+			D3DXMATRIX MeshMat;
+			D3DXVECTOR3 RayVec, RayPos;
+			float MeshDis;
+
+			MeshTmp = MapObjManager->mapObj[j]->GetMesh();
+			MeshMat = MapObjManager->mapObj[j]->GetMat();
+			RayPos = DecorationManager->decoration[i]->GetPos();
+			RayVec = DecorationManager->decoration[i]->GetMoveVec();
+			D3DXVec3Normalize(&RayVec, &RayVec);
+
+			//---------------------------------------------------------------
+
+			if (MeshCollisionDetection(&MeshTmp, &MeshMat, &RayPos, &RayVec, &MeshDis))			//メッシュに対してレイ判定
+			{
+				float Radius = 3.0f;
+
+				if (MeshDis < Radius)										//距離が半径以下なら
+				{
+
+					break;
+				}
 			}
 		}
 	}

@@ -13,9 +13,9 @@ SnowBallManager::~SnowBallManager()
 	snowBall.clear();
 }
 
-void SnowBallManager::SetSnowBall(SnowBallInitValue *snowBallInitValue)
+void SnowBallManager::SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID)
 {
-	snowBall.push_back(new SnowBall(*snowBallInitValue));
+	snowBall.push_back(new SnowBall(*ThrowingInitValue, _ID));
 }
 
 void SnowBallManager::Draw(void)

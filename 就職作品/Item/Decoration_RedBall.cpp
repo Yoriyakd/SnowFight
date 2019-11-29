@@ -7,6 +7,26 @@ Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
 
 	picUpDistans = 8.0f;
 	decorationID = RED_BALL;
+
+	D3DXMatrixTranslation(&mat, _Pos->x, _Pos->y, _Pos->z);
+	
+	moveVec = D3DXVECTOR3(0, 0, 0);
+}
+
+Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
+{
+	mesh = resourceManager->GetXFILE("Decoration_RedBall.x");
+	pos = *_Pos;
+
+	picUpDistans = 8.0f;
+	decorationID = RED_BALL;
+
+	moveVec = ThrowingInit(ThrowingInitValue, &mat);
+
+	D3DXMATRIX TmpRot;
+
+	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(ThrowingInitValue->YAxisAng));		//”­ËŒ³‚ÌŠp“x‚©‚çs—ñì¬
+	mat = TmpRot * mat;
 }
 
 Decoration_RedBall::~Decoration_RedBall()

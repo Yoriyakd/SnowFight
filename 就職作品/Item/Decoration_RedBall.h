@@ -4,6 +4,7 @@
 class Decoration_RedBall:public DecorationBase {
 public:
 	Decoration_RedBall(const D3DXVECTOR3 *_Pos);
+	Decoration_RedBall(const D3DXVECTOR3 *_Pos, ThrowingInitValue * ThrowingInitValue);
 	~Decoration_RedBall();
 	void Draw();
 private:

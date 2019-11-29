@@ -1,4 +1,5 @@
 #include "DecorationBase.h"
+#include"../GameScene/GameScene.h"
 
 void DecorationBase::Draw()
 {
@@ -29,13 +30,43 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 void DecorationBase::Updata()
 {
-	static const float Gravity = -0.1f;
-	pos.y += Gravity;
-	if (pos.y <= 0)		//地面に埋もれない
+	
+	D3DXMATRIX tmpMat;
+	moveVec.y += SnowBallGravity;		//地面に落ちていく
+
+	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
+
+	mat = tmpMat * mat;
+
+	if (mat._42 <= 0.0f)		//地面に埋もれない
 	{
-		pos.y = 0;
+		mat._42 = 0.0f;
+
+		//地面につくと少し滑って止まる
+		moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
+
+		if (moveVec.x <= 0.0f)
+		{
+			moveVec.x = 0.0f;
+		}
+
+		if (moveVec.z <= 0.0f)
+		{
+			moveVec.z = 0.0f;
+		}
 	}
-	D3DXMatrixTranslation(&mat, pos.x, pos.y, pos.z);
+
+	globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
+
+	memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
+
+	pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
+}
+
+
+void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
+{
+	pos = *_Pos;
 }
 
 D3DXVECTOR3 DecorationBase::GetPos()
@@ -43,10 +74,6 @@ D3DXVECTOR3 DecorationBase::GetPos()
 	return pos;
 }
 
-void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
-{
-	pos = *_Pos;
-}
 
 bool DecorationBase::GetPicUpFlag(void)
 {
@@ -56,4 +83,9 @@ bool DecorationBase::GetPicUpFlag(void)
 DecorationID DecorationBase::GetID(void)
 {
 	return decorationID;
+}
+
+D3DXVECTOR3 DecorationBase::GetMoveVec()
+{
+	return globalMoveVec;
 }

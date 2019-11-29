@@ -12,7 +12,7 @@ public:
 	std::vector<DecorationBase*> decoration;
 	bool CheckForCanPicUp(const D3DXVECTOR3 *_Pos);
 	DecorationID PickUp(const D3DXVECTOR3 *_Pos);
-	void Drop(const D3DXVECTOR3 *_Pos, DecorationID ID);
+	void Throw(const D3DXVECTOR3 *_Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue);
 
 	void Draw(void);
 	void Updata(void);

@@ -12,7 +12,7 @@ private:
 	ID id;
 	static const float radius;
 public:
-	SnowBall(SnowBallInitValue);			//発射位置、発射角度、発射方向、発射パワー
+	SnowBall(ThrowingInitValue, ID);			//発射位置、発射角度、発射方向、発射パワー
 	~SnowBall();
 	bool Update(void);
 	void Draw(void);

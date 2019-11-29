@@ -10,7 +10,7 @@ public:
 	SnowBallManager();
 	~SnowBallManager();
 	//‰Šú‰»‚ÉsnowBallInitValueŒ^‚ğƒ|ƒCƒ“ƒ^‚Å“n‚·
-	void SetSnowBall(SnowBallInitValue *snowBallInitValue);
+	void SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID);
 	void Draw(void);
 	void Update(void);
 };

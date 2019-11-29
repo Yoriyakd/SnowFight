@@ -7,6 +7,26 @@ Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos)
 
 	picUpDistans = 8.0f;
 	decorationID = YELLOW_BALL;
+
+	D3DXMatrixTranslation(&mat, _Pos->x, _Pos->y, _Pos->z);
+
+	moveVec = D3DXVECTOR3(0, 0, 0);
+}
+
+Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
+{
+	mesh = resourceManager->GetXFILE("Decoration_YellowBall.x");
+	pos = *_Pos;
+
+	picUpDistans = 8.0f;
+	decorationID = YELLOW_BALL;
+
+	moveVec = ThrowingInit(ThrowingInitValue, &mat);
+
+	D3DXMATRIX TmpRot;
+
+	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(ThrowingInitValue->YAxisAng));		//”­ŽËŒ³‚ÌŠp“x‚©‚çs—ñì¬
+	mat = TmpRot * mat;
 }
 
 Decoration_YellowBall::~Decoration_YellowBall()

@@ -42,18 +42,18 @@ DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 	return NUM_ITEM;
 }
 
-void DecorationManager::Drop(const D3DXVECTOR3 * _Pos, DecorationID ID)			//この処理は重いみたい☆		新しく作っているから？プレイヤーのインベントリに入る=消えるからインスタンスを削除した
+void DecorationManager::Throw(const D3DXVECTOR3 * _Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue)
 {
 	switch (ID)
 	{
 	case RED_BALL:
-		decoration.push_back(new Decoration_RedBall(_Pos));
+		decoration.push_back(new Decoration_RedBall(_Pos, ThrowingInitValue));
 		break;
 	case BLUE_BALL:
-		decoration.push_back(new Decoration_BlueBall(_Pos));
+		decoration.push_back(new Decoration_BlueBall(_Pos, ThrowingInitValue));
 		break;
 	case YELLOW_BALL:
-		decoration.push_back(new Decoration_YellowBall(_Pos));
+		decoration.push_back(new Decoration_YellowBall(_Pos, ThrowingInitValue));
 		break;
 	default:
 		break;

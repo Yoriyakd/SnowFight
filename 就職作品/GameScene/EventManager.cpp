@@ -24,3 +24,9 @@ void EventManager::Update()
 	}
 	
 }
+
+void EventManager::AddScore(int Score)
+{
+	score = Score;
+}
+

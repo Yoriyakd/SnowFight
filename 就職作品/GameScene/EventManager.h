@@ -11,7 +11,8 @@ public:
 	EventManager();
 	~EventManager();
 	void Update();
+	void AddScore(int Score);
 	WavePatternBase *wavePattern;
 private:
-	
+	int score;
 };

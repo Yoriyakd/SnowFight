@@ -133,18 +133,17 @@ bool Enemy::TakeDamage(int Damage)
 
 void Enemy::ShootSnowBall(float TragetAng)
 {
-	SnowBallInitValue ValueTmp;
+	ThrowingInitValue ValueTmp;
 	ValueTmp.shootPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)	手の位置から発射するようにする
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
 	ValueTmp.YAxisAng = TragetAng;						/*要調整*/
 	ValueTmp.powerRate = 40.0f;							/*要調整*/
-	ValueTmp.id = ENEMY_ID;
 
 
 	if (ShootCoolTime < 0)
 	{
-		snowBallManager->SetSnowBall(&ValueTmp);
+		snowBallManager->SetSnowBall(&ValueTmp, ENEMY_ID);
 		ShootCoolTime = 3 * GameFPS;
 	}
 	ShootCoolTime--;

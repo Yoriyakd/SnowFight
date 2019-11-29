@@ -6,16 +6,19 @@
 #include"Effect/EffectManager.h"
 #include"Player/Player.h"
 #include"Player/PlayerCamera.h"
+#include"Item/DecorationManager.h"
 class CollisionObserver {
 public:
 	CollisionObserver();
 	~CollisionObserver();
 	//敵と雪玉の当たり判定	SnowBallManagerとEnemyManagerをポインタで渡す
-	void SnowBalltoEnemy(SnowBallManager *snowBallManager, EnemyManager *enemyManager);
+	void SnowBalltoEnemy(SnowBallManager *SnowBallManager, EnemyManager *EnemyManager);
 	//雪玉とMapオブジェの当たり判定	SnowBallManagerとMapObjManagerをポインタで渡す
-	void SnowBalltoObj(SnowBallManager *snowBallManager, MapObjManager *MapObjManager);
+	void SnowBalltoObj(SnowBallManager *SnowBallManager, MapObjManager *MapObjManager);
 	//playerのマップオブジェクトに対する当たり判定
 	void PlayertoObj(PlayerCamera *PlayerCam, MapObjManager *MapObjManager);
-
-	void EnemySnowBalltoPlayer(Player *Player, SnowBallManager *snowBallManager);
+	//敵の雪玉とプレイヤーの当たり判定
+	void EnemySnowBalltoPlayer(Player *Player, SnowBallManager *SnowBallManager);
+	//Mapオブジェとデコレーションの当たり判定
+	void DecorationToMapObj(DecorationManager *DecorationManager, MapObjManager *MapObjManager);
 };

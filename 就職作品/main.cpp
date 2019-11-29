@@ -95,15 +95,15 @@ bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPo
 	return true;
 }
 
-D3DXVECTOR3 SnowBallInit(SnowBallInitValue* snowBallInitValue, D3DXMATRIX *Mat)
+D3DXVECTOR3 ThrowingInit(ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat)
 {
 	float Power;
 	D3DXVECTOR3 moveVec;
-	Power = ((snowBallInitValue->powerRate / 100)) * 3;		//飛距離調整のための3
+	Power = ((ThrowingInitValue->powerRate / 100)) * 3;		//飛距離調整のための3
 
-	D3DXMatrixTranslation(Mat, snowBallInitValue->shootPos.x, snowBallInitValue->shootPos.y, snowBallInitValue->shootPos.z);			//発射位置
+	D3DXMatrixTranslation(Mat, ThrowingInitValue->shootPos.x, ThrowingInitValue->shootPos.y, ThrowingInitValue->shootPos.z);			//発射位置
 
-	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(snowBallInitValue->XAxisAng))), (Power * cos(D3DXToRadian(snowBallInitValue->XAxisAng))));	//発射のベクトルを求める
+	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(ThrowingInitValue->XAxisAng))), (Power * cos(D3DXToRadian(ThrowingInitValue->XAxisAng))));	//発射のベクトルを求める
 
 	return moveVec;
 }

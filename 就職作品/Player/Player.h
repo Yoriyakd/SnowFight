@@ -88,11 +88,12 @@ private:
 	//-----------------------------
 	//privateメソッド
 	//-----------------------------
-	//Updateで呼ぶ	クリックで球が出る		引数にsnowBallManagerをポインタで渡す
-	void ShootSnowball(SnowBallManager *snowBallManager);
-
+	//Updateで呼ぶ	右クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
+	void Throw(SnowBallManager *snowBallManager);
+	//雪玉を作成する	左クリック
 	void MakeBall();
-	void MakeGhostMat(SnowBallInitValue *snowBallInitValue);
+	//予測線を作成する
+	void MakeGhostMat(ThrowingInitValue *ThrowingInitValue);
 	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
-	SnowBallInitValue MakeSnowBallInitValue(void);
+	ThrowingInitValue MakeThrowValue(void);
 };

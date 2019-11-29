@@ -4,8 +4,6 @@
 #include"../Map/MapObjManager.h"
 
 
-enum objType { EMPTY, WALL, ENEMY = 5 };
-
 class LoadStageData {
 public:
 	LoadStageData(int StageNo);
