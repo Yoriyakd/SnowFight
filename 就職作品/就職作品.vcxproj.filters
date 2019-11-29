@@ -46,6 +46,12 @@
     <Filter Include="MenuScene">
       <UniqueIdentifier>{95a291a6-53d9-4927-be17-d6fda6d89012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player\Anime\ArmR">
+      <UniqueIdentifier>{9cf8aa35-5449-40a7-9a67-e34e54041ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Anime\ArmL">
+      <UniqueIdentifier>{3e67792e-b4d0-4e1b-bf7b-b3b3ed96f2c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -135,24 +141,6 @@
     <ClCompile Include="UI\PickUpInstructions.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Player\ArmLWalkAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\ArmRAnimeFront.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\ArmRAnimeMid.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\ThrowRAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\WindUpLAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\WindUpRAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
     <ClCompile Include="Item\DecorationManager.cpp">
       <Filter>Item</Filter>
     </ClCompile>
@@ -182,6 +170,24 @@
     </ClCompile>
     <ClCompile Include="Map\Stage1Enclosure.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ArmRAnimeFront.cpp">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ArmRAnimeMid.cpp">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ThrowRAnime.cpp">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\WindUpRAnime.cpp">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ArmLWalkAnime.cpp">
+      <Filter>Player\Anime\ArmL</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\WindUpLAnime.cpp">
+      <Filter>Player\Anime\ArmL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,24 +284,6 @@
     <ClInclude Include="Player\ArmAnimeBase.h">
       <Filter>Player\Anime</Filter>
     </ClInclude>
-    <ClInclude Include="Player\ArmLWalkAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\ArmRAnimeFront.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\ArmRAnimeMid.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\ThrowRAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\WindUpLAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\WindUpRAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
     <ClInclude Include="Item\DecorationManager.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -325,6 +313,24 @@
     </ClInclude>
     <ClInclude Include="Map\Stage1Enclosure.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmRAnimeFront.h">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmRAnimeMid.h">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ThrowRAnime.h">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\WindUpRAnime.h">
+      <Filter>Player\Anime\ArmR</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmLWalkAnime.h">
+      <Filter>Player\Anime\ArmL</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\WindUpLAnime.h">
+      <Filter>Player\Anime\ArmL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
