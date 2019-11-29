@@ -57,20 +57,11 @@ Player::~Player()
 
 bool Player::Update(SnowBallManager *snowBallManager)
 {
-	D3DXVECTOR3 NewPos;
-	NewPos = pPlayerCam->GetPos();		//カメラの座標をセット
+	//D3DXVECTOR3 NewPos;	☆
+	//NewPos = pPlayerCam->GetPos();		//カメラの座標をセット
+	//pos = NewPos;		//座標更新		動いているかの判定のため分けていた
 
-	if (pos == NewPos)		//動いているかどうか判定
-	{
-		pos = NewPos;
-		walkFlag = true;
-		//ArmLAnime = new ArmLWalkAnime()		//☆
-	}
-	else
-	{
-		pos = NewPos;
-		walkFlag = false;
-	}
+	pos = pPlayerCam->GetPos();		//カメラの座標をセット
 
 	//-----------------------------------------------------
 	//デコレーション周り
@@ -92,20 +83,6 @@ bool Player::Update(SnowBallManager *snowBallManager)
 		pickUpInstructions->TurnOffDisplay();
 	}
 
-	//if (carryFlag == true)
-	//{
-	//	if (GetAsyncKeyState('Q') & 0x8000)		//Fでもいいような
-	//	{
-	//		carryFlag = false;
-
-	//		D3DXVECTOR3 DropPoinOffset;
-
-	//		DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
-	//		D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
-
-	//		decorationManager->Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
-	//	}
-	//}
 
 	//-----------------------------------------------------
 

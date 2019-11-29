@@ -67,7 +67,6 @@ private:
 	D3DXMATRIX armLOffsetMat, armLMat;
 	ArmAnimeBase *ArmLAnime;		//左腕のアニメーション
 
-	bool walkFlag;
 
 	//-----------------------------
 	//作成中の雪玉
