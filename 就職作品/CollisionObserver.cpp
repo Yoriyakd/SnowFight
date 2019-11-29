@@ -8,7 +8,7 @@ CollisionObserver::~CollisionObserver()
 {
 }
 
-void CollisionObserver::SnowBalltoEnemy(SnowBallManager *SnowBallManager, EnemyManager *EnemyManager)
+void CollisionObserver::SnowBalltoEnemy(SnowBallManager *SnowBallManager, EnemyManager *EnemyManager)		//ŒÄ‚Ño‚·‘¤‚Åfor•¶‚ğ‰ñ‚·‚æ‚¤‚É•ÏX‚·‚é
 {
 	for (unsigned int i = 0; i < EnemyManager->enemy.size(); i++)
 	{

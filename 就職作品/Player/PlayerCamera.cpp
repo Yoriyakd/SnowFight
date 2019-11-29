@@ -24,11 +24,6 @@ PlayerCamera::~PlayerCamera()
 
 void PlayerCamera::Update(void)
 {
-	Move();
-}
-
-void PlayerCamera::SetCamera(void)
-{
 	POINT Pt;
 	ClientToScreen(hwnd, &Pt);		//スクリーン座標座標に変換
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
@@ -53,6 +48,11 @@ void PlayerCamera::SetCamera(void)
 
 	rotMat = rotMatX * rotMatY;
 
+	Move();
+}
+
+void PlayerCamera::SetCamera(void)
+{
 	D3DXVECTOR3 camTmpVec, camHead;
 
 	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
