@@ -10,7 +10,7 @@ TitleScene::TitleScene()
 	backTex = resourceManager->GetTexture("BackTex.jpg", SCRW, SCRH, NULL);		//‰¼‚Ì”wŒiƒTƒCƒY‚ª‘å‚«‚·‚¬‚é
 	D3DXMatrixTranslation(&backMat, 0, 0, 0);
 
-	kyeInstructionTex = resourceManager->GetTexture("PushSpase.png", kyeInstructionX, 128, NULL);
+	kyeInstructionTex = resourceManager->GetTexture("TitleInstructions.png", kyeInstructionX, 116, NULL);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 
 	sceneSwitchEffectAlpha = 0;
@@ -46,7 +46,7 @@ void TitleScene::Render2D(void)
 	lpSprite->SetTransform(&logoMat);
 	lpSprite->Draw(logoTex, &RcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	RECT RcKyeInstruction = { 0, 0, 548, 128 };
+	RECT RcKyeInstruction = { 0, 0, kyeInstructionX, 116 };
 	lpSprite->SetTransform(&kyeInstructionMat);
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
@@ -60,7 +60,17 @@ void TitleScene::Render2D(void)
 
 bool TitleScene::Update(void)
 {
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	//if (GetAsyncKeyState(VK_RBUTTON || VK_LBUTTON) & 0x8000)		‚Å‚«‚È‚©‚Á‚½
+	//{
+	//	sceneSwitchFlag = true;
+	//}
+
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	{
+		sceneSwitchFlag = true;
+	}
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
 		sceneSwitchFlag = true;
 	}

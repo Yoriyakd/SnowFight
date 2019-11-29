@@ -17,7 +17,7 @@ public:
 private:
 	LPDIRECT3DTEXTURE9 logoTex, kyeInstructionTex;
 	D3DXMATRIX logoMat, kyeInstructionMat;
-	const int logoTexX = 832, kyeInstructionX = 548;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
+	const int logoTexX = 832, kyeInstructionX = 426;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
 
 	LPDIRECT3DTEXTURE9 switchEffectTex;
 	D3DXMATRIX switchEffectMat;
