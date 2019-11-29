@@ -130,6 +130,7 @@ void GameScene::Render2D(void)
 bool GameScene::Update()
 {
 	playerCam->Update();
+	collisionObserver->PlayertoObj(playerCam, mapObjManager);
 
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
@@ -149,7 +150,6 @@ bool GameScene::Update()
 
 	collisionObserver->SnowBalltoEnemy(snowBallManager, enemyManager);
 	collisionObserver->SnowBalltoObj(snowBallManager, mapObjManager);
-	collisionObserver->PlayertoObj(playerCam, mapObjManager);
 	collisionObserver->EnemySnowBalltoPlayer(player, snowBallManager);
 	return true;
 }
