@@ -34,16 +34,16 @@ bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
 
 	XFILE MeshTmp;
 	D3DXMATRIX MeshMat;
-	D3DXVECTOR3 RayVec, RayPos;
+	D3DXVECTOR3 LayVec, LayPos;
 	float MeshDis;
 
 	MeshTmp = MapObj->GetMesh();
 	MeshMat = MapObj->GetMat();
-	RayPos = SnowBall->GetPos();
-	RayVec = SnowBall->GetMoveVec();
-	D3DXVec3Normalize(&RayVec, &RayVec);
+	LayPos = SnowBall->GetPos();
+	LayVec = SnowBall->GetMoveVec();
+	D3DXVec3Normalize(&LayVec, &LayVec);
 
-	if (MeshCollisionDetection(&MeshTmp, &MeshMat, &RayPos, &RayVec, &MeshDis))			//メッシュに対してレイ判定
+	if (MeshCollisionDetection(&MeshTmp, &MeshMat, &LayPos, &LayVec, &MeshDis))			//メッシュに対してレイ判定
 	{
 		CollisionSphere SnowBallSphere;
 		SnowBall->GetCollisionSphere(&SnowBallSphere);
@@ -63,10 +63,12 @@ bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
 
 void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 {
-	D3DXVECTOR3 PlayerPosTmp, PlayerMoveVecTmp;
-	PlayerPosTmp = PlayerCam->GetPos();
-	PlayerPosTmp.y = 0;				//Y座標が頭の位置なので変更
-	PlayerMoveVecTmp = PlayerCam->GetmoveVec();
+	D3DXVECTOR3 LayPos, LayVec;
+	LayPos = PlayerCam->GetPos();
+	LayPos.y = 0;						//Y座標が頭の位置なので変更
+	LayVec = PlayerCam->GetmoveVec();
+	
+	D3DXVec3Normalize(&LayVec, &LayVec);
 
 	CollisionDetectionType TypeTmp;
 	TypeTmp = MapObj->GetCollisionDetectionType();
@@ -75,64 +77,31 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 	{
 		D3DXMATRIX ObjMatTmp;
 		ObjMatTmp = MapObj->GetMat();
-		D3DXMATRIX invMat;
 
-		D3DXMatrixInverse(&invMat, NULL, &ObjMatTmp);
-
-		D3DXVECTOR3 LocalPos, LocalVec;
-
-		D3DXVec3TransformCoord(&LocalPos, &PlayerPosTmp, &invMat);		//それぞれの逆行列を作る
-		D3DXVec3TransformNormal(&LocalVec, &PlayerMoveVecTmp, &invMat);
-		D3DXVec3Normalize(&LocalVec, &LocalVec);
-
-
-		BOOL hit; float meshDis; DWORD PolyNo; XFILE ObjMesh;
+		float MeshDis; DWORD PolyNo; XFILE ObjMesh;
 
 		ObjMesh = MapObj->GetMesh();
 
-		D3DXIntersect(ObjMesh.lpMesh, &LocalPos, &LocalVec, &hit, &PolyNo, NULL, NULL, &meshDis, NULL, NULL);
-		if (hit == TRUE)
+		if(MeshCollisionDetection(&ObjMesh, &ObjMatTmp, &LayPos, &LayVec, &MeshDis, &PolyNo) == true)
 		{
-			WORD *pI;
-			ObjMesh.lpMesh->LockIndexBuffer(0, (LPVOID*)&pI);
-			DWORD vertexNo[3];
-			vertexNo[0] = *(pI + PolyNo * 3 + 0);		//PolyNo番目の構成する1つめのインデックス
-			vertexNo[1] = *(pI + PolyNo * 3 + 1);
-			vertexNo[2] = *(pI + PolyNo * 3 + 2);
-
-			CLONEVERTEX *pV;
-
-			ObjMesh.lpMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-
-			D3DXVECTOR3 vPos[3];
-
-			vPos[0] = (pV + vertexNo[0])->Pos;			//上で手に入れたインデックスを用いてその頂点の座標を得る
-			vPos[1] = (pV + vertexNo[1])->Pos;
-			vPos[2] = (pV + vertexNo[2])->Pos;
-
-			ObjMesh.lpMesh->UnlockVertexBuffer();
-
-			D3DXVECTOR3 Vec1, Vec2;
-
-			Vec1 = vPos[1] - vPos[0];			//2辺用意
-			Vec2 = vPos[2] - vPos[0];
-
 			D3DXVECTOR3 ObjNormal;
 
-			D3DXVec3Cross(&ObjNormal, &Vec1, &Vec2);	//ポリゴンの2辺の外積を求め法線を求める
-			D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMatTmp);		//表示に使う行列を使ってグローバル座標をを求めている
-			D3DXVec3Normalize(&ObjNormal, &ObjNormal);	//正規化
+			GetPolyNormal(&ObjNormal, ObjMesh.lpMesh, &PolyNo);
+
+			D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMatTmp);		//表示に使う行列を使ってグローバル座標をを求めている		※忘れない
 
 			float Dot;
-			Dot = D3DXVec3Dot(&ObjNormal, &-PlayerMoveVecTmp);		//内積を求める	両方長さ1なのでコサインθになる
+			Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	両方長さ1なのでコサインθになる		//反転させるなんでだっけ？
+
 			float Limit;					//三角形の斜辺の長さ
 			Limit = 3 / Dot;				//3は壁から離したい距離
+
 			if (Limit < 0)Limit *= -1;		//逆から壁に接近した場合-になるので反転
 
-			if (meshDis < Limit)
+			if (MeshDis < Limit)
 			{
 				D3DXVECTOR3 PushVec;
-				PushVec = ObjNormal * ((Limit - meshDis) * Dot);	//法線方向に押し出し
+				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出し
 				PushVec.y = 0;									//斜めの壁にぶつかると地面に埋まるのでy方向の移動を0にしている
 				PlayerCam->PushPos(&PushVec);
 			}
@@ -145,7 +114,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 			D3DXVECTOR3 TargetVec, ObjPosTmp;
 			ObjPosTmp = MapObj->GetPos();
 
-			TargetVec = D3DXVECTOR3(PlayerPosTmp.x, 0.0f, PlayerPosTmp.z) - ObjPosTmp;		//Y座標を無視する
+			TargetVec = D3DXVECTOR3(LayPos.x, 0.0f, LayPos.z) - ObjPosTmp;		//Y座標を無視する
 
 			float TargetLength;
 
@@ -189,32 +158,84 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 
 void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj)
 {
+
 	//---------------------------------------------------------------
 	//必要な値を用意
 
-	XFILE MeshTmp;
-	D3DXMATRIX MeshMat;
-	D3DXVECTOR3 RayVec, RayPos;
+	XFILE ObjMesh;
+	D3DXMATRIX ObjMat;
+	D3DXVECTOR3 LayVec, LayPos, MoveVec;
 	float MeshDis;
 
-	MeshTmp = MapObj->GetMesh();
-	MeshMat = MapObj->GetMat();
-	RayPos = Decoration->GetPos();
-	RayVec = Decoration->GetMoveVec();
+	ObjMesh = MapObj->GetMesh();
+	ObjMat = MapObj->GetMat();
+	LayPos = Decoration->GetPos();
+	MoveVec = LayVec = Decoration->GetMoveVec();
 
-	D3DXVec3Normalize(&RayVec, &RayVec);
+	D3DXVec3Normalize(&LayVec, &LayVec);
 
-	//---------------------------------------------------------------
+	DWORD PolyNo;
 
-	if (MeshCollisionDetection(&MeshTmp, &MeshMat, &RayPos, &RayVec, &MeshDis))			//メッシュに対してレイ判定
+	if (MeshCollisionDetection(&ObjMesh, &ObjMat, &LayPos, &LayVec, &MeshDis, &PolyNo))			//メッシュに対してレイ判定
 	{
-		float Radius = 3.0f;
+		float Limit = 3.0f;
 
-		if (MeshDis < Radius)										//距離が半径以下なら
+		if (MeshDis < Limit)										//距離が半径以下なら
 		{
+			if (MapObj->GetPossibleDecorate() == true)			//飾ることができるなら
+			{
+				Decoration->SetMoveFlag(false);		//動かなくする
+			}
+			else
+			{
+				D3DXVECTOR3 ObjNormal;
+
+				GetPolyNormal(&ObjNormal, ObjMesh.lpMesh, &PolyNo);
+
+				D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMat);		//表示に使う行列を使ってグローバル座標をを求めている		※忘れない
+
+				float Dot;
+				Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	両方長さ1なのでコサインθになる
+
+				MoveVec = MoveVec + 2 * (-MoveVec * Dot) * Dot;			//1度進ませた移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている		なんでマイナスなんだ？
+
+				Decoration->SetMoveVec(&MoveVec);
+			}
 		}
 	}
 
 
+}
+
+void CollisionObserver::GetPolyNormal(D3DXVECTOR3 * ObjNormal, LPD3DXMESH ObjMesh, const DWORD * PolyNo)
+{
+	WORD *pI;
+	ObjMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+	DWORD vertexNo[3];
+	vertexNo[0] = *(pI + *PolyNo * 3 + 0);		//PolyNo番目の構成する1つめのインデックス
+	vertexNo[1] = *(pI + *PolyNo * 3 + 1);
+	vertexNo[2] = *(pI + *PolyNo * 3 + 2);
+
+	CLONEVERTEX *pV;
+
+	ObjMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+
+	D3DXVECTOR3 vPos[3];
+
+	vPos[0] = (pV + vertexNo[0])->Pos;			//上で手に入れたインデックスを用いてその頂点の座標を得る
+	vPos[1] = (pV + vertexNo[1])->Pos;
+	vPos[2] = (pV + vertexNo[2])->Pos;
+
+	ObjMesh->UnlockVertexBuffer();
+
+	D3DXVECTOR3 Vec1, Vec2;
+
+	Vec1 = vPos[1] - vPos[0];			//2辺用意
+	Vec2 = vPos[2] - vPos[0];
+
+	D3DXVec3Cross(ObjNormal, &Vec1, &Vec2);	//ポリゴンの2辺の外積を求め法線を求める
+	D3DXVec3Normalize(ObjNormal, ObjNormal);	//正規化		※ローカル座標の法線
+
+	
 }
 

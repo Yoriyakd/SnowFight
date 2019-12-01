@@ -235,7 +235,7 @@ bool GameScene::Update()
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[i]);
+			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j]);
 		}
 	}
 

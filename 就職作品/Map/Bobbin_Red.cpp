@@ -14,6 +14,8 @@ Bobbin_Red::Bobbin_Red(D3DXVECTOR3 Pos, float Ang)
 
 	type = Circles;
 	objRadius = 1.5f;
+
+	possibleDecorate = false;
 }
 
 Bobbin_Red::~Bobbin_Red()

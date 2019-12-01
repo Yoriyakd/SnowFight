@@ -1,6 +1,16 @@
 #include "DecorationBase.h"
 #include"../GameScene/GameScene.h"
 
+DecorationBase::DecorationBase()
+{
+	picUpFlag = false;
+	moveFlag = true;
+}
+
+DecorationBase::~DecorationBase()
+{
+}
+
 void DecorationBase::Draw()
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
@@ -9,6 +19,11 @@ void DecorationBase::Draw()
 
 bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
+	if (moveFlag == false)
+	{
+		return false;			//動けない状態なら拾えない
+	}
+
 	D3DXVECTOR3 TargetVec;
 	TargetVec = pos - *_Pos;		//2点のベクトルを求める
 
@@ -30,43 +45,50 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 void DecorationBase::Updata()
 {
-	
-	D3DXMATRIX tmpMat;
-	moveVec.y += SnowBallGravity;		//地面に落ちていく
-
-	D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
-
-	mat = tmpMat * mat;
-
-	if (mat._42 <= 0.0f)		//地面に埋もれない
+	if (moveFlag == true)
 	{
-		mat._42 = 0.0f;
+		D3DXMATRIX tmpMat;
+		moveVec.y += SnowBallGravity;		//地面に落ちていく
 
-		//地面につくと少し滑って止まる
-		moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
+		D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
 
-		if (moveVec.x <= 0.0f)
+		mat = tmpMat * mat;
+
+		if (mat._42 <= 0.0f)		//地面に埋もれない
 		{
-			moveVec.x = 0.0f;
+			mat._42 = 0.0f;
+
+			//地面につくと少し滑って止まる
+			moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
+
+			if (moveVec.x <= 0.0f)
+			{
+				moveVec.x = 0.0f;
+			}
+
+			if (moveVec.z <= 0.0f)
+			{
+				moveVec.z = 0.0f;
+			}
 		}
 
-		if (moveVec.z <= 0.0f)
-		{
-			moveVec.z = 0.0f;
-		}
+		globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
+
+		memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
+
+		pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	}
-
-	globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
-
-	memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-
-	pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 }
 
 
 void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
 {
 	pos = *_Pos;
+}
+
+void DecorationBase::SetMoveVec(D3DXVECTOR3 * _Vec)
+{
+	moveVec = *_Vec;
 }
 
 D3DXVECTOR3 DecorationBase::GetPos()
@@ -88,4 +110,9 @@ DecorationID DecorationBase::GetID(void)
 D3DXVECTOR3 DecorationBase::GetMoveVec()
 {
 	return globalMoveVec;
+}
+
+void DecorationBase::SetMoveFlag(bool Flag)
+{
+	moveFlag = Flag;
 }

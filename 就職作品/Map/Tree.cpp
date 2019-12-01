@@ -12,6 +12,8 @@ Tree::Tree(D3DXVECTOR3 Pos, float Ang)
 	mat = TmpRotMatY * TmpTransMat;
 	type = Circles;
 	objRadius = 2.5f;
+
+	possibleDecorate = false;
 }
 
 Tree::~Tree()

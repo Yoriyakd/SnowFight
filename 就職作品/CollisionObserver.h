@@ -21,4 +21,7 @@ public:
 	bool EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall);
 	//Mapオブジェとデコレーションの当たり判定
 	void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj);
+
+private:
+	void GetPolyNormal(D3DXVECTOR3 *ObjNormal ,LPD3DXMESH ObjMesh, const DWORD *PolyNo);
 };

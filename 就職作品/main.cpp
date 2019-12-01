@@ -95,6 +95,27 @@ bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPo
 	return true;
 }
 
+bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo)
+{
+	D3DXMATRIX InvMat;
+	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
+
+	D3DXVECTOR3 LocalPos, LocalVec;
+
+	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//ƒŒƒC”­ŽËˆÊ’u
+	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//ƒŒƒC”­ŽË•ûŒü
+
+	BOOL Hit;
+
+	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, PolyNo, NULL, NULL, &*MeshDis, NULL, NULL);
+	if (Hit == FALSE)
+	{
+		*MeshDis = -1;
+		return false;
+	}
+	return true;
+}
+
 D3DXVECTOR3 ThrowingInit(ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat)
 {
 	float Power;

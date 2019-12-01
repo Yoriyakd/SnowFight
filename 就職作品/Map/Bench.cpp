@@ -15,6 +15,8 @@ Bench::Bench(D3DXVECTOR3 Pos, float Ang)
 
 	type = Ray;
 	objRadius = 1.5f;
+
+	possibleDecorate = false;
 }
 
 Bench::~Bench()

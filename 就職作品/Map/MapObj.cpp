@@ -39,3 +39,8 @@ float MapObj::GetRadius()
 {
 	return objRadius;
 }
+
+bool MapObj::GetPossibleDecorate()
+{
+	return possibleDecorate;
+}
