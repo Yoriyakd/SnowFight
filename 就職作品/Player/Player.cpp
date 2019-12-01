@@ -274,7 +274,7 @@ void Player::Throw(SnowBallManager *snowBallManager)
 	static bool LKyeFlag = false;
 	static bool AnimeFlag = false;
 
-	if (remainingBalls > 0) {
+	if (remainingBalls > 0 || carryFlag == true) {
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			LKyeFlag = true;
