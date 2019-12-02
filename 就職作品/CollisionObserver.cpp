@@ -206,6 +206,10 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 			{
 				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている
 
+				D3DXVECTOR3 PushVec;
+				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
+				Decoration->PushPos(&PushVec);		//1度法線方向に押し出す
+
 				MoveVec *= 0.8f;		//反発係数を設定
 
 				Decoration->SetMoveVec(&MoveVec);
