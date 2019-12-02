@@ -206,6 +206,8 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 			{
 				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている
 
+				MoveVec *= 0.8f;		//反発係数を設定
+
 				Decoration->SetMoveVec(&MoveVec);
 			}
 		}
