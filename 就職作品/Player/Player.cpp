@@ -317,6 +317,8 @@ void Player::Throw(SnowBallManager *snowBallManager)
 					D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 					decorationManager->Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
+
+					timeCnt = 0;
 					LKyeFlag = false;
 				}
 				else
