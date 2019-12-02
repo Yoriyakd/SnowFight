@@ -47,12 +47,12 @@ void DecorationBase::Updata()
 {
 	if (moveFlag == true)
 	{
-		D3DXMATRIX tmpMat;
+		D3DXMATRIX TmpMat;
 		moveVec.y += SnowBallGravity;		//地面に落ちていく
 
-		D3DXMatrixTranslation(&tmpMat, moveVec.x, moveVec.y, moveVec.z);
+		D3DXMatrixTranslation(&TmpMat, moveVec.x, moveVec.y, moveVec.z);
 
-		mat = tmpMat * mat;
+		mat = TmpMat * mat;		//行列更新
 
 		if (mat._42 <= 0.0f)		//地面に埋もれない
 		{
@@ -72,7 +72,7 @@ void DecorationBase::Updata()
 			}
 		}
 
-		globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;
+		globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;				//現在の座標と記憶しておいた前フレームの座標を計算して回転行列を含めた移動ベクトルを求めている
 
 		memoryPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 
@@ -88,7 +88,10 @@ void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
 
 void DecorationBase::SetMoveVec(D3DXVECTOR3 * _Vec)
 {
-	moveVec = *_Vec;
+	D3DXMATRIX InvMat;
+
+	D3DXMatrixInverse(&InvMat, NULL, &mat);
+	D3DXVec3TransformNormal(&moveVec,  _Vec, &InvMat);
 }
 
 D3DXVECTOR3 DecorationBase::GetPos()
@@ -115,4 +118,17 @@ D3DXVECTOR3 DecorationBase::GetMoveVec()
 void DecorationBase::SetMoveFlag(bool Flag)
 {
 	moveFlag = Flag;
+}
+
+bool DecorationBase::GetMovevFlag(void)
+{
+	return moveFlag;
+}
+
+void DecorationBase::PushPos(D3DXVECTOR3 * PushVec)
+{
+	D3DXMATRIX TmpMat;
+
+	D3DXMatrixTranslation(&TmpMat, PushVec->x, PushVec->y, PushVec->z);
+	mat = TmpMat * mat;
 }

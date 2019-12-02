@@ -19,7 +19,10 @@ public:
 	DecorationID GetID(void);
 	D3DXVECTOR3 GetMoveVec();				//グローバルの移動ベクトルを渡す
 
-	void SetMoveFlag(bool);					//動ける状態を更新
+	void SetMoveFlag(bool);					//状態を更新
+	bool GetMovevFlag(void);				//状態を返す
+
+	void PushPos(D3DXVECTOR3 *PushVec);		//埋まってい分押し出すときに使う
 protected:
 	float picUpDistans;		//拾うことができるようになるまでの距離
 	D3DXVECTOR3 pos;

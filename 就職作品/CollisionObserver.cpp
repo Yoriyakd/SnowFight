@@ -88,10 +88,10 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 
 			GetPolyNormal(&ObjNormal, ObjMesh.lpMesh, &PolyNo);
 
-			D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMatTmp);		//表示に使う行列を使ってグローバル座標をを求めている		※忘れない
+			D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMatTmp);		//表示に使う行列を使ってポリゴン自体の回転を考慮したベクトルを求めている			※忘れない
 
 			float Dot;
-			Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	両方長さ1なのでコサインθになる		//反転させるなんでだっけ？
+			Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	両方長さ1なのでコサインθになる		法線の向きに合わせるためベクトルを反転させている
 
 			float Limit;					//三角形の斜辺の長さ
 			Limit = 3 / Dot;				//3は壁から離したい距離
@@ -101,7 +101,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 			if (MeshDis < Limit)
 			{
 				D3DXVECTOR3 PushVec;
-				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出し
+				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
 				PushVec.y = 0;									//斜めの壁にぶつかると地面に埋まるのでy方向の移動を0にしている
 				PlayerCam->PushPos(&PushVec);
 			}
@@ -122,7 +122,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 
 			const float PlayerRadius = 2.0f, ObjRadius = MapObj->GetRadius();
 
-			if (TargetLength < PlayerRadius + ObjRadius)		//仮☆
+			if (TargetLength < PlayerRadius + ObjRadius)		//仮☆プレイヤー半径が
 			{
 				D3DXVec3Normalize(&TargetVec, &TargetVec);
 				TargetVec *= (PlayerRadius + ObjRadius - TargetLength);
@@ -158,7 +158,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 
 void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj)
 {
-
+	if (Decoration->GetMovevFlag() == false)return;		//状態が動かないならreturnで抜ける
 	//---------------------------------------------------------------
 	//必要な値を用意
 
@@ -180,24 +180,31 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 	{
 		float Limit = 3.0f;
 
+		D3DXVECTOR3 ObjNormal;
+
+		GetPolyNormal(&ObjNormal, ObjMesh.lpMesh, &PolyNo);
+
+		D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMat);		//表示に使う行列を使ってポリゴン自体の回転を考慮したベクトルを求めている			※忘れない
+
+		float Dot;
+		Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	進行ベクトルと壁の法線 両方長さ1なのでコサインθになる
+
+		Limit = 1 / Dot;				//1は壁から離したい距離
+
+		if (Limit < 0)Limit *= -1;		//逆から壁に接近した場合-になるので反転
+
 		if (MeshDis < Limit)										//距離が半径以下なら
 		{
 			if (MapObj->GetPossibleDecorate() == true)			//飾ることができるなら
 			{
 				Decoration->SetMoveFlag(false);		//動かなくする
+				D3DXVECTOR3 PushVec;
+				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
+				Decoration->PushPos(&PushVec);
 			}
 			else
 			{
-				D3DXVECTOR3 ObjNormal;
-
-				GetPolyNormal(&ObjNormal, ObjMesh.lpMesh, &PolyNo);
-
-				D3DXVec3TransformNormal(&ObjNormal, &ObjNormal, &ObjMat);		//表示に使う行列を使ってグローバル座標をを求めている		※忘れない
-
-				float Dot;
-				Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//内積を求める	両方長さ1なのでコサインθになる
-
-				MoveVec = MoveVec + 2 * (-MoveVec * Dot) * Dot;			//1度進ませた移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている		なんでマイナスなんだ？
+				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている
 
 				Decoration->SetMoveVec(&MoveVec);
 			}
