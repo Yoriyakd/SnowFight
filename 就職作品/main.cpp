@@ -7,6 +7,7 @@
 #include"TitleScene/TitleScene.h"
 #include"ResourceManager.h"
 #include"Effect/EffectManager.h"
+#include"Effect/SceneSwitchEffect.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -35,6 +36,7 @@ const int GameFPS = 60;		//ゲームのFPS指定
 SceneSwitcher sceneSwitcher;
 ResourceManager *resourceManager;
 EffectManager *effectManager;
+SceneSwitchEffect *sceneSwitchEffect;
 
 void DrawMesh(XFILE *XFile)
 {
@@ -359,6 +361,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	// ゲームに関する初期化処理 ---------------------------
 	resourceManager = new ResourceManager();
 	effectManager = new EffectManager();
+	sceneSwitchEffect = new SceneSwitchEffect();
 
 
 
@@ -392,6 +395,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	// ゲームに関する終了処理 ---------------------------
 	delete resourceManager;
 	delete effectManager;
+	delete sceneSwitchEffect;
 
 
 	lpSprite->Release();	// スプライト

@@ -3,6 +3,7 @@
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
 #include"Stage1Button.h"
+#include"../Effect/SceneSwitchEffect.h"
 class MenuScene : public SceneBase {
 public:
 	MenuScene();
@@ -16,10 +17,7 @@ private:
 	//---------------------------------------
 	//切り替えエフェクト
 	//---------------------------------------
-	LPDIRECT3DTEXTURE9 switchEffectTex;
-	D3DXMATRIX switchEffectMat;
-	int sceneSwitchEffectAlpha;
-	bool sceneSwitchFlag;
+	int sceneSwitchState;		//-1 = 暗転	0 = 動きなし	1 = 明転
 
 	//---------------------------------------
 	//背景
@@ -34,4 +32,5 @@ private:
 	D3DXMATRIX boardMat;
 
 	Stage1Button *stage1Button;
+	int selectedStage;		//選択されたステージ番号
 };

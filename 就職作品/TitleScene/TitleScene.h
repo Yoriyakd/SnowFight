@@ -3,6 +3,7 @@
 #include"../main.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
+#include"../Effect/SceneSwitchEffect.h"
 
 class TitleScene : public SceneBase {
 public:
@@ -22,7 +23,7 @@ private:
 	LPDIRECT3DTEXTURE9 switchEffectTex;
 	D3DXMATRIX switchEffectMat;
 	int sceneSwitchEffectAlpha;
-	bool sceneSwitchFlag;
+	bool sceneSwitchState;
 	
 
 	LPDIRECT3DTEXTURE9 backTex;
