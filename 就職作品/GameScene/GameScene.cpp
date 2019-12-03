@@ -11,6 +11,7 @@ const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 GameScene::GameScene(int StageNo)
 {
 	srand(timeGetTime());
+
 	loadStageData = new LoadStageData(StageNo);
 	player = new Player;
 	ground = new Ground;
@@ -22,15 +23,20 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
+	//-------------------------------------------------------
+	//UI
+	//-------------------------------------------------------
 	pickUpInstructions = new PickUpInstructions();
 	remainingBallUI = new RemainingBallUI();
+	timeUI = new TimeUI();
+
 
 
 	decorationManager->decoration.push_back(new Decoration_RedBall(&D3DXVECTOR3(80, 0, 50)));		//test☆
 	decorationManager->decoration.push_back(new Decoration_BlueBall(&D3DXVECTOR3(80, 0, 60)));		//test☆
 	decorationManager->decoration.push_back(new Decoration_YellowBall(&D3DXVECTOR3(80, 0, 70)));		//test☆
 
-	loadStageData->SetStageMap(mapObjManager);
+	loadStageData->SetStageMap(mapObjManager, eventManager);
 	//-------------------------------------------------------
 	//ステージの境界を求める
 	//-------------------------------------------------------
@@ -90,7 +96,12 @@ GameScene::~GameScene()
 	delete mapObjManager;
 	delete collisionObserver;
 	delete eventManager;
+	//-------------------------------------------------------
+	//UI
+	//-------------------------------------------------------
 	delete pickUpInstructions;
+	delete remainingBallUI;
+	delete timeUI;
 }
 
 void GameScene::Render3D(void)
@@ -122,6 +133,7 @@ void GameScene::Render2D(void)
 
 	pickUpInstructions->Draw();
 	remainingBallUI->Draw();
+	timeUI->Draw();
 
 	// 描画終了
 	lpSprite->End();
@@ -149,7 +161,6 @@ bool GameScene::Update()
 	effectManager->SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
 	effectManager->Update();
 
-	eventManager->Update();
 	decorationManager->Updata();
 
 	//雪玉と敵の当たり判定
@@ -238,6 +249,9 @@ bool GameScene::Update()
 			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j]);
 		}
 	}
+
+	eventManager->Update();
+	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
 
 	return true;
 }

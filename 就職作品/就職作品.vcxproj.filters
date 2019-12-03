@@ -192,6 +192,9 @@
     <ClCompile Include="Map\Bobbin_Red.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="UI\TimeUI.cpp">
+      <Filter>GameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -337,6 +340,9 @@
     </ClInclude>
     <ClInclude Include="Map\Bobbin_Red.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TimeUI.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

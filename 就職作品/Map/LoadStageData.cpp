@@ -28,7 +28,7 @@ void LoadStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
 //private
 //===============================================
 
-void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
+void LoadStageData::SetStageMap(MapObjManager * MapObjManager, EventManager * EventManager)
 {
 	char FileName[16];
 	//=================================================================================
@@ -45,6 +45,10 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager)
 	////=================================================================================
 	fscanf_s(fp, "StageSizeX:%f\n", &stageSizeX);
 	fscanf_s(fp, "StageSizeY:%f\n", &stageSizeZ);
+
+	int TimeLimit_frame;		//§ŒÀŽžŠÔ
+	fscanf_s(fp, "TimeLimit_Frame:%d\n", &TimeLimit_frame);
+	EventManager->SetTimeLimit(TimeLimit_frame);
 
 	int BenchCnt, TreeCnt, XmasTreeCnt;
 

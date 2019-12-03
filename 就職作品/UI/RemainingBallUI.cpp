@@ -37,6 +37,8 @@ void RemainingBallUI::Draw()
 
 	for (int i = 0; i < NUM_DIGITS; i++)
 	{
+		if (cBallCnt[i] == '\0')break;		//—v‘f‚ÌI’[‚È‚çbreak
+
 		DisplayNum = cBallCnt[i] - '0';		//”Žš‚É•ÏŠ·
 
 		RECT RcNumber = { 42 * DisplayNum, 0, 42 * (DisplayNum + 1), 42 };

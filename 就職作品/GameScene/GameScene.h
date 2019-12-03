@@ -18,6 +18,7 @@
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 #include"../UI/RemainingBallUI.h"
+#include"../UI/TimeUI.h"
 
 
 class GameScene : public SceneBase {
@@ -40,6 +41,7 @@ private:
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
 	RemainingBallUI *remainingBallUI;
+	TimeUI *timeUI;
 };
 
 extern EnemyManager *enemyManager;
