@@ -10,12 +10,14 @@ EventManager::~EventManager()
 	delete wavePattern;
 }
 
-void EventManager::Update()
+bool EventManager::Update()
 {
 	timeLimit_Frame--;
 
 	if (timeLimit_Frame <= 0)
 	{
+		timeLimit_Frame = 0;
+		return false;
 		//ƒŠƒUƒ‹ƒgˆÚs
 	}
 
@@ -29,7 +31,7 @@ void EventManager::Update()
 			wavePattern = NextPattern;
 		}
 	}
-	
+	return true;
 }
 
 void EventManager::AddScore(int Score)

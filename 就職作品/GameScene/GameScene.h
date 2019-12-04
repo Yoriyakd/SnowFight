@@ -19,6 +19,8 @@
 #include"../UI/PickUpInstructions.h"
 #include"../UI/RemainingBallUI.h"
 #include"../UI/TimeUI.h"
+#include"../Effect/SceneSwitchEffect.h"
+#include"ResultCam.h"
 
 
 class GameScene : public SceneBase {
@@ -42,6 +44,10 @@ private:
 	EventManager *eventManager;
 	RemainingBallUI *remainingBallUI;
 	TimeUI *timeUI;
+	ResultCam *resultCam;
+
+	bool resultFlag;		//ƒŠƒUƒ‹ƒg•\¦’†‚©‚Ìó‘Ô
+	int sceneSwitchState;		//-1 = ˆÃ“]	0 = “®‚«‚È‚µ	1 = –¾“]
 };
 
 extern EnemyManager *enemyManager;

@@ -13,9 +13,6 @@ TitleScene::TitleScene()
 	kyeInstructionTex = resourceManager->GetTexture("TitleInstructions.png", kyeInstructionX, 116, NULL);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 
-	sceneSwitchEffectAlpha = 0;
-	switchEffectTex = resourceManager->GetTexture("SceneSwitchEffect.png", 32, 32, NULL);
-	D3DXMatrixTranslation(&switchEffectMat, 0, 0, 0);
 }
 
 TitleScene::~TitleScene()
@@ -50,9 +47,8 @@ void TitleScene::Render2D(void)
 	lpSprite->SetTransform(&kyeInstructionMat);
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	RECT RcSwitchEffect = { 0, 0, SCRW, SCRH };
-	lpSprite->SetTransform(&switchEffectMat);
-	lpSprite->Draw(switchEffectTex, &RcSwitchEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(sceneSwitchEffectAlpha, 255, 255, 255));
+	sceneSwitchEffect->Draw();
+
 
 	// 描画終了
 	lpSprite->End();
@@ -62,23 +58,22 @@ bool TitleScene::Update(void)
 {
 	//if (GetAsyncKeyState(VK_RBUTTON || VK_LBUTTON) & 0x8000)		できなかった
 	//{
-	//	sceneSwitchFlag = true;
+	//	sceneSwitchState = true;
 	//}
 
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		sceneSwitchFlag = true;
+		sceneSwitchState = true;
 	}
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		sceneSwitchFlag = true;
+		sceneSwitchState = true;
 	}
 
-	if (sceneSwitchFlag == true)
+	if (sceneSwitchState == true)
 	{
-		sceneSwitchEffectAlpha += 20;
-		if (sceneSwitchEffectAlpha > 255)		//アルファ値が255以上でシーン遷移
+		if (sceneSwitchEffect->ToDarkness() == true)		//真っ暗になったら移行
 		{
 			sceneSwitcher.SwitchScene(new MenuScene());
 			return false;

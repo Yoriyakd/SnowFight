@@ -18,6 +18,8 @@ public:
 	void SetBobbin_Red(D3DXVECTOR3 Pos, float Ang);
 	void SetXmasTree(D3DXVECTOR3 Pos);
 
+	D3DXVECTOR3 GetXmasTreePos(void);
+
 	void Draw();
 	void Update();
 };

@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include"../MenuScene/MenuScene.h"
 
 EnemyManager *enemyManager;
 Player *player;
@@ -11,6 +12,7 @@ const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 GameScene::GameScene(int StageNo)
 {
 	srand(timeGetTime());
+	sceneSwitchState = 1;		//最初は明転させる
 
 	loadStageData = new LoadStageData(StageNo);
 	player = new Player;
@@ -87,15 +89,19 @@ GameScene::GameScene(int StageNo)
 GameScene::~GameScene()
 {
 	delete loadStageData;
-	delete player;
 	delete ground;
-	delete enemyManager;
 	delete skyBox;
 	delete stage1Enclosure;
 	delete snowBallManager;
 	delete mapObjManager;
 	delete collisionObserver;
+	delete playerCam;
 	delete eventManager;
+
+	delete player;
+	delete enemyManager;
+
+	delete resultCam;
 	//-------------------------------------------------------
 	//UI
 	//-------------------------------------------------------
@@ -106,10 +112,21 @@ GameScene::~GameScene()
 
 void GameScene::Render3D(void)
 {
+	//-------------------------------------------------------
+	//背景や動かないもの
+	//-------------------------------------------------------
 	skyBox->Draw();
 	ground->Draw();
 	stage1Enclosure->Draw();
 	mapObjManager->Draw();
+
+	if (resultFlag == true)
+	{
+		return;		//描画しない		(インスタンスを削除する方がいいんだろうか？)☆
+	}
+	//-------------------------------------------------------
+	//動くもの
+	//-------------------------------------------------------
 	enemyManager->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
@@ -120,6 +137,11 @@ void GameScene::Render3D(void)
 
 void GameScene::SetCamera(void)
 {
+	if (resultFlag == true)
+	{
+		resultCam->SetCamera();
+		return;
+	}
 	playerCam->SetCamera();
 }
 
@@ -130,10 +152,14 @@ void GameScene::Render2D(void)
 	//////////////////////////////////////////////////
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	if (resultFlag == false)		//リザルト表示中は消す
+	{
+		pickUpInstructions->Draw();
+		remainingBallUI->Draw();
+		timeUI->Draw();
+	}
 
-	pickUpInstructions->Draw();
-	remainingBallUI->Draw();
-	timeUI->Draw();
+	sceneSwitchEffect->Draw();
 
 	// 描画終了
 	lpSprite->End();
@@ -141,6 +167,44 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
+	//---------------------------------------------------------
+	//リザルト中の処理
+	//---------------------------------------------------------
+	if (resultFlag == true)
+	{
+		if (sceneSwitchState == 1)
+		{
+			sceneSwitchEffect->ToBrightness();
+		}
+		resultCam->Update(&mapObjManager->GetXmasTreePos());
+
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		{
+			sceneSwitchState = -1;
+		}
+
+		if (sceneSwitchState == -1)
+		{
+			if (sceneSwitchEffect->ToDarkness() == true)
+			{				
+				sceneSwitcher.SwitchScene(new MenuScene());
+				return false;
+			}
+		}
+
+		return true;		//リザルト表示中は早期リターンして動きを止める
+	}
+
+	if (sceneSwitchState == 1)
+	{
+		if (sceneSwitchEffect->ToBrightness() == true)
+		{
+			sceneSwitchState = 0;
+		}
+	}
+
+	//---------------------------------------------------------
+
 	playerCam->Update();
 	//マップオブジェとプレイヤーの当たり判定
 	for (unsigned int i = 0; i < mapObjManager->mapObj.size(); i++)
@@ -250,7 +314,22 @@ bool GameScene::Update()
 		}
 	}
 
-	eventManager->Update();
+	if (eventManager->Update() == false)		//falseが返ってきたらリザルトへ移行する
+	{
+		sceneSwitchState = -1;
+	}
+
+	if (sceneSwitchState == -1)
+	{
+		if (sceneSwitchEffect->ToDarkness() == true)
+		{
+			resultFlag = true;
+			resultCam = new ResultCam();
+			sceneSwitchState = 1;
+			//敵やエフェクトなど邪魔なものを削除する
+		}
+	}
+	
 	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
 
 	return true;

@@ -10,7 +10,8 @@ class EventManager {
 public:
 	EventManager();
 	~EventManager();
-	void Update();
+	bool Update();
+
 	void AddScore(int Score);
 	void SetTimeLimit(int TimeLimit_Flame);
 

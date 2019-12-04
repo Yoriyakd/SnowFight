@@ -195,6 +195,12 @@
     <ClCompile Include="UI\TimeUI.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\SceneSwitchEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\ResultCam.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -343,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="UI\TimeUI.h">
       <Filter>GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\SceneSwitchEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\ResultCam.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

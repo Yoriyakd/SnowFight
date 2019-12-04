@@ -58,7 +58,7 @@ void PlayerCamera::SetCamera(void)
 	D3DXVec3TransformCoord(&camTmpVec, &D3DXVECTOR3(0, 0, 1), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 	D3DXVec3TransformCoord(&camHead, &D3DXVECTOR3(0, 1, 0), &rotMat);	//最初の向きと傾いた分のベクトルを合わせる
 
-	// 視点行列の設定
+	//視点行列の設定
 	D3DXMatrixLookAtLH(&mView,
 		&D3DXVECTOR3(pos.x, pos.y, pos.z),	// カメラの位置	
 		&(D3DXVECTOR3(pos.x, pos.y, pos.z) + camTmpVec),	// カメラの視点

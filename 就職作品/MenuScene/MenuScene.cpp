@@ -3,12 +3,7 @@
 
 MenuScene::MenuScene()
 {
-	//---------------------------------------
-	//Ø‚è‘Ö‚¦ƒGƒtƒFƒNƒg
-	//---------------------------------------
-	sceneSwitchEffectAlpha = 255;
-	switchEffectTex = resourceManager->GetTexture("SceneSwitchEffect.png", 32, 32, NULL);
-	D3DXMatrixTranslation(&switchEffectMat, 0, 0, 0);
+	sceneSwitchState = 1;		//1Å‰‚Í–¾“]‚³‚¹‚é
 
 	//---------------------------------------
 	//”wŒi
@@ -46,8 +41,6 @@ void MenuScene::Render2D(void)
 	// •`‰æŠJŽn
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	//RECT RCRightArrow = {};
-
 	RECT RcBack = { 0, 0, SCRW, SCRH };
 	lpSprite->SetTransform(&backMat);
 	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -58,10 +51,7 @@ void MenuScene::Render2D(void)
 
 	stage1Button->Draw();
 
-	RECT RcSwitchEffect = { 0, 0, SCRW, SCRH };
-	lpSprite->SetTransform(&switchEffectMat);
-	lpSprite->Draw(switchEffectTex, &RcSwitchEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(sceneSwitchEffectAlpha, 255, 255, 255));
-
+	sceneSwitchEffect->Draw();
 
 	// •`‰æI—¹
 	lpSprite->End();
@@ -69,21 +59,31 @@ void MenuScene::Render2D(void)
 
 bool MenuScene::Update(void)
 {
-	sceneSwitchEffectAlpha -= 20;
-	if (sceneSwitchEffectAlpha < 0)
-	{
-		sceneSwitchEffectAlpha = 0;
-	}
-
 	stage1Button->Update();
-
 	
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
 		if (stage1Button->GetState() == true)
 		{
-			sceneSwitcher.SwitchScene(new GameScene(1));
+			sceneSwitchState = -1;
+			selectedStage = 1;
+		}
+	}
+
+	if (sceneSwitchState == -1)
+	{
+		if (sceneSwitchEffect->ToDarkness() == true)			//ˆÃ“]‚³‚¹‚é
+		{
+			sceneSwitcher.SwitchScene(new GameScene(selectedStage));
 			return false;
+		}
+	}
+
+	if (sceneSwitchState == 1)
+	{
+		if (sceneSwitchEffect->ToBrightness() == true)
+		{
+			sceneSwitchState = 0;
 		}
 	}
 	return true;
