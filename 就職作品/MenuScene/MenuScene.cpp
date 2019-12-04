@@ -23,6 +23,11 @@ MenuScene::MenuScene()
 	headCharTex = resourceManager->GetTexture("StageSelect_Menu.png", 640, 64, NULL);
 	D3DXMatrixTranslation(&headCharMat, 430, 100, 0);
 
+	//---------------------------------------
+	//カーソル
+	//---------------------------------------
+	cursorTex = resourceManager->GetTexture("Cursor.png", 64, 64, NULL);
+
 	stage1Button = new Stage1Button();
 }
 
@@ -62,6 +67,10 @@ void MenuScene::Render2D(void)
 
 	stage1Button->Draw();
 
+	RECT RcCursor = { 0, 0, 64, 64 };
+	lpSprite->SetTransform(&cursorMat);
+	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
 	sceneSwitchEffect->Draw();
 
 	// 描画終了
@@ -97,5 +106,16 @@ bool MenuScene::Update(void)
 			sceneSwitchState = 0;
 		}
 	}
+
+	//--------------------------------------------
+	//カーソル移動
+	//--------------------------------------------
+	POINT Pt;
+
+	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
+	ScreenToClient(hwnd, &Pt);		//スクリーン座標に変換
+
+	D3DXMatrixTranslation(&cursorMat, (float)Pt.x, (float)Pt.y, 0);
+
 	return true;
 }

@@ -363,6 +363,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	effectManager = new EffectManager();
 	sceneSwitchEffect = new SceneSwitchEffect();
 
+	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
+
 
 
 	// スプライト作成
@@ -396,6 +398,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	delete resourceManager;
 	delete effectManager;
 	delete sceneSwitchEffect;
+
+	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 
 
 	lpSprite->Release();	// スプライト

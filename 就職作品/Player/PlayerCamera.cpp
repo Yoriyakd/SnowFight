@@ -12,14 +12,12 @@ PlayerCamera::PlayerCamera()
 	angX = 0, angY = 0;		//初期化
 	ClientToScreen(hwnd, &basePt);		//元がクライアント座標なのでスクリーン座標に変換する(画面の中央に設定される)
 	SetCursorPos(basePt.x, basePt.y);
-	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 	D3DXMatrixIdentity(&billBoardMat);
 	moveSpeed = 0.5;		//移動速度
 }
 
 PlayerCamera::~PlayerCamera()
 {
-	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 }
 
 void PlayerCamera::Update(void)

@@ -37,6 +37,12 @@ private:
 	LPDIRECT3DTEXTURE9 headCharTex;
 	D3DXMATRIX headCharMat;
 
+	//---------------------------------------
+	//カーソル
+	//---------------------------------------
+	LPDIRECT3DTEXTURE9 cursorTex;
+	D3DXMATRIX cursorMat;
+
 	Stage1Button *stage1Button;
 	int selectedStage;		//選択されたステージ番号
 };
