@@ -14,8 +14,14 @@ MenuScene::MenuScene()
 	//---------------------------------------
 	//ステージセレクトボード
 	//---------------------------------------
-	boardTex = resourceManager->GetTexture("StageSelect.png", 768, 540, NULL);
+	boardTex = resourceManager->GetTexture("StageSelect_Board.png", 768, 540, NULL);
 	D3DXMatrixTranslation(&boardMat, 370, 100, 0);
+
+	//---------------------------------------
+	//ステージセレクト文字
+	//---------------------------------------
+	headCharTex = resourceManager->GetTexture("StageSelect_Menu.png", 640, 64, NULL);
+	D3DXMatrixTranslation(&headCharMat, 430, 100, 0);
 
 	stage1Button = new Stage1Button();
 }
@@ -41,6 +47,7 @@ void MenuScene::Render2D(void)
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
+
 	RECT RcBack = { 0, 0, SCRW, SCRH };
 	lpSprite->SetTransform(&backMat);
 	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -48,6 +55,10 @@ void MenuScene::Render2D(void)
 	RECT RcBoard = { 0, 0, 768, 540 };
 	lpSprite->SetTransform(&boardMat);
 	lpSprite->Draw(boardTex, &RcBoard, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	RECT rcHead = { 0, 0, 640, 64 };
+	lpSprite->SetTransform(&headCharMat);
+	lpSprite->Draw(headCharTex, &rcHead, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	stage1Button->Draw();
 

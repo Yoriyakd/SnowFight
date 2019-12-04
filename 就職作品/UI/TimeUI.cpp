@@ -6,7 +6,7 @@ TimeUI::TimeUI()
 	D3DXMatrixTranslation(&numberOffsetMat, 10, 56, 0);
 
 	logoTex = resourceManager->GetTexture("TimeLogo.png", 194, 46, NULL);
-	D3DXMatrixTranslation(&logoMat, 0, 0, 0);
+	D3DXMatrixTranslation(&logoMat, 10, 10, 0);
 }
 
 TimeUI::~TimeUI()

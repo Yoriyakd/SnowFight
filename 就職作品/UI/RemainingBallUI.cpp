@@ -5,7 +5,7 @@ RemainingBallUI::RemainingBallUI()
 	backTex = resourceManager->GetTexture("SnowBallUI.png", 256, 64, NULL);
 	numberTex = resourceManager->GetTexture("Number.png", 420, 42, NULL);
 
-	D3DXMatrixTranslation(&backMat, 500, 0, 0);
+	D3DXMatrixTranslation(&backMat, 500, 10, 0);
 	D3DXMatrixTranslation(&numberOffsetMat, 120.0f, 13.0f, 0);
 }
 

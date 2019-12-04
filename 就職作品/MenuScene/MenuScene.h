@@ -31,6 +31,12 @@ private:
 	LPDIRECT3DTEXTURE9 boardTex;
 	D3DXMATRIX boardMat;
 
+	//---------------------------------------
+	//ステージセレクト文字
+	//---------------------------------------
+	LPDIRECT3DTEXTURE9 headCharTex;
+	D3DXMATRIX headCharMat;
+
 	Stage1Button *stage1Button;
 	int selectedStage;		//選択されたステージ番号
 };

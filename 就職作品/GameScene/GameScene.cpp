@@ -113,24 +113,25 @@ GameScene::~GameScene()
 void GameScene::Render3D(void)
 {
 	//-------------------------------------------------------
-	//背景や動かないもの
+	//
 	//-------------------------------------------------------
 	skyBox->Draw();
 	ground->Draw();
 	stage1Enclosure->Draw();
 	mapObjManager->Draw();
 
+	decorationManager->Draw();
 	if (resultFlag == true)
 	{
 		return;		//描画しない		(インスタンスを削除する方がいいんだろうか？)☆
 	}
 	//-------------------------------------------------------
-	//動くもの
+	//
 	//-------------------------------------------------------
 	enemyManager->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
-	decorationManager->Draw();
+	
 
 	player->Draw();		//※Zバッファクリアをしているため最後に描画する
 }
