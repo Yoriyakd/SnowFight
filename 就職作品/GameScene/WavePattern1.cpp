@@ -1,24 +1,40 @@
 #include "WavePattern1.h"
 #include"GameScene.h"
 
-WavePattern1::WavePattern1()
+WavePatternRandom::WavePatternRandom()
 {
 	nowWaveTime = 0;
-	waveLimit = 10 * GameFPS;
+	waveLimit = 5 * GameFPS;
 }
 
-WavePatternBase * WavePattern1::WaveProcessing(void)
+WavePatternBase * WavePatternRandom::WaveProcessing(void)
 {
 	nowWaveTime++;
 
 	if (nowWaveTime == 5 * GameFPS)
 	{
-		int EnemyCnt = 5;
+		int EnemyCnt = 2;
 		D3DXVECTOR3 SpownPoint;
 
 		SpownPoint = D3DXVECTOR3(float(rand() % (int)stageBorder->Right), 0.0f, float(rand() % (int)stageBorder->Top));
 
 
+		
+		switch (rand() % 3)
+		{
+		case 0:
+			decorationManager->decoration.push_back(new Decoration_RedBall(&SpownPoint));
+			break;
+		case 1:
+			decorationManager->decoration.push_back(new Decoration_BlueBall(&SpownPoint));
+			break;
+		case 2:
+			decorationManager->decoration.push_back(new Decoration_YellowBall(&SpownPoint));
+			break;
+		default:
+			break;
+		}
+		
 
 		for (int i = 0; i < EnemyCnt; i++)
 		{
@@ -30,7 +46,7 @@ WavePatternBase * WavePattern1::WaveProcessing(void)
 	
 	if (nowWaveTime >= waveLimit)
 	{
-		return new WavePattern1();
+		return new WavePatternRandom();
 	}
 
 	return nullptr;

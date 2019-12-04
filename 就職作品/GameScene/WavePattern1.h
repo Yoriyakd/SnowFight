@@ -1,8 +1,8 @@
 #pragma once
 #include"WavePatternBase.h"
-class WavePattern1 :public WavePatternBase {
+class WavePatternRandom :public WavePatternBase {
 public:
-	WavePattern1();
+	WavePatternRandom();
 	WavePatternBase* WaveProcessing(void);
 private:
 };

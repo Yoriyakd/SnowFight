@@ -2,7 +2,7 @@
 
 EventManager::EventManager()
 {
-	wavePattern = new WavePattern1();
+	wavePattern = new WavePatternRandom();
 	normState = false;
 }
 

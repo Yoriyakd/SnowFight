@@ -2,6 +2,9 @@
 
 DecorationManager::DecorationManager()
 {
+	resourceManager->GetXFILE("Decoration_RedBall.x");			//1“x“Ç‚Ýž‚ñ‚Å‚¨‚­(ƒQ[ƒ€’†‚Ì•‰‰×ŒyŒ¸)
+	resourceManager->GetXFILE("Decoration_BlueBall.x");
+	resourceManager->GetXFILE("Decoration_YellowBall.x");
 }
 
 DecorationManager::~DecorationManager()

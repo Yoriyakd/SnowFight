@@ -3,6 +3,7 @@
 #include"WavePatternBase.h"
 #include"WavePattern1.h"
 #include"../Item/DecorationBase.h"
+#include"../Item/DecorationManager.h"
 
 //--------------------------------------------
 //プレイヤーが直接関係ないイベントを管理するクラス
