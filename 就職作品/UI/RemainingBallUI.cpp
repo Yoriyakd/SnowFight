@@ -3,9 +3,9 @@
 RemainingBallUI::RemainingBallUI()
 {
 	backTex = resourceManager->GetTexture("SnowBallUI.png", 256, 64, NULL);
-	numberTex = resourceManager->GetTexture("Number.png", 420, 42, NULL);
-
 	D3DXMatrixTranslation(&backMat, 500, 10, 0);
+
+	numberTex = resourceManager->GetTexture("Number.png", 420, 42, NULL);
 	D3DXMatrixTranslation(&numberOffsetMat, 120.0f, 13.0f, 0);
 }
 
@@ -20,9 +20,9 @@ void RemainingBallUI::SetRemainingBallCnt(int Cnt)
 
 void RemainingBallUI::Draw()
 {
-	RECT RcPickUpInstructions = { 0, 0, 256, 64 };
+	RECT RcBack = { 0, 0, 256, 64 };
 	lpSprite->SetTransform(&backMat);
-	lpSprite->Draw(backTex, &RcPickUpInstructions, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	int DisplayNum;
 	const int NUM_DIGITS = 4;		//––”ö‚É\0‚ª‘}“ü‚³‚ê‚é‚½‚ß3Œ…•\¦‚·‚éÛ4‚ğ‚¢‚ê‚é

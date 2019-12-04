@@ -6,6 +6,7 @@
 #include"Player/PlayerCamera.h"
 #include"Player/Player.h"
 #include"Item/DecorationManager.h"
+#include"GameScene/EventManager.h"
 
 class CollisionObserver {
 public:
@@ -20,7 +21,7 @@ public:
 	//敵の雪玉とプレイヤーの当たり判定
 	bool EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall);
 	//Mapオブジェとデコレーションの当たり判定
-	void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj);
+	void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, EventManager *EventManager);
 
 private:
 	void GetPolyNormal(D3DXVECTOR3 *ObjNormal ,LPD3DXMESH ObjMesh, const DWORD *PolyNo);

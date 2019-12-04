@@ -31,6 +31,7 @@ GameScene::GameScene(int StageNo)
 	pickUpInstructions = new PickUpInstructions();
 	remainingBallUI = new RemainingBallUI();
 	timeUI = new TimeUI();
+	gameObjective = new GameObjective();
 
 
 
@@ -38,7 +39,7 @@ GameScene::GameScene(int StageNo)
 	decorationManager->decoration.push_back(new Decoration_BlueBall(&D3DXVECTOR3(80, 0, 60)));		//test☆
 	decorationManager->decoration.push_back(new Decoration_YellowBall(&D3DXVECTOR3(80, 0, 70)));		//test☆
 
-	loadStageData->SetStageMap(mapObjManager, eventManager);
+	loadStageData->SetStageMap(mapObjManager, eventManager, gameObjective);
 	//-------------------------------------------------------
 	//ステージの境界を求める
 	//-------------------------------------------------------
@@ -108,6 +109,7 @@ GameScene::~GameScene()
 	delete pickUpInstructions;
 	delete remainingBallUI;
 	delete timeUI;
+	delete gameObjective;
 }
 
 void GameScene::Render3D(void)
@@ -158,6 +160,7 @@ void GameScene::Render2D(void)
 		pickUpInstructions->Draw();
 		remainingBallUI->Draw();
 		timeUI->Draw();
+		gameObjective->Draw();
 	}
 
 	sceneSwitchEffect->Draw();
@@ -311,10 +314,10 @@ bool GameScene::Update()
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j]);
+			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j], eventManager);
 		}
 	}
-
+	//----------------------------------------------------------------------------------------
 	if (eventManager->Update() == false)		//falseが返ってきたらリザルトへ移行する
 	{
 		sceneSwitchState = -1;
@@ -330,8 +333,19 @@ bool GameScene::Update()
 			//敵やエフェクトなど邪魔なものを削除する
 		}
 	}
-	
+	//----------------------------------------------------------------------------------------
 	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
+	bool NormState;
+
+	NormState = eventManager->GetNormState();
+	if (NormState == false)
+	{
+		gameObjective->SetNowNormCnt(eventManager->GetNowNormCnt());
+	}
+	else
+	{
+		gameObjective->SetNormState(eventManager->GetNormState());
+	}
 
 	return true;
 }

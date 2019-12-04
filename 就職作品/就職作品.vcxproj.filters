@@ -201,6 +201,9 @@
     <ClCompile Include="GameScene\ResultCam.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GameObjective.cpp">
+      <Filter>GameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\ResultCam.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GameObjective.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

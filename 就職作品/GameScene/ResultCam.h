@@ -11,7 +11,7 @@ public:
 	void Update(const D3DXVECTOR3 * TreePos);
 	void SetCamera(void);
 private:
-	const float camHight = 45.0f, treeDistance = 50.0f;
+	const float camHight = 45.0f, treeDistance = 100.0f;
 	D3DXVECTOR3 camPos, camLookAt;
 	float camAng;		//ƒJƒƒ‰‚Ìü‰ñ‰^“®‚ÌŠp“x
 };

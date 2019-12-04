@@ -156,7 +156,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 }
 
 
-void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj)
+void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj, EventManager * EventManager)
 {
 	if (Decoration->GetMovevFlag() == false)return;		//ó‘Ô‚ª“®‚©‚È‚¢‚È‚çreturn‚Å”²‚¯‚é
 	//---------------------------------------------------------------
@@ -201,6 +201,8 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 				D3DXVECTOR3 PushVec;
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//–@ü•ûŒü‚É‰Ÿ‚µo‚·’·‚³‚ð‹‚ß‚é
 				Decoration->PushPos(&PushVec);
+				EventManager->DoDecorate(Decoration->GetID());
+				EventManager->AddScore(500);
 			}
 			else
 			{

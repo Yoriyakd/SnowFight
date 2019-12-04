@@ -28,7 +28,7 @@ void LoadStageData::GetStageSize(float *StageSizeX, float *StageSizeZ)
 //private
 //===============================================
 
-void LoadStageData::SetStageMap(MapObjManager * MapObjManager, EventManager * EventManager)
+void LoadStageData::SetStageMap(MapObjManager * MapObjManager, EventManager * EventManager, GameObjective * GameObjective)
 {
 	char FileName[16];
 	//=================================================================================
@@ -40,15 +40,20 @@ void LoadStageData::SetStageMap(MapObjManager * MapObjManager, EventManager * Ev
 	fopen_s(&fp, FileName, "r");	//fopenのセキュリティ強化版らしい
 
 
-	////=================================================================================
-	////読み取った値をセット
-	////=================================================================================
+	//=================================================================================
+	//読み取った値をセット
+	//=================================================================================
 	fscanf_s(fp, "StageSizeX:%f\n", &stageSizeX);
 	fscanf_s(fp, "StageSizeY:%f\n", &stageSizeZ);
 
 	int TimeLimit_frame;		//制限時間
 	fscanf_s(fp, "TimeLimit_Frame:%d\n", &TimeLimit_frame);
 	EventManager->SetTimeLimit(TimeLimit_frame);
+
+	int NormCnt;
+	fscanf_s(fp, "Norm:%d\n", &NormCnt);
+	EventManager->SetNorm(NormCnt);
+	GameObjective->SetNorm(NormCnt);
 
 	int BenchCnt, TreeCnt, XmasTreeCnt;
 

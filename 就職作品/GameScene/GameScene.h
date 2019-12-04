@@ -19,6 +19,7 @@
 #include"../UI/PickUpInstructions.h"
 #include"../UI/RemainingBallUI.h"
 #include"../UI/TimeUI.h"
+#include"../UI/GameObjective.h"
 #include"../Effect/SceneSwitchEffect.h"
 #include"ResultCam.h"
 
@@ -42,8 +43,13 @@ private:
 	CollisionObserver *collisionObserver;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
+	//------------------------------------------
+	//UI
+	//------------------------------------------
 	RemainingBallUI *remainingBallUI;
 	TimeUI *timeUI;
+	GameObjective *gameObjective;
+	//------------------------------------------
 	ResultCam *resultCam;
 
 	bool resultFlag;		//ÉäÉUÉãÉgï\é¶íÜÇ©ÇÃèÛë‘

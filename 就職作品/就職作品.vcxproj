@@ -235,6 +235,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="UI\GameObjective.cpp" />
     <ClCompile Include="UI\PickUpInstructions.cpp" />
     <ClCompile Include="UI\RemainingBallUI.cpp" />
     <ClCompile Include="UI\TimeUI.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
+    <ClInclude Include="UI\GameObjective.h" />
     <ClInclude Include="UI\PickUpInstructions.h" />
     <ClInclude Include="UI\RemainingBallUI.h" />
     <ClInclude Include="UI\TimeUI.h" />
