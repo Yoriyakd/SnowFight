@@ -1,6 +1,6 @@
 StageSizeX:256
 StageSizeY:256
-TimeLimit_Frame:1800
+TimeLimit_Frame:180
 Norm:3
 Bench:2
 30,0,80:90

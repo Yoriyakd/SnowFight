@@ -49,11 +49,16 @@ private:
 	RemainingBallUI *remainingBallUI;
 	TimeUI *timeUI;
 	GameObjective *gameObjective;
+	//------------------------------------------//クラスにまとめる(設計思いつき次第)
+	//リザルト
 	//------------------------------------------
 	ResultCam *resultCam;
 
 	bool resultFlag;		//リザルト表示中かの状態
 	int sceneSwitchState;		//-1 = 暗転	0 = 動きなし	1 = 明転
+	
+	LPDIRECT3DTEXTURE9 resultTex, returnTex;
+	D3DXMATRIX resultMat, returnMat;
 };
 
 extern EnemyManager *enemyManager;

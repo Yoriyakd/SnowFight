@@ -33,11 +33,15 @@ GameScene::GameScene(int StageNo)
 	timeUI = new TimeUI();
 	gameObjective = new GameObjective();
 
+	//-------------------------------------------------------
+	//ƒŠƒUƒ‹ƒg
+	//-------------------------------------------------------
+	resultTex = resourceManager->GetTexture("Result.png", 820, 160, NULL);
+	D3DXMatrixTranslation(&resultMat, SCRW / 2, 10, 0);
 
+	returnTex = resourceManager->GetTexture("Click_To_Return.png", 420, 40, NULL);
+	D3DXMatrixTranslation(&returnMat, 800, 500, 0);
 
-	decorationManager->decoration.push_back(new Decoration_RedBall(&D3DXVECTOR3(80, 0, 50)));		//test™
-	decorationManager->decoration.push_back(new Decoration_BlueBall(&D3DXVECTOR3(80, 0, 60)));		//test™
-	decorationManager->decoration.push_back(new Decoration_YellowBall(&D3DXVECTOR3(80, 0, 70)));		//test™
 
 	loadStageData->SetStageMap(mapObjManager, eventManager, gameObjective);
 	//-------------------------------------------------------
@@ -161,6 +165,16 @@ void GameScene::Render2D(void)
 		remainingBallUI->Draw();
 		timeUI->Draw();
 		gameObjective->Draw();
+	}
+	else
+	{
+		RECT RcResult = { 0, 0, 820, 160 };
+		lpSprite->SetTransform(&resultMat);
+		lpSprite->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		RECT RcReturn = { 0, 0, 420, 40 };
+		lpSprite->SetTransform(&returnMat);
+		lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
 	sceneSwitchEffect->Draw();
