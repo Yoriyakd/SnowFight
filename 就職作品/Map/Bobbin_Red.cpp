@@ -13,7 +13,7 @@ Bobbin_Red::Bobbin_Red(D3DXVECTOR3 Pos, float Ang)
 	mat = TmpRotMatY * TmpTransMat;
 
 	type = Circles;
-	objRadius = 1.5f;
+	objRadius = 4.0f;
 
 	possibleDecorate = false;
 }
