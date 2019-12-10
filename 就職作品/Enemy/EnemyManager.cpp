@@ -6,9 +6,14 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
-	for (unsigned int i = 0; i < enemy.size(); i++)
+	AllDelete();
+}
+
+void EnemyManager::AllDelete(void)
+{
+	for (auto *Enemy : enemy)
 	{
-		delete enemy[i];
+		delete Enemy;
 	}
 	enemy.clear();
 }
@@ -20,15 +25,15 @@ void EnemyManager::SetEnemy(D3DXVECTOR3 Pos)
 
 void EnemyManager::Draw()
 {
-	for (unsigned int i = 0; i < enemy.size(); i++)
+	for (auto *Enemy : enemy)
 	{
-		enemy[i]->Draw();
+		Enemy->Draw();
 	}
 }
 
 void EnemyManager::Update(SnowBallManager *SnowBallManager)
 {
-	for (unsigned int i = 0; i < enemy.size(); i++)
+	for (unsigned int i = 0; i < enemy.size(); i++)		//型推論だとsignedになるためダメみたい
 	{
 		enemy[i]->Update(SnowBallManager);
 		//D3DXVECTOR3 PushOutVec;		//押されたときに移動するベクトル ☆
@@ -39,6 +44,4 @@ void EnemyManager::Update(SnowBallManager *SnowBallManager)
 			enemy[i]->CheckOverlapEnemies(&enemy[j]->GetPos());				//敵同士が重ならないようにする処理
 		}
 	}
-
-	
 }

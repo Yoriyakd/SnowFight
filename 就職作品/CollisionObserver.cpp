@@ -10,6 +10,7 @@ CollisionObserver::~CollisionObserver()
 
 bool CollisionObserver::SnowBalltoEnemy(SnowBall * SnowBall, Enemy * Enemy)		//呼び出す側でfor文を回すように変更する
 {
+	if (SnowBall->GetID() == ENEMY_ID)return false;		//IDが敵のものなら早期リターン
 	//---------------------------------------------------------------
 	//必要な値を用意
 	CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;//Aが上Bが下
@@ -136,6 +137,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 
 bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBall)
 {
+	if (SnowBall->GetID() == PLAYER_ID)return false;			//IDがプレイヤーのものなら早期リターン
 	//---------------------------------------------------------------
 	//必要な値を用意
 
@@ -158,7 +160,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 
 void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj, EventManager * EventManager)
 {
-	if (Decoration->GetMovevFlag() == false)return;		//状態が動かないならreturnで抜ける
+	if (Decoration->GetDecoratedState() == false)return;		//状態が動かないならreturnで抜ける
 	//---------------------------------------------------------------
 	//必要な値を用意
 
@@ -197,7 +199,7 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 		{
 			if (MapObj->GetPossibleDecorate() == true)			//飾ることができるなら
 			{
-				Decoration->SetMoveFlag(false);		//動かなくする
+				Decoration->SetDecoratedState(true);		//飾られている状態にする
 				D3DXVECTOR3 PushVec;
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
 				Decoration->PushPos(&PushVec);

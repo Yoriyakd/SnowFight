@@ -1,6 +1,10 @@
 #pragma once
 #include<d3dx9.h>
 #include"../main.h"
+//----------------------------------------
+//プレイヤーのカメラクラス
+//移動や視点操作を担当
+//----------------------------------------
 class PlayerCamera {
 public:
 	PlayerCamera();

@@ -4,7 +4,7 @@
 DecorationBase::DecorationBase()
 {
 	picUpFlag = false;
-	moveFlag = true;
+	decoratedState = false;
 }
 
 DecorationBase::~DecorationBase()
@@ -19,7 +19,7 @@ void DecorationBase::Draw()
 
 bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
-	if (moveFlag == false)
+	if (decoratedState == false)
 	{
 		return false;			//ìÆÇØÇ»Ç¢èÛë‘Ç»ÇÁèEÇ¶Ç»Ç¢
 	}
@@ -45,7 +45,7 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 void DecorationBase::Updata()
 {
-	if (moveFlag == true)
+	if (decoratedState == false)
 	{
 		D3DXMATRIX TmpMat;
 		moveVec.y += SnowBallGravity;		//ínñ Ç…óéÇøÇƒÇ¢Ç≠
@@ -115,14 +115,14 @@ D3DXVECTOR3 DecorationBase::GetMoveVec()
 	return globalMoveVec;
 }
 
-void DecorationBase::SetMoveFlag(bool Flag)
+void DecorationBase::SetDecoratedState(bool State)
 {
-	moveFlag = Flag;
+	decoratedState = State;
 }
 
-bool DecorationBase::GetMovevFlag(void)
+bool DecorationBase::GetDecoratedState(void)
 {
-	return moveFlag;
+	return decoratedState;
 }
 
 void DecorationBase::PushPos(D3DXVECTOR3 * PushVec)

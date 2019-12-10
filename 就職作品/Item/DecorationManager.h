@@ -9,7 +9,9 @@ class DecorationManager {
 public:
 	DecorationManager();
 	~DecorationManager();
+	void DeleteToResult(void);
 	std::vector<DecorationBase*> decoration;
+
 	bool CheckForCanPicUp(const D3DXVECTOR3 *_Pos);
 	DecorationID PickUp(const D3DXVECTOR3 *_Pos);
 	void Throw(const D3DXVECTOR3 *_Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue);

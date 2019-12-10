@@ -9,6 +9,7 @@ public:
 	EnemyManager();
 	~EnemyManager();
 
+	void AllDelete(void);
 
 	void SetEnemy(D3DXVECTOR3 Pos);
 	

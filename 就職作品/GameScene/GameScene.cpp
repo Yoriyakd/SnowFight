@@ -146,7 +146,7 @@ void GameScene::SetCamera(void)
 {
 	if (resultFlag == true)
 	{
-		resultCam->SetCamera();
+		resultCam->SetCamera();				//リザルト中のカメラ
 		return;
 	}
 	playerCam->SetCamera();
@@ -177,7 +177,7 @@ void GameScene::Render2D(void)
 		lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
-	sceneSwitchEffect->Draw();
+	sceneSwitchEffect->Draw();			//常に描画
 
 	// 描画終了
 	lpSprite->End();
@@ -190,38 +190,22 @@ bool GameScene::Update()
 	//---------------------------------------------------------
 	if (resultFlag == true)
 	{
-		if (sceneSwitchState == 1)
+		if (ResultUpdate() == false)			//リザルト中の処理はここに記述
 		{
-			sceneSwitchEffect->ToBrightness();
+			sceneSwitcher.SwitchScene(new MenuScene());
+			return false;
 		}
-		resultCam->Update(&mapObjManager->GetXmasTreePos());
-
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-		{
-			sceneSwitchState = -1;
-		}
-
-		if (sceneSwitchState == -1)
-		{
-			if (sceneSwitchEffect->ToDarkness() == true)
-			{				
-				sceneSwitcher.SwitchScene(new MenuScene());
-				return false;
-			}
-		}
-
 		return true;		//リザルト表示中は早期リターンして動きを止める
 	}
 
-	if (sceneSwitchState == 1)
+	//---------------------------------------------------------
+	if (sceneSwitchState == 1)				//初めに明転させる処理
 	{
 		if (sceneSwitchEffect->ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
 	}
-
-	//---------------------------------------------------------
 
 	playerCam->Update();
 	//マップオブジェとプレイヤーの当たり判定
@@ -246,81 +230,75 @@ bool GameScene::Update()
 	decorationManager->Updata();
 
 	//雪玉と敵の当たり判定
-	for (unsigned int i = 0; i < enemyManager->enemy.size(); i++)
+	for (unsigned int ei = 0; ei < enemyManager->enemy.size(); ei++)
 	{
-		for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
+		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (snowBallManager->snowBall[j]->GetID() == PLAYER_ID)		//プレイヤーの球なら実行
+			if (collisionObserver->SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
 			{
-				if (collisionObserver->SnowBalltoEnemy(snowBallManager->snowBall[j], enemyManager->enemy[i]) == true)		//命中でtrueが返ってくる
+				//SnowFragエフェクト呼ぶ
+				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
+
+				if (enemyManager->enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
 				{
-					//SnowFragエフェクト呼ぶ
-					effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+					//-------------------------------------------------------------
+					//EnemyDeathAnime再生開始
+					//-------------------------------------------------------------
+					//引数として渡す変数を一時的に宣言
+					D3DXMATRIX TmpAnimeMat;
+					XFILE TmpAnimeMesh;
+					D3DXVECTOR3 SnowBallVec;
 
-					if (enemyManager->enemy[i]->TakeDamage(1) == false)		//falseが返ってきたら
-					{
-						//-------------------------------------------------------------
-						//EnemyDeathAnime再生開始
-						//-------------------------------------------------------------
-						//引数として渡す変数を一時的に宣言
-						D3DXMATRIX TmpAnimeMat;
-						XFILE TmpAnimeMesh;
-						D3DXVECTOR3 SnowBallVec;
+					TmpAnimeMat = enemyManager->enemy[ei]->GetMat();		//行列
+					TmpAnimeMesh = enemyManager->enemy[ei]->GetMesh();	//Mesh
+					SnowBallVec = snowBallManager->snowBall[sj]->GetMoveVec();	//雪玉の移動ベクトルをもらう
 
-						TmpAnimeMat = enemyManager->enemy[i]->GetMat();		//行列
-						TmpAnimeMesh = enemyManager->enemy[i]->GetMesh();	//Mesh
-						SnowBallVec = snowBallManager->snowBall[j]->GetMoveVec();	//雪玉の移動ベクトルをもらう
+					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
 
-						effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
-
-						//死んだインスタンス削除
-						delete enemyManager->enemy[i];
-						enemyManager->enemy.erase(enemyManager->enemy.begin() + i);
-						i--;		//きえた分詰める
-					}
 					//死んだインスタンス削除
-					delete snowBallManager->snowBall[j];
-					snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
-					j--;		//きえた分詰める
+					delete enemyManager->enemy[ei];
+					enemyManager->enemy.erase(enemyManager->enemy.begin() + ei);
+					ei--;		//きえた分詰める
 				}
+				//死んだインスタンス削除
+				delete snowBallManager->snowBall[sj];
+				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + sj);
+				sj--;		//きえた分詰める
 			}
 		}
 	}
 
 	//雪玉とマップオブジェの当たり判定
 
-	for (unsigned int i = 0; i < mapObjManager->mapObj.size(); i++)
+	for (unsigned int mi = 0; mi < mapObjManager->mapObj.size(); mi++)
 	{
-		for (unsigned int j = 0; j < snowBallManager->snowBall.size(); j++)
+		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (collisionObserver->SnowBalltoObj(snowBallManager->snowBall[j], mapObjManager->mapObj[i]))		//命中でtrueが返ってくる
+			if (collisionObserver->SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[j]->GetPos()));
+				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
 
 				//死んだインスタンス削除
-				delete snowBallManager->snowBall[j];
-				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + j);
-				j--;				//きえた分詰める
+				delete snowBallManager->snowBall[sj];
+				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + sj);
+				sj--;				//きえた分詰める
 			}
 		}
 	}
 
 	//敵の雪玉とプレイヤーのあたり判定
-	for (unsigned int i = 0; i < snowBallManager->snowBall.size(); i++)
+	for (unsigned int si = 0; si < snowBallManager->snowBall.size(); si++)
 	{
-		if (snowBallManager->snowBall[i]->GetID() == ENEMY_ID)		//敵の球なら実行
+		if (collisionObserver->EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
 		{
-			if (collisionObserver->EnemySnowBalltoPlayer(player, snowBallManager->snowBall[i]))
-			{
-				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[i]->GetPos()));
-				player->HitSnowBall();			//HIT時のメソッドを呼ぶ
+			//SnowFragエフェクト呼ぶ
+			effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[si]->GetPos()));
+			player->HitSnowBall();			//HIT時のメソッドを呼ぶ
 
-				delete snowBallManager->snowBall[i];
-				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + i);
-				i--;						//きえた分詰める
-			}
+			delete snowBallManager->snowBall[si];
+			snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + si);
+			si--;						//きえた分詰める
 		}
 	}
 
@@ -344,7 +322,12 @@ bool GameScene::Update()
 			resultFlag = true;
 			resultCam = new ResultCam();
 			sceneSwitchState = 1;
+
 			//敵やエフェクトなど邪魔なものを削除する
+			enemyManager->AllDelete();
+			effectManager->AllDelete();
+			snowBallManager->AllDelete();
+			decorationManager->DeleteToResult();
 		}
 	}
 	//----------------------------------------------------------------------------------------
@@ -361,5 +344,32 @@ bool GameScene::Update()
 		gameObjective->SetNormState(eventManager->GetNormState());
 	}
 
+	return true;
+}
+
+bool GameScene::ResultUpdate(void)
+{
+	if (sceneSwitchState == 1)				//シーン移行後明転させる処理
+	{
+		if (sceneSwitchEffect->ToBrightness() == true)
+		{
+			sceneSwitchState = 0;
+		}
+	}
+
+	resultCam->Update(&mapObjManager->GetXmasTreePos());
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		sceneSwitchState = -1;
+	}
+
+	if (sceneSwitchState == -1)
+	{
+		if (sceneSwitchEffect->ToDarkness() == true)
+		{
+			return false;
+		}
+	}
 	return true;
 }

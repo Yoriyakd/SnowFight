@@ -6,9 +6,14 @@ SnowBallManager::SnowBallManager()
 
 SnowBallManager::~SnowBallManager()
 {
-	for (unsigned int i = 0; i < snowBall.size(); i++)
+	AllDelete();
+}
+
+void SnowBallManager::AllDelete(void)
+{
+	for (auto *SnowBall : snowBall)
 	{
-		delete snowBall[i];
+		delete SnowBall;
 	}
 	snowBall.clear();
 }
@@ -20,9 +25,9 @@ void SnowBallManager::SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID)
 
 void SnowBallManager::Draw(void)
 {
-	for (unsigned int i = 0; i < snowBall.size(); i++)
+	for (auto *SnowBall : snowBall)
 	{
-		snowBall[i]->Draw();
+		SnowBall->Draw();
 	}
 }
 

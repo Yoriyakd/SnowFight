@@ -6,40 +6,45 @@ EffectManager::EffectManager()
 
 EffectManager::~EffectManager()
 {
-	for (unsigned int i = 0; i < snowFrag.size(); i++)
+	AllDelete();
+}
+
+void EffectManager::AllDelete(void)
+{
+	for (auto *SnowFrag : snowFrag)
 	{
-		delete snowFrag[i];
+		delete SnowFrag;
 	}
 	snowFrag.clear();
 
-	for (unsigned int i = 0; i < snowLocus.size(); i++)
+	for (auto *SnowLocus : snowLocus)
 	{
-		delete snowLocus[i];
+		delete SnowLocus;
 	}
 	snowLocus.clear();
 
-	for (unsigned int i = 0; i < enemyDeathAnime.size(); i++)
+	for (auto *EnemyDeathAnime : enemyDeathAnime)
 	{
-		delete enemyDeathAnime[i];
+		delete EnemyDeathAnime;
 	}
 	enemyDeathAnime.clear();
 }
 
 void EffectManager::Draw(void)
 {
-	for (unsigned int i = 0; i < snowFrag.size(); i++)
+	for (auto *SnowFrag : snowFrag)
 	{
-		snowFrag[i]->Draw();
+		SnowFrag->Draw();
 	}
 
-	for (unsigned int i = 0; i < snowLocus.size(); i++)
+	for (auto *SnowLocus : snowLocus)
 	{
-		snowLocus[i]->Draw();
+		SnowLocus->Draw();
 	}
 
-	for (unsigned int i = 0; i < enemyDeathAnime.size(); i++)
+	for (auto *EnemyDeathAnime : enemyDeathAnime)
 	{
-		enemyDeathAnime[i]->Draw();
+		EnemyDeathAnime->Draw();
 	}
 }
 

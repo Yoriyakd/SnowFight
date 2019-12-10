@@ -9,21 +9,31 @@ DecorationManager::DecorationManager()
 
 DecorationManager::~DecorationManager()
 {
-	for (unsigned int i = 0; i < decoration.size(); i++)
+	for (auto *Decoration : decoration)
 	{
-		delete decoration[i];
+		delete Decoration;
 	}
 	decoration.clear();
 }
 
-bool DecorationManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
+void DecorationManager::DeleteToResult(void)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
-		if (decoration[i]->CheckForCanPicUp(_Pos) == true)		//èEÇ¶ÇÈÇ»ÇÁÉAÉCÉeÉÄÇÃIDÇï‘Ç∑
+		if (decoration[i]->GetDecoratedState() == false)			//è¸ÇÁÇÍÇƒÇ¢Ç»Ç¢Ç‡ÇÃÇçÌèúÇ∑ÇÈ
 		{
-			return true;
+			delete decoration[i];
+			decoration.erase(decoration.begin() + i);			//îzóÒçÌèú
+			i--;											//è¡ÇµÇΩï™ãlÇﬂÇÈ
 		}
+	}
+}
+
+bool DecorationManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
+{
+	for (auto *Decoration : decoration)
+	{
+		if (Decoration->CheckForCanPicUp(_Pos) == true)return true;		//èEÇ¶ÇÈÇ»ÇÁtrueÇï‘Ç∑
 	}
 	return false;
 }
@@ -42,7 +52,7 @@ DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 			return TmpID;
 		}
 	}
-	return NUM_ITEM;
+	return NUM_ITEM;			
 }
 
 void DecorationManager::Throw(const D3DXVECTOR3 * _Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue)
@@ -66,16 +76,16 @@ void DecorationManager::Throw(const D3DXVECTOR3 * _Pos, DecorationID ID, Throwin
 
 void DecorationManager::Draw(void)
 {
-	for (unsigned int i = 0; i < decoration.size(); i++)
+	for (auto *Decoration : decoration)
 	{
-		decoration[i]->Draw();
+		Decoration->Draw();
 	}
 }
 
 void DecorationManager::Updata(void)
 {
-	for (unsigned int i = 0; i < decoration.size(); i++)
+	for (auto *Decoration : decoration)
 	{
-		decoration[i]->Updata();
+		Decoration->Updata();
 	}
 }
