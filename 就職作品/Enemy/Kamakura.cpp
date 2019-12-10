@@ -1,5 +1,4 @@
 #include "Kamakura.h"
-#include"../GameScene/GameScene.h"
 
 
 Kamakura::Kamakura()
@@ -27,7 +26,7 @@ void Kamakura::Update(void)
 {
 	if (CoolTime < 0)
 	{
-		enemyManager->SetEnemy(pos);
+		//enemyManager->SetEnemy(pos);
 		CoolTime = 3 * GameFPS;
 	}
 	CoolTime--;

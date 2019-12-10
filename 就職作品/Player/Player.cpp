@@ -1,5 +1,4 @@
 #include "Player.h"
-#include"../Map/LoadStageData.h"
 #include"../GameScene/GameScene.h"
 
 extern ResourceManager *resourceManager;
@@ -55,7 +54,7 @@ Player::~Player()
 	delete ArmRAnime;
 }
 
-bool Player::Update(SnowBallManager *snowBallManager)
+bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & DecorationManager, PickUpInstructions & PickUpInstructions)
 {
 	//D3DXVECTOR3 NewPos;	☆
 	//NewPos = pPlayerCam->GetPos();		//カメラの座標をセット
@@ -66,21 +65,21 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	//-----------------------------------------------------
 	//デコレーション周り
 	//-----------------------------------------------------
-	if (decorationManager->CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
+	if (DecorationManager.CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
 	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
-		pickUpInstructions->TurnOnDisplay();		//拾える時画面に指示を表示
+		PickUpInstructions.TurnOnDisplay();		//拾える時画面に指示を表示
 		if (carryFlag == false)		//今運んでいないなら
 		{
 			if (GetAsyncKeyState('F') & 0x8000)
 			{
-				carryDecorationID = decorationManager->PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
+				carryDecorationID = DecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
 				carryFlag = true;
 			}
 		}
 	}
 	else
 	{
-		pickUpInstructions->TurnOffDisplay();
+		PickUpInstructions.TurnOffDisplay();
 	}
 
 
@@ -95,7 +94,7 @@ bool Player::Update(SnowBallManager *snowBallManager)
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
 
 
-	Throw(snowBallManager);
+	Throw(SnowBallManager, DecorationManager);
 	MakeBall();
 
 	//-------------------------------------------------------
@@ -269,7 +268,7 @@ int Player::GetHP()
 //privateメソッド
 //=====================================
 
-void Player::Throw(SnowBallManager *snowBallManager)
+void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & DecorationManager)
 {
 	static bool LKyeFlag = false;
 	static bool AnimeFlag = false;
@@ -316,14 +315,14 @@ void Player::Throw(SnowBallManager *snowBallManager)
 					DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
 					D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
 
-					decorationManager->Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
+					DecorationManager.Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
 
 					timeCnt = 0;
 					LKyeFlag = false;
 				}
 				else
 				{
-					snowBallManager->SetSnowBall(&MakeThrowValue(), PLAYER_ID);
+					SnowBallManager.SetSnowBall(&MakeThrowValue(), PLAYER_ID);
 					timeCnt = 0;
 					LKyeFlag = false;
 					remainingBalls--;		//発射したら残数を1減らす

@@ -4,6 +4,7 @@
 #include"WavePattern1.h"
 #include"../Item/DecorationBase.h"
 #include"../Item/DecorationManager.h"
+#include"../Enemy/EnemyManager.h"
 
 //--------------------------------------------
 //プレイヤーが直接関係ないイベントを管理するクラス
@@ -12,7 +13,7 @@ class EventManager {
 public:
 	EventManager();
 	~EventManager();
-	bool Update();
+	bool Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder);
 
 	void AddScore(int Score);
 	void DoDecorate(DecorationID ID);			//現状は数だけだが、ノルマに種類などを設ける

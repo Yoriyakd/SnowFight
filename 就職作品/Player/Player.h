@@ -11,6 +11,7 @@
 #include"WindUpRAnime.h"
 #include"ArmLWalkAnime.h"
 #include"../Item/DecorationManager.h"
+#include"../UI/PickUpInstructions.h"
 
 //ワールド座標で管理
 
@@ -18,7 +19,7 @@ class Player {
 public:
 	Player();
 	~Player();
-	bool Update(SnowBallManager *snowBallManager);
+	bool Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions);
 	void SetCamera(void);
 	void Draw(void);
 
@@ -88,7 +89,7 @@ private:
 	//privateメソッド
 	//-----------------------------
 	//Updateで呼ぶ	右クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
-	void Throw(SnowBallManager *snowBallManager);
+	void Throw(SnowBallManager &snowBallManager, DecorationManager &decorationManager);
 	//雪玉を作成する	左クリック
 	void MakeBall();
 	//予測線を作成する

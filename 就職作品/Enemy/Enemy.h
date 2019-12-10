@@ -3,12 +3,13 @@
 #include"../main.h"
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBallManager.h"
+#include"../Player/Player.h"
 #include<vector>
 class Enemy {
 public:
 	Enemy(D3DXVECTOR3);
 	~Enemy();
-	virtual bool Update(SnowBallManager *snowBallManager);
+	virtual bool Update(Player &Player, SnowBallManager &SnowBallManager, StageBorder &StageBorder);
 	virtual void Draw(void);
 	virtual D3DXVECTOR3 GetPos(void);
 	virtual D3DXMATRIX GetMat(void);
@@ -23,15 +24,14 @@ protected:
 private:
 	XFILE mesh;
 	D3DXMATRIX mat, rotMat, transMat;
-	virtual void ShootSnowBall(float TragetAng);
-	virtual void EngagingMode(void);		//交戦中の行動
+	virtual void ShootSnowBall(float TragetAng, SnowBallManager &snowBallManager);
+	virtual void EngagingMode(const D3DXVECTOR3 TragetPos, SnowBallManager &snowBallManager);		//交戦中の行動
 	virtual void FreeMode(void);			//未発見時の行動
-	virtual void StageBorderProcessing(void);
+	virtual void StageBorderProcessing(StageBorder &StageBorder);
 
 	int ShootCoolTime;					//雪玉発射のクールタイム
 	float MoveInterval;						//freeMode時動くまでの時間
 	float freeMoveCnt;							//freeMode時動く必要のある時間の時間
-	SnowBallManager *snowBallManager;		//snowBallManagerのポインタを保存する
 
 	float searchRange;						//索敵範囲
 	const float maxLength = 40.0f, minLength = 15.0f;						//交戦時の距離の最大最小範囲

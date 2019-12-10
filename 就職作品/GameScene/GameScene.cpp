@@ -1,12 +1,9 @@
 #include "GameScene.h"
 #include"../MenuScene/MenuScene.h"
 
-EnemyManager *enemyManager;
 Player *player;
 D3DLIGHT9 Light;
 StageBorder *stageBorder;
-DecorationManager *decorationManager;
-PickUpInstructions *pickUpInstructions;
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo)
@@ -21,10 +18,10 @@ GameScene::GameScene(int StageNo)
 	skyBox = new SkyBox;
 	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
-	collisionObserver = new CollisionObserver();
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
+	stageBorder = new StageBorder;
 	//-------------------------------------------------------
 	//UI
 	//-------------------------------------------------------
@@ -43,20 +40,10 @@ GameScene::GameScene(int StageNo)
 	D3DXMatrixTranslation(&returnMat, 800, 500, 0);
 
 
-	loadStageData->SetStageMap(mapObjManager, eventManager, gameObjective);
+	loadStageData->SetStageMap(*mapObjManager, *eventManager, *gameObjective, *stageBorder);
+	
 	//-------------------------------------------------------
-	//ステージの境界を求める
-	//-------------------------------------------------------
-	float StageSizeX, StageSizeZ;		//ステージのサイズ	stageボーダーだけでよさそう
-	loadStageData->GetStageSize(&StageSizeX, &StageSizeZ);
-	stageBorder = new StageBorder;
-
-	stageBorder->Top = StageSizeZ;
-	stageBorder->Bottom = 0;
-	stageBorder->Left = 0;
-	stageBorder->Right = StageSizeX;
-	//-------------------------------------------------------
-	playerCam->SetPos(&D3DXVECTOR3(StageSizeX / 2, 0, 10.0f));				//プレイヤーの初期位置
+	playerCam->SetPos(&D3DXVECTOR3(stageBorder->Right / 2, 0, 10.0f));				//プレイヤーの初期位置
 
 	stage1Enclosure = new Stage1Enclosure(stageBorder);
 
@@ -99,7 +86,6 @@ GameScene::~GameScene()
 	delete stage1Enclosure;
 	delete snowBallManager;
 	delete mapObjManager;
-	delete collisionObserver;
 	delete playerCam;
 	delete eventManager;
 
@@ -207,19 +193,20 @@ bool GameScene::Update()
 		}
 	}
 
-	playerCam->Update();
+	playerCam->Update(*stageBorder);						//プレイヤーカメラの移動
+	player->Update(*snowBallManager, *decorationManager, *pickUpInstructions);		//カメラを更新してから
+
 	//マップオブジェとプレイヤーの当たり判定
 	for (unsigned int i = 0; i < mapObjManager->mapObj.size(); i++)
 	{
-		collisionObserver->PlayertoObj(playerCam, mapObjManager->mapObj[i]);
+		CollisionObserver::PlayertoObj(playerCam, mapObjManager->mapObj[i]);
 	}
 
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
 
-	enemyManager->Update(snowBallManager);
+	enemyManager->Update(*player, *snowBallManager, *stageBorder);
 
-	player->Update(snowBallManager);		//カメラを更新してから
 	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
 	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	snowBallManager->Update();
@@ -234,7 +221,7 @@ bool GameScene::Update()
 	{
 		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (collisionObserver->SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
+			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
 				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
@@ -274,7 +261,7 @@ bool GameScene::Update()
 	{
 		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (collisionObserver->SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
+			if (CollisionObserver::SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
 				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
@@ -290,7 +277,7 @@ bool GameScene::Update()
 	//敵の雪玉とプレイヤーのあたり判定
 	for (unsigned int si = 0; si < snowBallManager->snowBall.size(); si++)
 	{
-		if (collisionObserver->EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
+		if (CollisionObserver::EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
 		{
 			//SnowFragエフェクト呼ぶ
 			effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[si]->GetPos()));
@@ -306,11 +293,11 @@ bool GameScene::Update()
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			collisionObserver->DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j], eventManager);
+			CollisionObserver::DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j], eventManager);
 		}
 	}
 	//----------------------------------------------------------------------------------------
-	if (eventManager->Update() == false)		//falseが返ってきたらリザルトへ移行する
+	if (eventManager->Update(*enemyManager, *decorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
 	{
 		sceneSwitchState = -1;
 	}

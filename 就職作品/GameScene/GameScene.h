@@ -43,10 +43,13 @@ private:
 	SkyBox *skyBox;
 	Stage1Enclosure *stage1Enclosure;
 	SnowBallManager *snowBallManager;
-	MapObjManager *mapObjManager;
-	CollisionObserver *collisionObserver;	
+	MapObjManager *mapObjManager;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
+	EnemyManager *enemyManager;
+	Player *player;
+	DecorationManager *decorationManager;
+	PickUpInstructions *pickUpInstructions;
 	//------------------------------------------
 	//UI
 	//------------------------------------------
@@ -68,9 +71,6 @@ private:
 	D3DXMATRIX resultMat, returnMat;
 };
 
-extern EnemyManager *enemyManager;
-extern Player *player;
-extern StageBorder *stageBorder;
-extern DecorationManager *decorationManager;
-extern PickUpInstructions *pickUpInstructions;
+
+//extern StageBorder *stageBorder;
 extern const float SnowBallGravity;

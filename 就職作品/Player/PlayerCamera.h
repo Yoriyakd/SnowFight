@@ -9,7 +9,7 @@ class PlayerCamera {
 public:
 	PlayerCamera();
 	~PlayerCamera();
-	void Update(void);
+	void Update(StageBorder & StageBorder);
 	void SetCamera(void);
 	//--------------------------------------------------
 	//Getter
@@ -45,7 +45,7 @@ private:
 	//--------------------------------------------------
 	//ÉÅÉ\ÉbÉh
 	//--------------------------------------------------
-	void Move(void);
+	void Move(StageBorder & StageBorder);
 
 };
 

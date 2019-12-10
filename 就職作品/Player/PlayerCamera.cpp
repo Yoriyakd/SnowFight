@@ -20,7 +20,7 @@ PlayerCamera::~PlayerCamera()
 {
 }
 
-void PlayerCamera::Update(void)
+void PlayerCamera::Update(StageBorder & StageBorder)
 {
 	POINT Pt;
 	ClientToScreen(hwnd, &Pt);		//スクリーン座標座標に変換
@@ -46,7 +46,7 @@ void PlayerCamera::Update(void)
 
 	rotMat = rotMatX * rotMatY;
 
-	Move();
+	Move(StageBorder);
 }
 
 void PlayerCamera::SetCamera(void)
@@ -112,7 +112,7 @@ void PlayerCamera::SetPos(D3DXVECTOR3 * SetPos)
 //=====================================
 //privateメソッド
 //=====================================
-void PlayerCamera::Move(void)
+void PlayerCamera::Move(StageBorder & StageBorder)
 {
 
 	moveVec = D3DXVECTOR3(0, 0, 0);
@@ -165,24 +165,24 @@ void PlayerCamera::Move(void)
 	}
 
 	//ステージ境界の処理
-	if (pos.z > stageBorder->Top)
+	if (pos.z > StageBorder.Top)
 	{
-		pos.z += stageBorder->Top - pos.z;
+		pos.z += StageBorder.Top - pos.z;
 	}
 
-	if (pos.z < stageBorder->Bottom)
+	if (pos.z < StageBorder.Bottom)
 	{
-		pos.z += stageBorder->Bottom - pos.z;
+		pos.z += StageBorder.Bottom - pos.z;
 	}
 
-	if (pos.x < stageBorder->Left)
+	if (pos.x < StageBorder.Left)
 	{
-		pos.x += stageBorder->Left - pos.x;
+		pos.x += StageBorder.Left - pos.x;
 	}
 
-	if (pos.x > stageBorder->Right)
+	if (pos.x > StageBorder.Right)
 	{
-		pos.x += stageBorder->Right - pos.x;
+		pos.x += StageBorder.Right - pos.x;
 	}
 
 }

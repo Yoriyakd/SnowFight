@@ -1,5 +1,6 @@
 #pragma once
 #include"../main.h"
+#include"../ResourceManager.h"
 class Kamakura {
 public:
 	Kamakura();

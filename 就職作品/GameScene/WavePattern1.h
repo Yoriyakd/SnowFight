@@ -3,6 +3,6 @@
 class WavePatternRandom :public WavePatternBase {
 public:
 	WavePatternRandom();
-	WavePatternBase* WaveProcessing(void);
+	WavePatternBase* WaveProcessing(EnemyManager &EnemyManagers, DecorationManager & DecorationManager, StageBorder & StageBorder);
 private:
 };

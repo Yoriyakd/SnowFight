@@ -11,7 +11,7 @@ EventManager::~EventManager()
 	delete wavePattern;
 }
 
-bool EventManager::Update()
+bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder)
 {
 	timeLimit_Frame--;
 
@@ -25,7 +25,7 @@ bool EventManager::Update()
 	if (wavePattern != nullptr)
 	{
 		WavePatternBase *NextPattern;
-		NextPattern = wavePattern->WaveProcessing();
+		NextPattern = wavePattern->WaveProcessing(EnemyManager, DecorationManager, StageBorder);
 		if (NextPattern != nullptr)
 		{
 			delete wavePattern;

@@ -7,7 +7,7 @@ WavePatternRandom::WavePatternRandom()
 	waveLimit = 5 * GameFPS;
 }
 
-WavePatternBase * WavePatternRandom::WaveProcessing(void)
+WavePatternBase * WavePatternRandom::WaveProcessing(EnemyManager & EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder)
 {
 	nowWaveTime++;
 
@@ -16,20 +16,18 @@ WavePatternBase * WavePatternRandom::WaveProcessing(void)
 		int EnemyCnt = 2;
 		D3DXVECTOR3 SpownPoint;
 
-		SpownPoint = D3DXVECTOR3(float(rand() % (int)stageBorder->Right), 0.0f, float(rand() % (int)stageBorder->Top));
-
-
-		
+		SpownPoint = D3DXVECTOR3(float(rand() % (int)StageBorder.Right), 0.0f, float(rand() % (int)StageBorder.Top));
+			   		
 		switch (rand() % 3)
 		{
 		case 0:
-			decorationManager->decoration.push_back(new Decoration_RedBall(&SpownPoint));
+			DecorationManager.decoration.push_back(new Decoration_RedBall(&SpownPoint));
 			break;
 		case 1:
-			decorationManager->decoration.push_back(new Decoration_BlueBall(&SpownPoint));
+			DecorationManager.decoration.push_back(new Decoration_BlueBall(&SpownPoint));
 			break;
 		case 2:
-			decorationManager->decoration.push_back(new Decoration_YellowBall(&SpownPoint));
+			DecorationManager.decoration.push_back(new Decoration_YellowBall(&SpownPoint));
 			break;
 		default:
 			break;
@@ -40,7 +38,7 @@ WavePatternBase * WavePatternRandom::WaveProcessing(void)
 		{
 			D3DXVECTOR3 Tmp;													//d‚È‚Á‚Ä‚È‚¢‚©‚Ìˆ—‚ð“ü‚ê‚é
 			Tmp = D3DXVECTOR3(SpownPoint.x - (rand() % 5 - 15), 0, SpownPoint.z - (rand() % 5 - 15));
-			enemyManager->SetEnemy(D3DXVECTOR3(Tmp));
+			EnemyManager.SetEnemy(D3DXVECTOR3(Tmp));
 		}
 	}
 	

@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include"../GameScene/GameScene.h"
+#include"../GameScene/GameScene.h"//☆
 
 //=====================================
 //publicメソッド
@@ -36,12 +36,11 @@ Enemy::~Enemy()
 {
 }
 
-bool Enemy::Update(SnowBallManager *SnowBallManager)
+bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 {
-	snowBallManager = SnowBallManager;
 	D3DXVECTOR3 TragetPos, TragetVec;
 
-	TragetPos = player->GetPlayerPos();
+	TragetPos = Player.GetPlayerPos();
 	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める
 
 	float TragetLength, LimitLength = 50.0f;
@@ -49,14 +48,14 @@ bool Enemy::Update(SnowBallManager *SnowBallManager)
 
 	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
 	{
-		EngagingMode();
+		EngagingMode(TragetPos ,SnowBallManager);
 	}
 	else
 	{
 		FreeMode();						//範囲外で即追跡終了は変えたい
 	}
 
-	StageBorderProcessing();			//移動処理のあとに呼ぶ
+	StageBorderProcessing(StageBorder);			//移動処理のあとに呼ぶ
 
 	
 	return true;
@@ -131,7 +130,7 @@ bool Enemy::TakeDamage(int Damage)
 //privateメソッド
 //=====================================
 
-void Enemy::ShootSnowBall(float TragetAng)
+void Enemy::ShootSnowBall(const float TragetAng, SnowBallManager &snowBallManager)
 {
 	ThrowingInitValue ValueTmp;
 	ValueTmp.shootPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
@@ -143,13 +142,13 @@ void Enemy::ShootSnowBall(float TragetAng)
 
 	if (ShootCoolTime < 0)
 	{
-		snowBallManager->SetSnowBall(&ValueTmp, ENEMY_ID);
+		snowBallManager.SetSnowBall(&ValueTmp, ENEMY_ID);
 		ShootCoolTime = 3 * GameFPS;
 	}
 	ShootCoolTime--;
 }
 
-void Enemy::EngagingMode(void)
+void Enemy::EngagingMode(D3DXVECTOR3 TragetPos, SnowBallManager &SnowBallManager)
 {
 	//------------------------------------------------------
 	//現在の角度を求める
@@ -182,9 +181,8 @@ void Enemy::EngagingMode(void)
 	//プレイヤーとの角度を求める
 	//------------------------------------------------------
 
-	D3DXVECTOR3 TragetVec, TragetPos;
+	D3DXVECTOR3 TragetVec;
 
-	TragetPos = player->GetPlayerPos();
 
 	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める
 
@@ -299,7 +297,7 @@ void Enemy::EngagingMode(void)
 
 	mat = MoveMat * mat;
 
-	ShootSnowBall(TragetAng);
+	ShootSnowBall(TragetAng, SnowBallManager);
 }
 
 void Enemy::FreeMode(void)
@@ -325,26 +323,26 @@ void Enemy::FreeMode(void)
 
 }
 
-void Enemy::StageBorderProcessing(void)
+void Enemy::StageBorderProcessing(StageBorder & StageBorder)
 {
 	//ステージ境界の処理
-	if (mat._43 > stageBorder->Top)
+	if (mat._43 > StageBorder.Top)
 	{
-		mat._43 += stageBorder->Top - mat._43;
+		mat._43 += StageBorder.Top - mat._43;
 	}
 
-	if (mat._43 < stageBorder->Bottom)
+	if (mat._43 < StageBorder.Bottom)
 	{
-		mat._43 += stageBorder->Bottom - mat._43;
+		mat._43 += StageBorder.Bottom - mat._43;
 	}
 
-	if (mat._41 < stageBorder->Left)
+	if (mat._41 < StageBorder.Left)
 	{
-		mat._41 += stageBorder->Left - mat._41;
+		mat._41 += StageBorder.Left - mat._41;
 	}
 
-	if (mat._41 > stageBorder->Right)
+	if (mat._41 > StageBorder.Right)
 	{
-		mat._41 += stageBorder->Right - mat._41;
+		mat._41 += StageBorder.Right - mat._41;
 	}
 }
