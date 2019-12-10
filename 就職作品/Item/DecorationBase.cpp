@@ -19,7 +19,7 @@ void DecorationBase::Draw()
 
 bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
-	if (decoratedState == false)
+	if (decoratedState == true)
 	{
 		return false;			//“®‚¯‚È‚¢ó‘Ô‚È‚çE‚¦‚È‚¢
 	}

@@ -160,7 +160,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 
 void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj, EventManager * EventManager)
 {
-	if (Decoration->GetDecoratedState() == false)return;		//状態が動かないならreturnで抜ける
+	if (Decoration->GetDecoratedState() == true)return;		//状態が飾られているならreturnで抜ける
 	//---------------------------------------------------------------
 	//必要な値を用意
 
