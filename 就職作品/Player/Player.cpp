@@ -13,7 +13,6 @@ Player::Player()
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
-	int StartBallCnt = 10;	//スタート時のボールの数
 
 
 	remainingBalls = StartBallCnt;
@@ -51,7 +50,7 @@ Player::Player()
 
 Player::~Player()
 {
-	delete ArmRAnime;
+	delete ArmAnime;
 }
 
 bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & DecorationManager, PickUpInstructions & PickUpInstructions)
@@ -105,14 +104,14 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	//-------------------------------------------------------
 	//腕の行列作成
 	//-------------------------------------------------------
-	if (ArmRAnime != nullptr)
+	if (ArmAnime != nullptr)
 	{
 		ArmAnimeBase *NextAnime;
-		NextAnime = ArmRAnime->Anime(&armROffsetMat);
+		NextAnime = ArmAnime->Anime(&armROffsetMat);
 		if (NextAnime != nullptr)
 		{
-			delete ArmRAnime;
-			ArmRAnime = NextAnime;
+			delete ArmAnime;
+			ArmAnime = NextAnime;
 		}
 	}
 	
@@ -297,7 +296,7 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 			if (AnimeFlag == false)
 			{
 				AnimeFlag = true;
-				ArmRAnime = new WindUpRAnime(&armROffsetMat);
+				ArmAnime = new WindUpAnime(&armROffsetMat);
 			}
 
 		}
@@ -330,7 +329,7 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 
 				//腕アニメーション
 				AnimeFlag = false;
-				ArmRAnime = new ThrowRAnime();
+				ArmAnime = new ThrowAnime();
 			}
 		}
 	}
@@ -340,19 +339,20 @@ void Player::MakeBall()
 {
 	static bool RKyeFlag = false;
 	static float MakeingTimeCnt = 0;
-	static const float MakeTime = 1.5;		//作成に必要な時間
 	static float ballSize = 0;
+
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
 		RKyeFlag = true;
 		MakeingTimeCnt++;
+		pPlayerCam->SetMakeSnowBaallFlag(true);
 		if (MakeingTimeCnt > MakeTime * GameFPS)
 		{
 			MakeingTimeCnt = MakeTime * GameFPS;
 		}
 
 		const float MaxBallScal = 1.5;
-		ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;
+		ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
 
 		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
 
@@ -365,6 +365,7 @@ void Player::MakeBall()
 	}
 	else
 	{
+		pPlayerCam->SetMakeSnowBaallFlag(false);
 		if (RKyeFlag == true)
 		{
 			//SnowFragエフェクト呼ぶ

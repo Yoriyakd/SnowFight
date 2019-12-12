@@ -1,6 +1,6 @@
-#include "WindUpRAnime.h"
+#include "WindUpAnime.h"
 
-WindUpRAnime::WindUpRAnime(D3DXMATRIX *StartMat)
+WindUpAnime::WindUpAnime(D3DXMATRIX *StartMat)
 {
 	startMat = *StartMat;
 	animeSpeed = 0.2f;		//再生速度
@@ -15,7 +15,7 @@ WindUpRAnime::WindUpRAnime(D3DXMATRIX *StartMat)
 	endMat = EndRotXTmp * EndRotYTmp * EndTransTmp;		//前振りの終端
 }
 
-ArmAnimeBase * WindUpRAnime::Anime(D3DXMATRIX *NowMat)
+ArmAnimeBase * WindUpAnime::Anime(D3DXMATRIX *NowMat)
 {
 	animeFrame += animeSpeed;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include"ArmAnimeBase.h"
-class WindUpRAnime :public ArmAnimeBase {
+class WindUpAnime :public ArmAnimeBase {
 public:
-	WindUpRAnime(D3DXMATRIX *StartMat);
+	WindUpAnime(D3DXMATRIX *StartMat);
 	ArmAnimeBase* Anime(D3DXMATRIX *NowMat);
 };

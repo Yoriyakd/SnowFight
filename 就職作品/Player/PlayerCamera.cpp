@@ -13,7 +13,6 @@ PlayerCamera::PlayerCamera()
 	ClientToScreen(hwnd, &basePt);		//元がクライアント座標なのでスクリーン座標に変換する(画面の中央に設定される)
 	SetCursorPos(basePt.x, basePt.y);
 	D3DXMatrixIdentity(&billBoardMat);
-	moveSpeed = 0.5;		//移動速度
 }
 
 PlayerCamera::~PlayerCamera()
@@ -22,12 +21,23 @@ PlayerCamera::~PlayerCamera()
 
 void PlayerCamera::Update(StageBorder & StageBorder)
 {
+	if (MakeSnowBallFlag == true)
+	{
+		MakeSnowBallPose();
+		D3DXMatrixRotationY(&rotMatY, D3DXToRadian(angY));				//傾いた分だけ回転させる
+
+		D3DXMatrixRotationX(&rotMatX, D3DXToRadian(angX));				//傾いた分だけ回転させる
+		rotMat = rotMatX * rotMatY;
+
+		return;				//移動視点移動は実行しない
+	}
+
 	POINT Pt;
 	ClientToScreen(hwnd, &Pt);		//スクリーン座標座標に変換
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
-	angY += (Pt.x - basePt.x) / 4.0f;	//最初の位置との差を求め、移動量を調整している
+	angY += ((Pt.x - basePt.x) / 4.0f) * mouseSensitivityX;	//最初の位置との差を求め、移動量を調整している
 
-	angX += (Pt.y - basePt.y) / 4.0f;
+	angX += ((Pt.y - basePt.y) / 4.0f) * mouseSensitivityY;
 	SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット
 
 	if (angX >= 70)
@@ -109,6 +119,11 @@ void PlayerCamera::SetPos(D3DXVECTOR3 * SetPos)
 	pos.y = camHight;
 }
 
+void PlayerCamera::SetMakeSnowBaallFlag(bool Flag)
+{
+	MakeSnowBallFlag = Flag;
+}
+
 //=====================================
 //privateメソッド
 //=====================================
@@ -185,4 +200,12 @@ void PlayerCamera::Move(StageBorder & StageBorder)
 		pos.x += StageBorder.Right - pos.x;
 	}
 
+}
+
+void PlayerCamera::MakeSnowBallPose(void)
+{
+	if (angX < 20.0f)
+	{
+		angX += 1.0f;
+	}
 }

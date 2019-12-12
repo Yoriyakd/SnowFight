@@ -1,9 +1,9 @@
 #pragma once
 #include"ArmAnimeBase.h"
-class ArmRAnimeMid :public ArmAnimeBase {
+class ArmAnimeMid :public ArmAnimeBase {
 public:
-	ArmRAnimeMid(D3DXMATRIX *StartMat);
-	~ArmRAnimeMid();
+	ArmAnimeMid(D3DXMATRIX *StartMat);
+	~ArmAnimeMid();
 	ArmAnimeBase* Anime(D3DXMATRIX *NowMat);
 
 private:

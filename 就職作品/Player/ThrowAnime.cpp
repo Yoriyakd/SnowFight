@@ -1,14 +1,14 @@
-#include "ThrowRAnime.h"
-#include"ArmRAnimeMid.h"
+#include "ThrowAnime.h"
+#include"ArmAnimeMid.h"
 
-ThrowRAnime::ThrowRAnime()
+ThrowAnime::ThrowAnime()
 {
 	atOneceRot = -11;
 	nowAng = 0;
 	endAng = -150;
 }
 
-ArmAnimeBase *ThrowRAnime::Anime(D3DXMATRIX *NowMat)
+ArmAnimeBase *ThrowAnime::Anime(D3DXMATRIX *NowMat)
 {
 	NowMat->_42 += -0.05f;
 	NowMat->_43 = 2.5f;
@@ -23,7 +23,7 @@ ArmAnimeBase *ThrowRAnime::Anime(D3DXMATRIX *NowMat)
 
 	if (nowAng <= endAng)
 	{
-		return new ArmRAnimeMid(NowMat);
+		return new ArmAnimeMid(NowMat);
 	}
 	return nullptr;
 }

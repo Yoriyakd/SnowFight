@@ -1,7 +1,7 @@
-#include"ArmRAnimeMid.h"
-const float ArmRAnimeMid::AnimeSpeed = 0.05f;
+#include"ArmAnimeMid.h"
+const float ArmAnimeMid::AnimeSpeed = 0.05f;
 
-ArmRAnimeMid::ArmRAnimeMid(D3DXMATRIX *StartMat)
+ArmAnimeMid::ArmAnimeMid(D3DXMATRIX *StartMat)
 {
 	startMat = *StartMat;
 	animeFrame = 0.0f;
@@ -13,11 +13,11 @@ ArmRAnimeMid::ArmRAnimeMid(D3DXMATRIX *StartMat)
 	endMat = EndRotTmp * EndTransTmp;		//•à‚«ƒ‚[ƒVƒ‡ƒ“‚ÌI‚í‚è
 }
 
-ArmRAnimeMid::~ArmRAnimeMid()
+ArmAnimeMid::~ArmAnimeMid()
 {
 }
 
-ArmAnimeBase* ArmRAnimeMid::Anime(D3DXMATRIX *NowMat)
+ArmAnimeBase* ArmAnimeMid::Anime(D3DXMATRIX *NowMat)
 {
 	animeFrame += AnimeSpeed;
 
@@ -25,7 +25,7 @@ ArmAnimeBase* ArmRAnimeMid::Anime(D3DXMATRIX *NowMat)
 
 	if (animeFrame >= 1)
 	{
-		return new ArmRAnimeMid(&endMat);
+		return new ArmAnimeMid(&endMat);
 	}
 	return nullptr;
 }

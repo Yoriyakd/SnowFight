@@ -6,10 +6,9 @@
 #include"../commonObj/SnowBallManager.h"
 #include"PlayerCamera.h"
 #include"ArmAnimeBase.h"
-#include"ArmRAnimeMid.h"
-#include"ThrowRAnime.h"
-#include"WindUpRAnime.h"
-#include"ArmLWalkAnime.h"
+#include"ArmAnimeMid.h"
+#include"ThrowAnime.h"
+#include"WindUpAnime.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 
@@ -62,11 +61,11 @@ private:
 	//-----------------------------
 	XFILE armRMesh;
 	D3DXMATRIX armROffsetMat, armRMat;
-	ArmAnimeBase *ArmRAnime;		//右腕のアニメーション
 
 	XFILE armLMesh;
 	D3DXMATRIX armLOffsetMat, armLMat;
-	ArmAnimeBase *ArmLAnime;		//左腕のアニメーション
+
+	ArmAnimeBase *ArmAnime;		//腕のアニメーション
 
 
 	//-----------------------------
@@ -84,6 +83,12 @@ private:
 
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
 	LPDIRECT3DTEXTURE9 GhostTex;
+
+	//-----------------------------
+	//プレイヤーステータス
+	//-----------------------------
+	const int StartBallCnt = 10;	//スタート時のボールの数
+	const float MakeTime = 1.5;		//作成に必要な時間
 
 	//-----------------------------
 	//privateメソッド

@@ -207,17 +207,14 @@
     <ClCompile Include="Map\XmasTree.cpp" />
     <ClCompile Include="MenuScene\MenuScene.cpp" />
     <ClCompile Include="MenuScene\Stage1Button.cpp" />
-    <ClCompile Include="Player\ArmLWalkAnime.cpp" />
-    <ClCompile Include="Player\ArmRAnimeFront.cpp" />
-    <ClCompile Include="Player\ArmRAnimeMid.cpp" />
+    <ClCompile Include="Player\ArmAnimeMid.cpp" />
     <ClCompile Include="Player\Player.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp" />
-    <ClCompile Include="Player\ThrowRAnime.cpp" />
-    <ClCompile Include="Player\WindUpLAnime.cpp" />
-    <ClCompile Include="Player\WindUpRAnime.cpp" />
+    <ClCompile Include="Player\ThrowAnime.cpp" />
+    <ClCompile Include="Player\WindUpAnime.cpp" />
     <ClCompile Include="ResourceManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -276,15 +273,12 @@
     <ClInclude Include="Map\XmasTree.h" />
     <ClInclude Include="MenuScene\MenuScene.h" />
     <ClInclude Include="MenuScene\Stage1Button.h" />
-    <ClInclude Include="Player\ArmLWalkAnime.h" />
-    <ClInclude Include="Player\ArmRAnimeFront.h" />
-    <ClInclude Include="Player\ArmRAnimeMid.h" />
+    <ClInclude Include="Player\ArmAnimeMid.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\ArmAnimeBase.h" />
     <ClInclude Include="Player\PlayerCamera.h" />
-    <ClInclude Include="Player\ThrowRAnime.h" />
-    <ClInclude Include="Player\WindUpLAnime.h" />
-    <ClInclude Include="Player\WindUpRAnime.h" />
+    <ClInclude Include="Player\ThrowAnime.h" />
+    <ClInclude Include="Player\WindUpAnime.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
