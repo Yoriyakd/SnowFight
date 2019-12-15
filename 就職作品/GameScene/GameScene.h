@@ -50,6 +50,8 @@ private:
 	Player *player;
 	DecorationManager *decorationManager;
 	PickUpInstructions *pickUpInstructions;
+
+	StageBorder *stageBorder;
 	//------------------------------------------
 	//UI
 	//------------------------------------------
@@ -71,6 +73,4 @@ private:
 	D3DXMATRIX resultMat, returnMat;
 };
 
-
-//extern StageBorder *stageBorder;
 extern const float SnowBallGravity;

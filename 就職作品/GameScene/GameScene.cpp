@@ -1,9 +1,8 @@
 #include "GameScene.h"
 #include"../MenuScene/MenuScene.h"
 
-Player *player;
 D3DLIGHT9 Light;
-StageBorder *stageBorder;
+
 const float SnowBallGravity = -0.05f;						//d—Í	¦•K‚¸•‰‚Ì’l‚Ì‚·‚é
 
 GameScene::GameScene(int StageNo)
