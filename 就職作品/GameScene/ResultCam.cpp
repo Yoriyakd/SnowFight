@@ -12,7 +12,7 @@ ResultCam::~ResultCam()
 void ResultCam::Update(const D3DXVECTOR3 * TreePos)
 {
 	camLookAt = *TreePos;		//’Ž‹“_‚ðÝ’è
-	camLookAt.y = camHight;
+	camLookAt.y = CAM_HIGHT;
 
 	camAng += 0.5f;
 	if (camAng > 360)
@@ -21,7 +21,7 @@ void ResultCam::Update(const D3DXVECTOR3 * TreePos)
 	}
 
 	camPos.x = (float)(treeDistance * cos(D3DXToRadian(camAng)) + TreePos->x);
-	camPos.y = camHight;
+	camPos.y = CAM_HIGHT;
 	camPos.z = (float)(treeDistance * sin(D3DXToRadian(camAng)) + TreePos->z);
 }
 

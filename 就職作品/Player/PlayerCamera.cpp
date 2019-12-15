@@ -10,9 +10,11 @@ PlayerCamera::PlayerCamera()
 	basePt.x = SCRW / 2;
 	basePt.y = SCRH / 2;
 	angX = 0, angY = 0;		//初期化
-	ClientToScreen(hwnd, &basePt);		//元がクライアント座標なのでスクリーン座標に変換する(画面の中央に設定される)
+	ClientToScreen(hwnd, &basePt);		//basePtをスクリーン座標に変換する(画面の中央に設定される)
 	SetCursorPos(basePt.x, basePt.y);
 	D3DXMatrixIdentity(&billBoardMat);
+	hasPosed = false;
+	MakeSnowBallFlag = false;
 }
 
 PlayerCamera::~PlayerCamera()
@@ -23,13 +25,27 @@ void PlayerCamera::Update(StageBorder & StageBorder)
 {
 	if (MakeSnowBallFlag == true)
 	{
-		MakeSnowBallPose();
+		hasPosed = MakeSnowBallPose();
+
 		D3DXMatrixRotationY(&rotMatY, D3DXToRadian(angY));				//傾いた分だけ回転させる
 
 		D3DXMatrixRotationX(&rotMatX, D3DXToRadian(angX));				//傾いた分だけ回転させる
 		rotMat = rotMatX * rotMatY;
 
+		SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット
 		return;				//移動視点移動は実行しない
+	}
+	else
+	{
+		hasPosed = false;
+		if (pos.y <= CAM_HIGHT)
+		{
+			pos.y += SQUAT_SPEED;			//立ち上がる処理
+			if (pos.y >= CAM_HIGHT)
+			{
+				pos.y = CAM_HIGHT;			//万が一高さがずれたさい修正する
+			}
+		}
 	}
 
 	POINT Pt;
@@ -40,6 +56,9 @@ void PlayerCamera::Update(StageBorder & StageBorder)
 	angX += ((Pt.y - basePt.y) / 4.0f) * mouseSensitivityY;
 	SetCursorPos(basePt.x, basePt.y);	//カーソル位置リセット
 
+	//------------------------------------------
+	//角度制限
+	//------------------------------------------
 	if (angX >= 70)
 	{
 		angX = 70;
@@ -49,7 +68,7 @@ void PlayerCamera::Update(StageBorder & StageBorder)
 	{
 		angX = -70;
 	}
-
+	//------------------------------------------
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(angY));				//傾いた分だけ回転させる
 
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(angX));				//傾いた分だけ回転させる
@@ -108,6 +127,11 @@ D3DXVECTOR3 PlayerCamera::GetPos(void)
 	return pos;
 }
 
+bool PlayerCamera::GetHasPosed(void)
+{
+	return hasPosed;
+}
+
 void PlayerCamera::PushPos(D3DXVECTOR3 *PushVec)
 {
 	pos += *PushVec;
@@ -116,12 +140,17 @@ void PlayerCamera::PushPos(D3DXVECTOR3 *PushVec)
 void PlayerCamera::SetPos(D3DXVECTOR3 * SetPos)
 {
 	pos = *SetPos;
-	pos.y = camHight;
+	pos.y = CAM_HIGHT;
 }
 
-void PlayerCamera::SetMakeSnowBaallFlag(bool Flag)
+void PlayerCamera::SetMakeSnowBallFlag(bool Flag)
 {
 	MakeSnowBallFlag = Flag;
+}
+
+void PlayerCamera::SetMoveSpeed(float MoveSpeed)
+{
+	moveSpeed = MoveSpeed;
 }
 
 //=====================================
@@ -202,10 +231,26 @@ void PlayerCamera::Move(StageBorder & StageBorder)
 
 }
 
-void PlayerCamera::MakeSnowBallPose(void)
+bool PlayerCamera::MakeSnowBallPose(void)
 {
-	if (angX < 20.0f)
+	if (pos.y > 3.0f)
 	{
-		angX += 1.0f;
+		pos.y -= SQUAT_SPEED;
 	}
+
+	if (angX < -20.0f)
+	{
+		angX += 3.0f;
+		return false;
+	}
+
+	if (angX < MAKEBALL_CAM_ANG)
+	{
+		angX += 1.5f;
+	}
+	else
+	{
+		return true;
+	}
+	return false;
 }

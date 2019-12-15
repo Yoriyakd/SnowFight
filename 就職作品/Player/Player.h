@@ -9,6 +9,7 @@
 #include"ArmAnimeMid.h"
 #include"ThrowAnime.h"
 #include"WindUpAnime.h"
+#include"MakeSnowBallAnime.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 
@@ -54,7 +55,8 @@ private:
 	//靴
 	//-----------------------------
 	XFILE shoesMesh;
-	D3DXMATRIX shoesMat, shoesOffsetMat;
+	D3DXMATRIX shoesMat, shoesOffsetMat, shoesRotMatX;
+	float shoesAngX;
 
 	//-----------------------------
 	//腕
@@ -73,6 +75,8 @@ private:
 	//-----------------------------
 	XFILE ballMesh;
 	D3DXMATRIX ballMat, ballScalMat, ballOffsetMat;
+
+	const float MaxBallScal = 1.5;			//作成中の雪玉の最大サイズ
 
 	//-----------------------------
 	//当たり判定
@@ -93,10 +97,12 @@ private:
 	//-----------------------------
 	//privateメソッド
 	//-----------------------------
-	//Updateで呼ぶ	右クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
+	//Updateで呼ぶ	左クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
 	void Throw(SnowBallManager &snowBallManager, DecorationManager &decorationManager);
-	//雪玉を作成する	左クリック
+	//雪玉を作成する	右クリック
 	void MakeBall();
+	//靴の雪玉作成時のアニメーション
+	void ShoesMakeBallAnime(bool AnimeState);
 	//予測線を作成する
 	void MakeGhostMat(ThrowingInitValue *ThrowingInitValue);
 	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる

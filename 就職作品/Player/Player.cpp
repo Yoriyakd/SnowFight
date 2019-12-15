@@ -25,6 +25,7 @@ Player::Player()
 	//--------------------------------------------------------------
 	shoesMesh = resourceManager->GetXFILE("Shoes.x");
 	D3DXMatrixTranslation(&shoesOffsetMat, 0, -5, 0);			//プレイヤーといくら離すか
+	D3DXMatrixRotationX(&shoesRotMatX, D3DXToRadian(0));
 
 	//--------------------------------------------------------------
 	//腕
@@ -45,7 +46,7 @@ Player::Player()
 	//雪玉
 	//--------------------------------------------------------------
 	ballMesh = resourceManager->GetXFILE("SnowBall.x");
-	D3DXMatrixTranslation(&ballOffsetMat, 0, -3, 3);		//プレイヤーといくら離すか
+	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
 }
 
 Player::~Player()
@@ -86,7 +87,7 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 
 
 
-	//pos = D3DXVECTOR3(0, 5, 0);		//デバック用☆
+	//pos = D3DXVECTOR3(100, 5, 30);		//デバック用☆
 
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(pPlayerCam->GetCamAngY()));		//カメラの回転から行列作成
@@ -99,7 +100,7 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	//-------------------------------------------------------
 	//靴の行列作成
 	//-------------------------------------------------------
-	shoesMat = shoesOffsetMat * rotMatY * transMat;		//Y軸のみ回転
+	shoesMat = shoesOffsetMat * shoesRotMatX * rotMatY * transMat;		//プレイヤーのX軸は回転しない
 
 	//-------------------------------------------------------
 	//腕の行列作成
@@ -144,29 +145,6 @@ void Player::SetCamera(void)
 
 void Player::Draw(void)
 {
-	//--------------------------------------------------------------
-	//靴表示
-	//--------------------------------------------------------------
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &shoesMat);
-	DrawMesh(&shoesMesh);
-
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-
-	//--------------------------------------------------------------
-	//作成中の雪玉表示
-	//--------------------------------------------------------------
-	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
-	DrawMesh(&ballMesh);
-
-	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
-
 	//--------------------------------------------------------------
 	//軌道の表示
 	//--------------------------------------------------------------
@@ -214,12 +192,35 @@ void Player::Draw(void)
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
+	   
+	//--------------------------------------------------------------
+	//作成中の雪玉表示
+	//--------------------------------------------------------------
+	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
 
+	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
+	DrawMesh(&ballMesh);
+
+	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
+
+	//--------------------------------------------------------------
+	//靴表示
+	//--------------------------------------------------------------
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &shoesMat);
+	DrawMesh(&shoesMesh);
+
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//--------------------------------------------------------------
 	//腕表示
 	//--------------------------------------------------------------
-	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※最後に描画する
+	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
 
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &armRMat);
 	DrawMesh(&armRMesh);
@@ -270,13 +271,26 @@ int Player::GetHP()
 void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & DecorationManager)
 {
 	static bool LKyeFlag = false;
-	static bool AnimeFlag = false;
+	static bool AnimeFlag_T = false;
+
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)		//雪玉を作っているとき
+	{
+		//発射をキャンセルする
+		std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
+		AnimeFlag_T = false;
+		timeCnt = 0;
+		LKyeFlag = false;
+		pPlayerCam->SetMoveSpeed(0.5);			//移動速度リセット	//定数化☆
+		return;
+	}
 
 	if (remainingBalls > 0 || carryFlag == true) {
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			LKyeFlag = true;
 			timeCnt++;
+
+			pPlayerCam->SetMoveSpeed(0.3);		//移動速度を遅くする
 
 			if (timeCnt > MaxPowerTime * GameFPS)
 			{
@@ -293,12 +307,12 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 			MakeGhostMat(&MakeThrowValue());
 		
 			//腕アニメーション
-			if (AnimeFlag == false)
+			if (AnimeFlag_T == false)
 			{
-				AnimeFlag = true;
+				AnimeFlag_T = true;
+				delete ArmAnime;
 				ArmAnime = new WindUpAnime(&armROffsetMat);
 			}
-
 		}
 		else
 		{
@@ -311,7 +325,7 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 
 					D3DXVECTOR3 DropPoinOffset;
 
-					DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーのの少し前に落とすようにする
+					DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーの少し前に落とすようにする
 					D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 					DecorationManager.Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
@@ -326,9 +340,10 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 					LKyeFlag = false;
 					remainingBalls--;		//発射したら残数を1減らす
 				}
-
+				pPlayerCam->SetMoveSpeed(0.5f);		//移動速度リセット	//定数化☆
 				//腕アニメーション
-				AnimeFlag = false;
+				AnimeFlag_T = false;
+				delete ArmAnime;
 				ArmAnime = new ThrowAnime();
 			}
 		}
@@ -340,32 +355,50 @@ void Player::MakeBall()
 	static bool RKyeFlag = false;
 	static float MakeingTimeCnt = 0;
 	static float ballSize = 0;
+	static bool AnimeFlag_MKB = false;
+
+	
 
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		RKyeFlag = true;
-		MakeingTimeCnt++;
-		pPlayerCam->SetMakeSnowBaallFlag(true);
-		if (MakeingTimeCnt > MakeTime * GameFPS)
+		pPlayerCam->SetMakeSnowBallFlag(true);
+
+		if (pPlayerCam->GetHasPosed() == true)
 		{
-			MakeingTimeCnt = MakeTime * GameFPS;
-		}
+			RKyeFlag = true;
 
-		const float MaxBallScal = 1.5;
-		ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
+			MakeingTimeCnt++;
+			//--------------------------------------------
+			//カメラと靴のアニメーションを開始する
+			//--------------------------------------------
 
-		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
+			ShoesMakeBallAnime(true);
 
-		if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
-		{
-			remainingBalls++;
-			MakeingTimeCnt = 0;		//リセット
-			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+			if (AnimeFlag_MKB == false)
+			{
+				delete ArmAnime;
+				ArmAnime = new MakeSnowBallAnime(&armROffsetMat);
+				AnimeFlag_MKB = true;
+			}
+
+			//--------------------------------------------
+			
+			ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
+
+			D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
+
+			if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
+			{
+				remainingBalls++;
+				MakeingTimeCnt = 0;		//リセット
+				D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+			}
 		}
 	}
 	else
 	{
-		pPlayerCam->SetMakeSnowBaallFlag(false);
+		pPlayerCam->SetMakeSnowBallFlag(false);
+		ShoesMakeBallAnime(false);
 		if (RKyeFlag == true)
 		{
 			//SnowFragエフェクト呼ぶ
@@ -374,8 +407,38 @@ void Player::MakeBall()
 			RKyeFlag = false;
 			MakeingTimeCnt = 0;		//リセット
 			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+
+			//--------------------------------------------
+			//カメラと靴のアニメーションを終了する
+			//--------------------------------------------
+			pPlayerCam->SetMakeSnowBallFlag(false);
+
+			AnimeFlag_MKB = false;
+			delete ArmAnime;
+			ArmAnime = new ArmAnimeMid(&armROffsetMat);
 		}
 	}
+
+}
+
+void Player::ShoesMakeBallAnime(bool AnimeState)
+{
+	if (AnimeState == true)
+	{
+		if (shoesAngX <= 90.0f)
+		{
+			shoesAngX += 10.0f;
+		}
+	}
+	else
+	{
+		if (shoesAngX >= 0.0f)
+		{
+			shoesAngX -= 10.0f;
+		}
+	}
+
+	D3DXMatrixRotationX(&shoesRotMatX, D3DXToRadian(shoesAngX));
 }
 
 void Player::MakeGhostMat(ThrowingInitValue *ThrowingInitValue)

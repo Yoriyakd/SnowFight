@@ -1,5 +1,5 @@
 #include"ArmAnimeMid.h"
-const float ArmAnimeMid::AnimeSpeed = 0.05f;
+const float ArmAnimeMid::AnimeSpeed = 0.1f;
 
 ArmAnimeMid::ArmAnimeMid(D3DXMATRIX *StartMat)
 {
@@ -10,7 +10,7 @@ ArmAnimeMid::ArmAnimeMid(D3DXMATRIX *StartMat)
 	D3DXMatrixRotationZ(&EndRotTmp, D3DXToRadian(30));
 	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -1.5f, 3.0f);		//カメラからの距離
 	
-	endMat = EndRotTmp * EndTransTmp;		//歩きモーションの終わり
+	endMat = EndRotTmp * EndTransTmp;			//待機の位置
 }
 
 ArmAnimeMid::~ArmAnimeMid()

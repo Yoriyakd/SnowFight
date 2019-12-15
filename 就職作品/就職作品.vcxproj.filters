@@ -46,9 +46,6 @@
     <Filter Include="MenuScene">
       <UniqueIdentifier>{95a291a6-53d9-4927-be17-d6fda6d89012}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Anime\ArmR">
-      <UniqueIdentifier>{9cf8aa35-5449-40a7-9a67-e34e54041ecc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -183,14 +180,17 @@
     <ClCompile Include="UI\GameObjective.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Player\ArmAnimeMid.cpp">
+      <Filter>Player\Anime</Filter>
+    </ClCompile>
     <ClCompile Include="Player\ThrowAnime.cpp">
-      <Filter>Player\Anime\ArmR</Filter>
+      <Filter>Player\Anime</Filter>
     </ClCompile>
     <ClCompile Include="Player\WindUpAnime.cpp">
-      <Filter>Player\Anime\ArmR</Filter>
+      <Filter>Player\Anime</Filter>
     </ClCompile>
-    <ClCompile Include="Player\ArmAnimeMid.cpp">
-      <Filter>Player\Anime\ArmR</Filter>
+    <ClCompile Include="Player\MakeSnowBallAnime.cpp">
+      <Filter>Player\Anime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,13 +333,16 @@
       <Filter>GameScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="Player\ArmAnimeMid.h">
-      <Filter>Player\Anime\ArmR</Filter>
+      <Filter>Player\Anime</Filter>
     </ClInclude>
     <ClInclude Include="Player\ThrowAnime.h">
-      <Filter>Player\Anime\ArmR</Filter>
+      <Filter>Player\Anime</Filter>
     </ClInclude>
     <ClInclude Include="Player\WindUpAnime.h">
-      <Filter>Player\Anime\ArmR</Filter>
+      <Filter>Player\Anime</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\MakeSnowBallAnime.h">
+      <Filter>Player\Anime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

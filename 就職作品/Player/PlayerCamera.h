@@ -19,12 +19,14 @@ public:
 	D3DXMATRIX GetmView(void);
 	D3DXVECTOR3 GetmoveVec(void);					//プレイヤーの移動ベクトルを返す
 	D3DXVECTOR3 GetPos(void);
+	bool GetHasPosed(void);				//姿勢変更が完了したか聞く
 	//--------------------------------------------------
 	//Setter
 	//--------------------------------------------------
 	void PushPos(D3DXVECTOR3 *PushVec);				//押し出すベクトルを与える(当たり判定のところで使う)
 	void SetPos(D3DXVECTOR3 *SetPos);
-	void SetMakeSnowBaallFlag(bool Flag);			//
+	void SetMakeSnowBallFlag(bool Flag);			//
+	void SetMoveSpeed(float MoveSpeed);				//移動速度を変更する
 
 private:
 	//--------------------------------------------------
@@ -38,8 +40,10 @@ private:
 	//-------------------------------------------------
 	//設定用の変数(ここの値を変更する)
 	//-------------------------------------------------
-	const float moveSpeed = 0.5f;
-	const float camHight = 5.0f;		//カメラのy0からの高さ
+	float moveSpeed = 0.5f;		//移動速度
+	const float CAM_HIGHT = 5.0f;		//カメラのy0からの高さ
+	const float MAKEBALL_CAM_ANG = 50.0f;	//雪玉作成時のカメラの角度
+	const float SQUAT_SPEED = 0.2f;			//雪玉作成時のしゃがむスピード
 	//-------------------------------------------------
 
 	D3DXMATRIX billBoardMat;		//作ったビルボードの行列を入れておく
@@ -47,11 +51,12 @@ private:
 	D3DXMATRIX mView, mProj;		//視点行列,投影行列
 
 	bool MakeSnowBallFlag;		//trueの時雪玉作成の姿勢になる
+	bool hasPosed;				//姿勢変更が終わったかのフラグ
 	float mouseSensitivityX = 1.0f, mouseSensitivityY = 1.0f;			//マウス感度調整用変数
 	//--------------------------------------------------
 	//メソッド
 	//--------------------------------------------------
 	void Move(StageBorder & StageBorder);
-	void MakeSnowBallPose(void);
+	bool MakeSnowBallPose(void);
 
 };
