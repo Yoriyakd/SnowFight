@@ -33,7 +33,7 @@ Player::Player()
 	armRMesh = resourceManager->GetXFILE("ArmR.x");
 
 	D3DXMATRIX TmpRotZ, TmpTransMat;
-	D3DXMatrixTranslation(&TmpTransMat, 1.5f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
+	D3DXMatrixTranslation(&TmpTransMat, 1.8f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
 	
 
 	D3DXMatrixRotationZ(&TmpRotZ, D3DXToRadian(30));
@@ -290,7 +290,7 @@ void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & Decorat
 			LKyeFlag = true;
 			timeCnt++;
 
-			pPlayerCam->SetMoveSpeed(0.3);		//移動速度を遅くする
+			pPlayerCam->SetMoveSpeed(0.3f);		//移動速度を遅くする
 
 			if (timeCnt > MaxPowerTime * GameFPS)
 			{
@@ -361,7 +361,7 @@ void Player::MakeBall()
 
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		pPlayerCam->SetMakeSnowBallFlag(true);
+		//pPlayerCam->SetMakeSnowBallFlag(true);
 
 		if (pPlayerCam->GetHasPosed() == true)
 		{

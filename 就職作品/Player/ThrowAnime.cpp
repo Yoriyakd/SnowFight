@@ -10,7 +10,7 @@ ThrowAnime::ThrowAnime()
 
 ArmAnimeBase *ThrowAnime::Anime(D3DXMATRIX *NowMat)
 {
-	NowMat->_42 += -0.05f;
+	NowMat->_42 += -0.1f;
 	NowMat->_43 = 2.5f;
 	
 	nowAng += atOneceRot;
