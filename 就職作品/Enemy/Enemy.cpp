@@ -24,12 +24,6 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//minLength~maxLength‚ÌŠÔ‚Å‰Šú‰»	Å‘å’l‚ªmaxLength‚É‚È‚é‚æ‚¤‚É+1‚µ‚Ä‚¢‚é
 
 	HP = 5;
-
-	/*color.a = 255;	™
-	color.r = 255;
-	color.g = 0;
-	color.b = 0;
-	damageFlag = false;*/
 }
 
 Enemy::~Enemy()
@@ -48,7 +42,7 @@ bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBord
 
 	if (TragetLength < LimitLength)		//‹——£‚ªLimitLength–¢–‚È‚çŒğíMode‚É‚È‚é
 	{
-		EngagingMode(TragetPos ,SnowBallManager);
+		//EngagingMode(TragetPos ,SnowBallManager);
 	}
 	else
 	{
@@ -86,9 +80,9 @@ void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphe
 {
 	
 	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);		//YÀ•W—v’²®™	
-	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 5, mat._43);
-	CollisionSphereA->radius = 3;		//•Ï”‰»™
-	CollisionSphereB->radius = 3;
+	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
+	CollisionSphereA->radius = SphereRadiusHead;
+	CollisionSphereB->radius = SphereRadiusBody;
 }
 
 void Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)

@@ -227,7 +227,6 @@ void Player::Draw(void)
 
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
 	DrawMesh(&armLMesh);
-
 }
 
 int Player::GetRemainingBalls()
@@ -361,7 +360,7 @@ void Player::MakeBall()
 
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		//pPlayerCam->SetMakeSnowBallFlag(true);
+		pPlayerCam->SetMakeSnowBallFlag(true);
 
 		if (pPlayerCam->GetHasPosed() == true)
 		{

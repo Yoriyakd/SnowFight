@@ -38,4 +38,7 @@ private:
 	float limitLength;		//Œğíæ‚é‹——£
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//Œğí‚ÌˆÚ“®		‹…”­Ë‚Í~‚Ü‚é‚æ‚¤‚É‚·‚é
 
+	const float SphereRadiusHead = 1.3f;
+	const float SphereRadiusBody = 2.0f;
+
 };

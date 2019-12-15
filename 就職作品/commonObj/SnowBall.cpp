@@ -1,7 +1,6 @@
 #include "SnowBall.h"
 #include"../GameScene/GameScene.h"
 
-const float SnowBall::radius = 1.5;
 //発射位置、発射角度、発射方向、発射パワー(パワー 0~100)
 SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 {
@@ -25,8 +24,6 @@ bool SnowBall::Update(void)
 	{
 		return false;
 	}
-
-	
 
 	D3DXMATRIX tmpMat;
 	moveVec.y += SnowBallGravity;
@@ -81,5 +78,5 @@ ID SnowBall::GetID()
 void SnowBall::GetCollisionSphere(CollisionSphere * CollisionSphere)
 {
 	CollisionSphere->pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-	CollisionSphere->radius = radius;
+	CollisionSphere->radius = Sphereadius;
 }
