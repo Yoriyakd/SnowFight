@@ -42,7 +42,7 @@ bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBord
 
 	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
 	{
-		//EngagingMode(TragetPos ,SnowBallManager);
+		EngagingMode(TragetPos ,SnowBallManager);
 	}
 	else
 	{
@@ -79,7 +79,7 @@ XFILE Enemy::GetMesh(void)
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
 {
 	
-	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2, mat._43);		//Y座標要調整☆	
+	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2.0f, mat._43);		//Y座標要調整☆	
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
 	CollisionSphereA->radius = SphereRadiusHead;
 	CollisionSphereB->radius = SphereRadiusBody;

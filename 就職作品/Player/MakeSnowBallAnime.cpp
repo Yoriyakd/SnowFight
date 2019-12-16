@@ -33,7 +33,7 @@ ArmAnimeBase * MakeSnowBallAnime::Anime(D3DXMATRIX * NowMat)
 
 		frameCnt++;
 
-		D3DXMatrixRotationY(&TmpRotMat, D3DXToRadian(sin(frameCnt / 10)));
+		D3DXMatrixRotationY(&TmpRotMat, (float)D3DXToRadian(sin(frameCnt / 10)));
 
 		*NowMat = *NowMat * TmpRotMat;
 	}
