@@ -3,9 +3,9 @@
 class WindUpAnime :public ArmAnimeBase {
 public:
 	WindUpAnime(D3DXMATRIX *StartMat);
-	ArmAnimeBase* Anime(D3DXMATRIX *NowMat);
+	ArmAnimeBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 private:
-	D3DXMATRIX endMat, startMat;
+	D3DXMATRIX endMatR, startMatR;
 	float animeFrame;
 	float animeSpeed;
 };

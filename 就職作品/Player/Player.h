@@ -37,19 +37,26 @@ private:
 	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, -2.0f, 0.0f);		//カメラの位置からの距離
 
 	//-----------------------------
-	//プレイヤーステータス
+	//プレイヤーステータス		ここを変更して調整する
+	//-----------------------------
+	const int StartBallCnt = 10;	//スタート時のボールの数
+	const float MakeTime = 1.5;		//作成に必要な時間
+	const float MaxPowerTime = 1.5f;	//最大溜めまでにかかる時間
+	int HP = 10;
+
+
+	//-----------------------------
+	//ステータス変数
 	//-----------------------------
 	int remainingBalls;		//残弾数
 
 	bool carryFlag;			//デコレーションを運んでいるか
 	DecorationID carryDecorationID;		//運んでいるデコレーションの内容
-
-	int HP = 10;
+	
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------
 	float timeCnt = 0, shootPowerPCT;
-	static const float MaxPowerTime;		//最大溜めまでにかかる時間
 
 	//-----------------------------
 	//靴
@@ -88,11 +95,7 @@ private:
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
 	LPDIRECT3DTEXTURE9 GhostTex;
 
-	//-----------------------------
-	//プレイヤーステータス
-	//-----------------------------
-	const int StartBallCnt = 10;	//スタート時のボールの数
-	const float MakeTime = 1.5;		//作成に必要な時間
+	
 
 	//-----------------------------
 	//privateメソッド

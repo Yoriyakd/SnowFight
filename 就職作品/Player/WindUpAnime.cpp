@@ -2,7 +2,7 @@
 
 WindUpAnime::WindUpAnime(D3DXMATRIX *StartMat)
 {
-	startMat = *StartMat;
+	startMatR = *StartMat;
 	animeSpeed = 0.2f;		//再生速度
 	animeFrame = 0.0f;
 
@@ -12,14 +12,14 @@ WindUpAnime::WindUpAnime(D3DXMATRIX *StartMat)
 	D3DXMatrixRotationY(&EndRotYTmp, D3DXToRadian(150));
 	D3DXMatrixTranslation(&EndTransTmp, 1.5f, -1.5f, 0.0f);		//カメラからの距離
 
-	endMat = EndRotXTmp * EndRotYTmp * EndTransTmp;		//前振りの終端
+	endMatR = EndRotXTmp * EndRotYTmp * EndTransTmp;		//前振りの終端
 }
 
-ArmAnimeBase * WindUpAnime::Anime(D3DXMATRIX *NowMat)
+ArmAnimeBase * WindUpAnime::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	animeFrame += animeSpeed;
 
-	QuaternionAnime(NowMat, NowMat, &startMat, &endMat, animeFrame);
+	QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, animeFrame);
 
 	if (animeFrame >= 1)
 	{

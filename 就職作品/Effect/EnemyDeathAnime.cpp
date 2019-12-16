@@ -4,7 +4,7 @@ EnemyDeathAnime::EnemyDeathAnime(D3DXMATRIX _Mat, XFILE _Mesh, D3DXVECTOR3 _Vec)
 	//初期化
 
 	mesh = _Mesh;
-	startMat = _Mat;
+	startMatR = _Mat;
 	mat = _Mat;
 	ang = 0;
 
@@ -16,7 +16,7 @@ EnemyDeathAnime::EnemyDeathAnime(D3DXMATRIX _Mat, XFILE _Mesh, D3DXVECTOR3 _Vec)
 	D3DXVec3Cross(&RotAxis, &D3DXVECTOR3(0, 1, 0), &_Vec);			//Y方向と雪玉の進行方向で外積を求め回転軸にする
 
 	D3DXMATRIX InvMat;
-	InvMat = startMat;
+	InvMat = startMatR;
 
 	D3DXMatrixInverse(&InvMat, NULL, &InvMat);		//逆行列を作る
 
@@ -43,7 +43,7 @@ bool EnemyDeathAnime::Update(void)
 		return false;
 	}
 
-	mat = rotMat * startMat;
+	mat = rotMat * startMatR;
 
 	return true;
 }

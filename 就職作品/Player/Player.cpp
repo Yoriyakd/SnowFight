@@ -2,7 +2,7 @@
 #include"../GameScene/GameScene.h"
 
 extern ResourceManager *resourceManager;
-const float Player::MaxPowerTime = 1.5f;
+
 
 //=====================================
 //publicメソッド
@@ -30,17 +30,23 @@ Player::Player()
 	//--------------------------------------------------------------
 	//腕
 	//--------------------------------------------------------------
+	armLMesh = resourceManager->GetXFILE("ArmL.x");
 	armRMesh = resourceManager->GetXFILE("ArmR.x");
 
-	D3DXMATRIX TmpRotZ, TmpTransMat;
-	D3DXMatrixTranslation(&TmpTransMat, 1.8f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
-	
+	D3DXMATRIX TmpRotZ, TmpRotX, TmpTransMat;
 
+	D3DXMatrixTranslation(&TmpTransMat, -1.8f, -1.5f, -2.0f);
+	D3DXMatrixRotationZ(&TmpRotZ, D3DXToRadian(-90));
+	D3DXMatrixRotationX(&TmpRotX, D3DXToRadian(90));
+	armLOffsetMat = TmpRotZ * TmpRotX * TmpTransMat;
+
+
+	D3DXMatrixTranslation(&TmpTransMat, 1.8f, -1.5f, 3.0f);		//プレイヤーの原点からの距離
 	D3DXMatrixRotationZ(&TmpRotZ, D3DXToRadian(30));
 	armROffsetMat = TmpRotZ * TmpTransMat;
 
-	armLMesh = resourceManager->GetXFILE("ArmL.x");
-	D3DXMatrixTranslation(&armLOffsetMat, -2.5, -1.0, 0.0f);
+	
+	
 	
 	//--------------------------------------------------------------
 	//雪玉
@@ -108,7 +114,7 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	if (ArmAnime != nullptr)
 	{
 		ArmAnimeBase *NextAnime;
-		NextAnime = ArmAnime->Anime(&armROffsetMat);
+		NextAnime = ArmAnime->Anime(&armLOffsetMat, &armROffsetMat);
 		if (NextAnime != nullptr)
 		{
 			delete ArmAnime;
@@ -117,7 +123,7 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	}
 	
 	armRMat = armROffsetMat * rotMatX * rotMatY * transMat;		//カメラからの距離の距離の行列にカメラの行列から作った行列を合成してプレイヤーについていかせる
-	armLMat = armLOffsetMat * rotMatY * transMat;
+	armLMat = armLOffsetMat * rotMatX * rotMatY * transMat;
 	 
 	//-------------------------------------------------------
 	//作成中の雪玉行列作成
@@ -376,7 +382,7 @@ void Player::MakeBall()
 			if (AnimeFlag_MKB == false)
 			{
 				delete ArmAnime;
-				ArmAnime = new MakeSnowBallAnime(&armROffsetMat);
+				ArmAnime = new MakeSnowBallAnime(&armLOffsetMat, &armROffsetMat);
 				AnimeFlag_MKB = true;
 			}
 
@@ -414,7 +420,7 @@ void Player::MakeBall()
 
 			AnimeFlag_MKB = false;
 			delete ArmAnime;
-			ArmAnime = new ArmAnimeMid(&armROffsetMat);
+			ArmAnime = new ArmAnimeIdle(&armLOffsetMat, &armROffsetMat);
 		}
 	}
 

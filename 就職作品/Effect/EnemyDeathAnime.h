@@ -3,7 +3,7 @@
 class EnemyDeathAnime{
 private:
 	XFILE mesh;
-	D3DXMATRIX startMat, mat, rotMat;
+	D3DXMATRIX startMatR, mat, rotMat;
 	float ang;
 	D3DXVECTOR3 RotAxis, SnowBallVec;		//‰ñ“]Ž²
 public:
