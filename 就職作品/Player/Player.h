@@ -6,7 +6,7 @@
 #include"../commonObj/SnowBallManager.h"
 #include"PlayerCamera.h"
 #include"ArmAnimeBase.h"
-#include"ArmAnimeMid.h"
+#include"ArmAnimeIdle.h"
 #include"ThrowAnime.h"
 #include"WindUpAnime.h"
 #include"MakeSnowBallAnime.h"

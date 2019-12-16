@@ -7,7 +7,7 @@ public:
 	ArmAnimeBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 
 private:
-	const static float AnimeSpeed;
+	const float AnimeSpeed = 0.1f;
 	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;
 	float animeFrame;
 };

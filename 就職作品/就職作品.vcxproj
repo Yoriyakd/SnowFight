@@ -207,7 +207,7 @@
     <ClCompile Include="Map\XmasTree.cpp" />
     <ClCompile Include="MenuScene\MenuScene.cpp" />
     <ClCompile Include="MenuScene\Stage1Button.cpp" />
-    <ClCompile Include="Player\ArmAnimeMid.cpp" />
+    <ClCompile Include="Player\ArmAnimeIdle.cpp" />
     <ClCompile Include="Player\MakeSnowBallAnime.cpp" />
     <ClCompile Include="Player\Player.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
@@ -274,7 +274,7 @@
     <ClInclude Include="Map\XmasTree.h" />
     <ClInclude Include="MenuScene\MenuScene.h" />
     <ClInclude Include="MenuScene\Stage1Button.h" />
-    <ClInclude Include="Player\ArmAnimeMid.h" />
+    <ClInclude Include="Player\ArmAnimeIdle.h" />
     <ClInclude Include="Player\MakeSnowBallAnime.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\ArmAnimeBase.h" />

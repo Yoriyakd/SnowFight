@@ -180,9 +180,6 @@
     <ClCompile Include="UI\GameObjective.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Player\ArmAnimeMid.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
     <ClCompile Include="Player\ThrowAnime.cpp">
       <Filter>Player\Anime</Filter>
     </ClCompile>
@@ -190,6 +187,9 @@
       <Filter>Player\Anime</Filter>
     </ClCompile>
     <ClCompile Include="Player\MakeSnowBallAnime.cpp">
+      <Filter>Player\Anime</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ArmAnimeIdle.cpp">
       <Filter>Player\Anime</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,9 +332,6 @@
     <ClInclude Include="UI\GameObjective.h">
       <Filter>GameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Player\ArmAnimeMid.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
     <ClInclude Include="Player\ThrowAnime.h">
       <Filter>Player\Anime</Filter>
     </ClInclude>
@@ -342,6 +339,9 @@
       <Filter>Player\Anime</Filter>
     </ClInclude>
     <ClInclude Include="Player\MakeSnowBallAnime.h">
+      <Filter>Player\Anime</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ArmAnimeIdle.h">
       <Filter>Player\Anime</Filter>
     </ClInclude>
   </ItemGroup>

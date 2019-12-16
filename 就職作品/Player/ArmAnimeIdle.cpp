@@ -1,5 +1,5 @@
-#include"ArmAnimeMid.h"
-const float ArmAnimeIdle::AnimeSpeed = 0.1f;
+#include"ArmAnimeIdle.h"
+
 
 ArmAnimeIdle::ArmAnimeIdle(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
 {

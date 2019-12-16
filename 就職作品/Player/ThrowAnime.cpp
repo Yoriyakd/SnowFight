@@ -1,5 +1,5 @@
 #include "ThrowAnime.h"
-#include"ArmAnimeMid.h"
+#include"ArmAnimeIdle.h"
 
 ThrowAnime::ThrowAnime()
 {
