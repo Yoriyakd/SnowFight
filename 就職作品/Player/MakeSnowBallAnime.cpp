@@ -21,8 +21,6 @@ MakeSnowBallAnime::MakeSnowBallAnime(D3DXMATRIX * StartMatL, D3DXMATRIX * StartM
 
 	endMatL = EndRotTmpL * EndTransTmpL;			//腕を突き出した位置
 	endMatR = EndRotTmpR * EndTransTmpR;			//腕を突き出した位置
-	
-
 }
 
 MakeSnowBallAnime::~MakeSnowBallAnime()
