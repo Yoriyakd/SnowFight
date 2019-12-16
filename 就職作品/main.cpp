@@ -218,7 +218,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	hwnd = CreateWindowEx(
 		0,
 		szAppName,
-		"SnowBallFight Ver.0.9.2",
+		"SnowBallFight Ver.0.9.3",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
