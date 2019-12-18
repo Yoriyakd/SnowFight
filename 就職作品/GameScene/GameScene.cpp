@@ -183,7 +183,7 @@ bool GameScene::Update()
 		return true;		//リザルト表示中は早期リターンして動きを止める
 	}
 
-	
+
 	if (sceneSwitchState == 1)				//初めに明転させる処理
 	{
 		if (sceneSwitchEffect->ToBrightness() == true)
@@ -225,11 +225,39 @@ bool GameScene::Update()
 	{
 		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
+			if (CollisionObserver::SnowBalltoEnemyHat(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)
 			{
+				if (enemyManager->enemy[ei]->TakeDamage(5) == false)		//falseが返ってきたら
+				{
+					//-------------------------------------------------------------
+					//EnemyDeathAnime再生開始
+					//-------------------------------------------------------------
+					//引数として渡す変数を一時的に宣言
+					D3DXMATRIX TmpAnimeMat;
+					XFILE TmpAnimeMesh;
+					D3DXVECTOR3 SnowBallVec;
+
+					TmpAnimeMat = enemyManager->enemy[ei]->GetMat();		//行列
+					TmpAnimeMesh = enemyManager->enemy[ei]->GetMesh();	//Mesh
+					SnowBallVec = snowBallManager->snowBall[sj]->GetMoveVec();	//雪玉の移動ベクトルをもらう
+
+					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
+
+					//死んだインスタンス削除
+					enemyManager->DeleteInstance(ei);
+					ei--;		//きえた分詰める
+					break;
+				}
 				//SnowFragエフェクト呼ぶ
 				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
 
+				//死んだインスタンス削除
+				snowBallManager->DeleteInstance(sj);
+				sj--;		//きえた分詰める
+			}
+
+			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
+			{
 				if (enemyManager->enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
 				{
 					//-------------------------------------------------------------
@@ -247,13 +275,15 @@ bool GameScene::Update()
 					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
 
 					//死んだインスタンス削除
-					delete enemyManager->enemy[ei];
-					enemyManager->enemy.erase(enemyManager->enemy.begin() + ei);
+					enemyManager->DeleteInstance(ei);
 					ei--;		//きえた分詰める
 				}
+
+				//SnowFragエフェクト呼ぶ
+				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
+
 				//死んだインスタンス削除
-				delete snowBallManager->snowBall[sj];
-				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + sj);
+				snowBallManager->DeleteInstance(sj);
 				sj--;		//きえた分詰める
 			}
 		}
@@ -271,8 +301,7 @@ bool GameScene::Update()
 				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
 
 				//死んだインスタンス削除
-				delete snowBallManager->snowBall[sj];
-				snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + sj);
+				snowBallManager->DeleteInstance(sj);
 				sj--;				//きえた分詰める
 			}
 		}
@@ -287,8 +316,7 @@ bool GameScene::Update()
 			effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[si]->GetPos()));
 			player->HitSnowBall();			//HIT時のメソッドを呼ぶ
 
-			delete snowBallManager->snowBall[si];
-			snowBallManager->snowBall.erase(snowBallManager->snowBall.begin() + si);
+			snowBallManager->DeleteInstance(si);
 			si--;						//きえた分詰める
 		}
 	}

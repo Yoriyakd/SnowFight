@@ -18,6 +18,12 @@ void EnemyManager::AllDelete(void)
 	enemy.clear();
 }
 
+void EnemyManager::DeleteInstance(unsigned int ite)
+{
+	delete enemy[ite];
+	enemy.erase(enemy.begin() + ite);
+}
+
 void EnemyManager::SetEnemy(D3DXVECTOR3 Pos)
 {
 	enemy.push_back(new Enemy(Pos));

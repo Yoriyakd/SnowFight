@@ -18,6 +18,12 @@ void SnowBallManager::AllDelete(void)
 	snowBall.clear();
 }
 
+void SnowBallManager::DeleteInstance(unsigned int ite)
+{
+	delete snowBall[ite];
+	snowBall.erase(snowBall.begin() + ite);
+}
+
 void SnowBallManager::SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID)
 {
 	snowBall.push_back(new SnowBall(*ThrowingInitValue, _ID));
@@ -42,8 +48,7 @@ void SnowBallManager::Update(void)
 
 
 			//インスタンス削除
-			delete snowBall[i];
-			snowBall.erase(snowBall.begin() + i);
+			DeleteInstance(i);
 			i--;
 		}
 	}

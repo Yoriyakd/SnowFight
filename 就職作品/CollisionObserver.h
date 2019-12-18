@@ -12,6 +12,8 @@ class CollisionObserver {
 public:
 	CollisionObserver();
 	~CollisionObserver();
+	//敵の帽子と雪玉の当たり判定	SnowBallManagerとEnemyManagerをポインタで渡す
+	static bool SnowBalltoEnemyHat(SnowBall *SnowBall, Enemy *Enemy);
 	//敵と雪玉の当たり判定	SnowBallManagerとEnemyManagerをポインタで渡す
 	static bool SnowBalltoEnemy(SnowBall *SnowBall, Enemy *Enemy);
 	//雪玉とMapオブジェの当たり判定	SnowBallManagerとMapObjManagerをポインタで渡す

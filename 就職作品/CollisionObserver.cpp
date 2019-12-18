@@ -8,6 +8,49 @@ CollisionObserver::~CollisionObserver()
 {
 }
 
+bool CollisionObserver::SnowBalltoEnemyHat(SnowBall * SnowBall, Enemy * Enemy)
+{
+	if (SnowBall->GetID() == ENEMY_ID)return false;		//ID‚ª“G‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
+
+	float HatRadius, HatHight, SnowBallRadius;
+	D3DXVECTOR3 SnowBallPos;
+	D3DXMATRIX HatMat;
+
+	HatRadius = Enemy->GetHatRadius();
+	HatHight = Enemy->GetHatHight();
+	HatMat = Enemy->GetHatMat();
+
+	SnowBallPos = SnowBall->GetPos();
+	SnowBallRadius = SnowBall->GetSphereRadius();
+
+	//–³ŒÀ‰~’Œ“¯Žm‚Ì”»’è
+	D3DXVECTOR3 TargetVec;
+	TargetVec = D3DXVECTOR3(HatMat._41, 0.0f, HatMat._43) - D3DXVECTOR3(SnowBallPos.x, 0.0f, SnowBallPos.z);		//YÀ•W‚ð–³Ž‹‚·‚é
+
+	float TargetLength;
+
+	TargetLength = D3DXVec3Length(&TargetVec);
+
+	if (HatRadius + SnowBallRadius > TargetLength)		//‹——£‚ª”¼Œa“¯Žm‚ð‘«‚µ‚½‚à‚Ì‚æ‚è¬‚³‚¢‚È‚çA‚‚³‚Ì”»’è‚ðs‚¤
+	{
+		D3DXVECTOR3 HightVec;
+		HightVec = D3DXVECTOR3(0.0f, HatMat._42, 0.0f) - D3DXVECTOR3(0.0f, SnowBallPos.y, 0.0f);
+
+		float HightLength;
+
+		HightLength = D3DXVec3Length(&HightVec);
+
+		if (HatHight / 2.0f + SnowBallRadius > HightLength)
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+
+
 bool CollisionObserver::SnowBalltoEnemy(SnowBall * SnowBall, Enemy * Enemy)		//ŒÄ‚Ño‚·‘¤‚Åfor•¶‚ð‰ñ‚·‚æ‚¤‚É•ÏX‚·‚é
 {
 	if (SnowBall->GetID() == ENEMY_ID)return false;		//ID‚ª“G‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
@@ -202,7 +245,6 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 				Decoration->SetDecoratedState(true);		//ü‚ç‚ê‚Ä‚¢‚éó‘Ô‚É‚·‚é
 				D3DXVECTOR3 PushVec;
 
-				//Limit = 1.5f / Dot;
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//–@ü•ûŒü‚É‰Ÿ‚µo‚·’·‚³‚ð‹‚ß‚é
 				Decoration->PushPos(&PushVec);
 				EventManager->DoDecorate(Decoration->GetID());

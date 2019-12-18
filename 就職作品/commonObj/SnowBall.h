@@ -10,7 +10,7 @@ private:
 	D3DXVECTOR3 moveVec, memoryPos, globalMoveVec;
 	int deleteTime;
 	ID id;
-	const float Sphereadius = 0.4f;				//当たり判定に使う球の半径
+	const float SphereRadius = 0.4f;				//当たり判定に使う球の半径
 public:
 	SnowBall(ThrowingInitValue, ID);			//発射位置、発射角度、発射方向、発射パワー
 	~SnowBall();
@@ -21,4 +21,5 @@ public:
 	D3DXVECTOR3 GetMoveVec();				//グローバルの移動ベクトルを渡す
 	ID GetID();
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
+	float GetSphereRadius(void);
 };

@@ -7,9 +7,11 @@
 
 Enemy::Enemy(D3DXVECTOR3 Pos)
 {
-	mesh = resourceManager->GetXFILE("EnemyBody.x");
-	D3DXMatrixIdentity(&mat);
+	bodyMesh = resourceManager->GetXFILE("EnemyBody.x");
 	D3DXMatrixTranslation(&transMat, Pos.x, Pos.y, Pos.z);
+
+	hatMesh = resourceManager->GetXFILE("EnemyHat.x");
+	D3DXMatrixTranslation(&hatOffsetMat, 0.0f, 6.6f, -0.3f);
 
 	D3DXMATRIX InitRotMat;
 	float TmpRndAng;
@@ -18,6 +20,10 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	D3DXMatrixRotationY(&InitRotMat ,D3DXToRadian(TmpRndAng));
 
 	mat = InitRotMat * transMat;
+
+	D3DXMatrixRotationX(&hatRotMat, D3DXToRadian(-10));
+
+	hatMat = hatRotMat * hatOffsetMat * mat;
 
 	MoveInterval = 0;	//初期値は0(すぐ動く)
 	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//初期化
@@ -42,23 +48,27 @@ bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBord
 
 	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
 	{
-		EngagingMode(TragetPos ,SnowBallManager);
+		//EngagingMode(TragetPos ,SnowBallManager);
 	}
 	else
 	{
-		FreeMode();						//範囲外で即追跡終了は変えたい
+		//FreeMode();						//範囲外で即追跡終了は変えたい
 	}
 
 	StageBorderProcessing(StageBorder);			//移動処理のあとに呼ぶ
 
-	
+	hatMat = hatRotMat * hatOffsetMat * mat;
+
 	return true;
 }
 
 void Enemy::Draw(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	DrawMesh(&mesh);
+	DrawMesh(&bodyMesh);
+
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &hatMat);
+	DrawMesh(&hatMesh);
 }
 
 D3DXVECTOR3 Enemy::GetPos(void)
@@ -73,7 +83,7 @@ D3DXMATRIX Enemy::GetMat(void)
 
 XFILE Enemy::GetMesh(void)
 {
-	return mesh;
+	return bodyMesh;
 }
 
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
@@ -83,6 +93,21 @@ void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphe
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
 	CollisionSphereA->radius = SphereRadiusHead;
 	CollisionSphereB->radius = SphereRadiusBody;
+}
+
+D3DXMATRIX Enemy::GetHatMat(void)
+{
+	return hatMat;
+}
+
+float Enemy::GetHatRadius(void)
+{
+	return hatRadius;
+}
+
+float Enemy::GetHatHight(void)
+{
+	return hatHight;
 }
 
 void Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)

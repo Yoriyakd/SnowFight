@@ -11,19 +11,36 @@ public:
 	~Enemy();
 	virtual bool Update(Player &Player, SnowBallManager &SnowBallManager, StageBorder &StageBorder);
 	virtual void Draw(void);
+	//--------------------------------------------
+	//Getter
+	//--------------------------------------------
 	virtual D3DXVECTOR3 GetPos(void);
 	virtual D3DXMATRIX GetMat(void);
 	virtual XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
+
+	D3DXMATRIX GetHatMat(void);
+	float GetHatRadius(void);
+	float GetHatHight(void);
+
 	void CheckOverlapEnemies(D3DXVECTOR3*);
+
 	bool TakeDamage(int Damage);
 
 protected:
 	int HP;		//ëÃóÕ	ê·ã 1î≠Ç≈1å∏è≠
 
 private:
-	XFILE mesh;
+	XFILE bodyMesh;
 	D3DXMATRIX mat, rotMat, transMat;
+
+	//------------------------------------------------
+	XFILE hatMesh;
+	D3DXMATRIX hatMat, hatOffsetMat, hatRotMat;
+
+	const float hatRadius = 1.0f, hatHight = 2.0f;
+	//------------------------------------------------
+
 	virtual void ShootSnowBall(float TragetAng, SnowBallManager &snowBallManager);
 	virtual void EngagingMode(const D3DXVECTOR3 TragetPos, SnowBallManager &snowBallManager);		//åêÌíÜÇÃçsìÆ
 	virtual void FreeMode(void);			//ñ¢î≠å©éûÇÃçsìÆ

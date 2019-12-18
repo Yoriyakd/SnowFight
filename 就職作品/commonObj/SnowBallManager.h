@@ -14,6 +14,8 @@ public:
 	~SnowBallManager();
 	//全インスタンス削除
 	void AllDelete(void);
+	//消したいインスタンスの配列番号を渡すとそのインスタンスを削除する
+	void DeleteInstance(unsigned int ite);
 	//初期化にsnowBallInitValue型をポインタで渡す
 	void SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID);
 	void Draw(void);

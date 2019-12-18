@@ -11,6 +11,9 @@ public:
 
 	void AllDelete(void);
 
+	//消したいインスタンスの配列番号を渡すとそのインスタンスを削除する
+	void DeleteInstance(unsigned int ite);
+
 	void SetEnemy(D3DXVECTOR3 Pos);
 	
 	void Draw();
