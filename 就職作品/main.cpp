@@ -65,7 +65,7 @@ void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color)
 
 //座標、半径、座標、半径
 //戻り値　HIT == true 当たってなかったら == falsle
-bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
+bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
 {
 	float targetLengh;
 	targetLengh = D3DXVec3Length(&(dataA->pos - dataB->pos));
@@ -76,26 +76,27 @@ bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
 	return false;
 }
 
-bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis)
-{
-	D3DXMATRIX InvMat;
-	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
 
-	D3DXVECTOR3 LocalPos, LocalVec;
-
-	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//レイ発射位置
-	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//レイ発射方向
-
-	BOOL Hit;
-	
-	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &*MeshDis, NULL, NULL);
-	if (Hit == FALSE)
-	{
-		*MeshDis = -1;
-		return false;
-	}
-	return true;
-}
+//bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis)
+//{
+//	D3DXMATRIX InvMat;
+//	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
+//
+//	D3DXVECTOR3 LocalPos, LocalVec;
+//
+//	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//レイ発射位置
+//	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//レイ発射方向
+//
+//	BOOL Hit;
+//	
+//	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &*MeshDis, NULL, NULL);
+//	if (Hit == FALSE)
+//	{
+//		*MeshDis = -1;
+//		return false;
+//	}
+//	return true;
+//}
 
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo)
 {
@@ -109,10 +110,23 @@ bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPo
 
 	BOOL Hit;
 
+	if (MeshDis == nullptr)
+	{
+		MeshDis = NULL;
+	}
+
+	if (PolyNo == nullptr)
+	{
+		PolyNo = NULL;
+	}
+
 	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, PolyNo, NULL, NULL, &*MeshDis, NULL, NULL);
 	if (Hit == FALSE)
 	{
-		*MeshDis = -1;
+		if (MeshDis != nullptr)		//値が何か入っている場合HITしていないことを表す-1を入れる
+		{
+			*MeshDis = -1;
+		}
 		return false;
 	}
 	return true;

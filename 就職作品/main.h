@@ -76,12 +76,9 @@ void DrawMesh(XFILE *XFile);
 void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color);
 
 //球同士の当たり判定
-bool CollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
+bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
 
-//メッシュに対してのレイ判定
-bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis);
-
-//メッシュに対してのレイ判定ポリゴン番号入手バージョン
+//メッシュに対してのレイ判定(MeshDisとPolyNoはnullptr許容)		HITしなかった場合MeshDisには-1が入る
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo);
 
 //ThrowingInitValueを渡すと移動ベクトルが返ってきて発射位置の行列作成ができる

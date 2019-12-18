@@ -183,7 +183,7 @@ bool GameScene::Update()
 		return true;		//リザルト表示中は早期リターンして動きを止める
 	}
 
-	//---------------------------------------------------------
+	
 	if (sceneSwitchState == 1)				//初めに明転させる処理
 	{
 		if (sceneSwitchEffect->ToBrightness() == true)
@@ -191,15 +191,20 @@ bool GameScene::Update()
 			sceneSwitchState = 0;
 		}
 	}
-
+	//----------------------------------------------------------------------------------------------------------------
+	//プレイヤーの更新	※カメラ→あたり判定→プレイヤーの順番で	プレイヤーのの位置がカメラとずれるため
+	//----------------------------------------------------------------------------------------------------------------
 	playerCam->Update(*stageBorder);						//プレイヤーカメラの移動
-	player->Update(*snowBallManager, *decorationManager, *pickUpInstructions);		//カメラを更新してから
 
 	//マップオブジェとプレイヤーの当たり判定
 	for (unsigned int i = 0; i < mapObjManager->mapObj.size(); i++)
 	{
 		CollisionObserver::PlayertoObj(playerCam, mapObjManager->mapObj[i]);
 	}
+
+	player->Update(*snowBallManager, *decorationManager, *pickUpInstructions);		//カメラを更新してから
+	//---------------------------------------------------------
+
 
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ

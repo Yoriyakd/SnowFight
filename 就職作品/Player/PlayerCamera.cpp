@@ -64,9 +64,9 @@ void PlayerCamera::Update(StageBorder & StageBorder)
 		angX = 70;
 	}
 
-	if (angX <= -70)
+	if (angX <= -50)
 	{
-		angX = -70;
+		angX = -50;
 	}
 	//------------------------------------------
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(angY));				//ŒX‚¢‚½•ª‚¾‚¯‰ñ“]‚³‚¹‚é

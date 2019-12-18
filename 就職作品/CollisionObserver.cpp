@@ -13,13 +13,13 @@ bool CollisionObserver::SnowBalltoEnemy(SnowBall * SnowBall, Enemy * Enemy)		//Œ
 	if (SnowBall->GetID() == ENEMY_ID)return false;		//ID‚ª“G‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
 	//---------------------------------------------------------------
 	//•K—v‚È’l‚ğ—pˆÓ
-	CollisionSphere SnowBallSphre, EnemySphreA, EnemySphreB;//A‚ªãB‚ª‰º
+	CollisionSphere SnowBallSphre, EnemySphreHead, EnemySphreBody;//A‚ªãB‚ª‰º
 
-	Enemy->GetCollisionSphere(&EnemySphreA, &EnemySphreB);		/*“–‚½‚è”»’è‚Ì‹…‚Ìƒf[ƒ^æ“¾*/
+	Enemy->GetCollisionSphere(&EnemySphreHead, &EnemySphreBody);		/*“–‚½‚è”»’è‚Ì‹…‚Ìƒf[ƒ^æ“¾*/
 	SnowBall->GetCollisionSphere(&SnowBallSphre);			/*“–‚½‚è”»’è‚Ì‹…‚Ìƒf[ƒ^æ“¾*/
 	//---------------------------------------------------------------
 
-	if (CollisionDetection(&SnowBallSphre, &EnemySphreA) || CollisionDetection(&SnowBallSphre, &EnemySphreB))
+	if (SphereCollisionDetection(&SnowBallSphre, &EnemySphreHead) || SphereCollisionDetection(&SnowBallSphre, &EnemySphreBody))
 	{
 		return true;
 	}
@@ -35,7 +35,7 @@ bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
 
 	XFILE MeshTmp;
 	D3DXMATRIX MeshMat;
-	D3DXVECTOR3 LayVec, LayPos;
+	D3DXVECTOR3 LayVec, LayPos; D3DXVECTOR3 LayPosTmp;
 	float MeshDis;
 
 	MeshTmp = MapObj->GetMesh();
@@ -44,14 +44,14 @@ bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
 	LayVec = SnowBall->GetMoveVec();
 	D3DXVec3Normalize(&LayVec, &LayVec);
 
-	if (MeshCollisionDetection(&MeshTmp, &MeshMat, &LayPos, &LayVec, &MeshDis))			//ƒƒbƒVƒ…‚É‘Î‚µ‚ÄƒŒƒC”»’è
+
+	if (MeshCollisionDetection(&MeshTmp, &MeshMat, &LayPos, &LayVec, &MeshDis, nullptr))			//ƒƒbƒVƒ…‚É‘Î‚µ‚ÄƒŒƒC”»’è
 	{
 		CollisionSphere SnowBallSphere;
 		SnowBall->GetCollisionSphere(&SnowBallSphere);
 
-		if (MeshDis < SnowBallSphere.radius)										//‹——£‚ª”¼ŒaˆÈ‰º‚È‚ç
+		if (MeshDis < SnowBallSphere.radius + 2.0f)										//‹——£‚ª”¼ŒaˆÈ‰º‚È‚ç	(‚·‚±‚µ‘å‚«‚ß‚É‚Æ‚é)
 		{
-			
 			return true;
 		}
 		else
@@ -147,7 +147,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 	SnowBall->GetCollisionSphere(&SnowBallSphre);			/*“–‚½‚è”»’è‚Ì‹…‚Ìƒf[ƒ^æ“¾*/
 	//---------------------------------------------------------------
 
-	if (CollisionDetection(&SnowBallSphre, &PlayerSphre))
+	if (SphereCollisionDetection(&SnowBallSphre, &PlayerSphre))
 	{
 		return true;
 	}
@@ -191,7 +191,7 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 		float Dot;
 		Dot = D3DXVec3Dot(&ObjNormal, &-LayVec);		//“àÏ‚ğ‹‚ß‚é	isƒxƒNƒgƒ‹‚Æ•Ç‚Ì–@ü —¼•û’·‚³1‚È‚Ì‚ÅƒRƒTƒCƒ“ƒÆ‚É‚È‚é
 
-		Limit = 1 / Dot;				//1‚Í•Ç‚©‚ç—£‚µ‚½‚¢‹——£
+		Limit = 4.5f / Dot;				//—£‚µ‚½‚¢‹——£‚ğDot‚ÅŠ„‚Á‚ÄÎ•Ó‚Ì’·‚³‚ğ‹‚ß‚Ä‚¢‚é
 
 		if (Limit < 0)Limit *= -1;		//‹t‚©‚ç•Ç‚ÉÚ‹ß‚µ‚½ê‡-‚É‚È‚é‚Ì‚Å”½“]
 
@@ -201,19 +201,22 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 			{
 				Decoration->SetDecoratedState(true);		//ü‚ç‚ê‚Ä‚¢‚éó‘Ô‚É‚·‚é
 				D3DXVECTOR3 PushVec;
+
+				//Limit = 1.5f / Dot;
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//–@ü•ûŒü‚É‰Ÿ‚µo‚·’·‚³‚ğ‹‚ß‚é
 				Decoration->PushPos(&PushVec);
 				EventManager->DoDecorate(Decoration->GetID());
-				EventManager->AddScore(500);
+				//EventManager->AddScore(500);
 			}
 			else
 			{
-				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//ˆÚ“®ƒxƒNƒgƒ‹‚ğ•Ç‚Ì–@ü•ûŒü‚É2‰ñ‰Ÿ‚µo‚µ‚Ä”½ËƒxƒNƒgƒ‹‚ğ‹‚ß‚Ä‚¢‚é
-
 				D3DXVECTOR3 PushVec;
+
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//–@ü•ûŒü‚É‰Ÿ‚µo‚·’·‚³‚ğ‹‚ß‚é
 				Decoration->PushPos(&PushVec);		//1“x–@ü•ûŒü‚É‰Ÿ‚µo‚·
 
+				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//ˆÚ“®ƒxƒNƒgƒ‹‚ğ•Ç‚Ì–@ü•ûŒü‚É2‰ñ‰Ÿ‚µo‚µ‚Ä”½ËƒxƒNƒgƒ‹‚ğ‹‚ß‚Ä‚¢‚é
+				
 				MoveVec *= 0.8f;		//”½”­ŒW”‚ğİ’è
 
 				Decoration->SetMoveVec(&MoveVec);
