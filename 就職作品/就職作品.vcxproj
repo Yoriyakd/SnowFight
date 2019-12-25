@@ -146,7 +146,9 @@
     <ClCompile Include="Effect\EffectManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Effect\EnemyAnimeManager.cpp" />
     <ClCompile Include="Effect\EnemyDeathAnime.cpp" />
+    <ClCompile Include="Effect\EnemyHatAnime.cpp" />
     <ClCompile Include="Effect\Locus.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -245,7 +247,9 @@
     <ClInclude Include="commonObj\SnowBall.h" />
     <ClInclude Include="commonObj\SnowBallManager.h" />
     <ClInclude Include="Effect\EffectManager.h" />
+    <ClInclude Include="Effect\EnemyAnimeManager.h" />
     <ClInclude Include="Effect\EnemyDeathAnime.h" />
+    <ClInclude Include="Effect\EnemyHatAnime.h" />
     <ClInclude Include="Effect\Locus.h" />
     <ClInclude Include="Effect\SceneSwitchEffect.h" />
     <ClInclude Include="Effect\SnowFrag.h" />

@@ -407,7 +407,7 @@ void Player::MakeBall()
 		if (RKyeFlag == true)
 		{
 			//SnowFragエフェクト呼ぶ
-			effectManager->snowFrag.push_back(new SnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43))));
+			effectManager->NewSnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43)));
 
 			RKyeFlag = false;
 			MakeingTimeCnt = 0;		//リセット

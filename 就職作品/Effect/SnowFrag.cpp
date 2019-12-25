@@ -1,6 +1,6 @@
 #include "SnowFrag.h"
 
-SnowFrag::SnowFrag(D3DXVECTOR3 Pos)
+SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos)
 {
 	for (int i = 0; i < FRAG_NUM; i++)
 	{

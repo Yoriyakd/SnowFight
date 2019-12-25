@@ -14,16 +14,16 @@ public:
 	//--------------------------------------------
 	//Getter
 	//--------------------------------------------
-	virtual D3DXVECTOR3 GetPos(void);
-	virtual D3DXMATRIX GetMat(void);
-	virtual XFILE GetMesh(void);
+	virtual const D3DXVECTOR3 GetPos(void);
+	virtual const D3DXMATRIX GetMat(void);
+	//virtual const XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
 
 	D3DXMATRIX GetHatMat(void);
 	float GetHatRadius(void);
 	float GetHatHight(void);
 
-	void CheckOverlapEnemies(D3DXVECTOR3*);
+	void CheckOverlapEnemies(const D3DXVECTOR3*);
 
 	bool TakeDamage(int Damage);
 

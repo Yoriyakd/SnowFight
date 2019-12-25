@@ -192,6 +192,12 @@
     <ClCompile Include="Player\ArmAnimeIdle.cpp">
       <Filter>Player\Anime</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\EnemyHatAnime.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\EnemyAnimeManager.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -343,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="Player\ArmAnimeIdle.h">
       <Filter>Player\Anime</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\EnemyHatAnime.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\EnemyAnimeManager.h">
+      <Filter>Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,12 +22,16 @@ void EffectManager::AllDelete(void)
 		delete SnowLocus;
 	}
 	snowLocus.clear();
+}
 
-	for (auto *EnemyDeathAnime : enemyDeathAnime)
-	{
-		delete EnemyDeathAnime;
-	}
-	enemyDeathAnime.clear();
+void EffectManager::NewSnowFrag(const D3DXVECTOR3 &Pos)
+{
+	snowFrag.push_back(new SnowFrag(Pos));
+}
+
+void EffectManager::NewSnowLocus(const D3DXMATRIX &SnowBallMat)
+{
+	snowLocus.push_back(new SnowLocus(SnowBallMat));
 }
 
 void EffectManager::Draw(void)
@@ -40,11 +44,6 @@ void EffectManager::Draw(void)
 	for (auto *SnowLocus : snowLocus)
 	{
 		SnowLocus->Draw();
-	}
-
-	for (auto *EnemyDeathAnime : enemyDeathAnime)
-	{
-		EnemyDeathAnime->Draw();
 	}
 }
 
@@ -71,18 +70,6 @@ void EffectManager::Update(void)
 			delete snowLocus[i];
 			snowLocus.erase(snowLocus.begin() + i);	//配列開放
 			i--;									//消した分つめる
-		}
-	}
-
-	//再生をし終わるとインスタンス削除
-	for (unsigned int i = 0; i < enemyDeathAnime.size(); i++)
-	{
-		if (enemyDeathAnime[i]->Update() == false)
-		{
-			delete enemyDeathAnime[i];
-			enemyDeathAnime.erase(enemyDeathAnime.begin() + i);	//配列開放
-			i--;									//消した分つめる
-
 		}
 	}
 }

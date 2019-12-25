@@ -34,11 +34,11 @@ bool SnowBall::Update(void)
 	if (mat._42 < 0.0f)				//地面に衝突でエフェクト発生 インスタンス削除
 	{
 		//SnowFragエフェクト呼ぶ
-		effectManager->snowFrag.push_back(new SnowFrag(D3DXVECTOR3(mat._41, mat._42, mat._43)));
+		effectManager->NewSnowFrag(D3DXVECTOR3(mat._41, mat._42, mat._43));
 		return false;
 	}
 
-	effectManager->snowLocus.push_back(new SnowLocus(mat));		//毎フレーム雪の軌跡を作る
+	effectManager->NewSnowLocus(mat);		//毎フレーム雪の軌跡を作る
 	//-----------------------------------
 	//グローバル移動ベクトルを求める
 	//-----------------------------------

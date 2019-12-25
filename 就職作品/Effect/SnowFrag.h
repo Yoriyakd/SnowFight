@@ -17,7 +17,7 @@ private:
 
 	
 public:
-	SnowFrag(D3DXVECTOR3 Pos);
+	SnowFrag(const D3DXVECTOR3 &Pos);
 	~SnowFrag();
 
 	void Draw();

@@ -20,6 +20,8 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
+	enemyAnimeManager = new EnemyAnimeManager();
+
 	stageBorder = new StageBorder;
 	//-------------------------------------------------------
 	//UI
@@ -120,6 +122,7 @@ void GameScene::Render3D(void)
 	//
 	//-------------------------------------------------------
 	enemyManager->Draw();
+	enemyAnimeManager->Draw();
 	snowBallManager->Draw();
 	effectManager->Draw();
 	
@@ -217,6 +220,7 @@ bool GameScene::Update()
 
 	effectManager->SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
 	effectManager->Update();
+	enemyAnimeManager->Updata();
 
 	decorationManager->Updata();
 
@@ -227,33 +231,28 @@ bool GameScene::Update()
 		{
 			if (CollisionObserver::SnowBalltoEnemyHat(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)
 			{
-				if (enemyManager->enemy[ei]->TakeDamage(5) == false)		//falseが返ってきたら
+				if (enemyManager->enemy[ei]->TakeDamage(10) == false)		//falseが返ってきたら
 				{
 					//-------------------------------------------------------------
-					//EnemyDeathAnime再生開始
+					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
-					//引数として渡す変数を一時的に宣言
-					D3DXMATRIX TmpAnimeMat;
-					XFILE TmpAnimeMesh;
-					D3DXVECTOR3 SnowBallVec;
-
-					TmpAnimeMat = enemyManager->enemy[ei]->GetMat();		//行列
-					TmpAnimeMesh = enemyManager->enemy[ei]->GetMesh();	//Mesh
-					SnowBallVec = snowBallManager->snowBall[sj]->GetMoveVec();	//雪玉の移動ベクトルをもらう
-
-					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
+					enemyAnimeManager->NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
+					enemyAnimeManager->NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], true);
 
 					//死んだインスタンス削除
 					enemyManager->DeleteInstance(ei);
 					ei--;		//きえた分詰める
+
+					//SnowFragエフェクト呼ぶ
+					effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
+
+					//死んだインスタンス削除
+					snowBallManager->DeleteInstance(sj);
+					sj--;		//きえた分詰める
+
 					break;
 				}
-				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
-
-				//死んだインスタンス削除
-				snowBallManager->DeleteInstance(sj);
-				sj--;		//きえた分詰める
+				
 			}
 
 			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
@@ -261,18 +260,11 @@ bool GameScene::Update()
 				if (enemyManager->enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
 				{
 					//-------------------------------------------------------------
-					//EnemyDeathAnime再生開始
+					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
-					//引数として渡す変数を一時的に宣言
-					D3DXMATRIX TmpAnimeMat;
-					XFILE TmpAnimeMesh;
-					D3DXVECTOR3 SnowBallVec;
 
-					TmpAnimeMat = enemyManager->enemy[ei]->GetMat();		//行列
-					TmpAnimeMesh = enemyManager->enemy[ei]->GetMesh();	//Mesh
-					SnowBallVec = snowBallManager->snowBall[sj]->GetMoveVec();	//雪玉の移動ベクトルをもらう
-
-					effectManager->enemyDeathAnime.push_back(new EnemyDeathAnime(TmpAnimeMat, TmpAnimeMesh, SnowBallVec));
+					enemyAnimeManager->NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
+					enemyAnimeManager->NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], false);
 
 					//死んだインスタンス削除
 					enemyManager->DeleteInstance(ei);
@@ -280,11 +272,13 @@ bool GameScene::Update()
 				}
 
 				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
+				effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//死んだインスタンス削除
 				snowBallManager->DeleteInstance(sj);
 				sj--;		//きえた分詰める
+
+				break;
 			}
 		}
 	}
@@ -298,7 +292,7 @@ bool GameScene::Update()
 			if (CollisionObserver::SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
-				effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[sj]->GetPos()));
+				effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//死んだインスタンス削除
 				snowBallManager->DeleteInstance(sj);
@@ -313,7 +307,7 @@ bool GameScene::Update()
 		if (CollisionObserver::EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
 		{
 			//SnowFragエフェクト呼ぶ
-			effectManager->snowFrag.push_back(new SnowFrag(snowBallManager->snowBall[si]->GetPos()));
+			effectManager->NewSnowFrag(snowBallManager->snowBall[si]->GetPos());
 			player->HitSnowBall();			//HIT時のメソッドを呼ぶ
 
 			snowBallManager->DeleteInstance(si);

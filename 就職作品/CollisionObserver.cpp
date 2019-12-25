@@ -8,7 +8,7 @@ CollisionObserver::~CollisionObserver()
 {
 }
 
-bool CollisionObserver::SnowBalltoEnemyHat(SnowBall * SnowBall, Enemy * Enemy)
+bool CollisionObserver::SnowBalltoEnemyHat(SnowBall *SnowBall, Enemy *Enemy)
 {
 	if (SnowBall->GetID() == ENEMY_ID)return false;		//ID‚ª“G‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
 
@@ -51,7 +51,7 @@ bool CollisionObserver::SnowBalltoEnemyHat(SnowBall * SnowBall, Enemy * Enemy)
 
 
 
-bool CollisionObserver::SnowBalltoEnemy(SnowBall * SnowBall, Enemy * Enemy)		//ŒÄ‚Ño‚·‘¤‚Åfor•¶‚ð‰ñ‚·‚æ‚¤‚É•ÏX‚·‚é
+bool CollisionObserver::SnowBalltoEnemy(SnowBall *SnowBall, Enemy *Enemy)		//ŒÄ‚Ño‚·‘¤‚Åfor•¶‚ð‰ñ‚·‚æ‚¤‚É•ÏX‚·‚é
 {
 	if (SnowBall->GetID() == ENEMY_ID)return false;		//ID‚ª“G‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
 	//---------------------------------------------------------------
@@ -72,7 +72,7 @@ bool CollisionObserver::SnowBalltoEnemy(SnowBall * SnowBall, Enemy * Enemy)		//Œ
 	}
 }
 
-bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
+bool CollisionObserver::SnowBalltoObj(SnowBall *SnowBall, MapObj *MapObj)
 {
 	//•K—v‚È’l‚ð—pˆÓ
 
@@ -105,7 +105,7 @@ bool CollisionObserver::SnowBalltoObj(SnowBall * SnowBall, MapObj * MapObj)
 	return false;
 }
 
-void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
+void CollisionObserver::PlayertoObj(PlayerCamera *PlayerCam, MapObj *MapObj)
 {
 	D3DXVECTOR3 LayPos, LayVec;
 	LayPos = PlayerCam->GetPos();
@@ -178,7 +178,7 @@ void CollisionObserver::PlayertoObj(PlayerCamera * PlayerCam, MapObj * MapObj)
 	}
 }
 
-bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBall)
+bool CollisionObserver::EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall)
 {
 	if (SnowBall->GetID() == PLAYER_ID)return false;			//ID‚ªƒvƒŒƒCƒ„[‚Ì‚à‚Ì‚È‚ç‘ŠúƒŠƒ^[ƒ“
 	//---------------------------------------------------------------
@@ -201,7 +201,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player * Player, SnowBall * SnowBa
 }
 
 
-void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj * MapObj, EventManager * EventManager)
+void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, EventManager *EventManager)
 {
 	if (Decoration->GetDecoratedState() == true)return;		//ó‘Ô‚ªü‚ç‚ê‚Ä‚¢‚é‚È‚çreturn‚Å”²‚¯‚é
 	//---------------------------------------------------------------
@@ -269,7 +269,7 @@ void CollisionObserver::DecorationToMapObj(DecorationBase * Decoration, MapObj *
 
 }
 
-void CollisionObserver::GetPolyNormal(D3DXVECTOR3 * ObjNormal, LPD3DXMESH ObjMesh, const DWORD * PolyNo)
+void CollisionObserver::GetPolyNormal(D3DXVECTOR3 *ObjNormal, LPD3DXMESH ObjMesh, const DWORD *PolyNo)
 {
 	WORD *pI;
 	ObjMesh->LockIndexBuffer(0, (LPVOID*)&pI);

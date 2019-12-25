@@ -44,7 +44,7 @@ void SnowBallManager::Update(void)
 		if (snowBall[i]->Update() == false)		//Updateがfalseなら
 		{
 			//SnowFragエフェクト呼ぶ
-			effectManager->snowFrag.push_back(new SnowFrag(snowBall[i]->GetPos()));
+			effectManager->NewSnowFrag(snowBall[i]->GetPos());
 
 
 			//インスタンス削除

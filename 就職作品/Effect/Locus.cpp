@@ -1,6 +1,6 @@
 #include "Locus.h"
 
-SnowLocus::SnowLocus(D3DXMATRIX Mat)
+SnowLocus::SnowLocus(const D3DXMATRIX &Mat)
 {
 	D3DXMatrixTranslation(&mat, Mat._41, Mat._42, Mat._43);
 
@@ -67,7 +67,7 @@ bool SnowLocus::Update()
 	return true;
 }
 
-void SnowLocus::SetBillBoardMat(D3DXMATRIX BillBoardMat)
+void SnowLocus::SetBillBoardMat(const D3DXMATRIX &BillBoardMat)
 {
 	billBoardMat = BillBoardMat * mat;
 }

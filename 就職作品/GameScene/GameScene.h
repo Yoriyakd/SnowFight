@@ -14,6 +14,7 @@
 #include"../commonObj/SnowBallManager.h"
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
+#include"../Effect/EnemyAnimeManager.h"
 #include"EventManager.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
@@ -50,6 +51,7 @@ private:
 	Player *player;
 	DecorationManager *decorationManager;
 	PickUpInstructions *pickUpInstructions;
+	EnemyAnimeManager *enemyAnimeManager;
 
 	StageBorder *stageBorder;
 	//------------------------------------------

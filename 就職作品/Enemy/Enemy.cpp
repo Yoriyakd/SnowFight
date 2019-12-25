@@ -29,7 +29,7 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 	freeMoveCnt = (float)(rand() % 3) * GameFPS;	//初期化
 	limitLength = rand() % (int)(maxLength + 1 - minLength) + minLength;		//minLength~maxLengthの間で初期化	最大値がmaxLengthになるように+1している
 
-	HP = 5;
+	HP = 3;
 }
 
 Enemy::~Enemy()
@@ -48,11 +48,11 @@ bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBord
 
 	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
 	{
-		//EngagingMode(TragetPos ,SnowBallManager);
+		EngagingMode(TragetPos ,SnowBallManager);
 	}
 	else
 	{
-		//FreeMode();						//範囲外で即追跡終了は変えたい
+		FreeMode();						//範囲外で即追跡終了は変えたい
 	}
 
 	StageBorderProcessing(StageBorder);			//移動処理のあとに呼ぶ
@@ -71,20 +71,20 @@ void Enemy::Draw(void)
 	DrawMesh(&hatMesh);
 }
 
-D3DXVECTOR3 Enemy::GetPos(void)
+const D3DXVECTOR3 Enemy::GetPos(void)
 {
 	return D3DXVECTOR3(mat._41, mat._42, mat._43);
 }
 
-D3DXMATRIX Enemy::GetMat(void)
+const D3DXMATRIX Enemy::GetMat(void)
 {
 	return mat;
 }
 
-XFILE Enemy::GetMesh(void)
-{
-	return bodyMesh;
-}
+//const XFILE Enemy::GetMesh(void)
+//{
+//	return bodyMesh;
+//}
 
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
 {
@@ -110,7 +110,7 @@ float Enemy::GetHatHight(void)
 	return hatHight;
 }
 
-void Enemy::CheckOverlapEnemies(D3DXVECTOR3 *TargetPos)
+void Enemy::CheckOverlapEnemies(const D3DXVECTOR3 *TargetPos)
 {
 
 	D3DXVECTOR3 TargetVec;
