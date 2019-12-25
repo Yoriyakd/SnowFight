@@ -2,13 +2,13 @@
 
 GameObjective::GameObjective()
 {
-	backTex = resourceManager->GetTexture("GameObjective.png", 400, 64, NULL);
+	backTex = GetResource.GetTexture("GameObjective.png", 400, 64, NULL);
 	D3DXMatrixTranslation(&backMat, 800.0f, 10.0f, 0.0f);
 
-	numberTex = resourceManager->GetTexture("Number.png", 420, 42, NULL);
+	numberTex = GetResource.GetTexture("Number.png", 420, 42, NULL);
 	D3DXMatrixTranslation(&numberOffsetMat, 290.0f, 15.0f, 0.0f);
 
-	clearTex = resourceManager->GetTexture("Clear.png", 400, 64, NULL);
+	clearTex = GetResource.GetTexture("Clear.png", 400, 64, NULL);
 }
 
 GameObjective::~GameObjective()

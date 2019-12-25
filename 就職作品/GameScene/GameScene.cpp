@@ -34,10 +34,10 @@ GameScene::GameScene(int StageNo)
 	//-------------------------------------------------------
 	//ƒŠƒUƒ‹ƒg
 	//-------------------------------------------------------
-	resultTex = resourceManager->GetTexture("Result.png", 820, 160, NULL);
+	resultTex = GetResource.GetTexture("Result.png", 820, 160, NULL);
 	D3DXMatrixTranslation(&resultMat, SCRW / 2, 10, 0);
 
-	returnTex = resourceManager->GetTexture("Click_To_Return.png", 420, 40, NULL);
+	returnTex = GetResource.GetTexture("Click_To_Return.png", 420, 40, NULL);
 	D3DXMatrixTranslation(&returnMat, 800, 500, 0);
 
 

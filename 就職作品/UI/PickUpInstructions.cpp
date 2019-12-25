@@ -2,7 +2,7 @@
 
 PickUpInstructions::PickUpInstructions()
 {
-	tex = resourceManager->GetTexture("PickUpInstructions.png", 256, 64, NULL);
+	tex = GetResource.GetTexture("PickUpInstructions.png", 256, 64, NULL);
 	D3DXMatrixTranslation(&mat, 300, 500, 0);
 	displayFlag = false;
 }

@@ -17,21 +17,21 @@ Player::Player()
 
 	remainingBalls = StartBallCnt;
 
-	GhostTex = resourceManager->GetTexture("PredictionLine.png", 64, 64, NULL);
+	GhostTex = GetResource.GetTexture("PredictionLine.png", 64, 64, NULL);
 	carryFlag = false;
 
 	//--------------------------------------------------------------
 	//靴
 	//--------------------------------------------------------------
-	shoesMesh = resourceManager->GetXFILE("Shoes.x");
+	shoesMesh = GetResource.GetXFILE("Shoes.x");
 	D3DXMatrixTranslation(&shoesOffsetMat, 0, -5, 0);			//プレイヤーといくら離すか
 	D3DXMatrixRotationX(&shoesRotMatX, D3DXToRadian(0));
 
 	//--------------------------------------------------------------
 	//腕
 	//--------------------------------------------------------------
-	armLMesh = resourceManager->GetXFILE("ArmL.x");
-	armRMesh = resourceManager->GetXFILE("ArmR.x");
+	armLMesh = GetResource.GetXFILE("ArmL.x");
+	armRMesh = GetResource.GetXFILE("ArmR.x");
 
 	D3DXMATRIX TmpRotZ, TmpRotX, TmpTransMat;
 
@@ -51,7 +51,7 @@ Player::Player()
 	//--------------------------------------------------------------
 	//雪玉
 	//--------------------------------------------------------------
-	ballMesh = resourceManager->GetXFILE("SnowBall.x");
+	ballMesh = GetResource.GetXFILE("SnowBall.x");
 	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
 }
 

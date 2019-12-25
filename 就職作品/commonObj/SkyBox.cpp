@@ -2,7 +2,7 @@
 
 SkyBox::SkyBox()
 {
-	mesh = resourceManager->GetXFILE("Sky.x");
+	mesh = GetResource.GetXFILE("Sky.x");
 	D3DXMatrixTranslation(&mat, 0, 0, 0);
 }
 

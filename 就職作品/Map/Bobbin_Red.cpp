@@ -2,7 +2,7 @@
 
 Bobbin_Red::Bobbin_Red(D3DXVECTOR3 Pos, float Ang)
 {
-	mesh = resourceManager->GetXFILE("Bobbin_Red.x");
+	mesh = GetResource.GetXFILE("Bobbin_Red.x");
 	pos = Pos;
 
 	D3DXMATRIX TmpRotMatY, TmpTransMat;

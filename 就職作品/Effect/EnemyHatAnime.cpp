@@ -4,7 +4,7 @@ EnemyHatAnime::EnemyHatAnime(Enemy &Enemy, SnowBall &SnowBall, bool HeadShot)
 {
 	//‰Šú‰»
 
-	mesh = resourceManager->GetXFILE("EnemyHat.x");
+	mesh = GetResource.GetXFILE("EnemyHat.x");
 	mat = startRotMat = Enemy.GetHatMat();
 
 	//‰ñ“]²‚ğ‹‚ß‚é

@@ -17,7 +17,7 @@ Ground::Ground()
 	ground[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
 	ground[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
 
-	tex = resourceManager->GetTexture("SnowGround.png", 512, 512, NULL);
+	tex = GetResource.GetTexture("SnowGround.png", 512, 512, NULL);
 }
 
 Ground::~Ground()

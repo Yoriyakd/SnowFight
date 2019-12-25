@@ -8,7 +8,7 @@ SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos)
 	}
 	srand(timeGetTime());
 	
-	fragTex = resourceManager->GetTexture("SnowFrag.png", 1024, 1024, NULL);
+	fragTex = GetResource.GetTexture("SnowFrag.png", 1024, 1024, NULL);
 
 	for (int i = 0; i < FRAG_NUM; i++)
 	{
@@ -21,7 +21,7 @@ SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos)
 	//----------------------------------------------------------------------
 	//‰Œˆ—
 	//----------------------------------------------------------------------
-	smokeTex = resourceManager->GetTexture("FallingSnow.png", 250, 250, NULL);
+	smokeTex = GetResource.GetTexture("FallingSnow.png", 250, 250, NULL);
 	D3DXMatrixTranslation(&smokeMat, Pos.x, Pos.y, Pos.z);
 }
 

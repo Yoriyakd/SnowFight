@@ -34,7 +34,7 @@ HWND hwnd;		//ウインドウID(みたいなもの)
 const int GameFPS = 60;		//ゲームのFPS指定
 
 SceneSwitcher sceneSwitcher;
-ResourceManager *resourceManager;
+//ResourceManager *resourceManager;
 EffectManager *effectManager;
 SceneSwitchEffect *sceneSwitchEffect;
 
@@ -76,27 +76,6 @@ bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
 	return false;
 }
 
-
-//bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis)
-//{
-//	D3DXMATRIX InvMat;
-//	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
-//
-//	D3DXVECTOR3 LocalPos, LocalVec;
-//
-//	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//レイ発射位置
-//	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//レイ発射方向
-//
-//	BOOL Hit;
-//	
-//	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &*MeshDis, NULL, NULL);
-//	if (Hit == FALSE)
-//	{
-//		*MeshDis = -1;
-//		return false;
-//	}
-//	return true;
-//}
 
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo)
 {
@@ -212,7 +191,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 {
 	MSG msg;
 
-	//HWND hwnd;
 	WNDCLASS wc;
 	char szAppName[] = "Generic Game SDK Window";
 
@@ -373,9 +351,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	timeBeginPeriod(1);
 
 	// ゲームに関する初期化処理 ---------------------------
-	resourceManager = new ResourceManager();
+	ResourceManager::Create();
+
 	effectManager = new EffectManager();
 	sceneSwitchEffect = new SceneSwitchEffect();
+
+	
 
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 
@@ -409,9 +390,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	}
 
 	// ゲームに関する終了処理 ---------------------------
-	delete resourceManager;
 	delete effectManager;
 	delete sceneSwitchEffect;
+
+	ResourceManager::Destroy();
 
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 

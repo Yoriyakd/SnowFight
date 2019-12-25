@@ -2,7 +2,7 @@
 
 Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
 {
-	mesh = resourceManager->GetXFILE("Decoration_RedBall.x");
+	mesh = GetResource.GetXFILE("Decoration_RedBall.x");
 	pos = *_Pos;
 
 	picUpDistans = 8.0f;
@@ -15,7 +15,7 @@ Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
 
 Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
 {
-	mesh = resourceManager->GetXFILE("Decoration_RedBall.x");
+	mesh = GetResource.GetXFILE("Decoration_RedBall.x");
 	pos = *_Pos;
 
 	picUpDistans = 8.0f;
