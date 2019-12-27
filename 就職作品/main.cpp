@@ -34,7 +34,6 @@ HWND hwnd;		//ウインドウID(みたいなもの)
 const int GameFPS = 60;		//ゲームのFPS指定
 
 SceneSwitcher sceneSwitcher;
-//ResourceManager *resourceManager;
 EffectManager *effectManager;
 SceneSwitchEffect *sceneSwitchEffect;
 

@@ -288,6 +288,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
+    <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="UI\GameObjective.h" />
     <ClInclude Include="UI\PickUpInstructions.h" />

@@ -4,8 +4,6 @@ void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3
 void LoadMesh(struct XFILE *XFile, const char FName[]);
 void ReleaseMesh(struct XFILE *XFile);
 
-ResourceManager *ResourceManager::resourceManager = nullptr;
-
 void ResourceManager::AllDelete(void)
 {
 	for (auto ite = XFILEList.begin(); ite != XFILEList.end(); ite++)
@@ -29,21 +27,6 @@ ResourceManager::~ResourceManager()
 	AllDelete();
 }
 
-
-
-void ResourceManager::Create()
-{
-	if (resourceManager == nullptr)
-	{
-		resourceManager = new ResourceManager();
-	}
-}
-
-void ResourceManager::Destroy()
-{
-	delete resourceManager;
-	resourceManager = nullptr;
-}
 
 XFILE ResourceManager::GetXFILE(std::string FileName)
 {
@@ -94,11 +77,6 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, 
 		Tmp = TextureList[FileName];	
 	}
 	return Tmp;
-}
-
-ResourceManager& ResourceManager::GetInstance()
-{
-	return *resourceManager;
 }
 
 ResourceManager::ResourceManager()
