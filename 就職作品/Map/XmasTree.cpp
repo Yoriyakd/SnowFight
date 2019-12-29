@@ -2,7 +2,7 @@
 
 XmasTree::XmasTree(D3DXVECTOR3 Pos)
 {
-	mesh = GetResource.GetXFILE("XmasTree.x");
+	mesh = GetResource.GetXFILE(XmasTree_M);
 	pos = Pos;
 	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
 	type = Circles;

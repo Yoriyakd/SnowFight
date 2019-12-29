@@ -23,15 +23,15 @@ Player::Player()
 	//--------------------------------------------------------------
 	//靴
 	//--------------------------------------------------------------
-	shoesMesh = GetResource.GetXFILE("Shoes.x");
+	shoesMesh = GetResource.GetXFILE(Shoes_M);
 	D3DXMatrixTranslation(&shoesOffsetMat, 0, -5, 0);			//プレイヤーといくら離すか
 	D3DXMatrixRotationX(&shoesRotMatX, D3DXToRadian(0));
 
 	//--------------------------------------------------------------
 	//腕
 	//--------------------------------------------------------------
-	armLMesh = GetResource.GetXFILE("ArmL.x");
-	armRMesh = GetResource.GetXFILE("ArmR.x");
+	armLMesh = GetResource.GetXFILE(ArmL_M);
+	armRMesh = GetResource.GetXFILE(ArmR_M);
 
 	D3DXMATRIX TmpRotZ, TmpRotX, TmpTransMat;
 
@@ -51,7 +51,7 @@ Player::Player()
 	//--------------------------------------------------------------
 	//雪玉
 	//--------------------------------------------------------------
-	ballMesh = GetResource.GetXFILE("SnowBall.x");
+	ballMesh = GetResource.GetXFILE(SnowBall_M);
 	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
 }
 

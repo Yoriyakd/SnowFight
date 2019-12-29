@@ -2,9 +2,9 @@
 
 DecorationManager::DecorationManager()
 {
-	GetResource.GetXFILE("Decoration_RedBall.x");			//1“x“Ç‚İ‚ñ‚Å‚¨‚­(ƒQ[ƒ€’†‚Ì•‰‰×ŒyŒ¸)
-	GetResource.GetXFILE("Decoration_BlueBall.x");
-	GetResource.GetXFILE("Decoration_YellowBall.x");
+	GetResource.GetXFILE(Decoration_RedBall_M);			//1“x“Ç‚İ‚ñ‚Å‚¨‚­(ƒQ[ƒ€’†‚Ì•‰‰×ŒyŒ¸)
+	GetResource.GetXFILE(Decoration_BlueBall_M);
+	GetResource.GetXFILE(Decoration_YellowBall_M);
 }
 
 DecorationManager::~DecorationManager()

@@ -2,7 +2,7 @@
 
 Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos)
 {
-	mesh = GetResource.GetXFILE("Decoration_YellowBall.x");
+	mesh = GetResource.GetXFILE(Decoration_YellowBall_M);
 	pos = *_Pos;
 
 	picUpDistans = 8.0f;
@@ -15,7 +15,7 @@ Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos)
 
 Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
 {
-	mesh = GetResource.GetXFILE("Decoration_YellowBall.x");
+	mesh = GetResource.GetXFILE(Decoration_YellowBall_M);
 	pos = *_Pos;
 
 	picUpDistans = 8.0f;

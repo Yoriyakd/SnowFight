@@ -7,10 +7,10 @@
 
 Enemy::Enemy(D3DXVECTOR3 Pos)
 {
-	bodyMesh = GetResource.GetXFILE("EnemyBody.x");
+	bodyMesh = GetResource.GetXFILE(EnemyBody_M);
 	D3DXMatrixTranslation(&transMat, Pos.x, Pos.y, Pos.z);
 
-	hatMesh = GetResource.GetXFILE("EnemyHat.x");
+	hatMesh = GetResource.GetXFILE(EnemyHat_M);
 	D3DXMatrixTranslation(&hatOffsetMat, 0.0f, 6.6f, -0.3f);
 
 	D3DXMATRIX InitRotMat;

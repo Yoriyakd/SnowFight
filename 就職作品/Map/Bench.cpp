@@ -2,8 +2,8 @@
 
 Bench::Bench(D3DXVECTOR3 Pos, float Ang)
 {
-	mesh = GetResource.GetXFILE("Bench.x");
-	collisionMesh = GetResource.GetXFILE("BenchCollision.x");
+	mesh = GetResource.GetXFILE(Bench_M);
+	collisionMesh = GetResource.GetXFILE(BenchCollision_M);
 	pos = Pos;
 
 	D3DXMATRIX TmpRotMatY, TmpTransMat;

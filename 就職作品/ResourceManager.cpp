@@ -27,10 +27,13 @@ ResourceManager::~ResourceManager()
 	AllDelete();
 }
 
-
-XFILE ResourceManager::GetXFILE(std::string FileName)
+XFILE ResourceManager::GetXFILE(enum MeshName MeshName)
 {
 	XFILE TmpXFILE;
+
+	std::string FileName;
+
+	FileName = MeshFileName[MeshName];
 
 	if (XFILEList.find(FileName) == XFILEList.end())		//最後まで検索する
 	{
@@ -70,7 +73,6 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, 
 		
 		//引数で渡されたFileNameのところにTmpに入ったテクスチャを入れる
 		TextureList[FileName] = Tmp;
-		
 	}
 	else
 	{

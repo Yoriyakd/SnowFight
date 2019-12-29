@@ -3,7 +3,7 @@
 
 Kamakura::Kamakura()
 {
-	mesh = GetResource.GetXFILE("Kamakura.x");
+	mesh = GetResource.GetXFILE(Kamakura_M);
 }
 
 Kamakura::~Kamakura()

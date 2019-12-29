@@ -1,7 +1,7 @@
 #include"Tree.h"
 Tree::Tree(D3DXVECTOR3 Pos, float Ang)
 {
-	mesh = GetResource.GetXFILE("Tree.x");
+	mesh = GetResource.GetXFILE(Tree_M);
 	pos = Pos;
 
 	D3DXMATRIX TmpRotMatY, TmpTransMat;

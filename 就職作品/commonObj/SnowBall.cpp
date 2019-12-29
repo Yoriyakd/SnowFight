@@ -5,7 +5,7 @@
 SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 {
 	moveVec = ThrowingInit(&ThrowingInitValue, &mat);
-	mesh = GetResource.GetXFILE("SnowBall.x");
+	mesh = GetResource.GetXFILE(SnowBall_M);
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(ThrowingInitValue.YAxisAng));		//î≠éÀå≥ÇÃäpìxÇ©ÇÁçsóÒçÏê¨
 	mat = rotMat * mat;
 

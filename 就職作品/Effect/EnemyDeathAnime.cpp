@@ -3,7 +3,7 @@ EnemyDeathAnime::EnemyDeathAnime(Enemy &Enemy, SnowBall &SnowBall)
 {
 	//‰Šú‰»
 
-	mesh = GetResource.GetXFILE("EnemyBody.x");
+	mesh = GetResource.GetXFILE(EnemyBody_M);
 	mat = startMat = Enemy.GetMat();
 
 	nowAng = 0;
