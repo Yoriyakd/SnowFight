@@ -28,12 +28,14 @@ MenuScene::MenuScene()
 	//---------------------------------------
 	cursorTex = GetResource.GetTexture(MenuCursor_Tex);
 
-	stage1Button = new Stage1Button();
+	stage1Button = new ButtonBase(1);
+	stage2Button = new ButtonBase(2);
 }
 
 MenuScene::~MenuScene()
 {
 	delete stage1Button;
+	delete stage2Button;
 }
 
 void MenuScene::Render3D(void)
@@ -66,6 +68,7 @@ void MenuScene::Render2D(void)
 	lpSprite->Draw(headCharTex, &rcHead, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	stage1Button->Draw();
+	stage2Button->Draw();
 
 	RECT RcCursor = { 0, 0, 64, 64 };
 	lpSprite->SetTransform(&cursorMat);
@@ -80,6 +83,7 @@ void MenuScene::Render2D(void)
 bool MenuScene::Update(void)
 {
 	stage1Button->Update();
+	stage2Button->Update();
 	
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
@@ -87,6 +91,15 @@ bool MenuScene::Update(void)
 		{
 			sceneSwitchState = -1;
 			selectedStage = 1;
+		}
+	}
+	
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		if (stage2Button->GetState() == true)
+		{
+			sceneSwitchState = -1;
+			selectedStage = 2;
 		}
 	}
 

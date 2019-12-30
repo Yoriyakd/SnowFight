@@ -42,13 +42,14 @@ private:
 	const int StartBallCnt = 10;	//スタート時のボールの数
 	const float MakeTime = 1.5;		//作成に必要な時間
 	const float MaxPowerTime = 1.5f;	//最大溜めまでにかかる時間
-	int HP = 10;
+	const int StartHP = 10;
 
 
 	//-----------------------------
 	//ステータス変数
 	//-----------------------------
 	int remainingBalls;		//残弾数
+	int HP;					//体力
 
 	bool carryFlag;			//デコレーションを運んでいるか
 	DecorationID carryDecorationID;		//運んでいるデコレーションの内容

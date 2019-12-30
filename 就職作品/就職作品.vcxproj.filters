@@ -159,9 +159,6 @@
     <ClCompile Include="commonObj\ButtonBase.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
-    <ClCompile Include="MenuScene\Stage1Button.cpp">
-      <Filter>MenuScene</Filter>
-    </ClCompile>
     <ClCompile Include="Map\Stage1Enclosure.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -316,9 +313,6 @@
     </ClInclude>
     <ClInclude Include="commonObj\ButtonBase.h">
       <Filter>commonObj</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuScene\Stage1Button.h">
-      <Filter>MenuScene</Filter>
     </ClInclude>
     <ClInclude Include="Map\Stage1Enclosure.h">
       <Filter>Map</Filter>

@@ -1,7 +1,17 @@
 #include "ButtonBase.h"
 
-ButtonBase::ButtonBase()
+ButtonBase::ButtonBase(int Stage)
 {
+	switch (Stage)
+	{
+	case 1:
+		Stage1Initialize();
+		break;
+	case 2:
+		Stage2Initialize();
+	default:
+		break;
+	}
 }
 
 void ButtonBase::Draw()
@@ -32,4 +42,22 @@ void ButtonBase::Update()
 bool ButtonBase::GetState(void)
 {
 	return nowStae;
+}
+
+void ButtonBase::Stage1Initialize(void)
+{
+	tex = GetResource.GetTexture(Button_Tex);
+	pos = D3DXVECTOR2(480, 190);
+	texSize = D3DXVECTOR2(132, 132);
+	boxSize = D3DXVECTOR2(132, 132);
+	D3DXMatrixTranslation(&mat, pos.x, pos.y, 0);
+}
+
+void ButtonBase::Stage2Initialize(void)
+{
+	tex = GetResource.GetTexture(Button_Tex);
+	pos = D3DXVECTOR2(620, 190);
+	texSize = D3DXVECTOR2(132, 132);
+	boxSize = D3DXVECTOR2(132, 132);
+	D3DXMatrixTranslation(&mat, pos.x, pos.y, 0);
 }

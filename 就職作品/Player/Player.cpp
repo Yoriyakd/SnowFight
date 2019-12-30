@@ -13,12 +13,12 @@ Player::Player()
 	//--------------------------------------------------------------
 	//ÉvÉåÉCÉÑÅ[èâä˙âª
 	//--------------------------------------------------------------
-
-
 	remainingBalls = StartBallCnt;
 
 	GhostTex = GetResource.GetTexture(ThrowGhost_Tex);
 	carryFlag = false;
+
+	HP = StartHP;
 
 	//--------------------------------------------------------------
 	//åC
@@ -45,9 +45,6 @@ Player::Player()
 	D3DXMatrixRotationZ(&TmpRotZ, D3DXToRadian(30));
 	armROffsetMat = TmpRotZ * TmpTransMat;
 
-	
-	
-	
 	//--------------------------------------------------------------
 	//ê·ã 
 	//--------------------------------------------------------------

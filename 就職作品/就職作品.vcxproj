@@ -208,7 +208,6 @@
     </ClCompile>
     <ClCompile Include="Map\XmasTree.cpp" />
     <ClCompile Include="MenuScene\MenuScene.cpp" />
-    <ClCompile Include="MenuScene\Stage1Button.cpp" />
     <ClCompile Include="Player\ArmAnimeIdle.cpp" />
     <ClCompile Include="Player\MakeSnowBallAnime.cpp" />
     <ClCompile Include="Player\Player.cpp">
@@ -277,7 +276,6 @@
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />
     <ClInclude Include="MenuScene\MenuScene.h" />
-    <ClInclude Include="MenuScene\Stage1Button.h" />
     <ClInclude Include="Player\ArmAnimeIdle.h" />
     <ClInclude Include="Player\MakeSnowBallAnime.h" />
     <ClInclude Include="Player\Player.h" />
