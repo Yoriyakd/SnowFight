@@ -4,13 +4,13 @@
 
 TitleScene::TitleScene()
 {
-	logoTex = GetResource.GetTexture("TitleLogo.png", logoTexX, 170, NULL);
+	logoTex = GetResource.GetTexture(TitleLogo_Tex);
 	D3DXMatrixTranslation(&logoMat, SCRW / 2, 0, 0);
 
-	backTex = GetResource.GetTexture("BackTex.jpg", SCRW, SCRH, NULL);		//‰¼‚Ì”wŒiƒTƒCƒY‚ª‘å‚«‚·‚¬‚é
+	backTex = GetResource.GetTexture(TitleBack_Tex);
 	D3DXMatrixTranslation(&backMat, 0, 0, 0);
 
-	kyeInstructionTex = GetResource.GetTexture("TitleInstructions.png", kyeInstructionX, 116, NULL);
+	kyeInstructionTex = GetResource.GetTexture(TitleInstructions_Tex);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 
 }

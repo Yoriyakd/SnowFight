@@ -2,7 +2,7 @@
 
 SceneSwitchEffect::SceneSwitchEffect()
 {
-	effectTex = GetResource.GetTexture("SceneSwitchEffect.png", 32, 32, NULL);
+	effectTex = GetResource.GetTexture(SceneSwitch_Tex);
 	D3DXMatrixTranslation(&effectMat, 0, 0, 0);
 	effectAlpha = 0;
 }

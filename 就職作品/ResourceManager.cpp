@@ -59,24 +59,27 @@ XFILE ResourceManager::GetXFILE(enum MeshName MeshName)
 	return TmpXFILE;
 }
 
-LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string FileName, int width, int hight, D3DCOLOR ColorKey)
+LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName TexName)
 {
 	LPDIRECT3DTEXTURE9 Tmp;
 
+	TexData TexData;
 
-	if (TextureList.find(FileName) == TextureList.end())		//最後まで検索する
+	TexData = TexFileName[TexName];
+
+	if (TextureList.find(TexData.FileName) == TextureList.end())		//最後まで検索する
 	{
 		std::string FilePath = "data/";
-		FilePath += FileName;		//パスの作成
+		FilePath += TexData.FileName;		//パスの作成
 		//テクスチャをロードする
-		LoadTexture(&Tmp, &FilePath[0], width, hight, ColorKey);
+		LoadTexture(&Tmp, &FilePath[0], TexData.Width, TexData.Hight, TexData.Color);
 		
 		//引数で渡されたFileNameのところにTmpに入ったテクスチャを入れる
-		TextureList[FileName] = Tmp;
+		TextureList[TexData.FileName] = Tmp;
 	}
 	else
 	{
-		Tmp = TextureList[FileName];	
+		Tmp = TextureList[TexData.FileName];
 	}
 	return Tmp;
 }

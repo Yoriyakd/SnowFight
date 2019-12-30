@@ -2,10 +2,10 @@
 
 TimeUI::TimeUI()
 {
-	numberTex = GetResource.GetTexture("Number_Time.png", 460, 50, NULL);
+	numberTex = GetResource.GetTexture(TimeNumber_Tex);
 	D3DXMatrixTranslation(&numberOffsetMat, 10, 56, 0);
 
-	logoTex = GetResource.GetTexture("TimeLogo.png", 194, 46, NULL);
+	logoTex = GetResource.GetTexture(TimeLogo_Tex);
 	D3DXMatrixTranslation(&logoMat, 10, 10, 0);
 }
 

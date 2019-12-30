@@ -14,9 +14,9 @@ Stage1Enclosure::Stage1Enclosure(StageBorder * StageBorder)
 	vEnclosure[2].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	vEnclosure[3].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	hedgeTex = GetResource.GetTexture("Hedge.png", 512, 512, NULL);
-	brickTex = GetResource.GetTexture("Brick.jpg", 512, 512, NULL);
-	poleTex = GetResource.GetTexture("Pole.png", 512, 512, NULL);
+	hedgeTex = GetResource.GetTexture(Hedge_Tex);
+	brickTex = GetResource.GetTexture(Brick_Tex);
+	poleTex = GetResource.GetTexture(Pole_Tex);
 }
 
 Stage1Enclosure::~Stage1Enclosure()

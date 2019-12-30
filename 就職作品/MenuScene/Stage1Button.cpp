@@ -2,7 +2,7 @@
 
 Stage1Button::Stage1Button()
 {
-	tex = GetResource.GetTexture("Stage1.jpeg", 132, 132, NULL);
+	tex = GetResource.GetTexture(Button_Tex);
 	pos = D3DXVECTOR2(480, 190);
 	texSize = D3DXVECTOR2(132, 132);
 	boxSize = D3DXVECTOR2(132, 132);

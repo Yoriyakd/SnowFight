@@ -2,10 +2,10 @@
 
 RemainingBallUI::RemainingBallUI()
 {
-	backTex = GetResource.GetTexture("SnowBallUI.png", 256, 64, NULL);
+	backTex = GetResource.GetTexture(RemainingBallBack_Tex);
 	D3DXMatrixTranslation(&backMat, 500, 10, 0);
 
-	numberTex = GetResource.GetTexture("Number.png", 420, 42, NULL);
+	numberTex = GetResource.GetTexture(GameUINumber_Tex);
 	D3DXMatrixTranslation(&numberOffsetMat, 120.0f, 13.0f, 0);
 }
 

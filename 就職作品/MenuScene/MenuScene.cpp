@@ -8,25 +8,25 @@ MenuScene::MenuScene()
 	//---------------------------------------
 	//背景
 	//---------------------------------------
-	backTex = GetResource.GetTexture("Menuback.jpeg", 1280, 720, NULL);
+	backTex = GetResource.GetTexture(MenuBack_Tex);
 	D3DXMatrixTranslation(&backMat, 0, 0, 0);
 
 	//---------------------------------------
 	//ステージセレクトボード
 	//---------------------------------------
-	boardTex = GetResource.GetTexture("StageSelect_Board.png", 768, 540, NULL);
+	boardTex = GetResource.GetTexture(MenuBoard_Tex);
 	D3DXMatrixTranslation(&boardMat, 370, 100, 0);
 
 	//---------------------------------------
 	//ステージセレクト文字
 	//---------------------------------------
-	headCharTex = GetResource.GetTexture("StageSelect_Menu.png", 640, 64, NULL);
+	headCharTex = GetResource.GetTexture(MenuHeadChar_Tex);
 	D3DXMatrixTranslation(&headCharMat, 430, 100, 0);
 
 	//---------------------------------------
 	//カーソル
 	//---------------------------------------
-	cursorTex = GetResource.GetTexture("Cursor.png", 64, 64, NULL);
+	cursorTex = GetResource.GetTexture(MenuCursor_Tex);
 
 	stage1Button = new Stage1Button();
 }

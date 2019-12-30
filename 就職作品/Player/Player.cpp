@@ -17,7 +17,7 @@ Player::Player()
 
 	remainingBalls = StartBallCnt;
 
-	GhostTex = GetResource.GetTexture("PredictionLine.png", 64, 64, NULL);
+	GhostTex = GetResource.GetTexture(ThrowGhost_Tex);
 	carryFlag = false;
 
 	//--------------------------------------------------------------
