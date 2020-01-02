@@ -20,9 +20,10 @@ GameScene::GameScene(int StageNo)
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
 	decorationManager = new DecorationManager();
-	enemyAnimeManager = new EnemyAnimeManager();
+	
 
 	stageBorder = new StageBorder;
+	EnemyAnime.Create();
 	//-------------------------------------------------------
 	//UI
 	//-------------------------------------------------------
@@ -94,6 +95,8 @@ GameScene::~GameScene()
 	delete enemyManager;
 
 	delete resultCam;
+
+	EnemyAnime.Destroy();
 	//-------------------------------------------------------
 	//UI
 	//-------------------------------------------------------
@@ -122,9 +125,9 @@ void GameScene::Render3D(void)
 	//
 	//-------------------------------------------------------
 	enemyManager->Draw();
-	enemyAnimeManager->Draw();
+	EnemyAnime.Draw();
 	snowBallManager->Draw();
-	effectManager->Draw();
+	Effect.Draw();
 	
 
 	player->Draw();		//※Zバッファクリアをしているため最後に描画する
@@ -165,7 +168,7 @@ void GameScene::Render2D(void)
 		lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
-	sceneSwitchEffect->Draw();			//常に描画
+	SceneSwitch.Draw();			//常に描画
 
 	// 描画終了
 	lpSprite->End();
@@ -180,7 +183,7 @@ bool GameScene::Update()
 	{
 		if (ResultUpdate() == false)			//リザルト中の処理はここに記述
 		{
-			sceneSwitcher.SwitchScene(new MenuScene());
+			SwitcheScene.SwitchScene(new MenuScene());
 			return false;
 		}
 		return true;		//リザルト表示中は早期リターンして動きを止める
@@ -189,7 +192,7 @@ bool GameScene::Update()
 
 	if (sceneSwitchState == 1)				//初めに明転させる処理
 	{
-		if (sceneSwitchEffect->ToBrightness() == true)
+		if (SceneSwitch.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
@@ -218,9 +221,9 @@ bool GameScene::Update()
 	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	snowBallManager->Update();
 
-	effectManager->SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
-	effectManager->Update();
-	enemyAnimeManager->Updata();
+	Effect.SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
+	Effect.Update();
+	EnemyAnime.Updata();
 
 	decorationManager->Updata();
 
@@ -236,15 +239,15 @@ bool GameScene::Update()
 					//-------------------------------------------------------------
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
-					enemyAnimeManager->NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
-					enemyAnimeManager->NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], true);
+					EnemyAnime.NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], true);
 
 					//死んだインスタンス削除
 					enemyManager->DeleteInstance(ei);
 					ei--;		//きえた分詰める
 
 					//SnowFragエフェクト呼ぶ
-					effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
+					Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 					//死んだインスタンス削除
 					snowBallManager->DeleteInstance(sj);
@@ -263,8 +266,8 @@ bool GameScene::Update()
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
 
-					enemyAnimeManager->NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
-					enemyAnimeManager->NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], false);
+					EnemyAnime.NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], false);
 
 					//死んだインスタンス削除
 					enemyManager->DeleteInstance(ei);
@@ -272,7 +275,7 @@ bool GameScene::Update()
 				}
 
 				//SnowFragエフェクト呼ぶ
-				effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
+				Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//死んだインスタンス削除
 				snowBallManager->DeleteInstance(sj);
@@ -292,7 +295,7 @@ bool GameScene::Update()
 			if (CollisionObserver::SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
-				effectManager->NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
+				Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//死んだインスタンス削除
 				snowBallManager->DeleteInstance(sj);
@@ -307,7 +310,7 @@ bool GameScene::Update()
 		if (CollisionObserver::EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
 		{
 			//SnowFragエフェクト呼ぶ
-			effectManager->NewSnowFrag(snowBallManager->snowBall[si]->GetPos());
+			Effect.NewSnowFrag(snowBallManager->snowBall[si]->GetPos());
 			player->HitSnowBall();			//HIT時のメソッドを呼ぶ
 
 			snowBallManager->DeleteInstance(si);
@@ -330,7 +333,7 @@ bool GameScene::Update()
 
 	if (sceneSwitchState == -1)
 	{
-		if (sceneSwitchEffect->ToDarkness() == true)
+		if (SceneSwitch.ToDarkness() == true)
 		{
 			resultFlag = true;
 			resultCam = new ResultCam();
@@ -338,7 +341,7 @@ bool GameScene::Update()
 
 			//敵やエフェクトなど邪魔なものを削除する
 			enemyManager->AllDelete();
-			effectManager->AllDelete();
+			Effect.AllDelete();
 			snowBallManager->AllDelete();
 			decorationManager->DeleteToResult();
 		}
@@ -364,7 +367,7 @@ bool GameScene::ResultUpdate(void)
 {
 	if (sceneSwitchState == 1)				//シーン移行後明転させる処理
 	{
-		if (sceneSwitchEffect->ToBrightness() == true)
+		if (SceneSwitch.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
@@ -379,7 +382,7 @@ bool GameScene::ResultUpdate(void)
 
 	if (sceneSwitchState == -1)
 	{
-		if (sceneSwitchEffect->ToDarkness() == true)
+		if (SceneSwitch.ToDarkness() == true)
 		{
 			return false;
 		}

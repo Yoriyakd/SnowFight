@@ -74,7 +74,7 @@ void MenuScene::Render2D(void)
 	lpSprite->SetTransform(&cursorMat);
 	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	sceneSwitchEffect->Draw();
+	SceneSwitch.Draw();
 
 	// •`‰æI—¹
 	lpSprite->End();
@@ -105,16 +105,16 @@ bool MenuScene::Update(void)
 
 	if (sceneSwitchState == -1)
 	{
-		if (sceneSwitchEffect->ToDarkness() == true)			//ˆÃ“]‚³‚¹‚é
+		if (SceneSwitch.ToDarkness() == true)			//ˆÃ“]‚³‚¹‚é
 		{
-			sceneSwitcher.SwitchScene(new GameScene(selectedStage));
+			SwitcheScene.SwitchScene(new GameScene(selectedStage));
 			return false;
 		}
 	}
 
 	if (sceneSwitchState == 1)
 	{
-		if (sceneSwitchEffect->ToBrightness() == true)
+		if (SceneSwitch.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}

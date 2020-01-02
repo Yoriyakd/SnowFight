@@ -47,7 +47,7 @@ void TitleScene::Render2D(void)
 	lpSprite->SetTransform(&kyeInstructionMat);
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	sceneSwitchEffect->Draw();
+	SceneSwitch.Draw();
 
 
 	// 描画終了
@@ -73,9 +73,9 @@ bool TitleScene::Update(void)
 
 	if (sceneSwitchState == true)
 	{
-		if (sceneSwitchEffect->ToDarkness() == true)		//真っ暗になったら移行
+		if (SceneSwitch.ToDarkness() == true)		//真っ暗になったら移行
 		{
-			sceneSwitcher.SwitchScene(new MenuScene());
+			SwitcheScene.SwitchScene(new MenuScene());
 			return false;
 		}
 	}

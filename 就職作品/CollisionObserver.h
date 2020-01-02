@@ -10,8 +10,6 @@
 
 class CollisionObserver {
 public:
-	CollisionObserver();
-	~CollisionObserver();
 	//敵の帽子と雪玉の当たり判定	SnowBallManagerとEnemyManagerをポインタで渡す
 	static bool SnowBalltoEnemyHat(SnowBall *SnowBall, Enemy *Enemy);
 	//敵と雪玉の当たり判定	SnowBallManagerとEnemyManagerをポインタで渡す
@@ -26,5 +24,7 @@ public:
 	static void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, EventManager *EventManager);
 
 private:
+	CollisionObserver();
+	~CollisionObserver();
 	static void GetPolyNormal(D3DXVECTOR3 *ObjNormal ,LPD3DXMESH ObjMesh, const DWORD *PolyNo);
 };

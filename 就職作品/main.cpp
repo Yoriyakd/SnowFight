@@ -33,10 +33,6 @@ bool gameFullScreen;	// フルスクリーン（true,false)
 HWND hwnd;		//ウインドウID(みたいなもの)
 const int GameFPS = 60;		//ゲームのFPS指定
 
-SceneSwitcher sceneSwitcher;
-EffectManager *effectManager;
-SceneSwitchEffect *sceneSwitchEffect;
-
 void DrawMesh(XFILE *XFile)
 {
 	for (DWORD i = 0; i < XFile->NumMaterial; i++)
@@ -350,10 +346,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	timeBeginPeriod(1);
 
 	// ゲームに関する初期化処理 ---------------------------
+	SceneSwitcher::Create();
 	ResourceManager::Create();
-
-	effectManager = new EffectManager();
-	sceneSwitchEffect = new SceneSwitchEffect();
+	SceneSwitchEffect::Create();
+	EffectManager::Create();
 
 	
 
@@ -371,7 +367,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	lpFont->OnResetDevice();
 
-	sceneSwitcher.SwitchScene(new TitleScene());
+	SwitcheScene.SwitchScene(new TitleScene());
 
 	
 	while (1) {
@@ -384,15 +380,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		}
 		else 
 		{
-			sceneSwitcher.NowScene();
+			SwitcheScene.NowScene();
 		}
 	}
 
 	// ゲームに関する終了処理 ---------------------------
-	delete effectManager;
-	delete sceneSwitchEffect;
-
+	SceneSwitcher::Destroy();
 	ResourceManager::Destroy();
+	SceneSwitchEffect::Destroy();
+	EffectManager::Destroy();
+
 
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 

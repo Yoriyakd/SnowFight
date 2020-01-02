@@ -1,16 +1,21 @@
 #pragma once
 #include"SceneBase.h"
-class SceneSwitcher
+#include"../SingletonBase.h"
+
+#define SwitcheScene SceneSwitcher::GetInstance()
+
+class SceneSwitcher : public SingletonBase<SceneSwitcher>
 {
+	friend class SingletonBase<SceneSwitcher>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
-	SceneSwitcher();
-	~SceneSwitcher();
 	void NowScene(void);
 	//変える先のシーンをnewして入れる
 	void SwitchScene(SceneBase *NowScene);
 
 private:
+	SceneSwitcher();
+	~SceneSwitcher();
 	SceneBase *Scene;
 };
-//シーンを切る変えるときに呼ぶ	main.cppで宣言
-extern SceneSwitcher sceneSwitcher;
+
+SceneSwitcher* SingletonBase<SceneSwitcher>::instance = nullptr;

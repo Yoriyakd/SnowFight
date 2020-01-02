@@ -51,7 +51,6 @@ private:
 	Player *player;
 	DecorationManager *decorationManager;
 	PickUpInstructions *pickUpInstructions;
-	EnemyAnimeManager *enemyAnimeManager;
 
 	StageBorder *stageBorder;
 	//------------------------------------------

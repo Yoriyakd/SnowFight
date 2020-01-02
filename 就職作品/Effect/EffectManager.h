@@ -5,17 +5,21 @@
 #include"SnowFrag.h"
 #include"Locus.h"
 #include"../Player/PlayerCamera.h"
+#include"../SingletonBase.h"
 
 
 //---------------------------------------------------------------------------------
 //エフェクトのインスタンスが入っている配列を複数持つクラス
 //マネージャーのインスタンスにアクセスして、新しいエフェクトを作り配列に入れる役割
+//※シングルトンクラス
 //---------------------------------------------------------------------------------
 
-class EffectManager {
+#define Effect EffectManager::GetInstance()
+
+class EffectManager : public SingletonBase<EffectManager>{
 public:
-	EffectManager();
-	~EffectManager();
+	friend class SingletonBase<EffectManager>;			//SingletonBaseでのインスタンス作成削除は許可
+
 	void AllDelete(void);
 
 	void NewSnowFrag(const D3DXVECTOR3 &Pos);
@@ -26,6 +30,8 @@ public:
 	void SetBillBoardMat(D3DXMATRIX *BillBoardMat);
 
 private:
+	EffectManager();
+	~EffectManager();
 	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 	D3DXMATRIX billBoardMat;
 
@@ -33,4 +39,4 @@ private:
 	std::vector<SnowLocus*> snowLocus;
 };
 
-extern EffectManager *effectManager;	//mainで宣言
+EffectManager* SingletonBase<EffectManager>::instance = nullptr;
