@@ -33,7 +33,7 @@ protected:
 
 	virtual ~SingletonBase() {};
 private:
-	void operator=(const SingletonBase& obj) {};			//演算子をオーバーロードして代入を禁止している(アップキャストだと入れられる)
+	void operator=(const SingletonBase& obj) {};			//演算子をオーバーロードして代入を禁止している(ほかのクラスを入れられるのを防ぐ)
 	SingletonBase(const SingletonBase &obj) {};				//コピーコンストラクタを禁止してインスタンスが別のオブジェクトで初期化されるのを防ぐ
 
 	static T *instance;

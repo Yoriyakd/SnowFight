@@ -120,9 +120,6 @@
     <ClCompile Include="GameScene\GameScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\WavePattern1.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\EventManager.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
@@ -270,12 +267,6 @@
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\EventManager.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\WavePatternBase.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\WavePattern1.h">
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Map\XmasTree.h">
