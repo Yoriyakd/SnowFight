@@ -78,6 +78,10 @@ void DecorationBase::Updata()
 
 		pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 	}
+	else
+	{
+		globalMoveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
 }
 
 
@@ -130,5 +134,5 @@ void DecorationBase::PushPos(D3DXVECTOR3 * PushVec)
 	D3DXMATRIX TmpMat;
 
 	D3DXMatrixTranslation(&TmpMat, PushVec->x, PushVec->y, PushVec->z);
-	mat = TmpMat * mat;
+	mat = mat * TmpMat;
 }

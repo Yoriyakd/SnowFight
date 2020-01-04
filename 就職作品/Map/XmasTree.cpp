@@ -6,7 +6,7 @@ XmasTree::XmasTree(D3DXVECTOR3 Pos)
 	pos = Pos;
 	D3DXMatrixTranslation(&mat, Pos.x, Pos.y, Pos.z);
 	type = Circles;
-	objRadius = 10.0f;
+	objRadius = 14.0f;
 	
 	possibleDecorate = true;
 }

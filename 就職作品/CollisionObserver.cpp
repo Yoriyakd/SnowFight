@@ -245,7 +245,7 @@ void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *M
 				Decoration->SetDecoratedState(true);		//飾られている状態にする
 				D3DXVECTOR3 PushVec;
 
-				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
+				PushVec = LayVec * MeshDis;	//メッシュまでの長さ分移動させる
 				Decoration->PushPos(&PushVec);
 				EventManager->DoDecorate(Decoration->GetID());
 				//EventManager->AddScore(500);
