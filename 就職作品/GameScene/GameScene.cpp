@@ -10,17 +10,19 @@ GameScene::GameScene(int StageNo)
 	srand(timeGetTime());
 	sceneSwitchState = 1;		//最初は明転させる
 
+	GetEnemyManager.Create();
 	loadStageData = new LoadStageData(StageNo);
 	player = new Player;
 	ground = new Ground;
-	enemyManager = new EnemyManager;
+	
 	skyBox = new SkyBox;
 	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
-	decorationManager = new DecorationManager();
 	
+	GetDecorationManager.Create();
+	GetSpawnerManager.Create();
 
 	stageBorder = new StageBorder;
 	EnemyAnime.Create();
@@ -92,10 +94,12 @@ GameScene::~GameScene()
 	delete eventManager;
 
 	delete player;
-	delete enemyManager;
+	GetEnemyManager.Destroy();
 
 	delete resultCam;
 
+	GetDecorationManager.Destroy();
+	GetSpawnerManager.Destroy();
 	EnemyAnime.Destroy();
 	//-------------------------------------------------------
 	//UI
@@ -116,7 +120,7 @@ void GameScene::Render3D(void)
 	stage1Enclosure->Draw();
 	mapObjManager->Draw();
 
-	decorationManager->Draw();
+	GetDecorationManager.Draw();
 	if (resultFlag == true)
 	{
 		return;		//描画しない		(インスタンスを削除する方がいいんだろうか？)☆
@@ -124,7 +128,7 @@ void GameScene::Render3D(void)
 	//-------------------------------------------------------
 	//
 	//-------------------------------------------------------
-	enemyManager->Draw();
+	GetEnemyManager.Draw();
 	EnemyAnime.Draw();
 	snowBallManager->Draw();
 	Effect.Draw();
@@ -208,14 +212,14 @@ bool GameScene::Update()
 		CollisionObserver::PlayertoObj(playerCam, mapObjManager->mapObj[i]);
 	}
 
-	player->Update(*snowBallManager, *decorationManager, *pickUpInstructions);		//カメラを更新してから
+	player->Update(*snowBallManager, GetDecorationManager, *pickUpInstructions);		//カメラを更新してから
 	//---------------------------------------------------------
 
 
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
 
-	enemyManager->Update(*player, *snowBallManager, *stageBorder);
+	GetEnemyManager.Update(*player, *snowBallManager, *stageBorder);
 
 	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
 	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
@@ -225,25 +229,25 @@ bool GameScene::Update()
 	Effect.Update();
 	EnemyAnime.Updata();
 
-	decorationManager->Updata();
+	GetDecorationManager.Updata();
 
 	//雪玉と敵の当たり判定
-	for (unsigned int ei = 0; ei < enemyManager->enemy.size(); ei++)
+	for (unsigned int ei = 0; ei < GetEnemyManager.enemy.size(); ei++)
 	{
 		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (CollisionObserver::SnowBalltoEnemyHat(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)
+			if (CollisionObserver::SnowBalltoEnemyHat(snowBallManager->snowBall[sj], GetEnemyManager.enemy[ei]) == true)
 			{
-				if (enemyManager->enemy[ei]->TakeDamage(10) == false)		//falseが返ってきたら
+				if (GetEnemyManager.enemy[ei]->TakeDamage(10) == false)		//falseが返ってきたら
 				{
 					//-------------------------------------------------------------
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
-					EnemyAnime.NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
-					EnemyAnime.NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], true);
+					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj], true);
 
 					//死んだインスタンス削除
-					enemyManager->DeleteInstance(ei);
+					GetEnemyManager.DeleteEnemyInstance(ei);
 					ei--;		//きえた分詰める
 
 					//SnowFragエフェクト呼ぶ
@@ -258,19 +262,19 @@ bool GameScene::Update()
 				
 			}
 
-			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], enemyManager->enemy[ei]) == true)		//命中でtrueが返ってくる
+			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], GetEnemyManager.enemy[ei]) == true)		//命中でtrueが返ってくる
 			{
-				if (enemyManager->enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
+				if (GetEnemyManager.enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
 				{
 					//-------------------------------------------------------------
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
 
-					EnemyAnime.NewEnemyDeathAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj]);
-					EnemyAnime.NewEnemyHatAnime(*enemyManager->enemy[ei], *snowBallManager->snowBall[sj], false);
+					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj], false);
 
 					//死んだインスタンス削除
-					enemyManager->DeleteInstance(ei);
+					GetEnemyManager.DeleteEnemyInstance(ei);
 					ei--;		//きえた分詰める
 				}
 
@@ -318,15 +322,17 @@ bool GameScene::Update()
 		}
 	}
 
-	for (unsigned int i = 0; i < decorationManager->decoration.size(); i++)
+	for (unsigned int i = 0; i < GetDecorationManager.decoration.size(); i++)
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			CollisionObserver::DecorationToMapObj(decorationManager->decoration[i], mapObjManager->mapObj[j], eventManager);
+			CollisionObserver::DecorationToMapObj(GetDecorationManager.decoration[i], mapObjManager->mapObj[j], eventManager);
 		}
 	}
+
+	GetSpawnerManager.Update(*stageBorder);
 	//----------------------------------------------------------------------------------------
-	if (eventManager->Update(*enemyManager, *decorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
+	if (eventManager->Update(GetEnemyManager, GetDecorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
 	{
 		sceneSwitchState = -1;
 	}
@@ -340,10 +346,10 @@ bool GameScene::Update()
 			sceneSwitchState = 1;
 
 			//敵やエフェクトなど邪魔なものを削除する
-			enemyManager->AllDelete();
+			GetEnemyManager.AllDelete();
 			Effect.AllDelete();
 			snowBallManager->AllDelete();
-			decorationManager->DeleteToResult();
+			GetDecorationManager.DeleteToResult();
 		}
 	}
 	//----------------------------------------------------------------------------------------

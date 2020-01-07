@@ -1,9 +1,5 @@
 #include "EnemyManager.h"
 
-EnemyManager::EnemyManager()
-{
-}
-
 EnemyManager::~EnemyManager()
 {
 	AllDelete();
@@ -18,7 +14,7 @@ void EnemyManager::AllDelete(void)
 	enemy.clear();
 }
 
-void EnemyManager::DeleteInstance(unsigned int ite)
+void EnemyManager::DeleteEnemyInstance(unsigned int ite)
 {
 	delete enemy[ite];
 	enemy.erase(enemy.begin() + ite);

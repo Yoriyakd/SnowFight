@@ -1,10 +1,9 @@
 #pragma once
 #include"../main.h"
-#include"WavePatternBase.h"
-#include"WavePattern1.h"
 #include"../Item/DecorationBase.h"
 #include"../Item/DecorationManager.h"
 #include"../Enemy/EnemyManager.h"
+#include"GameObjectSpawner.h"
 
 //--------------------------------------------
 //プレイヤーが直接関係ないイベントを管理するクラス
@@ -30,5 +29,4 @@ private:
 	int timeLimit_Frame;		//制限時間	0になるとゲーム終了		単位フレーム
 	int nowCnt, normCnt;
 	bool normState;
-	WavePatternBase *wavePattern;
 };

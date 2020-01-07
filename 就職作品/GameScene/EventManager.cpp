@@ -2,13 +2,12 @@
 
 EventManager::EventManager()
 {
-	wavePattern = new WavePatternRandom();
 	normState = false;
+	nowCnt = 0;
 }
 
 EventManager::~EventManager()
 {
-	delete wavePattern;
 }
 
 bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder)
@@ -22,21 +21,11 @@ bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & Decora
 		//ƒŠƒUƒ‹ƒgˆÚs
 	}
 
-	if (wavePattern != nullptr)
-	{
-		WavePatternBase *NextPattern;
-		NextPattern = wavePattern->WaveProcessing(EnemyManager, DecorationManager, StageBorder);
-		if (NextPattern != nullptr)
-		{
-			delete wavePattern;
-			wavePattern = NextPattern;
-		}
-	}
-
 	if (nowCnt >= normCnt)
 	{
 		normState = true;
 	}
+
 	return true;
 }
 
@@ -75,4 +64,3 @@ bool EventManager::GetNormState(void)
 {
 	return normState;
 }
-

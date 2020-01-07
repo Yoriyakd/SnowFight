@@ -168,11 +168,13 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="GameScene\EventManager.cpp" />
+    <ClCompile Include="GameScene\GameObjectSpawner.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="GameScene\ResultCam.cpp" />
+    <ClCompile Include="GameScene\SpawnerManager.cpp" />
     <ClCompile Include="Item\DecorationBase.cpp" />
     <ClCompile Include="Item\DecorationManager.cpp" />
     <ClCompile Include="Item\Decoration_BlueBall.cpp" />
@@ -255,8 +257,10 @@
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\Kamakura.h" />
     <ClInclude Include="GameScene\EventManager.h" />
+    <ClInclude Include="GameScene\GameObjectSpawner.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameScene\ResultCam.h" />
+    <ClInclude Include="GameScene\SpawnerManager.h" />
     <ClInclude Include="Item\DecorationBase.h" />
     <ClInclude Include="Item\DecorationManager.h" />
     <ClInclude Include="Item\Decoration_BlueBall.h" />

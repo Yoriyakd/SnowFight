@@ -4,6 +4,7 @@
 #include"../Map/MapObjManager.h"
 #include"../GameScene/EventManager.h"
 #include"../UI/GameObjective.h"
+#include"../GameScene/SpawnerManager.h"
 
 
 class LoadStageData {

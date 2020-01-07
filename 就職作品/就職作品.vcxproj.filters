@@ -192,6 +192,12 @@
     <ClCompile Include="Effect\EnemyAnimeManager.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\GameObjectSpawner.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\SpawnerManager.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -343,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="SingletonBase.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\GameObjectSpawner.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\SpawnerManager.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

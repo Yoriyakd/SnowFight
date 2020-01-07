@@ -27,3 +27,17 @@ Bobbin_Red:3
 150, 0, 80
 XmasTree:1
 128,0,128
+EnemySpawner:
+SpawnProbability:1
+MaxSpawnAtOnceCnt:1
+MinSpawnAtOnceCnt:1
+LimitSpawnCnt:30
+LotteryIntervals_f:1
+NowFrameCnt:0
+DecorationSpawner:
+SpawnProbability:1
+MaxSpawnAtOnceCnt:1
+MinSpawnAtOnceCnt:1
+LimitSpawnCnt:30
+LotteryIntervals_f:1
+NowFrameCnt:0

@@ -29,6 +29,24 @@ void DecorationManager::DeleteToResult(void)
 	}
 }
 
+void DecorationManager::NewDecoration(D3DXVECTOR3 *_Pos, DecorationID ID)
+{
+	switch (ID)
+	{
+	case RED_BALL:
+		decoration.push_back(new Decoration_RedBall(_Pos));
+		break;
+	case BLUE_BALL:
+		decoration.push_back(new Decoration_BlueBall(_Pos));
+		break;
+	case YELLOW_BALL:
+		decoration.push_back(new Decoration_YellowBall(_Pos));
+		break;
+	default:
+		break;
+	}
+}
+
 bool DecorationManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
 	for (auto *Decoration : decoration)

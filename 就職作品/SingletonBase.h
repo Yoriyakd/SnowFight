@@ -17,10 +17,12 @@ public:
 
 	static inline void Create()			//インスタンス作成
 	{
-		if (instance == nullptr)
+		if (instance != nullptr)
 		{
-			instance = new T;
+			delete instance;
+			instance = nullptr;
 		}
+		instance = new T;
 	};
 	static inline void Destroy()			//インスタンス削除
 	{

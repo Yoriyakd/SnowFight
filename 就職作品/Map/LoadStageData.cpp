@@ -92,6 +92,16 @@ void LoadStageData::SetStageMap(MapObjManager & MapObjManager, EventManager & Ev
 		MapObjManager.SetXmasTree(TmpPos);
 	}
 
+	SpawnerData TmpData;
+
+	fscanf_s(fp, "EnemySpawner:\nSpawnProbability:%d\nMaxSpawnAtOnceCnt:%d\nMinSpawnAtOnceCnt:%d\nLimitSpawnCnt:%d\nLotteryIntervals_f:%d\nNowFrameCnt:%d\n", 
+				&TmpData.SpawnProbability, &TmpData.MaxSpawnAtOnceCnt, &TmpData.MinSpawnAtOnceCnt, &TmpData.LimitSpawnCnt, &TmpData.LotteryIntervals_f, &TmpData.NowFrameCnt);
+	GetSpawnerManager.EnemySpawnerInitialize(TmpData);
+
+	fscanf_s(fp, "DecorationSpawner:\nSpawnProbability:%d\nMaxSpawnAtOnceCnt:%d\nMinSpawnAtOnceCnt:%d\nLimitSpawnCnt:%d\nLotteryIntervals_f:%d\nNowFrameCnt:%d\n",
+		&TmpData.SpawnProbability, &TmpData.MaxSpawnAtOnceCnt, &TmpData.MinSpawnAtOnceCnt, &TmpData.LimitSpawnCnt, &TmpData.LotteryIntervals_f, &TmpData.NowFrameCnt);
+	GetSpawnerManager.DecorationSpawnerInitialize(TmpData);
+
 	fclose(fp);
 }
 

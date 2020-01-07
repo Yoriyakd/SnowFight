@@ -2,13 +2,17 @@
 #include<d3d9.h>
 #include"../main.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
-#include"../ResourceManager.h"
+
 #include"../Player/Player.h"
 #include<vector>
 #include"../Map/LoadStageData.h"
 #include"../Map/Ground.h"
+
+#include"../ResourceManager.h"
 #include"../Map/MapObjManager.h"
 #include"../Enemy/EnemyManager.h"
+#include"../GameScene/SpawnerManager.h"
+
 #include"../commonObj/SkyBox.h"
 #include"../Map/Stage1Enclosure.h"
 #include"../commonObj/SnowBallManager.h"
@@ -17,6 +21,7 @@
 #include"../Effect/EnemyAnimeManager.h"
 #include"EventManager.h"
 #include"../Item/DecorationManager.h"
+
 #include"../UI/PickUpInstructions.h"
 #include"../UI/RemainingBallUI.h"
 #include"../UI/TimeUI.h"
@@ -47,9 +52,7 @@ private:
 	MapObjManager *mapObjManager;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
-	EnemyManager *enemyManager;
 	Player *player;
-	DecorationManager *decorationManager;
 	PickUpInstructions *pickUpInstructions;
 
 	StageBorder *stageBorder;
