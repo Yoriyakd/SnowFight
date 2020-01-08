@@ -39,5 +39,5 @@ SpawnProbability:1
 MaxSpawnAtOnceCnt:1
 MinSpawnAtOnceCnt:1
 LimitSpawnCnt:30
-LotteryIntervals_f:1
+LotteryIntervals_f:60
 NowFrameCnt:0

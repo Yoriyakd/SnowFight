@@ -53,13 +53,17 @@ enum TexName
 	TitleBack_Tex,
 	TitleLogo_Tex,
 	TitleInstructions_Tex,
-	Button_Tex,
 
 //MenuScene
 	MenuBack_Tex,
 	MenuBoard_Tex,
 	MenuCursor_Tex,
 	MenuHeadChar_Tex,
+	ButtonText_Tex,
+	ButtonBack_Tex,
+	ButtonNum_Tex,
+	Stage1Button_Tex,
+	Stage2Button_Tex,
 
 //InGame-----------------------------
 	ThrowGhost_Tex,
@@ -140,11 +144,15 @@ private:
 		{TitleInstructions_Tex,   TexData{"TitleInstructions.png", 426, 116, NULL}},
 
 		//MenuScene
-		{Button_Tex,              TexData{"Stage1.jpeg", 132, 132, NULL}},
 		{MenuBack_Tex,            TexData{"Menuback.jpeg", 1280, 720, NULL}},
 		{MenuBoard_Tex,           TexData{"StageSelect_Board.png", 768, 540, NULL}},
 		{MenuCursor_Tex,          TexData{"Cursor.png", 64, 64, NULL}},
 		{MenuHeadChar_Tex,        TexData{"StageSelect_Menu.png", 640, 64, NULL}},
+		{ButtonText_Tex,		  TexData{"StageSelectText.png", 132, 30, NULL}},
+		{ButtonBack_Tex,		  TexData{"StageButton.jpg", 132, 132, NULL}},
+		{ButtonNum_Tex,			  TexData{"StageSelectNum.png", 300, 30, NULL}},
+		{Stage1Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
+		{Stage2Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
 
 		//InGame
 		{ThrowGhost_Tex,          TexData{"PredictionLine.png", 64, 64, NULL}},
