@@ -25,7 +25,12 @@ int GameObjectSpawner::Updata(void)
 		{
 			int SpawnCntTmp;
 
-			if (spawnerData.MaxSpawnAtOnceCnt == spawnerData.MinSpawnAtOnceCnt)return spawnerData.MaxSpawnAtOnceCnt;
+			if (spawnerData.MaxSpawnAtOnceCnt == spawnerData.MinSpawnAtOnceCnt)
+			{
+				SpawnCntTmp = spawnerData.MaxSpawnAtOnceCnt;
+				spawnerData.LimitSpawnCnt -= SpawnCntTmp;
+				return spawnerData.MaxSpawnAtOnceCnt;
+			}
 
 			SpawnCntTmp = rand() % (spawnerData.MaxSpawnAtOnceCnt - spawnerData.MinSpawnAtOnceCnt) + spawnerData.MinSpawnAtOnceCnt;		//ï¶Ç≠êîÇè„å¿Ç∆â∫å¿ÇÃä‘ÇÃêîÇ≈èoÇ∑
 

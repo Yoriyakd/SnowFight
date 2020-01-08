@@ -20,30 +20,31 @@ void SpawnerManager::DecorationSpawnerInitialize(SpawnerData& SpawnerData)
 
 void SpawnerManager::Update(StageBorder& StageBorder)
 {
-	int TmpCnt;
+	int TmpDecoCnt;
 
-	TmpCnt = decorationSpawner->Updata();
+	TmpDecoCnt = decorationSpawner->Updata();
 
-	if (TmpCnt != -1)
+	if (TmpDecoCnt != -1)
 	{
 		D3DXVECTOR3 SpownPoint;
 
 		SpownPoint = D3DXVECTOR3(float(rand() % (int)StageBorder.Right), 0.0f, float(rand() % (int)StageBorder.Top));
-		for (auto i = 0; i < TmpCnt; i++)
+		for (auto i = 0; i < TmpDecoCnt; i++)
 		{
 			GetDecorationManager.NewDecoration(&SpownPoint, (DecorationID)(rand() % NUM_ITEM));
 		}
 	}
 
+	int TmpEneCnt;
 
-	TmpCnt = enemySpawner->Updata();
+	TmpEneCnt = enemySpawner->Updata();
 
-	if (TmpCnt != -1)
+	if (TmpEneCnt != -1)
 	{
 		D3DXVECTOR3 SpownPoint;
 
 		SpownPoint = D3DXVECTOR3(float(rand() % (int)StageBorder.Right), 0.0f, float(rand() % (int)StageBorder.Top));
-		for (auto i = 0; i < TmpCnt; i++)
+		for (auto i = 0; i < TmpEneCnt; i++)
 		{
 			GetEnemyManager.SetEnemy(SpownPoint);
 		}
