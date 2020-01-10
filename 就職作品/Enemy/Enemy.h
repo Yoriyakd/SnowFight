@@ -5,6 +5,8 @@
 #include"../commonObj/SnowBallManager.h"
 #include"../Player/Player.h"
 #include<vector>
+#include"EnemyState/EnemyStateBase.h"
+#include"EnemyState/PlayerSearchState.h"
 class Enemy {
 public:
 	Enemy(D3DXVECTOR3);
@@ -16,12 +18,15 @@ public:
 	//--------------------------------------------
 	virtual const D3DXVECTOR3 GetPos(void);
 	virtual const D3DXMATRIX GetMat(void);
-	//virtual const XFILE GetMesh(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
+	bool GetJumpState();
 
 	D3DXMATRIX GetHatMat(void);
 	float GetHatRadius(void);
 	float GetHatHight(void);
+
+	virtual void FrontJump(void);
+	virtual void BackJump(void);
 
 	void CheckOverlapEnemies(const D3DXVECTOR3*);
 
@@ -31,6 +36,7 @@ protected:
 	int HP;		//体力	雪玉1発で1減少
 
 private:
+	EnemyStateBase *nowState;
 	XFILE bodyMesh;
 	D3DXMATRIX mat, rotMat, transMat;
 
@@ -45,6 +51,8 @@ private:
 	virtual void EngagingMode(const D3DXVECTOR3 TragetPos, SnowBallManager &snowBallManager);		//交戦中の行動
 	virtual void FreeMode(void);			//未発見時の行動
 	virtual void StageBorderProcessing(StageBorder &StageBorder);
+
+	bool jumpState;
 
 	int ShootCoolTime;					//雪玉発射のクールタイム
 	float MoveInterval;						//freeMode時動くまでの時間

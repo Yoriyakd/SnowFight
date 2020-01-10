@@ -5,7 +5,7 @@
 //publicメソッド
 //=====================================
 
-Enemy::Enemy(D3DXVECTOR3 Pos)
+Enemy::Enemy(D3DXVECTOR3 Pos) : jumpState(false), nowState(new PlayerSearchState())
 {
 	bodyMesh = GetResource.GetXFILE(EnemyBody_M);
 	D3DXMatrixTranslation(&transMat, Pos.x, Pos.y, Pos.z);
@@ -34,26 +34,56 @@ Enemy::Enemy(D3DXVECTOR3 Pos)
 
 Enemy::~Enemy()
 {
+	delete nowState;
 }
 
 bool Enemy::Update(Player & Player, SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 {
-	D3DXVECTOR3 TragetPos, TragetVec;
+	moveVec.y -= 0.001f;
 
-	TragetPos = Player.GetPlayerPos();
-	TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める
+	D3DXMATRIX MoveMat;
+	D3DXMatrixTranslation(&MoveMat, moveVec.x, moveVec.y, moveVec.z);
 
-	float TragetLength, LimitLength = 50.0f;
-	TragetLength = D3DXVec3Length(&TragetVec);		//プレイヤーとの距離を求める
 
-	if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
+	mat = MoveMat * mat;
+
+	if (mat._42 < 0.0f)
 	{
-		EngagingMode(TragetPos ,SnowBallManager);
+		mat._42 = 0.0f;
+		jumpState = false;
 	}
-	else
+
+
+	if (nowState != nullptr)
 	{
-		FreeMode();						//範囲外で即追跡終了は変えたい
+		EnemyStateBase *NextState;
+		NextState = nowState->Action(*this);
+		if (NextState != nullptr)
+		{
+			delete nowState;
+			nowState = NextState;
+		}
 	}
+	
+
+	
+
+	//D3DXVECTOR3 TragetPos, TragetVec;
+
+	//TragetPos = Player.GetPlayerPos();
+	//TragetVec = TragetPos - D3DXVECTOR3(mat._41, mat._42, mat._43);		//プレイヤーへのベクトルを求める
+
+	//float TragetLength, LimitLength = 50.0f;
+	//TragetLength = D3DXVec3Length(&TragetVec);		//プレイヤーとの距離を求める
+
+	//if (TragetLength < LimitLength)		//距離がLimitLength未満なら交戦Modeになる
+	//{
+	//	EngagingMode(TragetPos ,SnowBallManager);
+	//}
+	//else
+	//{
+	//	FreeMode();						//範囲外で即追跡終了は変えたい
+	//}
 
 	StageBorderProcessing(StageBorder);			//移動処理のあとに呼ぶ
 
@@ -81,10 +111,7 @@ const D3DXMATRIX Enemy::GetMat(void)
 	return mat;
 }
 
-//const XFILE Enemy::GetMesh(void)
-//{
-//	return bodyMesh;
-//}
+
 
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
 {
@@ -93,6 +120,11 @@ void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphe
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
 	CollisionSphereA->radius = SphereRadiusHead;
 	CollisionSphereB->radius = SphereRadiusBody;
+}
+
+bool Enemy::GetJumpState()
+{
+	return jumpState;
 }
 
 D3DXMATRIX Enemy::GetHatMat(void)
@@ -151,9 +183,12 @@ bool Enemy::TakeDamage(int Damage)
 
 void Enemy::ShootSnowBall(const float TragetAng, SnowBallManager &snowBallManager)
 {
+	D3DXVECTOR3 PosTmp(3, 3, 0);
+	D3DXVec3TransformCoord(&PosTmp, &PosTmp, &mat);
+
 	ThrowingInitValue ValueTmp;
-	ValueTmp.shootPos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-	ValueTmp.shootPos.y += 3;							//発射位置調整(変数化)	手の位置から発射するようにする
+	ValueTmp.shootPos = PosTmp;
+	
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
 	ValueTmp.YAxisAng = TragetAng;						/*要調整*/
 	ValueTmp.powerRate = 40.0f;							/*要調整*/
@@ -364,4 +399,22 @@ void Enemy::StageBorderProcessing(StageBorder & StageBorder)
 	{
 		mat._41 += StageBorder.Right - mat._41;
 	}
+}
+
+void Enemy::FrontJump(void)
+{
+	D3DXVECTOR3 JumpVec(0.0f, 0.05f, 0.1f);
+	D3DXMATRIX TmpMat;
+
+	moveVec = JumpVec;
+	jumpState = true;
+}
+
+void Enemy::BackJump(void)
+{
+	D3DXVECTOR3 JumpVec(0.0f, 1.0f, -0.1f);
+	D3DXMATRIX TmpMat;
+
+	moveVec = JumpVec;
+	jumpState = true;
 }

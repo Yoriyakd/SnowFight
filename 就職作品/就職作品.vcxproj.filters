@@ -46,6 +46,9 @@
     <Filter Include="MenuScene">
       <UniqueIdentifier>{95a291a6-53d9-4927-be17-d6fda6d89012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy\State">
+      <UniqueIdentifier>{f9a57969-77b0-4bed-b8ec-17980ed49708}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -197,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="GameScene\SpawnerManager.cpp">
       <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\PlayerSearchState.cpp">
+      <Filter>Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +361,12 @@
     </ClInclude>
     <ClInclude Include="GameScene\SpawnerManager.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\EnemyStateBase.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\PlayerSearchState.h">
+      <Filter>Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
