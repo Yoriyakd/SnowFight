@@ -210,6 +210,9 @@
     <ClCompile Include="Enemy\EnemyState\TurnToPlayer.cpp">
       <Filter>Enemy\State</Filter>
     </ClCompile>
+    <ClCompile Include="Player\CarryItem.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\EnemyState\TurnToPlayer.h">
       <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\CarryItem.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

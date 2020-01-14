@@ -14,12 +14,12 @@ EnemyStateBase *EngagingMode::Action(Enemy &Enemy)
 
 	ToPlayerAng = Enemy.CalculateEnemyToPlayerAng();
 
-	if (ToPlayerAng > ViewingAngle)
+	if (ToPlayerAng > ViewingAngle)		//視界から外れるとプレーヤーの方を向きなおす
 	{
 		return new TurnToPlayer();
 	}
 
-	if (ToPlayerAng < -ViewingAngle)
+	if (ToPlayerAng < -ViewingAngle)	//視界から外れるとプレーヤーの方を向きなおす
 	{
 		return new TurnToPlayer();
 	}

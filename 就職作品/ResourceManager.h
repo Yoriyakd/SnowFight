@@ -66,7 +66,8 @@ enum TexName
 	Stage2Button_Tex,
 
 //InGame-----------------------------
-	ThrowGhost_Tex,
+	ThrowGhostSnow_Tex,
+	ThrowGhostDeco_Tex,
 	PickUpInstructions_Tex,
 
 //Result
@@ -155,7 +156,8 @@ private:
 		{Stage2Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
 
 		//InGame
-		{ThrowGhost_Tex,          TexData{"PredictionLine.png", 64, 64, NULL}},
+		{ThrowGhostSnow_Tex,      TexData{"PredictionLine_Snow.png", 64, 64, NULL}},
+		{ThrowGhostDeco_Tex,      TexData{"PredictionLine_Deco.png", 64, 64, NULL}},
 		{PickUpInstructions_Tex,  TexData{"PickUpInstructions.png", 256, 64, NULL}},
 
 		//Result

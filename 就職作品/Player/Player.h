@@ -13,8 +13,15 @@
 #include"MakeSnowBallAnime.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
+#include"CarryItem.h"
 
 #define GetPlayer Player::GetInstance()
+
+//------------------------------------------------------------------------
+//playerのクラス
+//カメラの位置にモデルを表示する。操作を受け付けて雪玉を投げる。残弾数がHPのステータス保持
+//肥大化しているのでリファクタリングの必要性あり
+//------------------------------------------------------------------------
 
 //ワールド座標で管理
 
@@ -22,7 +29,6 @@ class Player : public SingletonBase<Player>{
 	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
 	bool Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions);
-	void SetCamera(void);
 	void Draw(void);
 
 	int GetRemainingBalls();			//残弾数を返す
@@ -30,7 +36,7 @@ public:
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
 
-	void HitSnowBall();
+	void HitSnowBall();				//雪玉がHITしたときの処理
 	int GetHP();
 
 private:
@@ -62,7 +68,7 @@ private:
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------
-	float timeCnt = 0, shootPowerPCT;
+	float timeCnt, shootPowerPCT;
 
 	//-----------------------------
 	//靴
@@ -92,6 +98,14 @@ private:
 	const float MaxBallScal = 1.5;			//作成中の雪玉の最大サイズ
 
 	//-----------------------------
+	//保持している雪玉、デコレーションの表示
+	//-----------------------------
+	//CarryItem* carryItem;
+	
+	
+
+
+	//-----------------------------
 	//当たり判定
 	//-----------------------------
 	float CollisionRadius = 1.0f;		//球当たり判定の半径
@@ -99,7 +113,7 @@ private:
 	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
-	LPDIRECT3DTEXTURE9 GhostTex;
+	LPDIRECT3DTEXTURE9 ghost_SnowTex, ghost_DecoTex;
 
 	
 

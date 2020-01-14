@@ -8,17 +8,13 @@ extern ResourceManager *resourceManager;
 //publicメソッド
 //=====================================
 
-Player::Player()
-{
+Player::Player() :remainingBalls(StartBallCnt), HP(StartHP), carryFlag(false), carryDecorationID(NUM_ITEM), timeCnt(0.0f), shootPowerPCT(0.0f){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
-	remainingBalls = StartBallCnt;
-
-	GhostTex = GetResource.GetTexture(ThrowGhost_Tex);
-	carryFlag = false;
-
-	HP = StartHP;
+	ghost_SnowTex = GetResource.GetTexture(ThrowGhostSnow_Tex);
+	ghost_DecoTex = GetResource.GetTexture(ThrowGhostDeco_Tex);
+	
 
 	//--------------------------------------------------------------
 	//靴
@@ -50,20 +46,20 @@ Player::Player()
 	//--------------------------------------------------------------
 	ballMesh = GetResource.GetXFILE(SnowBall_M);
 	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
+
+	//carryItem = new CarryItem(&armRMat);
 }
 
 Player::~Player()
 {
 	delete ArmAnime;
+	//delete carryItem;
 }
 
-bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & DecorationManager, PickUpInstructions & PickUpInstructions)
+bool Player::Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions)
 {
-	//D3DXVECTOR3 NewPos;	☆
-	//NewPos = pPlayerCam->GetPos();		//カメラの座標をセット
-	//pos = NewPos;		//座標更新		動いているかの判定のため分けていた
-
 	pos = pPlayerCam->GetPos();		//カメラの座標をセット
+	//pos = D3DXVECTOR3(100, 5, 30);		//デバック用☆
 
 	//-----------------------------------------------------
 	//デコレーション周り
@@ -85,13 +81,7 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 		PickUpInstructions.TurnOffDisplay();
 	}
 
-
 	//-----------------------------------------------------
-
-
-
-	//pos = D3DXVECTOR3(100, 5, 30);		//デバック用☆
-
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(pPlayerCam->GetCamAngY()));		//カメラの回転から行列作成
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
@@ -127,6 +117,11 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	//-------------------------------------------------------
 	ballMat = ballScalMat * ballOffsetMat * rotMatY * transMat;
 
+	//-------------------------------------------------------
+	//保持している雪玉、デコレーションの行列
+	//-------------------------------------------------------
+	//carryItem->Updata();
+
 	if (GetAsyncKeyState('O') & 0x8000)		//デバッグ ☆
 	{
 		remainingBalls += 10;
@@ -140,11 +135,6 @@ bool Player::Update(SnowBallManager & SnowBallManager, DecorationManager & Decor
 	return true;
 }
 
-void Player::SetCamera(void)
-{
-	
-
-}
 
 void Player::Draw(void)
 {
@@ -182,7 +172,15 @@ void Player::Draw(void)
 		D3DXVec3TransformCoord(&vertex[2].Pos, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
 		D3DXVec3TransformCoord(&vertex[3].Pos, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &ghostMat[i + 1]);
 
-		lpD3DDevice->SetTexture(0, GhostTex);
+		if (carryFlag == true)
+		{
+			lpD3DDevice->SetTexture(0, ghost_DecoTex);
+		}
+		else
+		{
+			lpD3DDevice->SetTexture(0, ghost_SnowTex);
+		}
+
 		D3DXMATRIX IdenMat;
 		D3DXMatrixIdentity(&IdenMat);
 		lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
@@ -230,6 +228,8 @@ void Player::Draw(void)
 
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
 	DrawMesh(&armLMesh);
+
+	//carryItem->Draw();
 }
 
 int Player::GetRemainingBalls()
@@ -243,7 +243,7 @@ D3DXVECTOR3 Player::GetPlayerPos(void)
 	return pos;
 }
 
-void Player::GetCollisionSphere(CollisionSphere * CollisionSphere)
+void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)
 {
 	CollisionSphere->pos = pos;
 	CollisionSphere->radius = CollisionRadius;
@@ -251,7 +251,7 @@ void Player::GetCollisionSphere(CollisionSphere * CollisionSphere)
 }
 
 
-void Player::SetPlayerCamPointer(PlayerCamera * PPlayerCam)
+void Player::SetPlayerCamPointer(PlayerCamera *PPlayerCam)
 {
 	pPlayerCam = PPlayerCam;
 }
@@ -270,7 +270,7 @@ int Player::GetHP()
 //privateメソッド
 //=====================================
 
-void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager & DecorationManager)
+void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager)
 {
 	static bool LKyeFlag = false;
 	static bool AnimeFlag_T = false;

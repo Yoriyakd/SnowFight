@@ -1,7 +1,7 @@
 #include "ThrowAnime.h"
 #include"ArmAnimeIdle.h"
 
-ThrowAnime::ThrowAnime()
+ThrowAnime::ThrowAnime() : shootAng(30)
 {
 	atOneceRot = -11;
 	nowAng = 0;
