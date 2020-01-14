@@ -5,14 +5,13 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo)
+GameScene::GameScene(int StageNo): Resultime(120)
 {
 	srand(timeGetTime());
 	sceneSwitchState = 1;		//最初は明転させる
 
 	GetEnemyManager.Create();
 	loadStageData = new LoadStageData(StageNo);
-	player = new Player;
 	ground = new Ground;
 	
 	skyBox = new SkyBox;
@@ -20,6 +19,8 @@ GameScene::GameScene(int StageNo)
 	mapObjManager = new MapObjManager();
 	playerCam = new PlayerCamera();
 	eventManager = new EventManager();
+
+	GetPlayer.Create();
 	
 	GetDecorationManager.Create();
 	GetSpawnerManager.Create();
@@ -51,7 +52,7 @@ GameScene::GameScene(int StageNo)
 
 	stage1Enclosure = new Stage1Enclosure(stageBorder);
 
-	player->SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
+	GetPlayer.SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 
 	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -93,7 +94,7 @@ GameScene::~GameScene()
 	delete playerCam;
 	delete eventManager;
 
-	delete player;
+	GetPlayer.Destroy();
 	GetEnemyManager.Destroy();
 
 	delete resultCam;
@@ -134,7 +135,7 @@ void GameScene::Render3D(void)
 	Effect.Draw();
 	
 
-	player->Draw();		//※Zバッファクリアをしているため最後に描画する
+	GetPlayer.Draw();		//※Zバッファクリアをしているため最後に描画する
 }
 
 void GameScene::SetCamera(void)
@@ -168,8 +169,12 @@ void GameScene::Render2D(void)
 		lpSprite->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		RECT RcReturn = { 0, 0, 420, 40 };
-		lpSprite->SetTransform(&returnMat);
-		lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		if (Resultime <= 0)
+		{
+			lpSprite->SetTransform(&returnMat);
+			lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+
 	}
 
 	SceneSwitch.Draw();			//常に描画
@@ -212,16 +217,16 @@ bool GameScene::Update()
 		CollisionObserver::PlayertoObj(playerCam, mapObjManager->mapObj[i]);
 	}
 
-	player->Update(*snowBallManager, GetDecorationManager, *pickUpInstructions);		//カメラを更新してから
+	GetPlayer.Update(*snowBallManager, GetDecorationManager, *pickUpInstructions);		//カメラを更新してから
 	//---------------------------------------------------------
 
 
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
 
-	GetEnemyManager.Update(*player, *snowBallManager, *stageBorder);
+	GetEnemyManager.Update(*snowBallManager, *stageBorder);
 
-	remainingBallUI->SetRemainingBallCnt(player->GetRemainingBalls());
+	remainingBallUI->SetRemainingBallCnt(GetPlayer.GetRemainingBalls());
 	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	snowBallManager->Update();
 
@@ -311,11 +316,11 @@ bool GameScene::Update()
 	//敵の雪玉とプレイヤーのあたり判定
 	for (unsigned int si = 0; si < snowBallManager->snowBall.size(); si++)
 	{
-		if (CollisionObserver::EnemySnowBalltoPlayer(player, snowBallManager->snowBall[si]))
+		if (CollisionObserver::EnemySnowBalltoPlayer(&GetPlayer, snowBallManager->snowBall[si]))
 		{
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(snowBallManager->snowBall[si]->GetPos());
-			player->HitSnowBall();			//HIT時のメソッドを呼ぶ
+			GetPlayer.HitSnowBall();			//HIT時のメソッドを呼ぶ
 
 			snowBallManager->DeleteInstance(si);
 			si--;						//きえた分詰める
@@ -369,6 +374,7 @@ bool GameScene::Update()
 	return true;
 }
 
+//この辺りは作り直しの必要あり
 bool GameScene::ResultUpdate(void)
 {
 	if (sceneSwitchState == 1)				//シーン移行後明転させる処理
@@ -381,9 +387,15 @@ bool GameScene::ResultUpdate(void)
 
 	resultCam->Update(&mapObjManager->GetXmasTreePos());
 
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	Resultime--;
+
+	if (Resultime <= 0)
 	{
-		sceneSwitchState = -1;
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//一定時間入力をうけつけない
+		{
+			sceneSwitchState = -1;
+			Resultime = 360;
+		}
 	}
 
 	if (sceneSwitchState == -1)

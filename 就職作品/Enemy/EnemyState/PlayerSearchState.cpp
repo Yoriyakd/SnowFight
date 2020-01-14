@@ -1,12 +1,22 @@
 #include "PlayerSearchState.h"
 #include"../Enemy.h"
+#include"EngagingMode.h"
 
 EnemyStateBase * PlayerSearchState::Action(Enemy &Enemy)
 {
-	if (Enemy.GetJumpState() == false)
+	float Length;
+	const float SensingLength = 40.0f;
+
+	Length = D3DXVec3Length(&Enemy.GetPlayerVec());
+
+	if (Length < SensingLength)
 	{
-		Enemy.FrontJump();
+		return new EngagingMode();
 	}
+
+
+	Enemy.FrontJump();
+	
 
 	return nullptr;
 }

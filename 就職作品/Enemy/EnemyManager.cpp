@@ -33,11 +33,11 @@ void EnemyManager::Draw()
 	}
 }
 
-void EnemyManager::Update(Player & Player, SnowBallManager & SnowBallManager, StageBorder & StageBorder)
+void EnemyManager::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 {
 	for (unsigned int i = 0; i < enemy.size(); i++)		//型推論だとsignedになるためダメみたい
 	{
-		enemy[i]->Update(Player, SnowBallManager, StageBorder);
+		enemy[i]->Update(SnowBallManager, StageBorder);
 		//D3DXVECTOR3 PushOutVec;		//押されたときに移動するベクトル ☆
 		for (unsigned int j = 0; j < enemy.size(); j++)
 		{

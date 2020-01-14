@@ -204,6 +204,12 @@
     <ClCompile Include="Enemy\EnemyState\PlayerSearchState.cpp">
       <Filter>Enemy\State</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\EngagingMode.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\TurnToPlayer.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -366,6 +372,12 @@
       <Filter>Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnemyState\PlayerSearchState.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\EngagingMode.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\TurnToPlayer.h">
       <Filter>Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>

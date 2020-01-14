@@ -52,7 +52,6 @@ private:
 	MapObjManager *mapObjManager;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;
-	Player *player;
 	PickUpInstructions *pickUpInstructions;
 
 	StageBorder *stageBorder;
@@ -65,7 +64,7 @@ private:
 	//------------------------------------------//クラスにまとめる(設計思いつき次第)
 	//リザルト
 	//------------------------------------------
-
+	int Resultime;
 	bool ResultUpdate(void);
 
 	ResultCam *resultCam;

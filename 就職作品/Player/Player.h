@@ -1,6 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 #include<vector>
+#include"../SingletonBase.h"
 #include"../ResourceManager.h"
 #include"../commonObj/SnowBall.h"
 #include"../commonObj/SnowBallManager.h"
@@ -13,12 +14,13 @@
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 
+#define GetPlayer Player::GetInstance()
+
 //ワールド座標で管理
 
-class Player {
+class Player : public SingletonBase<Player>{
+	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
-	Player();
-	~Player();
 	bool Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions);
 	void SetCamera(void);
 	void Draw(void);
@@ -32,6 +34,9 @@ public:
 	int GetHP();
 
 private:
+	Player();
+	~Player();
+
 	D3DXMATRIX transMat, rotMatY, rotMatX;
 	D3DXVECTOR3 pos;
 	const D3DXVECTOR3 shootOffset = D3DXVECTOR3(2.0f, -2.0f, 0.0f);		//カメラの位置からの距離
@@ -112,3 +117,5 @@ private:
 	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
 	ThrowingInitValue MakeThrowValue(void);
 };
+
+Player* SingletonBase<Player>::instance = nullptr;
