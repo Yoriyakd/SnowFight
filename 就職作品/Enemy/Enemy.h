@@ -21,6 +21,8 @@ public:
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
 	bool GetJumpState();		//ジャンプしているか
 	D3DXVECTOR3 GetPlayerVec();		//playerとのベクトルを返す
+	float GetToPlayerAng();
+	void PushedObj(const D3DXVECTOR3 &PushVec);
 
 	D3DXMATRIX GetHatMat(void);
 	float GetHatRadius(void);
@@ -33,7 +35,7 @@ public:
 	virtual void Jump(void);
 	virtual void FrontJump(void);
 	virtual void BackJump(void);
-	
+	virtual void ShootSnowBall();
 
 	void CheckOverlapEnemies(const D3DXVECTOR3*);
 
@@ -46,7 +48,7 @@ protected:
 
 private:
 	EnemyStateBase *nowState;
-	XFILE bodyMesh;
+	XFILE bodyMesh, handMesh;
 	D3DXMATRIX mat, rotMat, transMat;
 
 	//------------------------------------------------
@@ -56,20 +58,10 @@ private:
 	const float hatRadius = 1.0f, hatHight = 2.0f;
 	//------------------------------------------------
 
-
-	virtual void ShootSnowBall(float TragetAng, SnowBallManager &snowBallManager);
-	//virtual void EngagingMode(const D3DXVECTOR3 TragetPos, SnowBallManager &snowBallManager);		//交戦中の行動
-	//virtual void FreeMode(void);			//未発見時の行動
 	virtual void StageBorderProcessing(StageBorder &StageBorder);
 
 	bool jumpState;
 
-	int ShootCoolTime;					//雪玉発射のクールタイム
-	//float MoveInterval;						//freeMode時動くまでの時間
-	//float freeMoveCnt;							//freeMode時動く必要のある時間の時間
-
-	//const float maxLength = 40.0f, minLength = 15.0f;						//交戦時の距離の最大最小範囲
-	//float limitLength;		//交戦時取る距離
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//交戦時の移動		球発射時は止まるようにする
 
 	const float SphereRadiusHead = 1.3f;

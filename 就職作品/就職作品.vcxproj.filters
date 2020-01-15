@@ -213,6 +213,12 @@
     <ClCompile Include="Player\CarryItem.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\ShootSnowBall.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\LookForPlayerAnime.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -385,6 +391,12 @@
     </ClInclude>
     <ClInclude Include="Player\CarryItem.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\ShootSnowBall.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\LookForPlayerAnime.h">
+      <Filter>Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

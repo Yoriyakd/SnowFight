@@ -1,18 +1,26 @@
 #include"EngagingMode.h"
 #include"../Enemy.h"
 #include"TurnToPlayer.h"
+#include"ShootSnowBall.h"
 
 
 
-EngagingMode::EngagingMode() : ViewingAngle(10.0)
+EngagingMode::EngagingMode() : ShootCoolTime(180), ViewingAngle(10.0)
 {
 }
 
 EnemyStateBase *EngagingMode::Action(Enemy &Enemy)
 {
+	ShootCoolTime--;
+	if (ShootCoolTime <= 0)
+	{
+		return new ShootSnowBall();
+	}
+
 	float ToPlayerAng;
 
 	ToPlayerAng = Enemy.CalculateEnemyToPlayerAng();
+
 
 	if (ToPlayerAng > ViewingAngle)		//視界から外れるとプレーヤーの方を向きなおす
 	{
@@ -29,7 +37,7 @@ EnemyStateBase *EngagingMode::Action(Enemy &Enemy)
 
 	Length = D3DXVec3Length(&Enemy.GetPlayerVec());
 
-	if (Length > 25.0f)			//遠いと前にジャンプして距離を詰める
+	if (Length > 30.0f)			//遠いと前にジャンプして距離を詰める
 	{
 		Enemy.FrontJump();
 	}

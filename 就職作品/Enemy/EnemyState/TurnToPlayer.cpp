@@ -16,7 +16,7 @@ EnemyStateBase * TurnToPlayer::Action(Enemy & Enemy)
 
 	if (Ang <= 0)
 	{
-		Enemy.Spin(-5);
+		Enemy.Spin(-5);		//5“x‚¸‚Â‰ñ“]
 	}
 	else
 	{

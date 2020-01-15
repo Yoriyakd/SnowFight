@@ -1,6 +1,7 @@
 #include "PlayerSearchState.h"
 #include"../Enemy.h"
 #include"EngagingMode.h"
+#include"LookForPlayerAnime.h"
 
 EnemyStateBase * PlayerSearchState::Action(Enemy &Enemy)
 {
@@ -14,6 +15,10 @@ EnemyStateBase * PlayerSearchState::Action(Enemy &Enemy)
 		return new EngagingMode();
 	}
 
+	if (rand() % 250 < 1)
+	{
+		return new LookForPlayerAnime();
+	}
 
 	Enemy.FrontJump();
 	

@@ -48,7 +48,6 @@ private:
 	Ground *ground;
 	SkyBox *skyBox;
 	Stage1Enclosure *stage1Enclosure;
-	SnowBallManager *snowBallManager;
 	MapObjManager *mapObjManager;	
 	PlayerCamera *playerCam;
 	EventManager *eventManager;

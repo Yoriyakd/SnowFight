@@ -269,6 +269,31 @@ void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *M
 
 }
 
+void CollisionObserver::EnemyToMapObj(Enemy *Enemy, MapObj *MapObj)
+{
+	D3DXVECTOR3 TargetVec, ObjPosTmp, EnemyPos;
+
+	EnemyPos = Enemy->GetPos();
+	ObjPosTmp = MapObj->GetPos();
+
+	TargetVec = D3DXVECTOR3(EnemyPos.x, 0.0f, EnemyPos.z) - ObjPosTmp;		//Y座標を無視する
+
+	float TargetLength;
+
+	TargetLength = D3DXVec3Length(&TargetVec);
+
+	const float PlayerRadius = 3.0f, ObjRadius = MapObj->GetRadius();
+
+	if (TargetLength < PlayerRadius + ObjRadius)		//仮☆プレイヤー半径が
+	{
+		D3DXVec3Normalize(&TargetVec, &TargetVec);
+		TargetVec *= (PlayerRadius + ObjRadius - TargetLength);
+		D3DXMATRIX TmpMat;
+
+		Enemy->PushedObj(TargetVec);
+	}
+}
+
 void CollisionObserver::GetPolyNormal(D3DXVECTOR3 *ObjNormal, LPD3DXMESH ObjMesh, const DWORD *PolyNo)
 {
 	WORD *pI;

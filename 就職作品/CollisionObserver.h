@@ -22,6 +22,8 @@ public:
 	static bool EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall);
 	//Mapオブジェとデコレーションの当たり判定
 	static void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, EventManager *EventManager);
+	//Mapオブジェと敵の当たり判定
+	static void EnemyToMapObj(Enemy *Enemy, MapObj *MapObj);
 
 private:
 	CollisionObserver();

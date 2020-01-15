@@ -14,7 +14,7 @@ Bench::Bench(D3DXVECTOR3 Pos, float Ang)
 	mat = TmpRotMatY * TmpTransMat;
 
 	type = Ray;
-	objRadius = 1.5f;
+	objRadius = 3.5f;
 
 	possibleDecorate = false;
 }

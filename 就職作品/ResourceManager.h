@@ -21,6 +21,7 @@ enum MeshName
 
 //Enemy
 	EnemyBody_M,
+	EnemyHand_M,
 	EnemyHat_M,
 
 //MapObject
@@ -121,6 +122,7 @@ private:
 		{Shoes_M,                 "Shoes.x"},
 
 		{EnemyBody_M,             "EnemyBody.x"},
+		{EnemyHand_M,             "EnemyHand.x"},
 		{EnemyHat_M,              "EnemyHat.x"},
 
 		{Bench_M,                 "Bench.x"},
