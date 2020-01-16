@@ -106,7 +106,7 @@ bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPo
 	return true;
 }
 
-D3DXVECTOR3 ThrowingInit(ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat)
+D3DXVECTOR3 ThrowingInit(const ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat)
 {
 	float Power;
 	D3DXVECTOR3 moveVec;
@@ -205,7 +205,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	hwnd = CreateWindowEx(
 		0,
 		szAppName,
-		"SnowBallFight Ver.0.9.3",
+		"SnowBallFight Ver.0.9.4",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
