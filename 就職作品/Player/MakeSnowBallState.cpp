@@ -1,4 +1,4 @@
-#include "MakeSnowBallAnime.h"
+#include "MakeSnowBallState.h"
 const float MakeSnowBallAnime::AnimeSpeed = 0.1f;
 
 MakeSnowBallAnime::MakeSnowBallAnime(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
@@ -27,7 +27,7 @@ MakeSnowBallAnime::~MakeSnowBallAnime()
 {
 }
 
-ArmAnimeBase * MakeSnowBallAnime::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase * MakeSnowBallAnime::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	if (animeFrame <= 1)
 	{

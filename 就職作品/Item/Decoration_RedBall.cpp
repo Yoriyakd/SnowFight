@@ -13,10 +13,10 @@ Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
 	moveVec = D3DXVECTOR3(0, 0, 0);
 }
 
-Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
+Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValue)
 {
 	mesh = GetResource.GetXFILE(Decoration_RedBall_M);
-	pos = *_Pos;
+	pos = ThrowingInitValue->shootPos;
 
 	picUpDistans = 8.0f;
 	decorationID = RED_BALL;

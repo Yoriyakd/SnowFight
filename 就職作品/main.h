@@ -82,7 +82,7 @@ bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);
 bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo);
 
 //ThrowingInitValueを渡すと移動ベクトルが返ってきて発射位置の行列作成ができる
-D3DXVECTOR3 ThrowingInit(ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat);
+D3DXVECTOR3 ThrowingInit(const ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat);
 
 //クオータニオンでアニメーションする関数	第一引数に加工した行列が入る
 void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float AnimeFrame);

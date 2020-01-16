@@ -13,11 +13,11 @@ Decoration_BlueBall::Decoration_BlueBall(const D3DXVECTOR3 * _Pos)
 	moveVec = D3DXVECTOR3(0, 0, 0);
 }
 
-Decoration_BlueBall::Decoration_BlueBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
+Decoration_BlueBall::Decoration_BlueBall(const ThrowingInitValue *ThrowingInitValue)
 {
 
 	mesh = GetResource.GetXFILE(Decoration_BlueBall_M);
-	pos = *_Pos;
+	pos = ThrowingInitValue->shootPos;
 
 	picUpDistans = 8.0f;
 	decorationID = BLUE_BALL;

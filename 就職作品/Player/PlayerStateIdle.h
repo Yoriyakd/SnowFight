@@ -1,10 +1,10 @@
 #pragma once
-#include"ArmAnimeBase.h"
-class ArmAnimeIdle :public ArmAnimeBase {
+#include"PlayerStateBase.h"
+class PlayerStateIdle :public PlayerStateBase {
 public:
-	ArmAnimeIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR);
-	~ArmAnimeIdle();
-	ArmAnimeBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
+	PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR);
+	~PlayerStateIdle();
+	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 
 private:
 	const float AnimeSpeed = 0.1f;

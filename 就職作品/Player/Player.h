@@ -6,11 +6,11 @@
 #include"../commonObj/SnowBall.h"
 #include"../commonObj/SnowBallManager.h"
 #include"PlayerCamera.h"
-#include"ArmAnimeBase.h"
-#include"ArmAnimeIdle.h"
-#include"ThrowAnime.h"
-#include"WindUpAnime.h"
-#include"MakeSnowBallAnime.h"
+#include"PlayerStateBase.h"
+#include"PlayerStateIdle.h"
+#include"ThrowState.h"
+#include"WindUpState.h"
+#include"MakeSnowBallState.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
 #include"CarryItem.h"
@@ -28,18 +28,21 @@
 class Player : public SingletonBase<Player>{
 	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
-	bool Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions);
+	bool Update(PickUpInstructions &PickUpInstructions);
 	void Draw(void);
 
 	int GetRemainingBalls();			//残弾数を返す
 	D3DXVECTOR3 GetPlayerPos(void);
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
-	void SetPlayerCamPointer(PlayerCamera *PPlayerCam);
 
 	void HitSnowBall();				//雪玉がHITしたときの処理
 	int GetHP();
 
-private:
+	void Throw(const float PowerPCT);
+
+	bool IsThrowAnything();
+	void SetShootPower(float ShootPower);
+private: 
 	Player();
 	~Player();
 
@@ -52,7 +55,6 @@ private:
 	//-----------------------------
 	const int StartBallCnt = 10;	//スタート時のボールの数
 	const float MakeTime = 1.5;		//作成に必要な時間
-	const float MaxPowerTime = 1.5f;	//最大溜めまでにかかる時間
 	const int StartHP = 10;
 
 
@@ -61,6 +63,7 @@ private:
 	//-----------------------------
 	int remainingBalls;		//残弾数
 	int HP;					//体力
+	float shootPower;
 
 	bool carryFlag;			//デコレーションを運んでいるか
 	DecorationID carryDecorationID;		//運んでいるデコレーションの内容
@@ -68,7 +71,6 @@ private:
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------
-	float timeCnt, shootPowerPCT;
 
 	//-----------------------------
 	//靴
@@ -86,7 +88,7 @@ private:
 	XFILE armLMesh;
 	D3DXMATRIX armLOffsetMat, armLMat;
 
-	ArmAnimeBase *ArmAnime;		//腕のアニメーション
+	PlayerStateBase *playerState;		//腕のアニメーション
 
 
 	//-----------------------------
@@ -110,7 +112,6 @@ private:
 	//-----------------------------
 	float CollisionRadius = 1.0f;		//球当たり判定の半径
 
-	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
 
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
 	LPDIRECT3DTEXTURE9 ghost_SnowTex, ghost_DecoTex;
@@ -121,15 +122,15 @@ private:
 	//privateメソッド
 	//-----------------------------
 	//Updateで呼ぶ	左クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
-	void Throw(SnowBallManager &snowBallManager, DecorationManager &decorationManager);
+	//void Throw(void);
 	//雪玉を作成する	右クリック
 	void MakeBall();
 	//靴の雪玉作成時のアニメーション
 	void ShoesMakeBallAnime(bool AnimeState);
 	//予測線を作成する
-	void MakeGhostMat(ThrowingInitValue *ThrowingInitValue);
+	void MakeGhostMat();
 	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
-	ThrowingInitValue MakeThrowValue(void);
+	ThrowingInitValue MakeThrowValue(const float PowerPct);
 };
 
 Player* SingletonBase<Player>::instance = nullptr;

@@ -8,7 +8,7 @@ extern ResourceManager *resourceManager;
 //publicメソッド
 //=====================================
 
-Player::Player() :remainingBalls(StartBallCnt), HP(StartHP), carryFlag(false), carryDecorationID(NUM_ITEM), timeCnt(0.0f), shootPowerPCT(0.0f){
+Player::Player() :remainingBalls(StartBallCnt), HP(StartHP), carryFlag(false), carryDecorationID(NUM_ITEM){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
@@ -48,30 +48,31 @@ Player::Player() :remainingBalls(StartBallCnt), HP(StartHP), carryFlag(false), c
 	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
 
 	//carryItem = new CarryItem(&armRMat);
+	playerState = new PlayerStateIdle(&armLOffsetMat, &armROffsetMat);
 }
 
 Player::~Player()
 {
-	delete ArmAnime;
+	delete playerState;
 	//delete carryItem;
 }
 
-bool Player::Update(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager, PickUpInstructions &PickUpInstructions)
+bool Player::Update(PickUpInstructions &PickUpInstructions)
 {
-	pos = pPlayerCam->GetPos();		//カメラの座標をセット
+	pos = GetPlayerCam.GetPos();		//カメラの座標をセット
 	//pos = D3DXVECTOR3(100, 5, 30);		//デバック用☆
 
 	//-----------------------------------------------------
 	//デコレーション周り
 	//-----------------------------------------------------
-	if (DecorationManager.CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
+	if (GetDecorationManager.CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
 	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
 		PickUpInstructions.TurnOnDisplay();		//拾える時画面に指示を表示
 		if (carryFlag == false)		//今運んでいないなら
 		{
 			if (GetAsyncKeyState('F') & 0x8000)
 			{
-				carryDecorationID = DecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
+				carryDecorationID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
 				carryFlag = true;
 			}
 		}
@@ -83,11 +84,10 @@ bool Player::Update(SnowBallManager &SnowBallManager, DecorationManager &Decorat
 
 	//-----------------------------------------------------
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
-	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(pPlayerCam->GetCamAngY()));		//カメラの回転から行列作成
-	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(pPlayerCam->GetCamAngX()));		//カメラの回転から行列作成
+	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(GetPlayerCam.GetCamAngY()));		//カメラの回転から行列作成
+	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(GetPlayerCam.GetCamAngX()));		//カメラの回転から行列作成
 
 
-	Throw(SnowBallManager, DecorationManager);
 	MakeBall();
 
 	//-------------------------------------------------------
@@ -98,16 +98,18 @@ bool Player::Update(SnowBallManager &SnowBallManager, DecorationManager &Decorat
 	//-------------------------------------------------------
 	//腕の行列作成
 	//-------------------------------------------------------
-	if (ArmAnime != nullptr)
+	if (playerState != nullptr)
 	{
-		ArmAnimeBase *NextAnime;
-		NextAnime = ArmAnime->Anime(&armLOffsetMat, &armROffsetMat);
+		PlayerStateBase *NextAnime;
+		NextAnime = playerState->Anime(&armLOffsetMat, &armROffsetMat);
 		if (NextAnime != nullptr)
 		{
-			delete ArmAnime;
-			ArmAnime = NextAnime;
+			delete playerState;
+			playerState = NextAnime;
 		}
 	}
+
+	MakeGhostMat();
 	
 	armRMat = armROffsetMat * rotMatX * rotMatY * transMat;		//カメラからの距離の距離の行列にカメラの行列から作った行列を合成してプレイヤーについていかせる
 	armLMat = armLOffsetMat * rotMatX * rotMatY * transMat;
@@ -250,12 +252,6 @@ void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)
 
 }
 
-
-void Player::SetPlayerCamPointer(PlayerCamera *PPlayerCam)
-{
-	pPlayerCam = PPlayerCam;
-}
-
 void Player::HitSnowBall()
 {
 	HP--;
@@ -270,86 +266,35 @@ int Player::GetHP()
 //privateメソッド
 //=====================================
 
-void Player::Throw(SnowBallManager &SnowBallManager, DecorationManager &DecorationManager)
+void Player::Throw(const float PowerPct)
 {
-	static bool LKyeFlag = false;
-	static bool AnimeFlag_T = false;
-
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)		//雪玉を作っているとき
+	if (carryFlag == true)			//デコレーションを運んでいる状態ではデコレーションを投げる
 	{
-		//発射をキャンセルする
-		std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
-		AnimeFlag_T = false;
-		timeCnt = 0;
-		LKyeFlag = false;
-		pPlayerCam->SetMoveSpeed(0.5);			//移動速度リセット	//定数化☆
+		carryFlag = false;
+
+		D3DXVECTOR3 DropPoinOffset;
+
+		DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーの少し前に落とすようにする
+		D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
+
+		GetDecorationManager.Throw(carryDecorationID, &MakeThrowValue(PowerPct));
 		return;
 	}
 
-	if (remainingBalls > 0 || carryFlag == true) {
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-		{
-			LKyeFlag = true;
-			timeCnt++;
+	GetSnowBallManager.SetSnowBall(&MakeThrowValue(PowerPct), PLAYER_ID);
+	remainingBalls--;		//発射したら残数を1減らす
+}
 
-			pPlayerCam->SetMoveSpeed(0.3f);		//移動速度を遅くする
+bool Player::IsThrowAnything()
+{
+	if (remainingBalls > 0)return true;
+	if (carryFlag == true)return true;
+	return false;
+}
 
-			if (timeCnt > MaxPowerTime * GameFPS)
-			{
-				shootPowerPCT = 80;		//最大溜めの速さ
-			}
-			else
-			{
-				shootPowerPCT = 30 + 50 * (timeCnt / (MaxPowerTime * GameFPS));		//30や50は何となくで決めている
-			}
-
-			//--------------------------------------------------
-			//雪玉軌跡表示処理
-			//--------------------------------------------------
-			MakeGhostMat(&MakeThrowValue());
-		
-			//腕アニメーション
-			if (AnimeFlag_T == false)
-			{
-				AnimeFlag_T = true;
-				delete ArmAnime;
-				ArmAnime = new WindUpAnime(&armROffsetMat);
-			}
-		}
-		else
-		{
-			std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
-			if (LKyeFlag == true)
-			{
-				if (carryFlag == true)			//デコレーションを運んでいる状態ではデコレーションを投げる
-				{
-					carryFlag = false;
-
-					D3DXVECTOR3 DropPoinOffset;
-
-					DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーの少し前に落とすようにする
-					D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
-
-					DecorationManager.Throw(&(pos + DropPoinOffset), carryDecorationID, &MakeThrowValue());
-
-					timeCnt = 0;
-					LKyeFlag = false;
-				}
-				else
-				{
-					SnowBallManager.SetSnowBall(&MakeThrowValue(), PLAYER_ID);
-					timeCnt = 0;
-					LKyeFlag = false;
-					remainingBalls--;		//発射したら残数を1減らす
-				}
-				pPlayerCam->SetMoveSpeed(0.5f);		//移動速度リセット	//定数化☆
-				//腕アニメーション
-				AnimeFlag_T = false;
-				delete ArmAnime;
-				ArmAnime = new ThrowAnime();
-			}
-		}
-	}
+void Player::SetShootPower(float ShootPower)
+{
+	 shootPower = ShootPower;
 }
 
 void Player::MakeBall()
@@ -359,13 +304,12 @@ void Player::MakeBall()
 	static float ballSize = 0;
 	static bool AnimeFlag_MKB = false;
 
-	
-
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		pPlayerCam->SetMakeSnowBallFlag(true);
+		GetPlayerCam.SetMakeSnowBallFlag(true);
+		shootPower = 0;
 
-		if (pPlayerCam->GetHasPosed() == true)
+		if (GetPlayerCam.GetHasPosed() == true)
 		{
 			RKyeFlag = true;
 
@@ -378,8 +322,8 @@ void Player::MakeBall()
 
 			if (AnimeFlag_MKB == false)
 			{
-				delete ArmAnime;
-				ArmAnime = new MakeSnowBallAnime(&armLOffsetMat, &armROffsetMat);
+				delete playerState;
+				playerState = new MakeSnowBallAnime(&armLOffsetMat, &armROffsetMat);
 				AnimeFlag_MKB = true;
 			}
 
@@ -399,7 +343,7 @@ void Player::MakeBall()
 	}
 	else
 	{
-		pPlayerCam->SetMakeSnowBallFlag(false);
+		GetPlayerCam.SetMakeSnowBallFlag(false);
 		ShoesMakeBallAnime(false);
 		if (RKyeFlag == true)
 		{
@@ -413,11 +357,11 @@ void Player::MakeBall()
 			//--------------------------------------------
 			//カメラと靴のアニメーションを終了する
 			//--------------------------------------------
-			pPlayerCam->SetMakeSnowBallFlag(false);
+			GetPlayerCam.SetMakeSnowBallFlag(false);
 
 			AnimeFlag_MKB = false;
-			delete ArmAnime;
-			ArmAnime = new ArmAnimeIdle(&armLOffsetMat, &armROffsetMat);
+			delete playerState;
+			playerState = new PlayerStateIdle(&armLOffsetMat, &armROffsetMat);
 		}
 	}
 
@@ -443,19 +387,23 @@ void Player::ShoesMakeBallAnime(bool AnimeState)
 	D3DXMatrixRotationX(&shoesRotMatX, D3DXToRadian(shoesAngX));
 }
 
-void Player::MakeGhostMat(ThrowingInitValue *ThrowingInitValue)
+void Player::MakeGhostMat()
 {
 	std::vector<D3DXMATRIX>().swap(ghostMat);		//メモリ開放
+	if (shootPower == 0)return;
 
 	D3DXVECTOR3 moveVec;
 	D3DXMATRIX TmpMat, TmpRot;
 
+	ThrowingInitValue TmpThrowingInitValue;
 
-	moveVec = ThrowingInit(ThrowingInitValue, &TmpMat);
+	TmpThrowingInitValue = MakeThrowValue(shootPower);
 
-	D3DXMatrixTranslation(&TmpMat, ThrowingInitValue->shootPos.x, ThrowingInitValue->shootPos.y, ThrowingInitValue->shootPos.z);			//発射位置
+	moveVec = ThrowingInit(&TmpThrowingInitValue, &TmpMat);
 
-	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(ThrowingInitValue->YAxisAng));		//発射元の角度から行列作成
+	D3DXMatrixTranslation(&TmpMat, TmpThrowingInitValue.shootPos.x, TmpThrowingInitValue.shootPos.y, TmpThrowingInitValue.shootPos.z);			//発射位置
+
+	D3DXMatrixRotationY(&TmpRot, D3DXToRadian(TmpThrowingInitValue.YAxisAng));		//発射元の角度から行列作成
 	TmpMat = TmpRot * TmpMat;
 
 	ghostMat.push_back(TmpMat);
@@ -474,7 +422,7 @@ void Player::MakeGhostMat(ThrowingInitValue *ThrowingInitValue)
 	}
 }
 
-ThrowingInitValue Player::MakeThrowValue()
+ThrowingInitValue Player::MakeThrowValue(const float PowerPct)
 {
 	D3DXVECTOR3 ShootOffset;	//回転を考慮した座標を入れる
 	ThrowingInitValue _ThrowingBallInitValue;
@@ -482,8 +430,9 @@ ThrowingInitValue Player::MakeThrowValue()
 	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 	_ThrowingBallInitValue.shootPos = pos + ShootOffset;
-	_ThrowingBallInitValue.XAxisAng = pPlayerCam->GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
-	_ThrowingBallInitValue.YAxisAng = pPlayerCam->GetCamAngY();
-	_ThrowingBallInitValue.powerRate = shootPowerPCT;
+	_ThrowingBallInitValue.XAxisAng = GetPlayerCam.GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+	_ThrowingBallInitValue.YAxisAng = GetPlayerCam.GetCamAngY();
+	_ThrowingBallInitValue.powerRate = PowerPct;
 	return _ThrowingBallInitValue;
 }
+

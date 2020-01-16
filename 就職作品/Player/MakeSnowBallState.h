@@ -1,10 +1,10 @@
 #pragma once
-#include"ArmAnimeBase.h"
-class MakeSnowBallAnime : public ArmAnimeBase{
+#include"PlayerStateBase.h"
+class MakeSnowBallAnime : public PlayerStateBase{
 public:
 	MakeSnowBallAnime(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR);
 	~MakeSnowBallAnime();
-	ArmAnimeBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
+	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 private:
 	const static float AnimeSpeed;
 	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;

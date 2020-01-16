@@ -1,14 +1,17 @@
 #pragma once
 #include<d3dx9.h>
 #include"../main.h"
+#include"../SingletonBase.h"
 //----------------------------------------
 //プレイヤーのカメラクラス
 //移動や視点操作を担当
 //----------------------------------------
-class PlayerCamera {
+
+#define GetPlayerCam PlayerCamera::GetInstance()
+
+class PlayerCamera : public SingletonBase<PlayerCamera>{
+	friend class SingletonBase<PlayerCamera>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
-	PlayerCamera();
-	~PlayerCamera();
 	void Update(StageBorder & StageBorder);
 	void SetCamera(void);
 	//--------------------------------------------------
@@ -29,6 +32,8 @@ public:
 	void SetMoveSpeed(float MoveSpeed);				//移動速度を変更する
 
 private:
+	PlayerCamera();
+	~PlayerCamera();
 	//--------------------------------------------------
 	//マウスでカメラを動かす用の変数群
 	//--------------------------------------------------
@@ -56,7 +61,9 @@ private:
 	//--------------------------------------------------
 	//メソッド
 	//--------------------------------------------------
-	void Move(StageBorder & StageBorder);
+	void Move(StageBorder &StageBorder);
 	bool MakeSnowBallPose(void);
 
 };
+
+PlayerCamera* SingletonBase<PlayerCamera>::instance = nullptr;

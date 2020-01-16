@@ -1,7 +1,8 @@
-#include"ArmAnimeIdle.h"
+#include"PlayerStateIdle.h"
+#include"Player.h"
 
 
-ArmAnimeIdle::ArmAnimeIdle(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
+PlayerStateIdle::PlayerStateIdle(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
 {
 	startMatL = *StartMatL;
 	startMatR = *StartMatR;
@@ -20,11 +21,11 @@ ArmAnimeIdle::ArmAnimeIdle(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
 	endMatR = EndRotRTmp * EndTransRTmp;			//‘Ò‹@‚ÌˆÊ’u
 }
 
-ArmAnimeIdle::~ArmAnimeIdle()
+PlayerStateIdle::~PlayerStateIdle()
 {
 }
 
-ArmAnimeBase* ArmAnimeIdle::Anime(D3DXMATRIX * NowMatL, D3DXMATRIX * NowMatR)
+PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX * NowMatL, D3DXMATRIX * NowMatR)
 {
 	animeFrame += AnimeSpeed;
 
@@ -33,7 +34,15 @@ ArmAnimeBase* ArmAnimeIdle::Anime(D3DXMATRIX * NowMatL, D3DXMATRIX * NowMatR)
 
 	if (animeFrame >= 1)
 	{
-		return new ArmAnimeIdle(&endMatL, &endMatR);
+		return new PlayerStateIdle(&endMatL, &endMatR);
+	}
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//‰½‚©“Š‚°‚ç‚ê‚éó‘Ô‚È‚ç
+	{
+		if (GetPlayer.IsThrowAnything() == true)
+		{
+			return new WindUpState(NowMatR);
+		}
 	}
 	return nullptr;
 }

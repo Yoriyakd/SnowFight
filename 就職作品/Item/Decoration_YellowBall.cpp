@@ -13,10 +13,10 @@ Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos)
 	moveVec = D3DXVECTOR3(0, 0, 0);
 }
 
-Decoration_YellowBall::Decoration_YellowBall(const D3DXVECTOR3 * _Pos, ThrowingInitValue * ThrowingInitValue)
+Decoration_YellowBall::Decoration_YellowBall(const ThrowingInitValue * ThrowingInitValue)
 {
 	mesh = GetResource.GetXFILE(Decoration_YellowBall_M);
-	pos = *_Pos;
+	pos = ThrowingInitValue->shootPos;
 
 	picUpDistans = 8.0f;
 	decorationID = YELLOW_BALL;

@@ -73,18 +73,18 @@ DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 	return NUM_ITEM;			
 }
 
-void DecorationManager::Throw(const D3DXVECTOR3 * _Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue)
+void DecorationManager::Throw(DecorationID ID, ThrowingInitValue * ThrowingInitValue)
 {
 	switch (ID)
 	{
 	case RED_BALL:
-		decoration.push_back(new Decoration_RedBall(_Pos, ThrowingInitValue));
+		decoration.push_back(new Decoration_RedBall(ThrowingInitValue));
 		break;
 	case BLUE_BALL:
-		decoration.push_back(new Decoration_BlueBall(_Pos, ThrowingInitValue));
+		decoration.push_back(new Decoration_BlueBall(ThrowingInitValue));
 		break;
 	case YELLOW_BALL:
-		decoration.push_back(new Decoration_YellowBall(_Pos, ThrowingInitValue));
+		decoration.push_back(new Decoration_YellowBall(ThrowingInitValue));
 		break;
 	default:
 		break;

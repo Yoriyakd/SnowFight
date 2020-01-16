@@ -19,7 +19,7 @@ public:
 
 	bool CheckForCanPicUp(const D3DXVECTOR3 *_Pos);
 	DecorationID PickUp(const D3DXVECTOR3 *_Pos);
-	void Throw(const D3DXVECTOR3 *_Pos, DecorationID ID, ThrowingInitValue * ThrowingInitValue);
+	void Throw(DecorationID ID, ThrowingInitValue * ThrowingInitValue);
 
 	void Draw(void);
 	void Updata(void);

@@ -37,9 +37,6 @@
     <Filter Include="GameScene\UI">
       <UniqueIdentifier>{95fa5787-5ebe-4241-a210-39929930c37b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\Anime">
-      <UniqueIdentifier>{37d503a4-7c74-4e4c-adfb-d33ea9565084}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TitleScene">
       <UniqueIdentifier>{0c11a6f9-4291-42c9-b72d-04cfbe5f8b05}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Enemy\State">
       <UniqueIdentifier>{f9a57969-77b0-4bed-b8ec-17980ed49708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\State">
+      <UniqueIdentifier>{37d503a4-7c74-4e4c-adfb-d33ea9565084}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -177,18 +177,6 @@
     <ClCompile Include="UI\GameObjective.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Player\ThrowAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\WindUpAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\MakeSnowBallAnime.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\ArmAnimeIdle.cpp">
-      <Filter>Player\Anime</Filter>
-    </ClCompile>
     <ClCompile Include="Effect\EnemyHatAnime.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
@@ -218,6 +206,18 @@
     </ClCompile>
     <ClCompile Include="Enemy\EnemyState\LookForPlayerAnime.cpp">
       <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\WindUpState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerStateIdle.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\ThrowState.cpp">
+      <Filter>Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\MakeSnowBallState.cpp">
+      <Filter>Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,9 +305,6 @@
     <ClInclude Include="UI\PickUpInstructions.h">
       <Filter>GameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Player\ArmAnimeBase.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
     <ClInclude Include="Item\DecorationManager.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -350,18 +347,6 @@
     <ClInclude Include="UI\GameObjective.h">
       <Filter>GameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Player\ThrowAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\WindUpAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\MakeSnowBallAnime.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\ArmAnimeIdle.h">
-      <Filter>Player\Anime</Filter>
-    </ClInclude>
     <ClInclude Include="Effect\EnemyHatAnime.h">
       <Filter>Effect</Filter>
     </ClInclude>
@@ -397,6 +382,21 @@
     </ClInclude>
     <ClInclude Include="Enemy\EnemyState\LookForPlayerAnime.h">
       <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\WindUpState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerStateBase.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerStateIdle.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\ThrowState.h">
+      <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\MakeSnowBallState.h">
+      <Filter>Player\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

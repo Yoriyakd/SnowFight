@@ -49,7 +49,6 @@ private:
 	SkyBox *skyBox;
 	Stage1Enclosure *stage1Enclosure;
 	MapObjManager *mapObjManager;	
-	PlayerCamera *playerCam;
 	EventManager *eventManager;
 	PickUpInstructions *pickUpInstructions;
 

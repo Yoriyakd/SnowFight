@@ -17,7 +17,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	skyBox = new SkyBox;
 	GetSnowBallManager.Create();
 	mapObjManager = new MapObjManager();
-	playerCam = new PlayerCamera();
+	GetPlayerCam.Create();
 	eventManager = new EventManager();
 
 	GetPlayer.Create();
@@ -48,11 +48,10 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	loadStageData->SetStageMap(*mapObjManager, *eventManager, *gameObjective, *stageBorder);
 	
 	//-------------------------------------------------------
-	playerCam->SetPos(&D3DXVECTOR3(stageBorder->Right / 2, 0, 10.0f));				//プレイヤーの初期位置
+	GetPlayerCam.SetPos(&D3DXVECTOR3(stageBorder->Right / 2, 0, 10.0f));				//プレイヤーの初期位置
 
 	stage1Enclosure = new Stage1Enclosure(stageBorder);
 
-	GetPlayer.SetPlayerCamPointer(playerCam);		//プレイヤーカメラのポインタをセット
 
 	//-----------------------------
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -91,7 +90,7 @@ GameScene::~GameScene()
 	delete stage1Enclosure;
 	GetSnowBallManager.Destroy();
 	delete mapObjManager;
-	delete playerCam;
+	GetPlayerCam.Destroy();
 	delete eventManager;
 
 	GetPlayer.Destroy();
@@ -145,7 +144,7 @@ void GameScene::SetCamera(void)
 		resultCam->SetCamera();				//リザルト中のカメラ
 		return;
 	}
-	playerCam->SetCamera();
+	GetPlayerCam.SetCamera();
 }
 
 void GameScene::Render2D(void)
@@ -209,20 +208,20 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------------------------------
 	//プレイヤーの更新	※カメラ→あたり判定→プレイヤーの順番で	プレイヤーのの位置がカメラとずれるため
 	//----------------------------------------------------------------------------------------------------------------
-	playerCam->Update(*stageBorder);						//プレイヤーカメラの移動
+	GetPlayerCam.Update(*stageBorder);						//プレイヤーカメラの移動
 
 	//マップオブジェとプレイヤーの当たり判定
 	for (unsigned int i = 0; i < mapObjManager->mapObj.size(); i++)
 	{
-		CollisionObserver::PlayertoObj(playerCam, mapObjManager->mapObj[i]);
+		CollisionObserver::PlayertoObj(&GetPlayerCam, mapObjManager->mapObj[i]);
 	}
 
-	GetPlayer.Update(GetSnowBallManager, GetDecorationManager, *pickUpInstructions);		//カメラを更新してから
+	GetPlayer.Update(*pickUpInstructions);		//カメラを更新してから
 	//---------------------------------------------------------
 
 
 	D3DXMATRIX TmpBillBoardMat;
-	MakeBillBoardMat(&TmpBillBoardMat, &playerCam->GetmView());		//カメラのアップデートの後に呼ぶ
+	MakeBillBoardMat(&TmpBillBoardMat, &GetPlayerCam.GetmView());		//カメラのアップデートの後に呼ぶ
 
 	GetEnemyManager.Update(GetSnowBallManager, *stageBorder);
 
