@@ -6,7 +6,7 @@
 EnemyStateBase * PlayerSearchState::Action(Enemy &Enemy)
 {
 	float Length;
-	const float SensingLength = 40.0f;
+	const float SensingLength = 60.0f;
 
 	Length = D3DXVec3Length(&Enemy.GetPlayerVec());
 

@@ -32,7 +32,7 @@ public:
 private:
 	EffectManager();
 	~EffectManager();
-	PlayerCamera *pPlayerCam;	//プレイヤーカメラのポインタ
+
 	D3DXMATRIX billBoardMat;
 
 	std::vector<SnowFrag*> snowFrag;
