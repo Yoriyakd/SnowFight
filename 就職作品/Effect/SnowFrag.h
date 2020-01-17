@@ -4,16 +4,15 @@ class SnowFrag {
 private:
 	static const int FRAG_NUM = 4;			//飛ばす破片の数
 	XFILE mesh;
-	D3DXMATRIX mat[FRAG_NUM], scalMat[FRAG_NUM], transMat[FRAG_NUM];
+	D3DXMATRIX fragMat[FRAG_NUM], scalMat[FRAG_NUM], transMat[FRAG_NUM];
 	D3DXVECTOR3 fragVec[FRAG_NUM], fragPos[FRAG_NUM];		//飛ぶ方向のベクトル, 座標(ワールド管理)
-	//int deleteTime;		//消えるまでのカウント
 
 	LPDIRECT3DTEXTURE9 smokeTex, fragTex;
-	VERTEX smokeV[4], fragV[4];
-	int alpha = 128;
+	VERTEX firstSmokeV[4]/*, secondSmokeV[4], */,fragV[4];
+	int firstAlpha;;//, secondAlpha;
 	D3DXMATRIX smokeBillBoardMat, fragBillBoardMat;
-	D3DXMATRIX smokeMat;
-	float smokeScaling = 0;
+	D3DXMATRIX firstSmokeMat;// , secondSmokeMat;
+	float firstSmokeScaling;// , secondSmokeScaling;
 
 	
 public:
@@ -22,6 +21,5 @@ public:
 
 	void Draw();
 	bool Update();
-	void SetPos(D3DXVECTOR3 Pos);		//飛ばす元の座標を入れる
 	void SetBillBoardMat(D3DXMATRIX BillBoardMat);
 };

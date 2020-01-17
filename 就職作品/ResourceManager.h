@@ -177,7 +177,7 @@ private:
 		//Effect
 		{SnowLocus_Tex,           TexData{"FallingSnow.png", 250, 250, NULL}},
 		{SnowFrag_Tex,            TexData{"SnowFrag.png", 1024, 1024, NULL}},
-		{SnowSmoke_Tex,           TexData{"FallingSnow.png", 250, 250, NULL}},			//もっと煙のテクスチャに変える
+		{SnowSmoke_Tex,           TexData{"Smoke.png", 250, 250, NULL}},			//もっと煙のテクスチャに変える
 		{SceneSwitch_Tex,         TexData{"SceneSwitchEffect.png", 32, 32, NULL}},
 
 		//Map

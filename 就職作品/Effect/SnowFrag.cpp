@@ -1,6 +1,6 @@
 #include "SnowFrag.h"
 
-SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos)
+SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos) : firstSmokeScaling(0)/*, secondSmokeScaling(0)*/, firstAlpha(128)/*, secondAlpha(128)*/
 {
 	for (int i = 0; i < FRAG_NUM; i++)
 	{
@@ -17,12 +17,13 @@ SnowFrag::SnowFrag(const D3DXVECTOR3 &Pos)
 		fragVec[i].y = (rand() % 15) / 10.0f;
 		fragVec[i].z = (rand() % 3) / 10.0f;
 	}
-	//deleteTime = 3 * 60;
+
 	//----------------------------------------------------------------------
 	//煙処理
 	//----------------------------------------------------------------------
 	smokeTex = GetResource.GetTexture(SnowSmoke_Tex);
-	D3DXMatrixTranslation(&smokeMat, Pos.x, Pos.y, Pos.z);
+	D3DXMatrixTranslation(&firstSmokeMat, Pos.x, Pos.y, Pos.z);
+	//D3DXMatrixTranslation(&secondSmokeMat, Pos.x, Pos.y, Pos.z);
 }
 
 SnowFrag::~SnowFrag()
@@ -42,7 +43,7 @@ void SnowFrag::Draw()
 
 	for (int i = 0; i < FRAG_NUM; i++)
 	{
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &mat[i]);
+		lpD3DDevice->SetTransform(D3DTS_WORLD, &fragMat[i]);
 		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, fragV, sizeof(VERTEX));
 	}
 
@@ -50,7 +51,8 @@ void SnowFrag::Draw()
 
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &smokeBillBoardMat);
 
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, smokeV, sizeof(VERTEX));
+	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, firstSmokeV, sizeof(VERTEX));
+	//lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, secondSmokeV, sizeof(VERTEX));
 
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
@@ -60,15 +62,25 @@ void SnowFrag::Draw()
 
 bool SnowFrag::Update()
 {
-	smokeV[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
-	smokeV[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
-	smokeV[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
-	smokeV[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
+	firstSmokeV[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
+	firstSmokeV[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
+	firstSmokeV[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
+	firstSmokeV[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
 
-	smokeV[0].Pos = D3DXVECTOR3(-1.5f * smokeScaling, 1.5f * smokeScaling, 0.0f);
-	smokeV[1].Pos = D3DXVECTOR3(1.5f * smokeScaling, 1.5f * smokeScaling, 0.0f);
-	smokeV[2].Pos = D3DXVECTOR3(1.5f * smokeScaling, -1.5f * smokeScaling, 0.0f);
-	smokeV[3].Pos = D3DXVECTOR3(-1.5f * smokeScaling, -1.5f * smokeScaling, 0.0f);
+	firstSmokeV[0].Pos = D3DXVECTOR3(-1.5f * firstSmokeScaling, 1.5f * firstSmokeScaling, 0.0f);
+	firstSmokeV[1].Pos = D3DXVECTOR3(1.5f * firstSmokeScaling, 1.5f * firstSmokeScaling, 0.0f);
+	firstSmokeV[2].Pos = D3DXVECTOR3(1.5f * firstSmokeScaling, -1.5f * firstSmokeScaling, 0.0f);
+	firstSmokeV[3].Pos = D3DXVECTOR3(-1.5f * firstSmokeScaling, -1.5f * firstSmokeScaling, 0.0f);
+	
+	/*secondSmokeV[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
+	secondSmokeV[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
+	secondSmokeV[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
+	secondSmokeV[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
+
+	secondSmokeV[0].Pos = D3DXVECTOR3(-1.5f * secondSmokeScaling, 1.5f * secondSmokeScaling, 0.0f);
+	secondSmokeV[1].Pos = D3DXVECTOR3(1.5f * secondSmokeScaling, 1.5f * secondSmokeScaling, 0.0f);
+	secondSmokeV[2].Pos = D3DXVECTOR3(1.5f * secondSmokeScaling, -1.5f * secondSmokeScaling, 0.0f);
+	secondSmokeV[3].Pos = D3DXVECTOR3(-1.5f * secondSmokeScaling, -1.5f * secondSmokeScaling, 0.0f);*/
 
 	fragV[0].Tex = D3DXVECTOR2(0.0f, 0.0f);
 	fragV[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
@@ -80,18 +92,54 @@ bool SnowFrag::Update()
 	fragV[2].Pos = D3DXVECTOR3(0.3f, -0.3f, 0.0f);
 	fragV[3].Pos = D3DXVECTOR3(-0.3f, -0.3f, 0.0f);
 
-	smokeScaling += 0.03f;
-	alpha--;
+	if (firstSmokeScaling <= 2.5f)
+	{
+		firstSmokeScaling += 0.8f;
+	}
+	else
+	{
+		firstSmokeScaling += 0.05f;
+	}
+
+	/*if (firstAlpha < 80)
+	{
+		secondAlpha -= 3;
+		if (secondSmokeScaling <= 2.5f)
+		{
+			secondSmokeScaling += 0.3f;
+		}
+		else
+		{
+			secondSmokeScaling += 0.05f;
+		}
+	}
+	else
+	{
+		
+	}*/
+
+	firstAlpha -= 3;
+
+	if (firstAlpha < 0)
+	{
+		firstAlpha = 0;
+	}
+
 	//見えなくなったら削除
-	if (alpha < 0)
+	if (firstAlpha < 0)
 	{
 		return false;
 	}
 
-	smokeV[0].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
-	smokeV[1].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
-	smokeV[2].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
-	smokeV[3].Color = D3DCOLOR_ARGB(alpha, 255, 255, 255);
+	firstSmokeV[0].Color = D3DCOLOR_ARGB(firstAlpha, 255, 255, 255);
+	firstSmokeV[1].Color = D3DCOLOR_ARGB(firstAlpha, 255, 255, 255);
+	firstSmokeV[2].Color = D3DCOLOR_ARGB(firstAlpha, 255, 255, 255);
+	firstSmokeV[3].Color = D3DCOLOR_ARGB(firstAlpha, 255, 255, 255);
+	
+	/*secondSmokeV[0].Color = D3DCOLOR_ARGB(secondAlpha, 255, 255, 255);
+	secondSmokeV[1].Color = D3DCOLOR_ARGB(secondAlpha, 255, 255, 255);
+	secondSmokeV[2].Color = D3DCOLOR_ARGB(secondAlpha, 255, 255, 255);
+	secondSmokeV[3].Color = D3DCOLOR_ARGB(secondAlpha, 255, 255, 255);*/
 
 	fragV[0].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	fragV[1].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -113,27 +161,14 @@ bool SnowFrag::Update()
 
 	for (int i = 0; i < FRAG_NUM; i++)
 	{
-		mat[i] = fragBillBoardMat * transMat[i];			//行列合成
+		fragMat[i] = fragBillBoardMat * transMat[i];			//行列合成
 	}
 
-	//deleteTime--;
-	//if (deleteTime < 0)		//DeleteTimeが0になったら消す
-	//{
-	//	return false;
-	//}
 	return true;
-}
-
-void SnowFrag::SetPos(D3DXVECTOR3 Pos)
-{
-	for (int i = 0; i < FRAG_NUM; i++)
-	{
-		fragPos[i] = Pos;
-	}
 }
 
 void SnowFrag::SetBillBoardMat(D3DXMATRIX BillBoardMat)
 {
-	smokeBillBoardMat = BillBoardMat * smokeMat;
+	smokeBillBoardMat = BillBoardMat * firstSmokeMat;
 	fragBillBoardMat = BillBoardMat;
 }
