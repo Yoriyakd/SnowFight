@@ -19,6 +19,8 @@
 #include"../CollisionObserver.h"
 #include"../Effect/EffectManager.h"
 #include"../Effect/EnemyAnimeManager.h"
+#include"../Effect/PlayerHitEffect.h"
+
 #include"EventManager.h"
 #include"../Item/DecorationManager.h"
 
@@ -51,6 +53,11 @@ private:
 	MapObjManager *mapObjManager;	
 	EventManager *eventManager;
 	PickUpInstructions *pickUpInstructions;
+
+	static const int EFFECT_CNT = 5;
+	PlayerHitEffect *playerHitEffect_Right[EFFECT_CNT];
+	PlayerHitEffect *playerHitEffect_Left[EFFECT_CNT];
+	PlayerHitEffect *playerHitEffect_Back;
 
 	StageBorder *stageBorder;
 	//------------------------------------------

@@ -219,6 +219,9 @@
     <ClCompile Include="Player\MakeSnowBallState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\PlayerHitEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Player\MakeSnowBallState.h">
       <Filter>Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\PlayerHitEffect.h">
+      <Filter>Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

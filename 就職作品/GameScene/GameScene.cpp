@@ -25,6 +25,22 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	GetDecorationManager.Create();
 	GetSpawnerManager.Create();
 
+
+	for (auto i = 0; i < EFFECT_CNT; i++)
+	{
+		playerHitEffect_Right[i] = new PlayerHitEffect();
+		playerHitEffect_Right[i]->Initialize_RightEffect();
+	}
+
+	for (auto i = 0; i < EFFECT_CNT; i++)
+	{
+		playerHitEffect_Left[i] = new PlayerHitEffect();
+		playerHitEffect_Left[i]->Initialize_LeftEffect();
+	}
+
+	playerHitEffect_Back = new PlayerHitEffect();
+	playerHitEffect_Back->Initialize_BackEffect();
+
 	stageBorder = new StageBorder;
 	EnemyAnime.Create();
 	//-------------------------------------------------------
@@ -98,6 +114,21 @@ GameScene::~GameScene()
 
 	delete resultCam;
 
+	for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+	{
+		delete PlayerHitEffect_Right;
+		
+	}
+
+	for (auto PlayerHitEffect_Left : playerHitEffect_Left)
+	{
+		delete PlayerHitEffect_Left;
+	}
+
+	delete playerHitEffect_Back;
+
+	delete stageBorder;
+
 	GetDecorationManager.Destroy();
 	GetSpawnerManager.Destroy();
 	EnemyAnime.Destroy();
@@ -156,6 +187,18 @@ void GameScene::Render2D(void)
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	if (resultFlag == false)		//リザルト表示中は消す
 	{
+		for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+		{
+			PlayerHitEffect_Right->Draw();
+		}
+
+		for (auto PlayerHitEffect_Left : playerHitEffect_Left)
+		{
+			PlayerHitEffect_Left->Draw();
+		}
+
+		playerHitEffect_Back->Draw();
+
 		pickUpInstructions->Draw();
 		remainingBallUI->Draw();
 		timeUI->Draw();
@@ -175,6 +218,7 @@ void GameScene::Render2D(void)
 		}
 
 	}
+
 
 	SceneSwitch.Draw();			//常に描画
 
@@ -321,10 +365,31 @@ bool GameScene::Update()
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
 			GetPlayer.HitSnowBall();			//HIT時のメソッドを呼ぶ
 
+			for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+			{
+				if (PlayerHitEffect_Right->GetActiveState() == false)
+				{
+					PlayerHitEffect_Right->Active();
+					break;
+				}	
+			}
+
 			GetSnowBallManager.DeleteInstance(si);
 			si--;						//きえた分詰める
 		}
 	}
+
+	for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+	{
+		PlayerHitEffect_Right->Update();
+	}
+
+	for (auto PlayerHitEffect_Left : playerHitEffect_Left)
+	{
+		PlayerHitEffect_Left->Update();
+	}
+
+	playerHitEffect_Back->Update();
 
 	//デコレーションとMapObjの当たり判定
 	for (unsigned int i = 0; i < GetDecorationManager.decoration.size(); i++)

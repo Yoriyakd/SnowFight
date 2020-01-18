@@ -270,7 +270,7 @@ void Enemy::ShootSnowBall()
 	ValueTmp.shootPos = PosTmp;
 
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
-	ValueTmp.YAxisAng = GetToPlayerAng() - 3;						/*要調整手から発射するための応急処置☆*/
+	ValueTmp.YAxisAng = GetToPlayerAng() - 5;						/*要調整手から発射するための応急処置☆*/
 	ValueTmp.powerRate = 40.0f;							/*要調整*/
 
 	GetSnowBallManager.SetSnowBall(&ValueTmp, ENEMY_ID);
