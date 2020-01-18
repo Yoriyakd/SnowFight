@@ -169,8 +169,11 @@ LRESULT APIENTRY WndFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		switch (wParam) {
 		case VK_ESCAPE:
-			PostQuitMessage(0);
-			return 0;
+			if (MessageBox(NULL, "終了しますか？", "終了確認", MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION) == IDYES)
+			{
+				PostQuitMessage(0);
+				return 0;
+			}
 		}
 		return 0;
 
@@ -224,9 +227,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	{
 		gameFullScreen = true;
 	}
-	if (gameFullScreen) {
-		ShowCursor(FALSE);
-	}
+
 	else {
 		RECT rc = { 0,0,SCRW,SCRH };
 		AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
