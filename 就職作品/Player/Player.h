@@ -32,7 +32,8 @@ public:
 	void Draw(void);
 
 	int GetRemainingBalls();			//c’e”‚ğ•Ô‚·
-	D3DXVECTOR3 GetPlayerPos(void);
+	const D3DXVECTOR3 GetPlayerPos(void);
+	const D3DXMATRIX GetMat(void);
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 
 	void HitSnowBall();				//á‹Ê‚ªHIT‚µ‚½‚Æ‚«‚Ìˆ—

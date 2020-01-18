@@ -19,9 +19,16 @@ public:
 	virtual const D3DXVECTOR3 GetPos(void);
 	virtual const D3DXMATRIX GetMat(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
-	bool GetJumpState();		//ジャンプしているか
-	D3DXVECTOR3 GetPlayerVec();		//playerとのベクトルを返す
+	//ジャンプしているか
+	bool GetJumpState();		
+	//playerとのベクトルを返す
+	D3DXVECTOR3 GetPlayerVec();		
+	//渡されたPosとのベクトルを返す
+	D3DXVECTOR3 GetPlayerVec(D3DXVECTOR3 &Offset);
+	//playerとの角度を返す
 	float GetToPlayerAng();
+	//playerとの角度を返す渡されたPosと
+	float GetToPlayerAng(D3DXVECTOR3 &Pos);
 	void PushedObj(const D3DXVECTOR3 &PushVec);
 
 	D3DXMATRIX GetHatMat(void);

@@ -1,4 +1,5 @@
 #include "PlayerHitEffect.h"
+#include"../Player/Player.h"
 
 PlayerHitEffect::PlayerHitEffect()
 {
@@ -68,6 +69,15 @@ void PlayerHitEffect::Update()
 
 
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
+}
+
+void PlayerHitEffect::CalculateHitDirection(const D3DXVECTOR3 &SnowBallVec)
+{
+	D3DXVECTOR3 PlayerVecTmp(0, 1, 0);
+
+	D3DXVec3TransformNormal(&PlayerVecTmp, &PlayerVecTmp, &GetPlayer.GetMat());
+
+
 }
 
 void PlayerHitEffect::InitPos()

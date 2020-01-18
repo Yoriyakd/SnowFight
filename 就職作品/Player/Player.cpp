@@ -240,9 +240,17 @@ int Player::GetRemainingBalls()
 }
 
 
-D3DXVECTOR3 Player::GetPlayerPos(void)
+const D3DXVECTOR3 Player::GetPlayerPos(void)
 {
 	return pos;
+}
+
+const D3DXMATRIX Player::GetMat(void)
+{
+	D3DXMATRIX TmpMat;
+
+	TmpMat = rotMatX * rotMatY * transMat;
+	return TmpMat;
 }
 
 void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)

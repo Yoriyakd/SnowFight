@@ -22,6 +22,7 @@ public:
 
 	void Draw();
 	void Update();
+	static void CalculateHitDirection(const D3DXVECTOR3 &SnowBallVec);
 private:
 	void InitPos();
 

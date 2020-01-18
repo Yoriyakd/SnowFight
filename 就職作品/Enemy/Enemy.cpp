@@ -112,11 +112,42 @@ D3DXVECTOR3 Enemy::GetPlayerVec()
 	return GetPlayer.GetPlayerPos() - D3DXVECTOR3(mat._41, mat._42, mat._43);
 }
 
+D3DXVECTOR3 Enemy::GetPlayerVec(D3DXVECTOR3 &Pos)
+{
+	return GetPlayer.GetPlayerPos() - Pos;
+}
+
 float Enemy::GetToPlayerAng()
 {
 	D3DXVECTOR3 TragetVec, DefaultVec(0, 0, 1);
 
 	TragetVec = GetPlayerVec();
+
+	D3DXVec3Normalize(&TragetVec, &TragetVec);				//ベクトル正規化
+
+	float TragetDot;
+
+	TragetDot = D3DXVec3Dot(&TragetVec, &DefaultVec);		//初期ベクトルとプレイヤーへのベクトルから内積を求める
+
+	if (TragetDot > 1)TragetDot = 1;						//内積の値が1より大きくならないように
+	if (TragetDot < -1)TragetDot = -1;						//内積の値が-1より小さくくならないように
+
+	float TragetAng;
+
+	TragetAng = D3DXToDegree(acos(TragetDot));				//プレイヤーと初期の角度を求める
+
+	if (TragetVec.x < 0)									//角度の正負チェック	(外積を使わない方法で求めている)
+	{
+		TragetAng *= -1;
+	}
+	return TragetAng;
+}
+
+float Enemy::GetToPlayerAng(D3DXVECTOR3 &Offset)
+{
+	D3DXVECTOR3 TragetVec, DefaultVec(0, 0, 1);
+
+	TragetVec = GetPlayerVec(Offset);
 
 	D3DXVec3Normalize(&TragetVec, &TragetVec);				//ベクトル正規化
 
@@ -263,15 +294,15 @@ void Enemy::BackJump(void)
 
 void Enemy::ShootSnowBall()
 {
-	D3DXVECTOR3 PosTmp(3, 3, 0);
-	D3DXVec3TransformCoord(&PosTmp, &PosTmp, &mat);
-
+	D3DXVECTOR3 OffsetTmp(3, 3, 0);
 	ThrowingInitValue ValueTmp;
-	ValueTmp.shootPos = PosTmp;
 
+	D3DXVec3TransformCoord(&OffsetTmp, &OffsetTmp, &mat);
+
+	ValueTmp.shootPos = OffsetTmp;
+	ValueTmp.YAxisAng = GetToPlayerAng(OffsetTmp);						/*要調整☆*/
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
-	ValueTmp.YAxisAng = GetToPlayerAng() - 5;						/*要調整手から発射するための応急処置☆*/
-	ValueTmp.powerRate = 40.0f;							/*要調整*/
+	ValueTmp.powerRate = 40.0f + rand() % 5;							/*要調整*/
 
 	GetSnowBallManager.SetSnowBall(&ValueTmp, ENEMY_ID);
 }
