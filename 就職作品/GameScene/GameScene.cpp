@@ -365,15 +365,41 @@ bool GameScene::Update()
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
 			GetPlayer.HitSnowBall();			//HIT時のメソッドを呼ぶ
 
-			for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+			//----------------------------------------------------
+			//HitEffecctの処理(Effectのクラスに変数を持たせた方がいいのでは？)
+			//----------------------------------------------------
+			HitEffectID ActivationID;
+
+			ActivationID = PlayerHitEffect::CalculateHitDirection(GetSnowBallManager.snowBall[si]->GetMoveVec());
+
+			switch (ActivationID)
 			{
-				if (PlayerHitEffect_Right->GetActiveState() == false)
+			case Right:
+				for (auto PlayerHitEffect_Right : playerHitEffect_Right)
 				{
-					PlayerHitEffect_Right->Active();
-					break;
-				}	
+					if (PlayerHitEffect_Right->GetActiveState() == false)
+					{
+						PlayerHitEffect_Right->Active();
+						break;
+					}
+				}
+				break;
+			case Left:
+				for (auto PlayerHitEffect_Left: playerHitEffect_Left)
+				{
+					if (PlayerHitEffect_Left->GetActiveState() == false)
+					{
+						PlayerHitEffect_Left->Active();
+						break;
+					}
+				}
+				break;
+			case Back:
+				playerHitEffect_Back->Active();
+				break;
 			}
 
+			//----------------------------------------------------
 			GetSnowBallManager.DeleteInstance(si);
 			si--;						//きえた分詰める
 		}

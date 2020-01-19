@@ -71,13 +71,41 @@ void PlayerHitEffect::Update()
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 }
 
-void PlayerHitEffect::CalculateHitDirection(const D3DXVECTOR3 &SnowBallVec)
+HitEffectID PlayerHitEffect::CalculateHitDirection(const D3DXVECTOR3 &SnowBallVec)
 {
-	D3DXVECTOR3 PlayerVecTmp(0, 1, 0);
+	D3DXVECTOR3 PlayerVecTmp(0, 0, 1), SnowBallVecTmp;
 
 	D3DXVec3TransformNormal(&PlayerVecTmp, &PlayerVecTmp, &GetPlayer.GetMat());
+	PlayerVecTmp.y = 0.0f;				//Y方向の情報は必要ない
+	D3DXVec3Normalize(&PlayerVecTmp, &PlayerVecTmp);
 
+	SnowBallVecTmp = SnowBallVec;
+	SnowBallVecTmp.y = 0.0f;			//Y方向の情報は必要ない
 
+	D3DXVec3Normalize(&SnowBallVecTmp, &SnowBallVecTmp);
+
+	float Dot;
+	Dot = D3DXVec3Dot(&PlayerVecTmp, &-SnowBallVecTmp);			//playerの方に向かうベクトルのため雪玉のベクトルは反転させたものを使う
+
+	if (Dot > 1)Dot = 1;						//内積の値が1より大きくならないように
+	if (Dot < -1)Dot = -1;						//内積の値が-1より小さくくならないように
+
+	if (Dot < 0)		//内積が負の値なら後ろから
+	{
+		return Back;
+	}
+
+	D3DXVECTOR3 CrossTmp;
+
+	D3DXVec3Cross(&CrossTmp, &PlayerVecTmp, &SnowBallVecTmp);
+	if (CrossTmp.y > 0)			//外積で得たベクトルが上向きなら左からHIT
+	{
+		return Left;
+	}
+	else
+	{
+		return Right;
+	}
 }
 
 void PlayerHitEffect::InitPos()
