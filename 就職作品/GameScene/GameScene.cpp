@@ -7,6 +7,10 @@ const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo): Resultime(120)
 {
+	GetResource.GetXFILE(EnemyBody_M);
+	GetResource.GetXFILE(EnemyHand_M);
+	GetResource.GetXFILE(EnemyHat_M);
+
 	srand(timeGetTime());
 	sceneSwitchState = 1;		//最初は明転させる
 
@@ -202,6 +206,10 @@ void GameScene::Render2D(void)
 		pickUpInstructions->Draw();
 		remainingBallUI->Draw();
 		timeUI->Draw();
+		for (auto *TimePenaltyUI : timePenaltyUI)
+		{
+			TimePenaltyUI->Draw();
+		}
 		gameObjective->Draw();
 	}
 	else
@@ -363,7 +371,8 @@ bool GameScene::Update()
 		{
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
-			GetPlayer.HitSnowBall();			//HIT時のメソッドを呼ぶ
+			eventManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
+			timePenaltyUI.push_back(new TimePenaltyUI(3));
 
 			//----------------------------------------------------
 			//HitEffecctの処理(Effectのクラスに変数を持たせた方がいいのでは？)
@@ -433,7 +442,16 @@ bool GameScene::Update()
 			CollisionObserver::EnemyToMapObj(GetEnemyManager.enemy[ei], mapObjManager->mapObj[mj]);
 		}
 	}
+	for (unsigned int i = 0; i < timePenaltyUI.size(); i++)
+	{
+		if (timePenaltyUI[i]->Update() == false)
+		{
+			delete timePenaltyUI[i];
+			timePenaltyUI.erase(timePenaltyUI.begin() + i);
+			i--;
+		}
 
+	}
 	GetSpawnerManager.Update(*stageBorder);
 	//----------------------------------------------------------------------------------------
 	if (eventManager->Update(GetEnemyManager, GetDecorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する

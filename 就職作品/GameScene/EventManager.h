@@ -14,8 +14,9 @@ public:
 	~EventManager();
 	bool Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder);
 
-	void AddScore(int Score);
+	//void AddScore(int Score);
 	void DoDecorate(DecorationID ID);			//Œ»ó‚Í”‚¾‚¯‚¾‚ªAƒmƒ‹ƒ}‚Éí—Ş‚È‚Ç‚ğİ‚¯‚é
+	void PlayerTakeDamage();
 
 	void SetTimeLimit(int TimeLimit_Flame);
 	void SetNorm(int Norm);

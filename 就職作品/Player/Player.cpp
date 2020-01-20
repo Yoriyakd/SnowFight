@@ -8,7 +8,7 @@ extern ResourceManager *resourceManager;
 //publicメソッド
 //=====================================
 
-Player::Player() :remainingBalls(StartBallCnt), HP(StartHP), carryFlag(false), carryDecorationID(NUM_ITEM){
+Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryDecorationID(NUM_ITEM){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
@@ -258,16 +258,6 @@ void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)
 	CollisionSphere->pos = pos;
 	CollisionSphere->radius = CollisionRadius;
 
-}
-
-void Player::HitSnowBall()
-{
-	HP--;
-}
-
-int Player::GetHP()
-{
-	return HP;
 }
 
 //=====================================

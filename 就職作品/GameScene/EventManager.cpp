@@ -29,14 +29,19 @@ bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & Decora
 	return true;
 }
 
-void EventManager::AddScore(int Score)
-{
-	score = Score;
-}
+//void EventManager::AddScore(int Score)
+//{
+//	score = Score;
+//}
 
 void EventManager::DoDecorate(DecorationID ID)
 {
 	nowCnt += 1;
+}
+
+void EventManager::PlayerTakeDamage()
+{
+	timeLimit_Frame -= 3 * GameFPS;
 }
 
 

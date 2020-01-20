@@ -245,6 +245,7 @@
     <ClCompile Include="UI\GameObjective.cpp" />
     <ClCompile Include="UI\PickUpInstructions.cpp" />
     <ClCompile Include="UI\RemainingBallUI.cpp" />
+    <ClCompile Include="UI\TimePenaltyUI.cpp" />
     <ClCompile Include="UI\TimeUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +308,7 @@
     <ClInclude Include="UI\GameObjective.h" />
     <ClInclude Include="UI\PickUpInstructions.h" />
     <ClInclude Include="UI\RemainingBallUI.h" />
+    <ClInclude Include="UI\TimePenaltyUI.h" />
     <ClInclude Include="UI\TimeUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

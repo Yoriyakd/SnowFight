@@ -36,9 +36,6 @@ public:
 	const D3DXMATRIX GetMat(void);
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 
-	void HitSnowBall();				//雪玉がHITしたときの処理
-	int GetHP();
-
 	void Throw(const float PowerPCT);
 
 	bool IsThrowAnything();
@@ -56,14 +53,12 @@ private:
 	//-----------------------------
 	const int StartBallCnt = 10;	//スタート時のボールの数
 	const float MakeTime = 1.5;		//作成に必要な時間
-	const int StartHP = 10;
 
 
 	//-----------------------------
 	//ステータス変数
 	//-----------------------------
 	int remainingBalls;		//残弾数
-	int HP;					//体力
 	float shootPower;
 
 	bool carryFlag;			//デコレーションを運んでいるか

@@ -189,6 +189,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall
 	Player->GetCollisionSphere(&PlayerSphre);				/*当たり判定の球のデータ取得*/
 	SnowBall->GetCollisionSphere(&SnowBallSphre);			/*当たり判定の球のデータ取得*/
 	//---------------------------------------------------------------
+	SnowBallSphre.radius += 3.0f;
 
 	if (SphereCollisionDetection(&SnowBallSphre, &PlayerSphre))
 	{

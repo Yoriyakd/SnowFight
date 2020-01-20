@@ -80,6 +80,7 @@ enum TexName
 	RemainingBallBack_Tex,
 	TimeLogo_Tex,
 	TimeNumber_Tex,
+	TimePenalty_Tex,
 	GameObjectiveBack_Tex,
 	GameObjectiveClear_Tex,
 
@@ -173,6 +174,7 @@ private:
 		{RemainingBallBack_Tex,   TexData{"SnowBallUI.png", 256, 64, NULL}},
 		{TimeLogo_Tex,            TexData{"TimeLogo.png", 194, 46, NULL}},
 		{TimeNumber_Tex,          TexData{"Number_Time.png", 460, 50, NULL}},
+		{TimePenalty_Tex,         TexData{"Minus.png", 46, 46, NULL}},
 		{GameObjectiveBack_Tex,   TexData{"GameObjective.png", 400, 64, NULL}},
 		{GameObjectiveClear_Tex,  TexData{"Clear.png", 400, 64, NULL}},
 

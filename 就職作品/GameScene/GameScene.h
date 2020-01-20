@@ -27,6 +27,7 @@
 #include"../UI/PickUpInstructions.h"
 #include"../UI/RemainingBallUI.h"
 #include"../UI/TimeUI.h"
+#include"../UI/TimePenaltyUI.h"
 #include"../UI/GameObjective.h"
 #include"../Effect/SceneSwitchEffect.h"
 #include"ResultCam.h"
@@ -65,6 +66,7 @@ private:
 	//------------------------------------------
 	RemainingBallUI *remainingBallUI;
 	TimeUI *timeUI;
+	std::vector<TimePenaltyUI*> timePenaltyUI;
 	GameObjective *gameObjective;
 	//------------------------------------------//クラスにまとめる(設計思いつき次第)
 	//リザルト

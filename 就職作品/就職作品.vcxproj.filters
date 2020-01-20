@@ -49,6 +49,12 @@
     <Filter Include="Player\State">
       <UniqueIdentifier>{37d503a4-7c74-4e4c-adfb-d33ea9565084}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\Sound">
+      <UniqueIdentifier>{d0629e29-3f99-41a5-a047-7eb9673a12ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\VFX">
+      <UniqueIdentifier>{944ed0bd-938d-4f1f-b775-2ee2bcf47610}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,15 +96,6 @@
     <ClCompile Include="Map\LoadStageData.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Effect\SnowFrag.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\EffectManager.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\Locus.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapObj.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -113,9 +110,6 @@
     </ClCompile>
     <ClCompile Include="Enemy\Kamakura.cpp">
       <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\EnemyDeathAnime.cpp">
-      <Filter>Effect</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp">
       <Filter>Player</Filter>
@@ -168,20 +162,11 @@
     <ClCompile Include="UI\TimeUI.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Effect\SceneSwitchEffect.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\ResultCam.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
     <ClCompile Include="UI\GameObjective.cpp">
       <Filter>GameScene\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\EnemyHatAnime.cpp">
-      <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\EnemyAnimeManager.cpp">
-      <Filter>Effect</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\GameObjectSpawner.cpp">
       <Filter>GameScene</Filter>
@@ -219,8 +204,32 @@
     <ClCompile Include="Player\MakeSnowBallState.cpp">
       <Filter>Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\EffectManager.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\EnemyAnimeManager.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\EnemyDeathAnime.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\EnemyHatAnime.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\Locus.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
     <ClCompile Include="Effect\PlayerHitEffect.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\SceneSwitchEffect.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\SnowFrag.cpp">
+      <Filter>Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TimePenaltyUI.cpp">
+      <Filter>GameScene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,15 +272,6 @@
     <ClInclude Include="CollisionObserver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Effect\SnowFrag.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect\EffectManager.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect\Locus.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapObj.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -286,9 +286,6 @@
     </ClInclude>
     <ClInclude Include="Enemy\Kamakura.h">
       <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect\EnemyDeathAnime.h">
-      <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerCamera.h">
       <Filter>Player</Filter>
@@ -341,20 +338,11 @@
     <ClInclude Include="UI\TimeUI.h">
       <Filter>GameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Effect\SceneSwitchEffect.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\ResultCam.h">
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="UI\GameObjective.h">
       <Filter>GameScene\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect\EnemyHatAnime.h">
-      <Filter>Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect\EnemyAnimeManager.h">
-      <Filter>Effect</Filter>
     </ClInclude>
     <ClInclude Include="SingletonBase.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -401,8 +389,32 @@
     <ClInclude Include="Player\MakeSnowBallState.h">
       <Filter>Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="Effect\EffectManager.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\EnemyAnimeManager.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\EnemyDeathAnime.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\EnemyHatAnime.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\Locus.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
     <ClInclude Include="Effect\PlayerHitEffect.h">
-      <Filter>Effect</Filter>
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\SceneSwitchEffect.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\SnowFrag.h">
+      <Filter>Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TimePenaltyUI.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
