@@ -7,9 +7,12 @@ const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
 GameScene::GameScene(int StageNo): Resultime(120)
 {
-	GetResource.GetXFILE(EnemyBody_M);
+	
+	test = GetResource.GetSound(InGameBGM);
+
+	/*GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
-	GetResource.GetXFILE(EnemyHat_M);
+	GetResource.GetXFILE(EnemyHat_M);*//*1度読み込むことで軽量化*/
 
 	srand(timeGetTime());
 	sceneSwitchState = 1;		//最初は明転させる
@@ -236,6 +239,9 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
+	test->Play(0, 0, 0);
+
+
 	//---------------------------------------------------------
 	//リザルト中の処理
 	//---------------------------------------------------------

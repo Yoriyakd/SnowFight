@@ -131,6 +131,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="commonObj\ButtonBase.cpp" />
+    <ClCompile Include="commonObj\Function.cpp" />
     <ClCompile Include="commonObj\SkyBox.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -237,6 +238,8 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Sound\Sound2D.cpp" />
+    <ClCompile Include="Sound\wavread.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -304,6 +307,8 @@
     <ClInclude Include="SceanSwitcher\SceneBase.h" />
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
     <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="Sound\Sound2D.h" />
+    <ClInclude Include="Sound\wavread.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="UI\GameObjective.h" />
     <ClInclude Include="UI\PickUpInstructions.h" />

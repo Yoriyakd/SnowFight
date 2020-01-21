@@ -231,6 +231,15 @@
     <ClCompile Include="UI\TimePenaltyUI.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\Function.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\wavread.cpp">
+      <Filter>Effect\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\Sound2D.cpp">
+      <Filter>Effect\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -415,6 +424,12 @@
     </ClInclude>
     <ClInclude Include="UI\TimePenaltyUI.h">
       <Filter>GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\wavread.h">
+      <Filter>Effect\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\Sound2D.h">
+      <Filter>Effect\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

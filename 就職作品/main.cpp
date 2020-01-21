@@ -33,129 +33,9 @@ bool gameFullScreen;	// フルスクリーン（true,false)
 HWND hwnd;		//ウインドウID(みたいなもの)
 const int GameFPS = 60;		//ゲームのFPS指定
 
-void DrawMesh(XFILE *XFile)
-{
-	for (DWORD i = 0; i < XFile->NumMaterial; i++)
-	{
-		lpD3DDevice->SetMaterial(&(XFile->Mat[i]));
-		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
-		XFile->lpMesh->DrawSubset(i);
-	}
-}
 
-void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color)
-{
-	for (DWORD i = 0; i < XFile->NumMaterial; i++)
-	{
-		//XFILE  TmpXFILE;
-		D3DMATERIAL9 TmpMat;
-		TmpMat = *XFile->Mat;
-		TmpMat.Diffuse = Color;
-
-		lpD3DDevice->SetMaterial(&(TmpMat));
-		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
-		XFile->lpMesh->DrawSubset(i);
-	}
-}
-
-//座標、半径、座標、半径
-//戻り値　HIT == true 当たってなかったら == falsle
-bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB)
-{
-	float targetLengh;
-	targetLengh = D3DXVec3Length(&(dataA->pos - dataB->pos));
-	if (targetLengh <= dataA->radius + dataB->radius)
-	{
-		return true;
-	}
-	return false;
-}
-
-
-bool MeshCollisionDetection(XFILE *Mesh, D3DXMATRIX *MeshMat, D3DXVECTOR3 *LayPos, D3DXVECTOR3 *LayVec, float *MeshDis, DWORD *PolyNo)
-{
-	D3DXMATRIX InvMat;
-	D3DXMatrixInverse(&InvMat, NULL, &*MeshMat);
-
-	D3DXVECTOR3 LocalPos, LocalVec;
-
-	D3DXVec3TransformCoord(&LocalPos, &*LayPos, &InvMat);		//レイ発射位置
-	D3DXVec3TransformNormal(&LocalVec, &*LayVec, &InvMat);			//レイ発射方向
-
-	BOOL Hit;
-
-	if (MeshDis == nullptr)
-	{
-		MeshDis = NULL;
-	}
-
-	if (PolyNo == nullptr)
-	{
-		PolyNo = NULL;
-	}
-
-	D3DXIntersect(Mesh->lpMesh, &LocalPos, &LocalVec, &Hit, PolyNo, NULL, NULL, &*MeshDis, NULL, NULL);
-	if (Hit == FALSE)
-	{
-		if (MeshDis != nullptr)		//値が何か入っている場合HITしていないことを表す-1を入れる
-		{
-			*MeshDis = -1;
-		}
-		return false;
-	}
-	return true;
-}
-
-D3DXVECTOR3 ThrowingInit(const ThrowingInitValue* ThrowingInitValue, D3DXMATRIX *Mat)
-{
-	float Power;
-	D3DXVECTOR3 moveVec;
-	Power = ((ThrowingInitValue->powerRate / 100)) * 3;		//飛距離調整のための3
-
-	D3DXMatrixTranslation(Mat, ThrowingInitValue->shootPos.x, ThrowingInitValue->shootPos.y, ThrowingInitValue->shootPos.z);			//発射位置
-
-	moveVec = D3DXVECTOR3(0, (Power * tan(D3DXToRadian(ThrowingInitValue->XAxisAng))), (Power * cos(D3DXToRadian(ThrowingInitValue->XAxisAng))));	//発射のベクトルを求める
-
-	return moveVec;
-}
-
-void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float AnimeFrame)
-{
-	D3DXQUATERNION StartQua, NowQua, EndQua;
-
-	//行列をクオータニオンに変換
-
-	D3DXQuaternionRotationMatrix(&NowQua, NowMat);
-	D3DXQuaternionRotationMatrix(&StartQua, StartMat);
-	D3DXQuaternionRotationMatrix(&EndQua, EndMat);
-
-	D3DXQuaternionSlerp(&NowQua, &StartQua, &EndQua, AnimeFrame);
-
-	D3DXMatrixRotationQuaternion(OutMat, &NowQua);
-
-	D3DXVECTOR3 StartPos, NowPos, EndPos;
-
-	StartPos = D3DXVECTOR3(StartMat->_41, StartMat->_42, StartMat->_43);
-	EndPos = D3DXVECTOR3(EndMat->_41, EndMat->_42, EndMat->_43);
-
-	D3DXVec3Lerp(&NowPos, &StartPos, &EndPos, AnimeFrame);
-
-	OutMat->_41 = NowPos.x;
-	OutMat->_42 = NowPos.y;
-	OutMat->_43 = NowPos.z;
-}
-
-void MakeBillBoardMat(D3DXMATRIX *OutMat, const D3DXMATRIX *_mView)
-{
-	D3DXMATRIX TmpMview;
-	TmpMview = *_mView;
-
-	TmpMview._41 = 0;			//移動成分を削除
-	TmpMview._42 = 0;
-	TmpMview._43 = 0;
-
-	D3DXMatrixInverse(OutMat, NULL, &TmpMview);		//ビルボード用視点行列
-}
+LPDIRECTSOUND8 lpDSound;	//DirectSoundオブジェクト
+LPDIRECTSOUNDBUFFER lpSPrimary;
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
@@ -346,6 +226,39 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	timeBeginPeriod(1);
 
+	//---------------------DirectSound関連-----------------------
+	DirectSoundCreate8(NULL, &lpDSound, NULL);
+
+	//協調レベルを設定
+	lpDSound->SetCooperativeLevel(hwnd, DSSCL_PRIORITY);
+
+	// プライマリ・バッファの作成
+	// DSBUFFERDESC構造体を設定
+	DSBUFFERDESC dsbdesc;
+	ZeroMemory(&dsbdesc, sizeof(DSBUFFERDESC));
+	dsbdesc.dwSize = sizeof(DSBUFFERDESC);
+	// プライマリ・バッファを指定
+	dsbdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D | DSBCAPS_PRIMARYBUFFER;
+	dsbdesc.dwBufferBytes = 0;
+	dsbdesc.lpwfxFormat = NULL;
+
+	// バッファを作る
+	lpDSound->CreateSoundBuffer(&dsbdesc, &lpSPrimary, NULL);
+
+	// プライマリ・バッファのWaveフォーマットを設定
+	// 　　　優先協調レベル以上の協調レベルが設定されている必要があります．
+	WAVEFORMATEX pcmwf;
+	ZeroMemory(&pcmwf, sizeof(WAVEFORMATEX));
+	pcmwf.wFormatTag = WAVE_FORMAT_PCM;
+	pcmwf.nChannels = 2;		// ２チャンネル（ステレオ）
+	pcmwf.nSamplesPerSec = 44100;	// サンプリング・レート　44.1kHz
+	pcmwf.nBlockAlign = 4;
+	pcmwf.nAvgBytesPerSec = pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
+	pcmwf.wBitsPerSample = 16;		// 16ビット
+	lpSPrimary->SetFormat(&pcmwf);
+
+	CoInitialize(NULL);
+
 	// ゲームに関する初期化処理 ---------------------------
 	SceneSwitcher::Create();
 	ResourceManager::Create();
@@ -404,6 +317,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	// Direct3D オブジェクトを解放
 	lpD3DDevice->Release();
 	lpD3D->Release();
+
+	lpSPrimary->Release();
+	lpDSound->Release();
+
+	CoUninitialize();
 
 	return (int)msg.wParam;
 }

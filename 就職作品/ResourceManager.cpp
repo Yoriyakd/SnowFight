@@ -1,39 +1,12 @@
 #include "ResourceManager.h"
 
-void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color);
-void LoadMesh(struct XFILE *XFile, const char FName[]);
-void ReleaseMesh(struct XFILE *XFile);
-
-void ResourceManager::AllDelete(void)
-{
-	for (auto ite = XFILEList.begin(); ite != XFILEList.end(); ite++)
-	{
-		ReleaseMesh(&ite->second);
-	}
-
-	XFILEList.clear();
-
-	//型推論 auto
-	for (auto ite = TextureList.begin(); ite != TextureList.end(); ite++)
-	{
-		ite->second->Release();
-		//その項目の値(図の右側)
-	}
-	TextureList.clear();
-}
-
-ResourceManager::~ResourceManager()
-{
-	AllDelete();
-}
-
-XFILE ResourceManager::GetXFILE(enum MeshName MeshName)
+XFILE ResourceManager::GetXFILE(enum MeshName _MeshName)
 {
 	XFILE TmpXFILE;
 
 	std::string FileName;
 
-	FileName = MeshFileName[MeshName];
+	FileName = MeshFileName[_MeshName];
 
 	if (XFILEList.find(FileName) == XFILEList.end())		//最後まで検索する
 	{
@@ -52,20 +25,17 @@ XFILE ResourceManager::GetXFILE(enum MeshName MeshName)
 		//リストに登録する
 		XFILEList[FileName] = TmpXFILE;
 	}
-	else
-	{
-		TmpXFILE = XFILEList[FileName];
-	}
-	return TmpXFILE;
+	
+	return XFILEList[FileName];
 }
 
-LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName TexName)
+LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName _TexName)
 {
 	LPDIRECT3DTEXTURE9 Tmp;
 
 	TexData TexData;
 
-	TexData = TexFileName[TexName];
+	TexData = TexFileName[_TexName];
 
 	if (TextureList.find(TexData.FileName) == TextureList.end())		//最後まで検索する
 	{
@@ -73,23 +43,139 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName TexName)
 		FilePath += TexData.FileName;		//パスの作成
 		//テクスチャをロードする
 		LoadTexture(&Tmp, &FilePath[0], TexData.Width, TexData.Hight, TexData.Color);
-		
+
 		//引数で渡されたFileNameのところにTmpに入ったテクスチャを入れる
 		TextureList[TexData.FileName] = Tmp;
 	}
-	else
-	{
-		Tmp = TextureList[TexData.FileName];
-	}
-	return Tmp;
+	
+	return TextureList[TexData.FileName];
 }
+
+LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(SoundName _SoundName)
+{
+	LPDIRECTSOUNDBUFFER8 Tmp;
+
+	std::string FileName;
+
+	FileName = SoundFileName[_SoundName];
+
+	if (SoundBufferList.find(FileName) == SoundBufferList.end())
+	{
+		std::string FilePath = "data/";
+		FilePath += FileName;				//パスの作成
+
+		//ロードする
+	LoadWAVE(Tmp, &FilePath[0]);
+
+		SoundBufferList[FileName] = Tmp;
+	}
+	
+	return SoundBufferList[FileName];
+}
+
+//-------------------------------------------------------------------
+//privateメソッド
+//-------------------------------------------------------------------
+
+void ResourceManager::LoadWAVE(LPDIRECTSOUNDBUFFER8 &_Buffer, const char fname[])
+{
+	HRESULT hr;
+
+	// WAVEファイルを開く
+	CWaveSoundRead WaveFile;
+	WaveFile.Open((char*)fname);
+
+	// セカンダリ・バッファを作成する
+	// DSBUFFERDESC構造体を設定
+	DSBUFFERDESC dsbdesc;
+	ZeroMemory(&dsbdesc, sizeof(DSBUFFERDESC));
+	dsbdesc.dwSize = sizeof(DSBUFFERDESC);
+
+	//(DSBCAPS_CTRL3D=３Ｄサウンドを使用)
+	dsbdesc.dwFlags = DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRL3D |
+		DSBCAPS_CTRLVOLUME | /*DSBCAPS_CTRLPAN |*/ DSBCAPS_CTRLFREQUENCY;
+	dsbdesc.dwBufferBytes = WaveFile.m_ckIn.cksize;
+	dsbdesc.lpwfxFormat = WaveFile.m_pwfx;
+
+	//3DサウンドのHELアルゴリズムを選択
+	dsbdesc.guid3DAlgorithm = DS3DALG_NO_VIRTUALIZATION;
+	//	dsbdesc.guid3DAlgorithm=DS3DALG_DEFAULT;
+
+		// バッファを作る
+	LPDIRECTSOUNDBUFFER pDSTmp;
+	//	lpDSound->CreateSoundBuffer(&dsbdesc, &pDSData, NULL); 
+	lpDSound->CreateSoundBuffer(&dsbdesc, &pDSTmp, NULL);
+	pDSTmp->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&_Buffer);
+	pDSTmp->Release();
+
+	// セカンダリ・バッファにWaveデータを書き込む
+	LPVOID lpvPtr1;		// 最初のブロックのポインタ
+	DWORD dwBytes1;		// 最初のブロックのサイズ
+	LPVOID lpvPtr2;		// ２番目のブロックのポインタ
+	DWORD dwBytes2;		// ２番目のブロックのサイズ
+
+	hr = _Buffer->Lock(0, WaveFile.m_ckIn.cksize, &lpvPtr1, &dwBytes1, &lpvPtr2, &dwBytes2, 0);
+
+	// DSERR_BUFFERLOSTが返された場合，Restoreメソッドを使ってバッファを復元する
+	if (DSERR_BUFFERLOST == hr)
+	{
+		_Buffer->Restore();
+		hr = _Buffer->Lock(0, WaveFile.m_ckIn.cksize, &lpvPtr1, &dwBytes1, &lpvPtr2, &dwBytes2, 0);
+	}
+	if (SUCCEEDED(hr))
+	{
+		// ロック成功
+
+		// ここで，バッファに書き込む
+		// バッファにデータをコピーする
+		UINT rsize;
+		WaveFile.Read(dwBytes1, (LPBYTE)lpvPtr1, &rsize);
+		if (0 != dwBytes2)
+			WaveFile.Read(dwBytes2, (LPBYTE)lpvPtr2, &rsize);
+
+		// 書き込みが終わったらすぐにUnlockする．
+		hr = _Buffer->Unlock(lpvPtr1, dwBytes1, lpvPtr2, dwBytes2);
+	}
+}
+
+void ResourceManager::AllDelete(void)
+{
+	for (auto ite = XFILEList.begin(); ite != XFILEList.end(); ite++)
+	{
+		ReleaseMesh(&ite->second);
+	}
+
+	XFILEList.clear();
+
+	//型推論 auto
+	for (auto ite = TextureList.begin(); ite != TextureList.end(); ite++)
+	{
+		ite->second->Release();
+		//その項目の値(図の右側)
+	}
+	TextureList.clear();
+
+	for (auto ite = SoundBufferList.begin(); ite != SoundBufferList.end(); ite++)
+	{
+		ite->second->Release();
+		ite->second->Release();
+	}
+	SoundBufferList.clear();
+}
+
+ResourceManager::~ResourceManager()
+{
+	AllDelete();
+}
+
+
 
 ResourceManager::ResourceManager()
 {
 
 }
 
-void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color)
+void ResourceManager::LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color)
 {
 	if (W == 0)W = D3DX_DEFAULT;
 	if (H == 0)H = D3DX_DEFAULT;
@@ -98,7 +184,7 @@ void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3
 
 
 
-void LoadMesh(struct XFILE *XFile, const char FName[])
+void ResourceManager::LoadMesh(struct XFILE *XFile, const char FName[])
 {
 	LPD3DXBUFFER lpD3DXBuffer;
 
@@ -121,7 +207,7 @@ void LoadMesh(struct XFILE *XFile, const char FName[])
 	lpD3DXBuffer->Release();
 }
 
-void ReleaseMesh(struct XFILE *XFile)
+void ResourceManager::ReleaseMesh(struct XFILE *XFile)
 {
 	if (XFile->lpMesh != NULL) {
 		DWORD i;

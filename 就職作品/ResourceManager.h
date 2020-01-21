@@ -99,16 +99,23 @@ enum TexName
 	Ground_Tex,
 };
 
+enum SoundName {
+	InGameBGM,
+};
+
 class ResourceManager : public SingletonBase<ResourceManager>
 {
 public:
 	friend class SingletonBase<ResourceManager>;			//SingletonBaseでのインスタンス作成削除は許可
 
 	//enumで定義されたMeshNameを入れる
-	XFILE			  GetXFILE(enum MeshName);
+	XFILE			     GetXFILE(enum MeshName);
 
-	//ファイル名を指定,  横幅,   高さ,  カラーキー
-	LPDIRECT3DTEXTURE9 GetTexture(enum TexName);
+	//enumで定義されたTexNameを入れる
+	LPDIRECT3DTEXTURE9   GetTexture(enum TexName);
+
+	//enumで定義されたSoundNameを入れる
+	LPDIRECTSOUNDBUFFER8 GetSound(enum SoundName);
 protected:
 
 private:
@@ -116,7 +123,19 @@ private:
 	~ResourceManager();
 
 	std::map<std::string, XFILE> XFILEList;				//ポインタ型で宣言するように変える		ポインタ型で宣言した場合そのポインタ変数の削除が必要
+
 	std::map<std::string, LPDIRECT3DTEXTURE9> TextureList;
+
+	std::map<std::string, LPDIRECTSOUNDBUFFER8> SoundBufferList;
+
+	void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color);
+
+	void LoadMesh(struct XFILE *XFile, const char FName[]);
+
+	void ReleaseMesh(struct XFILE *XFile);
+
+	void LoadWAVE(LPDIRECTSOUNDBUFFER8 &_Buffer, const char fname[]);
+
 	void AllDelete(void);
 
 	std::map<MeshName, std::string> MeshFileName{
@@ -191,6 +210,11 @@ private:
 		{Hedge_Tex,               TexData{"Hedge.png", 512, 512, NULL}},
 		{Pole_Tex,                TexData{"Pole.png", 512, 512, NULL}},
 		{Ground_Tex,              TexData{"SnowGround.png", 512, 512, NULL}},
+	};
+
+	std::map<SoundName, std::string> SoundFileName{
+		//InGame
+		{InGameBGM, "Test.wav"},
 	};
 };
 ResourceManager* SingletonBase<ResourceManager>::instance = nullptr;		//nullptrで初期化(DirectXの機能を使うためDirectX初期化後に作成する必要がある)staticで最初に確保されていたやつはどこへ...?解放されてないきがするぞ
