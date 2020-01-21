@@ -96,10 +96,15 @@ const D3DXMATRIX Enemy::GetMat(void)
 void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphere * CollisionSphereB)
 {
 	
-	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2.0f, mat._43);		//Y座標要調整☆	
+	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2.0f, mat._43);
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
 	CollisionSphereA->radius = SphereRadiusHead;
 	CollisionSphereB->radius = SphereRadiusBody;
+}
+
+float Enemy::GetRadisu(void)
+{
+	return SphereRadiusBody;
 }
 
 bool Enemy::GetJumpState()
@@ -302,7 +307,7 @@ void Enemy::ShootSnowBall()
 	ValueTmp.shootPos = OffsetTmp;
 	ValueTmp.YAxisAng = GetToPlayerAng(OffsetTmp);						/*要調整☆*/
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
-	ValueTmp.powerRate = 40.0f + rand() % 5;							/*要調整*/
+	ValueTmp.powerRate = 45.0f + rand() % 5;							/*要調整*/
 
 	GetSnowBallManager.SetSnowBall(&ValueTmp, ENEMY_ID);
 }

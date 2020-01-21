@@ -19,6 +19,7 @@ public:
 	virtual const D3DXVECTOR3 GetPos(void);
 	virtual const D3DXMATRIX GetMat(void);
 	virtual void GetCollisionSphere(CollisionSphere *CollisionSphereA, CollisionSphere *CollisionSphereB);
+	float GetRadisu(void);
 	//ジャンプしているか
 	bool GetJumpState();		
 	//playerとのベクトルを返す

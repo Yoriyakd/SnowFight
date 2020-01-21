@@ -283,12 +283,12 @@ void CollisionObserver::EnemyToMapObj(Enemy *Enemy, MapObj *MapObj)
 
 	TargetLength = D3DXVec3Length(&TargetVec);
 
-	const float PlayerRadius = 3.0f, ObjRadius = MapObj->GetRadius();
+	const float EnemyRadius = Enemy->GetRadisu(), ObjRadius = MapObj->GetRadius();
 
-	if (TargetLength < PlayerRadius + ObjRadius)		//‰¼™ƒvƒŒƒCƒ„[”¼Œa‚ª
+	if (TargetLength < EnemyRadius + ObjRadius)
 	{
 		D3DXVec3Normalize(&TargetVec, &TargetVec);
-		TargetVec *= (PlayerRadius + ObjRadius - TargetLength);
+		TargetVec *= (EnemyRadius + ObjRadius - TargetLength);
 		D3DXMATRIX TmpMat;
 
 		Enemy->PushedObj(TargetVec);

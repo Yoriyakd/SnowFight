@@ -47,7 +47,6 @@ public:
 	bool Update(void);
 
 private:
-	LPDIRECTSOUNDBUFFER8 test;
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;

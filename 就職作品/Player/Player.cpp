@@ -60,7 +60,6 @@ Player::~Player()
 bool Player::Update(PickUpInstructions &PickUpInstructions)
 {
 	pos = GetPlayerCam.GetPos();		//カメラの座標をセット
-	//pos = D3DXVECTOR3(100, 5, 30);		//デバック用☆
 
 	//-----------------------------------------------------
 	//デコレーション周り
@@ -123,11 +122,6 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 	//保持している雪玉、デコレーションの行列
 	//-------------------------------------------------------
 	//carryItem->Updata();
-
-	if (GetAsyncKeyState('O') & 0x8000)		//デバッグ ☆
-	{
-		remainingBalls += 10;
-	}
 
 	if (remainingBalls > 999)
 	{

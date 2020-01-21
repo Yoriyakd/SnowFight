@@ -8,11 +8,10 @@ const float SnowBallGravity = -0.05f;						//d—Í	¦•K‚¸•‰‚Ì’l‚Ì‚·‚é
 GameScene::GameScene(int StageNo): Resultime(120)
 {
 	
-	test = GetResource.GetSound(InGameBGM);
 
-	/*GetResource.GetXFILE(EnemyBody_M);
+	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
-	GetResource.GetXFILE(EnemyHat_M);*//*1“x“Ç‚Ýž‚Þ‚±‚Æ‚ÅŒy—Ê‰»*/
+	GetResource.GetXFILE(EnemyHat_M);/*1“x“Ç‚Ýž‚Þ‚±‚Æ‚ÅŒy—Ê‰»*/
 
 	srand(timeGetTime());
 	sceneSwitchState = 1;		//Å‰‚Í–¾“]‚³‚¹‚é
@@ -239,7 +238,6 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	test->Play(0, 0, 0);
 
 
 	//---------------------------------------------------------
