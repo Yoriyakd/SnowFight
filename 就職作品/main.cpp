@@ -49,11 +49,11 @@ LRESULT APIENTRY WndFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		switch (wParam) {
 		case VK_ESCAPE:
-			if (MessageBox(NULL, "終了しますか？", "終了確認", MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION) == IDYES)
-			{
+			/*if (MessageBox(NULL, "終了しますか？", "終了確認", MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION) == IDYES)
+			{*/
 				PostQuitMessage(0);
 				return 0;
-			}
+			//}
 		}
 		return 0;
 
