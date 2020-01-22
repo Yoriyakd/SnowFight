@@ -8,7 +8,7 @@ extern ResourceManager *resourceManager;
 //publicメソッド
 //=====================================
 
-Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryDecorationID(NUM_ITEM){
+Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryObjID(NUM_ITEM_Dummy){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
@@ -47,8 +47,10 @@ Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryDecoratio
 	ballMesh = GetResource.GetXFILE(SnowBall_M);
 	D3DXMatrixTranslation(&ballOffsetMat, 0.0f, -3.0f, 1.5f);		//プレイヤーといくら離すか
 
-	//carryItem = new CarryItem(&armRMat);
+	carryItem = new CarryItem(&armRMat);
 	playerState = new PlayerStateIdle(&armLOffsetMat, &armROffsetMat);
+
+	carryItem->SetNowCarryItemPointer(&carryObjID);
 }
 
 Player::~Player()
@@ -71,7 +73,7 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 		{
 			if (GetAsyncKeyState('F') & 0x8000)
 			{
-				carryDecorationID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
+				carryObjID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
 				carryFlag = true;
 			}
 		}
@@ -81,13 +83,26 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 		PickUpInstructions.TurnOffDisplay();
 	}
 
+	if (carryFlag == false)
+	{
+		if (remainingBalls > 0)
+		{
+			carryObjID = SNOW_BALL;
+		}
+		else
+		{
+			carryObjID = NUM_ITEM_Dummy;
+		}
+	}
+
+
 	//-----------------------------------------------------
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(GetPlayerCam.GetCamAngY()));		//カメラの回転から行列作成
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(GetPlayerCam.GetCamAngX()));		//カメラの回転から行列作成
 
 
-	MakeBall();
+	MakeBall();			//stateに組み込む
 
 	//-------------------------------------------------------
 	//靴の行列作成
@@ -121,7 +136,7 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 	//-------------------------------------------------------
 	//保持している雪玉、デコレーションの行列
 	//-------------------------------------------------------
-	//carryItem->Updata();
+	carryItem->Updata();
 
 	if (remainingBalls > 999)
 	{
@@ -225,7 +240,7 @@ void Player::Draw(void)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
 	DrawMesh(&armLMesh);
 
-	//carryItem->Draw();
+	carryItem->Draw();
 }
 
 int Player::GetRemainingBalls()
@@ -269,12 +284,21 @@ void Player::Throw(const float PowerPct)
 		DropPoinOffset = D3DXVECTOR3(0, 2.0f, 5.0f);		//プレイヤーの少し前に落とすようにする
 		D3DXVec3TransformCoord(&DropPoinOffset, &DropPoinOffset, &rotMatY);	//回転を考慮したベクトル作成
 
-		GetDecorationManager.Throw(carryDecorationID, &MakeThrowValue(PowerPct));
+		GetDecorationManager.Throw(carryObjID, &MakeThrowValue(PowerPct));
 		return;
 	}
 
 	GetSnowBallManager.SetSnowBall(&MakeThrowValue(PowerPct), PLAYER_ID);
 	remainingBalls--;		//発射したら残数を1減らす
+
+	if (remainingBalls > 0)
+	{
+		carryObjID = SNOW_BALL;
+	}
+	else
+	{
+		carryObjID = NUM_ITEM_Dummy;
+	}
 }
 
 bool Player::IsThrowAnything()
@@ -300,6 +324,7 @@ void Player::MakeBall()
 	{
 		GetPlayerCam.SetMakeSnowBallFlag(true);
 		shootPower = 0;
+		carryObjID = NUM_ITEM_Dummy;			//作るときは表示しない（消えてるところがみえないように変更する)☆
 
 		if (GetPlayerCam.GetHasPosed() == true)
 		{

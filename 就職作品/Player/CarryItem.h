@@ -1,6 +1,7 @@
 #pragma once
 #include"../main.h"
 #include"../ResourceManager.h"
+#include"../Item/DecorationBase.h"
 
 //------------------------------------------------------------------------
 //
@@ -12,9 +13,13 @@ public:
 	~CarryItem();
 	void Draw();
 	void Updata();
+	void SetNowCarryItemPointer(const CarryObjectID *_ID);
 
-	XFILE* nowCarryItem;
-	XFILE RedBallMesh, BlueBallMesh, YellowBallMesh;
+private:
+	const CarryObjectID *id;
+	XFILE* nowCarryItemMesh;
+	XFILE RedBallMesh, BlueBallMesh, YellowBallMesh, SnowBallMesh;
 	D3DXMATRIX itemOffsetMat, itemMat;
+	D3DXMATRIX ScalingMat;		//デコレーションを小さくする行列
 	const D3DXMATRIX* armRMat_p;		//腕の行列のポインタを保存
 };

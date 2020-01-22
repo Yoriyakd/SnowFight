@@ -109,7 +109,7 @@ bool DecorationBase::GetPicUpFlag(void)
 	return picUpFlag;
 }
 
-DecorationID DecorationBase::GetID(void)
+CarryObjectID DecorationBase::GetID(void)
 {
 	return decorationID;
 }

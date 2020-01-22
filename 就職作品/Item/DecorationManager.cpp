@@ -29,7 +29,7 @@ void DecorationManager::DeleteToResult(void)
 	}
 }
 
-void DecorationManager::NewDecoration(D3DXVECTOR3 *_Pos, DecorationID ID)
+void DecorationManager::NewDecoration(D3DXVECTOR3 *_Pos, CarryObjectID ID)
 {
 	switch (ID)
 	{
@@ -56,13 +56,13 @@ bool DecorationManager::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 	return false;
 }
 
-DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
+CarryObjectID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 {
 	for (unsigned int i = 0; i < decoration.size(); i++)
 	{
 		if (decoration[i]->GetPicUpFlag() == true)		//拾えるならアイテムのIDを返す
 		{
-			DecorationID TmpID;
+			CarryObjectID TmpID;
 			TmpID = decoration[i]->GetID();
 			delete decoration[i];							//インスタンス削除
 			decoration.erase(decoration.begin() + i);			//配列削除
@@ -70,10 +70,10 @@ DecorationID DecorationManager::PickUp(const D3DXVECTOR3 * _Pos)
 			return TmpID;
 		}
 	}
-	return NUM_ITEM;			
+	return NUM_ITEM_Dummy;			
 }
 
-void DecorationManager::Throw(DecorationID ID, ThrowingInitValue * ThrowingInitValue)
+void DecorationManager::Throw(CarryObjectID ID, ThrowingInitValue * ThrowingInitValue)
 {
 	switch (ID)
 	{

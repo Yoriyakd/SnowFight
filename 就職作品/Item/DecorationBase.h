@@ -1,7 +1,7 @@
 #pragma once
 #include"../main.h"
 
-enum DecorationID{RED_BALL, BLUE_BALL, YELLOW_BALL, NUM_ITEM};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
+enum CarryObjectID{RED_BALL, BLUE_BALL, YELLOW_BALL, SNOW_BALL, NUM_ITEM_Dummy};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
 
 //------------------------------------------------------------------------
 //デコレーションの基底クラス継承して使う
@@ -20,7 +20,7 @@ public:
 
 	D3DXVECTOR3 GetPos();
 	bool GetPicUpFlag(void);
-	DecorationID GetID(void);
+	CarryObjectID GetID(void);
 	D3DXVECTOR3 GetMoveVec();				//グローバルの移動ベクトルを渡す
 
 	void SetDecoratedState(bool);					//状態を更新
@@ -32,7 +32,7 @@ protected:
 	D3DXVECTOR3 pos;
 	D3DXMATRIX mat;
 	XFILE mesh;
-	DecorationID decorationID;
+	CarryObjectID decorationID;
 	D3DXVECTOR3 moveVec;
 private:
 	bool picUpFlag;			//拾える状態か

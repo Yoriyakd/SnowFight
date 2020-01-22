@@ -62,7 +62,7 @@ private:
 	float shootPower;
 
 	bool carryFlag;			//デコレーションを運んでいるか
-	DecorationID carryDecorationID;		//運んでいるデコレーションの内容
+	CarryObjectID carryObjID;		//運んでいるデコレーションの内容
 	
 	//-----------------------------
 	//雪玉投擲関連
@@ -98,7 +98,7 @@ private:
 	//-----------------------------
 	//保持している雪玉、デコレーションの表示
 	//-----------------------------
-	//CarryItem* carryItem;
+	CarryItem* carryItem;
 	
 	
 
@@ -117,8 +117,6 @@ private:
 	//-----------------------------
 	//privateメソッド
 	//-----------------------------
-	//Updateで呼ぶ	左クリックで球かデコレーションが出る		引数にsnowBallManagerをポインタで渡す
-	//void Throw(void);
 	//雪玉を作成する	右クリック
 	void MakeBall();
 	//靴の雪玉作成時のアニメーション

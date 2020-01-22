@@ -15,7 +15,7 @@ public:
 	bool Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder);
 
 	//void AddScore(int Score);
-	void DoDecorate(DecorationID ID);			//現状は数だけだが、ノルマに種類などを設ける
+	void DoDecorate(CarryObjectID ID);			//現状は数だけだが、ノルマに種類などを設ける
 	void PlayerTakeDamage();
 
 	void SetTimeLimit(int TimeLimit_Flame);

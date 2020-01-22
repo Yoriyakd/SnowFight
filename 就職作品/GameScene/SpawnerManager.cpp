@@ -31,7 +31,7 @@ void SpawnerManager::Update(StageBorder& StageBorder)
 		SpownPoint = D3DXVECTOR3(float(rand() % (int)StageBorder.Right), 0.0f, float(rand() % (int)StageBorder.Top));
 		for (auto i = 0; i < TmpDecoCnt; i++)
 		{
-			GetDecorationManager.NewDecoration(&SpownPoint, (DecorationID)(rand() % NUM_ITEM));
+			GetDecorationManager.NewDecoration(&SpownPoint, (CarryObjectID)(rand() % NUM_ITEM_Dummy));
 		}
 	}
 

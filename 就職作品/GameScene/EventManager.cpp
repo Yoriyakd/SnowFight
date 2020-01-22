@@ -34,7 +34,7 @@ bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & Decora
 //	score = Score;
 //}
 
-void EventManager::DoDecorate(DecorationID ID)
+void EventManager::DoDecorate(CarryObjectID ID)
 {
 	nowCnt += 1;
 }

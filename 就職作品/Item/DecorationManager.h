@@ -15,11 +15,11 @@ public:
 	void DeleteToResult(void);
 	std::vector<DecorationBase*> decoration;
 
-	void NewDecoration(D3DXVECTOR3 *_Pos, DecorationID DecorationID);
+	void NewDecoration(D3DXVECTOR3 *_Pos, CarryObjectID CarryObjectID);
 
 	bool CheckForCanPicUp(const D3DXVECTOR3 *_Pos);
-	DecorationID PickUp(const D3DXVECTOR3 *_Pos);
-	void Throw(DecorationID ID, ThrowingInitValue * ThrowingInitValue);
+	CarryObjectID PickUp(const D3DXVECTOR3 *_Pos);
+	void Throw(CarryObjectID ID, ThrowingInitValue * ThrowingInitValue);
 
 	void Draw(void);
 	void Updata(void);
