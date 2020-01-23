@@ -1,14 +1,11 @@
 #include "Player.h"
 #include"../GameScene/GameScene.h"
 
-extern ResourceManager *resourceManager;
-
-
 //=====================================
 //publicメソッド
 //=====================================
 
-Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryObjID(NUM_ITEM_Dummy){
+Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryObjID(NUM_ITEM_Dummy), makingTimeCnt(0.0f), canMakeSnowBallFlag(true){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
@@ -56,7 +53,7 @@ Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryObjID(NUM
 Player::~Player()
 {
 	delete playerState;
-	//delete carryItem;
+	delete carryItem;
 }
 
 bool Player::Update(PickUpInstructions &PickUpInstructions)
@@ -66,43 +63,49 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 	//-----------------------------------------------------
 	//デコレーション周り
 	//-----------------------------------------------------
+	
 	if (GetDecorationManager.CheckForCanPicUp(&pos) == true)			//拾えるかのチェックだけ		
-	{//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
+	{
+		//運んでいるときは持ち運べない予定なので、はこんでいるときの指示は別に出す方がよさそう
+
 		PickUpInstructions.TurnOnDisplay();		//拾える時画面に指示を表示
-		if (carryFlag == false)		//今運んでいないなら
+		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 		{
-			if (GetAsyncKeyState('F') & 0x8000)
+			if (carryFlag == false)		//今運んでいないなら
 			{
 				carryObjID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
 				carryFlag = true;
+				canMakeSnowBallFlag = false;		//拾える状態では雪玉作成より拾うことを優先する
+			}
+			else
+			{
+				canMakeSnowBallFlag = true;
 			}
 		}
 	}
 	else
 	{
 		PickUpInstructions.TurnOffDisplay();
+		canMakeSnowBallFlag = true;
 	}
-
-	if (carryFlag == false)
+	
+	if (carryFlag == false)		//Itemを運んでおらず、雪玉を持っていたら雪玉を手に持つ
 	{
 		if (remainingBalls > 0)
 		{
 			carryObjID = SNOW_BALL;
+			carryItem->SetDisplayFlag(true);
 		}
 		else
 		{
-			carryObjID = NUM_ITEM_Dummy;
+			carryItem->SetDisplayFlag(false);
 		}
 	}
-
 
 	//-----------------------------------------------------
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
 	D3DXMatrixRotationY(&rotMatY, D3DXToRadian(GetPlayerCam.GetCamAngY()));		//カメラの回転から行列作成
 	D3DXMatrixRotationX(&rotMatX, D3DXToRadian(GetPlayerCam.GetCamAngX()));		//カメラの回転から行列作成
-
-
-	MakeBall();			//stateに組み込む
 
 	//-------------------------------------------------------
 	//靴の行列作成
@@ -110,7 +113,7 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 	shoesMat = shoesOffsetMat * shoesRotMatX * rotMatY * transMat;		//プレイヤーのX軸は回転しない
 
 	//-------------------------------------------------------
-	//腕の行列作成
+	//腕の行列作成とplayerState管理
 	//-------------------------------------------------------
 	if (playerState != nullptr)
 	{
@@ -290,15 +293,6 @@ void Player::Throw(const float PowerPct)
 
 	GetSnowBallManager.SetSnowBall(&MakeThrowValue(PowerPct), PLAYER_ID);
 	remainingBalls--;		//発射したら残数を1減らす
-
-	if (remainingBalls > 0)
-	{
-		carryObjID = SNOW_BALL;
-	}
-	else
-	{
-		carryObjID = NUM_ITEM_Dummy;
-	}
 }
 
 bool Player::IsThrowAnything()
@@ -313,75 +307,56 @@ void Player::SetShootPower(float ShootPower)
 	 shootPower = ShootPower;
 }
 
-void Player::MakeBall()
+void Player::MakeBallStart()
 {
 	static bool RKyeFlag = false;
-	static float MakeingTimeCnt = 0;
+
 	static float ballSize = 0;
-	static bool AnimeFlag_MKB = false;
 
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	shootPower = 0;
+	carryItem->SetDisplayFlag(false);			//タイミングの調整とplayerに消える瞬間がみえないようにするアニメ挿入☆
+
+	if (GetPlayerCam.GetHasPosed() == true)
 	{
-		GetPlayerCam.SetMakeSnowBallFlag(true);
-		shootPower = 0;
-		carryObjID = NUM_ITEM_Dummy;			//作るときは表示しない（消えてるところがみえないように変更する)☆
+		RKyeFlag = true;
 
-		if (GetPlayerCam.GetHasPosed() == true)
+		makingTimeCnt++;
+		//--------------------------------------------
+		//靴のアニメーションを開始する
+		//--------------------------------------------
+
+		ShoesMakeBallAnime(true);
+
+		ballSize = makingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
+
+		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
+
+		if (makingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
 		{
-			RKyeFlag = true;
-
-			MakeingTimeCnt++;
-			//--------------------------------------------
-			//カメラと靴のアニメーションを開始する
-			//--------------------------------------------
-
-			ShoesMakeBallAnime(true);
-
-			if (AnimeFlag_MKB == false)
-			{
-				delete playerState;
-				playerState = new MakeSnowBallAnime(&armLOffsetMat, &armROffsetMat);
-				AnimeFlag_MKB = true;
-			}
-
-			//--------------------------------------------
-			
-			ballSize = MakeingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
-
-			D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
-
-			if (MakeingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
-			{
-				remainingBalls++;
-				MakeingTimeCnt = 0;		//リセット
-				D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
-			}
-		}
-	}
-	else
-	{
-		GetPlayerCam.SetMakeSnowBallFlag(false);
-		ShoesMakeBallAnime(false);
-		if (RKyeFlag == true)
-		{
-			//SnowFragエフェクト呼ぶ
-			Effect.NewSnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43)));
-
-			RKyeFlag = false;
-			MakeingTimeCnt = 0;		//リセット
+			remainingBalls++;
+			makingTimeCnt = 0;		//リセット
 			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
-
-			//--------------------------------------------
-			//カメラと靴のアニメーションを終了する
-			//--------------------------------------------
-			GetPlayerCam.SetMakeSnowBallFlag(false);
-
-			AnimeFlag_MKB = false;
-			delete playerState;
-			playerState = new PlayerStateIdle(&armLOffsetMat, &armROffsetMat);
 		}
 	}
+}
 
+void Player::MakeBallEnd()
+{
+	Effect.NewSnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43)));	
+	makingTimeCnt = 0;		//リセット
+	D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+
+	carryItem->SetDisplayFlag(true);
+	//--------------------------------------------
+	//カメラと靴のアニメーションを終了する
+	//--------------------------------------------
+	ShoesMakeBallAnime(false);
+	
+}
+
+bool Player::CanMakeSnowBall()
+{
+	return canMakeSnowBallFlag;
 }
 
 void Player::ShoesMakeBallAnime(bool AnimeState)

@@ -1,9 +1,11 @@
-#include "MakeSnowBallState.h"
-const float MakeSnowBallAnime::AnimeSpeed = 0.1f;
+#include"MakeSnowBallState.h"
+#include"PlayerStateIdle.h"
+#include"PlayerCamera.h"
+#include"Player.h"
 
-MakeSnowBallAnime::MakeSnowBallAnime(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
+
+MakeSnowBallState::MakeSnowBallState(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
 {
-	flag = true;
 	frameCnt = 0;
 
 	startMatL = *StartMatL;
@@ -23,33 +25,47 @@ MakeSnowBallAnime::MakeSnowBallAnime(D3DXMATRIX * StartMatL, D3DXMATRIX * StartM
 	endMatR = EndRotTmpR * EndTransTmpR;			//腕を突き出した位置
 }
 
-MakeSnowBallAnime::~MakeSnowBallAnime()
+MakeSnowBallState::~MakeSnowBallState()
 {
 }
 
-PlayerStateBase * MakeSnowBallAnime::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase * MakeSnowBallState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
-	if (animeFrame <= 1)
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		animeFrame += AnimeSpeed;
+		GetPlayerCam.SetMakeSnowBallFlag(true);
+		if (GetPlayerCam.GetHasPosed() == false)return nullptr;			//ポーズが変更し終わってなかったら抜ける
+
+		GetPlayer.MakeBallStart();		//playerでボールを作り始める
+
+		if (animeFrame <= 1)
+		{
+			animeFrame += AnimeSpeed;
+
+			QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, animeFrame);
+			QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, animeFrame);
+			return nullptr;
+		}
 		
-		QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, animeFrame);
-		QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, animeFrame);
+		
+		//腕を前に出すアニメーションが終わった後に雪玉を作る動きをする
+		{
+			D3DXMATRIX TmpRotMatL, TmpRotMatR;
+
+			frameCnt++;			//腕の動きに使う時間経過
+
+			D3DXMatrixRotationY(&TmpRotMatL, -(float)D3DXToRadian(sin(frameCnt / 10)));		//sin関数で揺らす
+			D3DXMatrixRotationY(&TmpRotMatR, (float)D3DXToRadian(sin(frameCnt / 10)));
+
+			*NowMatL = *NowMatL * TmpRotMatL;
+			*NowMatR = *NowMatR * TmpRotMatR;
+		}
 	}
-	else//腕を前に出すアニメーションが終わった後に雪玉を作る動きをする
+	else
 	{
-		D3DXMATRIX TmpRotMatL, TmpRotMatR;
-
-		frameCnt++;
-
-		D3DXMatrixRotationY(&TmpRotMatL, -(float)D3DXToRadian(sin(frameCnt / 10)));
-		D3DXMatrixRotationY(&TmpRotMatR, (float)D3DXToRadian(sin(frameCnt / 10)));
-		
-
-		
-		*NowMatL = *NowMatL * TmpRotMatL;
-		*NowMatR = *NowMatR * TmpRotMatR;
+		GetPlayerCam.SetMakeSnowBallFlag(false);		//作っている状態を終了する
+		GetPlayer.MakeBallEnd();
+		return new PlayerStateIdle(NowMatL, NowMatR);
 	}
-	
 	return nullptr;
 }

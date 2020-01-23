@@ -40,6 +40,13 @@ public:
 
 	bool IsThrowAnything();
 	void SetShootPower(float ShootPower);
+
+	//雪玉を作成する	右クリック
+	void MakeBallStart();
+	//雪玉を作り終わる際の処理
+	void MakeBallEnd();
+
+	bool CanMakeSnowBall();
 private: 
 	Player();
 	~Player();
@@ -94,14 +101,13 @@ private:
 	D3DXMATRIX ballMat, ballScalMat, ballOffsetMat;
 
 	const float MaxBallScal = 1.5;			//作成中の雪玉の最大サイズ
+	float makingTimeCnt;
+	bool canMakeSnowBallFlag;
 
 	//-----------------------------
 	//保持している雪玉、デコレーションの表示
 	//-----------------------------
 	CarryItem* carryItem;
-	
-	
-
 
 	//-----------------------------
 	//当たり判定
@@ -112,13 +118,10 @@ private:
 	std::vector<D3DXMATRIX> ghostMat;			//飛ぶ軌道の行列
 	LPDIRECT3DTEXTURE9 ghost_SnowTex, ghost_DecoTex;
 
-	
-
 	//-----------------------------
 	//privateメソッド
 	//-----------------------------
-	//雪玉を作成する	右クリック
-	void MakeBall();
+	
 	//靴の雪玉作成時のアニメーション
 	void ShoesMakeBallAnime(bool AnimeState);
 	//予測線を作成する

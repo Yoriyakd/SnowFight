@@ -14,6 +14,8 @@ public:
 	void Draw();
 	void Updata();
 	void SetNowCarryItemPointer(const CarryObjectID *_ID);
+	//手のアイテムの表示管理
+	void SetDisplayFlag(bool _Flag);
 
 private:
 	const CarryObjectID *id;
@@ -22,4 +24,6 @@ private:
 	D3DXMATRIX itemOffsetMat, itemMat;
 	D3DXMATRIX ScalingMat;		//デコレーションを小さくする行列
 	const D3DXMATRIX* armRMat_p;		//腕の行列のポインタを保存
+
+	bool displayFlag;
 };

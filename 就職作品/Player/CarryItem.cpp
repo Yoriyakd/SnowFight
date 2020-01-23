@@ -10,10 +10,10 @@ CarryItem::CarryItem(const D3DXMATRIX *ArmRMat) : armRMat_p(ArmRMat)
 	//--------------------------------------------------------------
 	//保持している雪玉、デコレーション
 	//--------------------------------------------------------------
-	D3DXMatrixTranslation(&itemOffsetMat, 0.3f, 0.4f, 1.0f);		//手からいくら離すか
+	D3DXMatrixTranslation(&itemOffsetMat, 0.3f, 0.3f, 1.0f);		//手からいくら離すか
 	nowCarryItemMesh = nullptr;
 
-	D3DXMatrixScaling(&ScalingMat, 0.3f, 0.3f, 0.3f);
+	D3DXMatrixScaling(&ScalingMat, 0.4f, 0.4f, 0.4f);
 }
 
 CarryItem::~CarryItem()
@@ -25,14 +25,14 @@ void CarryItem::Draw()
 	//--------------------------------------------------------------
 	//保持している雪玉、デコレーション表示
 	//--------------------------------------------------------------
-	if (*id != NUM_ITEM_Dummy)
+	if (displayFlag == true)		//表示フラグがtrueなら表示
 	{
 		if (*id != SNOW_BALL)
 		{
 			D3DXMATRIX TmpMat;
 			TmpMat = ScalingMat * itemMat;
 			lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);				//雪玉ではない場合小さくする
-			lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+			lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);		//法線の再計算
 		}
 		else
 		{
@@ -63,7 +63,6 @@ void CarryItem::Updata()
 		nowCarryItemMesh = &SnowBallMesh;
 		break;
 	case NUM_ITEM_Dummy:
-		nowCarryItemMesh = nullptr;
 		break;
 	}
 }
@@ -71,6 +70,11 @@ void CarryItem::Updata()
 void CarryItem::SetNowCarryItemPointer(const CarryObjectID * _ID)
 {
 	id = _ID;
+}
+
+void CarryItem::SetDisplayFlag(bool _Flag)
+{
+	displayFlag = _Flag;
 }
 
 

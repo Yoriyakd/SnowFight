@@ -1,12 +1,14 @@
 #include"PlayerStateIdle.h"
 #include"Player.h"
+#include"MakeSnowBallState.h"
+#include"../Item/DecorationManager.h"
 
 
-PlayerStateIdle::PlayerStateIdle(D3DXMATRIX * StartMatL, D3DXMATRIX * StartMatR)
+PlayerStateIdle::PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR):KeyFlag(false)
 {
 	startMatL = *StartMatL;
 	startMatR = *StartMatR;
-	animeFrame = 0.0f;
+
 	D3DXMATRIX EndRotRTmp, EndTransRTmp, EndRotZLTmp, EndRotXLTmp, EndTransLTmp;
 
 	D3DXMatrixRotationZ(&EndRotZLTmp, D3DXToRadian(-90));
@@ -25,17 +27,12 @@ PlayerStateIdle::~PlayerStateIdle()
 {
 }
 
-PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX * NowMatL, D3DXMATRIX * NowMatR)
+PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
-	animeFrame += AnimeSpeed;
 
-	QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, animeFrame);
-	QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, animeFrame);
+	QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, 1.0f);		//常に終わりの状態をキープする
+	QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, 1.0f);
 
-	if (animeFrame >= 1)
-	{
-		return new PlayerStateIdle(&endMatL, &endMatR);
-	}
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//何か投げられる状態なら
 	{
@@ -43,6 +40,24 @@ PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX * NowMatL, D3DXMATRIX * NowMa
 		{
 			return new WindUpState(NowMatR);
 		}
+	}
+	
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	{
+		if(KeyFlag == true)return nullptr;		//拾ったあと押しっぱなしで雪玉を作れないようにしている
+		if(GetPlayer.CanMakeSnowBall() == true)
+		{
+			return new MakeSnowBallState(NowMatL, NowMatR);	
+		}
+		else
+		{
+			KeyFlag = true;
+			return nullptr;		//拾える状態なら雪玉を作らない(新しく拾えないが近くにデコレーションがあって作れないという状況が発生する☆)
+		}
+	}
+	else
+	{
+		KeyFlag = false;
 	}
 	return nullptr;
 }
