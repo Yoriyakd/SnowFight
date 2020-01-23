@@ -2,7 +2,7 @@
 #include"../GameScene/GameScene.h"
 #include"../MenuScene/MenuScene.h"
 
-TitleScene::TitleScene()
+TitleScene::TitleScene():ESCFlag(false)
 {
 	logoTex = GetResource.GetTexture(TitleLogo_Tex);
 	D3DXMatrixTranslation(&logoMat, SCRW / 2, 0, 0);
@@ -47,7 +47,7 @@ void TitleScene::Render2D(void)
 	lpSprite->SetTransform(&kyeInstructionMat);
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	SceneSwitch.Draw();
+	GetSceneSwitchEffect.Draw();
 
 
 	// 描画終了
@@ -61,6 +61,19 @@ bool TitleScene::Update(void)
 	//	sceneSwitchState = true;
 	//}
 
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		if (ESCFlag == true)
+		{
+			PostQuitMessage(0);		//終了する
+			return false;
+		}
+	}
+	else
+	{
+		ESCFlag = true;
+	}
+
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
 		sceneSwitchState = true;
@@ -73,9 +86,9 @@ bool TitleScene::Update(void)
 
 	if (sceneSwitchState == true)
 	{
-		if (SceneSwitch.ToDarkness() == true)		//真っ暗になったら移行
+		if (GetSceneSwitchEffect.ToDarkness() == true)		//真っ暗になったら移行
 		{
-			SwitcheScene.SwitchScene(new MenuScene());
+			GetSceneSwitcher.SwitchScene(new MenuScene());
 			return false;
 		}
 	}

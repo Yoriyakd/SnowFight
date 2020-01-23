@@ -8,7 +8,7 @@
 //※シングルトンクラス
 //------------------------------------------------------------------------------------------
 
-#define SceneSwitch SceneSwitchEffect::GetInstance()
+#define GetSceneSwitchEffect SceneSwitchEffect::GetInstance()
 
 class SceneSwitchEffect : public SingletonBase<SceneSwitchEffect>{
 public:

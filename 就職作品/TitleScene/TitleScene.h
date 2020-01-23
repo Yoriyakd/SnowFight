@@ -25,6 +25,7 @@ private:
 	int sceneSwitchEffectAlpha;
 	bool sceneSwitchState;
 	
+	bool ESCFlag;	//ƒQ[ƒ€I—¹‚ÌESC‰Ÿ‚µ‚Á‚Ï‚È‚µ”»’è
 
 	LPDIRECT3DTEXTURE9 backTex;
 	D3DXMATRIX backMat;

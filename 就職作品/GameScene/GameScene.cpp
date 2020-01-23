@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include"../MenuScene/MenuScene.h"
+#include"../TitleScene/TitleScene.h"
 
 D3DLIGHT9 Light;
 
@@ -230,7 +231,7 @@ void GameScene::Render2D(void)
 	}
 
 
-	SceneSwitch.Draw();			//常に描画
+	GetSceneSwitchEffect.Draw();			//常に描画
 
 	// 描画終了
 	lpSprite->End();
@@ -238,7 +239,11 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		GetSceneSwitcher.SwitchScene(new TitleScene());			//エフェクトと確認を入れる☆
+		return false;
+	}
 
 	//---------------------------------------------------------
 	//リザルト中の処理
@@ -247,7 +252,7 @@ bool GameScene::Update()
 	{
 		if (ResultUpdate() == false)			//リザルト中の処理はここに記述
 		{
-			SwitcheScene.SwitchScene(new MenuScene());
+			GetSceneSwitcher.SwitchScene(new MenuScene());
 			return false;
 		}
 		return true;		//リザルト表示中は早期リターンして動きを止める
@@ -256,7 +261,7 @@ bool GameScene::Update()
 
 	if (sceneSwitchState == 1)				//初めに明転させる処理
 	{
-		if (SceneSwitch.ToBrightness() == true)
+		if (GetSceneSwitchEffect.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
@@ -465,7 +470,7 @@ bool GameScene::Update()
 
 	if (sceneSwitchState == -1)
 	{
-		if (SceneSwitch.ToDarkness() == true)
+		if (GetSceneSwitchEffect.ToDarkness() == true)
 		{
 			resultFlag = true;
 			resultCam = new ResultCam();
@@ -500,7 +505,7 @@ bool GameScene::ResultUpdate(void)
 {
 	if (sceneSwitchState == 1)				//シーン移行後明転させる処理
 	{
-		if (SceneSwitch.ToBrightness() == true)
+		if (GetSceneSwitchEffect.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
@@ -521,7 +526,7 @@ bool GameScene::ResultUpdate(void)
 
 	if (sceneSwitchState == -1)
 	{
-		if (SceneSwitch.ToDarkness() == true)
+		if (GetSceneSwitchEffect.ToDarkness() == true)
 		{
 			return false;
 		}

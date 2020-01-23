@@ -2,7 +2,7 @@
 #include"SceneBase.h"
 #include"../SingletonBase.h"
 
-#define SwitcheScene SceneSwitcher::GetInstance()
+#define GetSceneSwitcher SceneSwitcher::GetInstance()
 
 class SceneSwitcher : public SingletonBase<SceneSwitcher>
 {

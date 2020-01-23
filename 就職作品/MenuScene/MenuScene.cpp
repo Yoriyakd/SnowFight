@@ -1,5 +1,6 @@
 #include "MenuScene.h"
 #include"../GameScene/GameScene.h"
+#include"../TitleScene/TitleScene.h"
 
 MenuScene::MenuScene()
 {
@@ -74,7 +75,7 @@ void MenuScene::Render2D(void)
 	lpSprite->SetTransform(&cursorMat);
 	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	SceneSwitch.Draw();
+	GetSceneSwitchEffect.Draw();
 
 	// 描画終了
 	lpSprite->End();
@@ -84,6 +85,12 @@ bool MenuScene::Update(void)
 {
 	stage1Button->Update();
 	stage2Button->Update();
+
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		GetSceneSwitcher.SwitchScene(new TitleScene());				//エフェクトと確認を入れる☆
+		return false;
+	}
 	
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
@@ -105,16 +112,16 @@ bool MenuScene::Update(void)
 
 	if (sceneSwitchState == -1)
 	{
-		if (SceneSwitch.ToDarkness() == true)			//暗転させる
+		if (GetSceneSwitchEffect.ToDarkness() == true)			//暗転させる
 		{
-			SwitcheScene.SwitchScene(new GameScene(selectedStage));
+			GetSceneSwitcher.SwitchScene(new GameScene(selectedStage));
 			return false;
 		}
 	}
 
 	if (sceneSwitchState == 1)
 	{
-		if (SceneSwitch.ToBrightness() == true)
+		if (GetSceneSwitchEffect.ToBrightness() == true)
 		{
 			sceneSwitchState = 0;
 		}
