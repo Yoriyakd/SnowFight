@@ -239,6 +239,8 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Sound\Sound2D.cpp" />
+    <ClCompile Include="Sound\Sound3D.cpp" />
+    <ClCompile Include="Sound\SoundManager.cpp" />
     <ClCompile Include="Sound\wavread.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
@@ -308,6 +310,8 @@
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Sound\Sound2D.h" />
+    <ClInclude Include="Sound\Sound3D.h" />
+    <ClInclude Include="Sound\SoundManager.h" />
     <ClInclude Include="Sound\wavread.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="UI\GameObjective.h" />

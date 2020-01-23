@@ -6,8 +6,10 @@
 #include"GameScene/GameScene.h"
 #include"TitleScene/TitleScene.h"
 #include"ResourceManager.h"
+
 #include"Effect/EffectManager.h"
 #include"Effect/SceneSwitchEffect.h"
+#include"Sound/SoundManager.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -46,16 +48,11 @@ LRESULT APIENTRY WndFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
-	case WM_KEYDOWN:
-		switch (wParam) {
+	//case WM_KEYDOWN:
+		/*switch (wParam) {
 		case VK_ESCAPE:
-			/*if (MessageBox(NULL, "終了しますか？", "終了確認", MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION) == IDYES)
-			{*/
-				PostQuitMessage(0);
-				return 0;
-			//}
 		}
-		return 0;
+		return 0;*/
 
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
@@ -264,9 +261,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	ResourceManager::Create();
 	SceneSwitchEffect::Create();
 	EffectManager::Create();
-
-	
-
+	GetSound.Create();
+	GetSound.Initialize();
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 
 
@@ -281,7 +277,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	lpFont->OnResetDevice();
 
-	SwitcheScene.SwitchScene(new TitleScene());
+	GetSceneSwitcher.SwitchScene(new TitleScene());
 
 	
 	while (1) {
@@ -294,7 +290,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		}
 		else 
 		{
-			SwitcheScene.NowScene();
+			GetSceneSwitcher.NowScene();
 		}
 	}
 
@@ -303,6 +299,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	ResourceManager::Destroy();
 	SceneSwitchEffect::Destroy();
 	EffectManager::Destroy();
+	GetSound.Destroy();
 
 
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない

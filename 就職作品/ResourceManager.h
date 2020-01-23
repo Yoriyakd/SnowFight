@@ -99,8 +99,8 @@ enum TexName
 	Ground_Tex,
 };
 
-enum SoundName {
-	InGameBGM,
+enum SoundID {
+	InGameBGM_ID,
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
@@ -115,7 +115,7 @@ public:
 	LPDIRECT3DTEXTURE9   GetTexture(enum TexName);
 
 	//enumで定義されたSoundNameを入れる
-	LPDIRECTSOUNDBUFFER8 GetSound(enum SoundName);
+	LPDIRECTSOUNDBUFFER8 GetSound(enum SoundID);
 protected:
 
 private:
@@ -138,6 +138,7 @@ private:
 
 	void AllDelete(void);
 
+	//素材が増える度に長くなるから何とかしたい。あと、影響範囲がでかいからリビルドも長くなる（外部ファイルでIDとパス等を対応させるCSV？）
 	std::map<MeshName, std::string> MeshFileName{
 		{ArmL_M,                  "ArmL.x"},
 		{ArmR_M,                  "ArmR.x"},
@@ -212,9 +213,9 @@ private:
 		{Ground_Tex,              TexData{"SnowGround.png", 512, 512, NULL}},
 	};
 
-	std::map<SoundName, std::string> SoundFileName{
+	std::map<SoundID, std::string> SoundFileName{
 		//InGame
-		{InGameBGM, "Test.wav"},
+		{InGameBGM_ID, "BGM.WAV"},
 	};
 };
 ResourceManager* SingletonBase<ResourceManager>::instance = nullptr;		//nullptrで初期化(DirectXの機能を使うためDirectX初期化後に作成する必要がある)staticで最初に確保されていたやつはどこへ...?解放されてないきがするぞ

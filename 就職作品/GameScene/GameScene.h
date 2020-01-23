@@ -21,6 +21,8 @@
 #include"../Effect/EnemyAnimeManager.h"
 #include"../Effect/PlayerHitEffect.h"
 
+#include"../Sound/SoundManager.h"
+
 #include"EventManager.h"
 #include"../Item/DecorationManager.h"
 

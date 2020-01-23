@@ -1,5 +1,6 @@
 #include<d3dx9.h>
 #include"SceneBase.h"
+#include"../Sound/SoundManager.h"
 
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 
@@ -47,7 +48,7 @@ void SceneBase::Frame(void)
 		BTcnt = NTcnt;		//基準時間を変更
 	}
 	//---------------------------------------------------------------------------
-
+	GetSound.Update();			//どの状態でも更新してほしいけどここでいいのか？☆
 	if (Update() == false)											//falseを返さないと消したシーンをが実行されるので注意
 	{
 		return;

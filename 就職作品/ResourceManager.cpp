@@ -51,7 +51,7 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName _TexName)
 	return TextureList[TexData.FileName];
 }
 
-LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(SoundName _SoundName)
+LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(SoundID _SoundName)
 {
 	LPDIRECTSOUNDBUFFER8 Tmp;
 
@@ -158,7 +158,7 @@ void ResourceManager::AllDelete(void)
 	for (auto ite = SoundBufferList.begin(); ite != SoundBufferList.end(); ite++)
 	{
 		ite->second->Release();
-		ite->second->Release();
+		//ite->second->Release();
 	}
 	SoundBufferList.clear();
 }

@@ -103,6 +103,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	lpD3DDevice->SetLight(0, &Light);
 	lpD3DDevice->LightEnable(0, TRUE);
 	//-----------------------------
+	GetSound.Play(InGameBGM_ID);
 }
 
 GameScene::~GameScene()
