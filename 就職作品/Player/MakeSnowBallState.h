@@ -6,9 +6,9 @@ public:
 	~MakeSnowBallState();
 	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 private:
-	const float AnimeSpeed = 0.3f;
-	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;
+	const float AnimeSpeed = 0.1f;
 	float animeFrame;
+	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;
 
 	int frameCnt;
 	D3DXMATRIX TmpRotZ;

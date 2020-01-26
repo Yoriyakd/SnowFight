@@ -7,6 +7,8 @@ public:
 	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 
 private:
+	const float AnimeSpeed = 0.1f;
+	float animeFrame;
 	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;
 	bool KeyFlag;
 };

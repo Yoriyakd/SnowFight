@@ -38,7 +38,7 @@ PlayerStateBase * MakeSnowBallState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowM
 
 		GetPlayer.MakeBallStart();		//player‚Åƒ{[ƒ‹‚ğì‚èn‚ß‚é
 
-		if (animeFrame <= 1)
+		if (animeFrame <= 1.0f)
 		{
 			animeFrame += AnimeSpeed;
 

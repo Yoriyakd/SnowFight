@@ -4,7 +4,7 @@
 #include"../Item/DecorationManager.h"
 
 
-PlayerStateIdle::PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR):KeyFlag(false)
+PlayerStateIdle::PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR):animeFrame(0), KeyFlag(false)
 {
 	startMatL = *StartMatL;
 	startMatR = *StartMatR;
@@ -29,9 +29,15 @@ PlayerStateIdle::~PlayerStateIdle()
 
 PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
+	animeFrame += AnimeSpeed;
 
-	QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, 1.0f);		//常に終わりの状態をキープする
-	QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, 1.0f);
+	if (animeFrame > 1.0f)
+	{
+		animeFrame = 1.0f;
+	}
+
+	QuaternionAnime(NowMatL, NowMatL, &startMatL, &endMatL, animeFrame);		//終わりの状態に移行しキープする
+	QuaternionAnime(NowMatR, NowMatR, &startMatR, &endMatR, animeFrame);
 
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//何か投げられる状態なら

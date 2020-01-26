@@ -9,7 +9,7 @@ Sound2D::Sound2D()
 
 Sound2D::~Sound2D()
 {
-	Buffer->Release();
+	
 }
 
 void Sound2D::Play()
