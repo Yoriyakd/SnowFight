@@ -2,7 +2,7 @@
 
 Sound2D::Sound2D()
 {
-	loopFrag = true;	//‰¼
+	loopFrag = false;	//‰¼
 	volume = 0;
 	
 }
@@ -30,16 +30,16 @@ void Sound2D::Initialize()
 
 void Sound2D::Update()
 {
-	IsPlayeEnd();
+	IsPlaying();
 }
 
 bool Sound2D::IsPlaying()
 {
-
-	return false;
-}
-
-void Sound2D::IsPlayeEnd()
-{
-	
+	DWORD pdwStatus;
+	Buffer->GetStatus(&pdwStatus);
+	if ((pdwStatus & DSBSTATUS_PLAYING) == FALSE)
+	{
+		return false;
+	}
+	return true;
 }
