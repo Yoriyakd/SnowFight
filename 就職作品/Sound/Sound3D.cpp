@@ -6,5 +6,4 @@ Sound3D::Sound3D()
 
 Sound3D::~Sound3D()
 {
-	Buffer3D->Release();
 }

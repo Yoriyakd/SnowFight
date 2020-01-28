@@ -70,7 +70,11 @@ LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(SoundID _SoundName)
 		SoundBufferList[FileName] = Tmp;
 	}
 	
-	return SoundBufferList[FileName];
+	LPDIRECTSOUNDBUFFER Copy;
+
+	lpDSound->DuplicateSoundBuffer(SoundBufferList[FileName], &Copy);			//ï°êªÇ∑ÇÈ
+	
+	return (LPDIRECTSOUNDBUFFER8)Copy;		//ÉLÉÉÉXÉgÇµÇƒï‘Ç∑
 }
 
 //-------------------------------------------------------------------

@@ -2,6 +2,8 @@
 #include"../SingletonBase.h"
 #include"Sound2D.h"
 #include"Sound3D.h"
+#include<map>
+
 
 #define GetSound SoundManager::GetInstance()
 class SoundManager : public SingletonBase<SoundManager>{
@@ -9,12 +11,20 @@ class SoundManager : public SingletonBase<SoundManager>{
 public:
 	SoundManager();
 	~SoundManager();
-	void Play(SoundID);
+
+	//失敗時falseが返る
+	bool Play(SoundID);
+
+	//void AllStop();
 
 	void Initialize();
 	void Update();
+	
 private:
-	Sound2D IngameBGM;
+	std::map<SoundID, Sound2D*> Sound2DMap;			//2Dサウンド管理(3Dもここに入れたかったが座標等の設定方法が思いつかなかった)
+	std::map<SoundID, Sound3D*> Sound3DMap;			//3Dサウンド管理
+
+	void AllDelete();
 };
 
 SoundManager* SingletonBase<SoundManager>::instance = nullptr;
