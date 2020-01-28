@@ -27,7 +27,7 @@ bool SoundManager::Play(SoundID _ID)
 void SoundManager::Initialize()
 {
 	//とりあえずここに直接書く（）TEXT等外部ファイルから読み込む
-	SoundInitData tmp{ InGameBGM_ID, false, 0, 10 };
+	SoundInitData tmp{ InGameBGM_ID, false, 0, 1 };
 
 	Sound2DMap.emplace(InGameBGM_ID, new Sound2D[tmp.MaxPlayCnt]);
 	
@@ -36,7 +36,7 @@ void SoundManager::Initialize()
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
 	}
 
-	tmp.ID = Test_ID;
+	/*tmp.ID = Test_ID;
 	tmp.LoopFlag = false;
 	tmp.Volume = -100;
 	tmp.MaxPlayCnt = 3;
@@ -46,7 +46,7 @@ void SoundManager::Initialize()
 	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
 	{
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
-	}
+	}*/
 }
 
 void SoundManager::Update()
