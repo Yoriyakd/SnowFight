@@ -13,7 +13,6 @@ void Sound2D::Play()
 {
 	Buffer->Play(0, 0, soundData.LoopFlag);
 	Buffer->SetCurrentPosition(0);					//再生時先頭から(戦闘以外から再生する場合メソッド追加)
-	IsPlaying();
 }
 
 void Sound2D::Stop()
