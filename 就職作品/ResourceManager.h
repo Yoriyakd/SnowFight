@@ -81,6 +81,7 @@ enum TexName
 	TimeLogo_Tex,
 	TimeNumber_Tex,
 	TimePenalty_Tex,
+	TimePenaltyEffect_Tex,
 	GameObjectiveBack_Tex,
 	GameObjectiveClear_Tex,
 
@@ -187,7 +188,7 @@ private:
 
 		//Result
 		{ResultHead_Tex,          TexData{"Result.png", 820, 160, NULL}},
-		{ResultReturn_Tex,        TexData{"Click_To_Return.png", 420, 40, NULL}},
+		{ResultReturn_Tex,        TexData{"Click_To_Return.png", 499, 84, NULL}},
 
 		//UI
 		{GameUINumber_Tex,		  TexData{"Number.png", 420, 42, NULL}},
@@ -195,6 +196,7 @@ private:
 		{TimeLogo_Tex,            TexData{"TimeLogo.png", 194, 46, NULL}},
 		{TimeNumber_Tex,          TexData{"Number_Time.png", 460, 50, NULL}},
 		{TimePenalty_Tex,         TexData{"Minus.png", 46, 46, NULL}},
+		{TimePenaltyEffect_Tex,	  TexData{"PenaltEffect.png", 256, 256, NULL}},
 		{GameObjectiveBack_Tex,   TexData{"GameObjective.png", 400, 64, NULL}},
 		{GameObjectiveClear_Tex,  TexData{"Clear.png", 400, 64, NULL}},
 
