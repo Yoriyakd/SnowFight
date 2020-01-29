@@ -13,6 +13,7 @@
 #include"MakeSnowBallState.h"
 #include"../Item/DecorationManager.h"
 #include"../UI/PickUpInstructions.h"
+#include"../UI/AddSnowBallUI.h"
 #include"CarryItem.h"
 
 #define GetPlayer Player::GetInstance()

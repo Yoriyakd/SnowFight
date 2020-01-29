@@ -30,7 +30,6 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	GetDecorationManager.Create();
 	GetSpawnerManager.Create();
 
-
 	for (auto i = 0; i < EFFECT_CNT; i++)
 	{
 		playerHitEffect_Right[i] = new PlayerHitEffect();
@@ -55,6 +54,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	remainingBallUI = new RemainingBallUI();
 	timeUI = new TimeUI();
 	gameObjective = new GameObjective();
+	AddSnowBallUI::GetInstance().Create();
 
 	//-------------------------------------------------------
 	//リザルト
@@ -145,6 +145,7 @@ GameScene::~GameScene()
 	delete remainingBallUI;
 	delete timeUI;
 	delete gameObjective;
+	AddSnowBallUI::GetInstance().Destroy();
 }
 
 void GameScene::Render3D(void)
@@ -213,6 +214,8 @@ void GameScene::Render2D(void)
 			TimePenaltyUI->Draw();
 		}
 		gameObjective->Draw();
+
+		AddSnowBallUI::GetInstance().Draw();
 	}
 	else
 	{
@@ -279,6 +282,8 @@ bool GameScene::Update()
 	}
 
 	GetPlayer.Update(*pickUpInstructions);		//カメラを更新してから
+
+	AddSnowBallUI::GetInstance().Update();
 	//---------------------------------------------------------
 
 

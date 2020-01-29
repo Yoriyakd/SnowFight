@@ -78,6 +78,7 @@ enum TexName
 //UI
 	GameUINumber_Tex,
 	RemainingBallBack_Tex,
+	AddSnowBall_Tex,
 	TimeLogo_Tex,
 	TimeNumber_Tex,
 	TimePenalty_Tex,
@@ -193,6 +194,7 @@ private:
 		//UI
 		{GameUINumber_Tex,		  TexData{"Number.png", 420, 42, NULL}},
 		{RemainingBallBack_Tex,   TexData{"SnowBallUI.png", 256, 64, NULL}},
+		{AddSnowBall_Tex,         TexData{"AddSnowBall.png", 158, 61, NULL}},
 		{TimeLogo_Tex,            TexData{"TimeLogo.png", 194, 46, NULL}},
 		{TimeNumber_Tex,          TexData{"Number_Time.png", 460, 50, NULL}},
 		{TimePenalty_Tex,         TexData{"Minus.png", 46, 46, NULL}},

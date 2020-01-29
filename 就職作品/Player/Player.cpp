@@ -336,6 +336,8 @@ void Player::MakeBallStart()
 			remainingBalls++;
 			makingTimeCnt = 0;		//ƒŠƒZƒbƒg
 			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
+
+			AddSnowBallUI::GetInstance().AddSnowBall();
 		}
 	}
 }

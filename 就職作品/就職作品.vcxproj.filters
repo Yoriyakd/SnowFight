@@ -246,6 +246,9 @@
     <ClCompile Include="Sound\SoundManager.cpp">
       <Filter>Effect\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="UI\AddSnowBallUI.cpp">
+      <Filter>GameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -442,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="Sound\SoundManager.h">
       <Filter>Effect\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AddSnowBallUI.h">
+      <Filter>GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

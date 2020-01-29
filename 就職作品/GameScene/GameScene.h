@@ -31,6 +31,7 @@
 #include"../UI/TimeUI.h"
 #include"../UI/TimePenaltyUI.h"
 #include"../UI/GameObjective.h"
+#include"../UI/AddSnowBallUI.h"
 #include"../Effect/SceneSwitchEffect.h"
 #include"ResultCam.h"
 
