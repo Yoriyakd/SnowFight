@@ -9,7 +9,7 @@ SoundManager::~SoundManager()
 	AllDelete();
 }
 
-bool SoundManager::Play(SoundID _ID)
+bool SoundManager::Play2D(SoundID _ID)
 {
 	const int CNT = Sound2DMap[_ID][0].GetMaxPlayCnt();
 
@@ -22,6 +22,20 @@ bool SoundManager::Play(SoundID _ID)
 		}
 	}
 	return false;		//Ž¸”s		//‚·‚×‚ÄÄ¶’†
+}
+
+void SoundManager::AllStop()
+{
+	for (auto ite = begin(Sound2DMap); ite != end(Sound2DMap); ite++)
+	{
+		const int CNT = ite->second[0].GetMaxPlayCnt();
+
+		for (auto i = 0; i < CNT; i++)
+		{
+			
+			ite->second[i].Stop();
+		}
+	}
 }
 
 void SoundManager::Initialize()

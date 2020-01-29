@@ -101,7 +101,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	lpD3DDevice->SetLight(0, &Light);
 	lpD3DDevice->LightEnable(0, TRUE);
 	//-----------------------------
-	GetSound.Play(InGameBGM_ID);
+	GetSound.Play2D(InGameBGM_ID);
 }
 
 GameScene::~GameScene()
@@ -220,11 +220,11 @@ void GameScene::Render2D(void)
 		lpSprite->SetTransform(&resultMat);
 		lpSprite->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-		RECT RcReturn = { 0, 0, 420, 40 };
+		RECT RcReturn = { 0, 0, 499, 84 };
 		if (Resultime <= 0)
 		{
 			lpSprite->SetTransform(&returnMat);
-			lpSprite->Draw(returnTex, &RcResult, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			lpSprite->Draw(returnTex, &RcReturn, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 
 	}
@@ -241,6 +241,7 @@ bool GameScene::Update()
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 	{
 		GetSceneSwitcher.SwitchScene(new TitleScene());			//エフェクトと確認を入れる☆
+		GetSound.AllStop();
 		return false;
 	}
 
@@ -252,6 +253,7 @@ bool GameScene::Update()
 		if (ResultUpdate() == false)			//リザルト中の処理はここに記述
 		{
 			GetSceneSwitcher.SwitchScene(new MenuScene());
+			GetSound.AllStop();
 			return false;
 		}
 		return true;		//リザルト表示中は早期リターンして動きを止める
