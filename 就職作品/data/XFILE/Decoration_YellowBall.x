@@ -31049,7 +31049,7 @@ Frame Root {
            96.078431;
            0.662839; 0.545861; 0.222369;;
            0.000000; 0.000000; 0.000000;;
-          TextureFilename {"data/DecorationBallTex.jpg";}
+          TextureFilename {"data/Texture/DecorationBallTex.jpg";}
         }
       } // End of YellowBall material list
     } // End of YellowBall mesh

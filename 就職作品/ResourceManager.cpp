@@ -10,7 +10,7 @@ XFILE ResourceManager::GetXFILE(enum MeshName _MeshName)
 
 	if (XFILEList.find(FileName) == XFILEList.end())		//最後まで検索する
 	{
-		std::string FilePath = "data/";
+		std::string FilePath = "data/XFILE/";
 		FilePath += FileName;		//パスの作成
 		//ロードする
 		LoadMesh(&TmpXFILE, &FilePath[0]);
@@ -39,7 +39,7 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName _TexName)
 
 	if (TextureList.find(TexData.FileName) == TextureList.end())		//最後まで検索する
 	{
-		std::string FilePath = "data/";
+		std::string FilePath = "data/Texture/";
 		FilePath += TexData.FileName;		//パスの作成
 		//テクスチャをロードする
 		LoadTexture(&Tmp, &FilePath[0], TexData.Width, TexData.Hight, TexData.Color);

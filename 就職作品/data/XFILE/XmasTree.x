@@ -3983,7 +3983,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
              0.300000; 0.300000; 0.300000;;
-          TextureFilename {"data/TreeBark.png";}
+          TextureFilename {"data/Texture/TreeBark.png";}
         }
         Material materialLeaf {
            0.000606; 0.146485; 0.000000; 1.000000;;

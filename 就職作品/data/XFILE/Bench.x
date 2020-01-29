@@ -1232,7 +1232,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.000000; 0.000000; 0.000000;;
-          TextureFilename {"data/TreeBark.png";}
+          TextureFilename {"data/Texture/TreeBark.png";}
         }
       } // End of bench material list
     } // End of bench mesh

@@ -102,7 +102,12 @@ enum TexName
 };
 
 enum SoundID {
-	InGameBGM_ID,
+	//Ingame
+	InGameBGM_SOUND,
+
+	//SE
+	SnowBallHit_SOUND,
+	Throw_Sound,
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
@@ -219,7 +224,11 @@ private:
 
 	std::map<SoundID, std::string> SoundFileName{
 		//InGame
-		{InGameBGM_ID, "BGM.WAV"},
+		{InGameBGM_SOUND,   "MusMus-BGM-061.wav"},
+
+		{SnowBallHit_SOUND, "Snowball_Impact.wav"},
+		{Throw_Sound,       "Throw.wav"},
+
 	};
 };
 ResourceManager* SingletonBase<ResourceManager>::instance = nullptr;		//nullptrで初期化(DirectXの機能を使うためDirectX初期化後に作成する必要がある)staticで最初に確保されていたやつはどこへ...?解放されてないきがするぞ

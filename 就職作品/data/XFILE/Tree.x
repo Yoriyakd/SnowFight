@@ -12326,7 +12326,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.000000; 0.000000; 0.000000;;
-          TextureFilename {"data/TreeBark.png";}
+          TextureFilename {"data/Texture/TreeBark.png";}
         }
         Material mat2 {
            0.236911; 0.097711; 0.044903; 1.000000;;

@@ -278,6 +278,7 @@ void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)
 
 void Player::Throw(const float PowerPct)
 {
+	GetSound.Play2D(Throw_Sound);
 	if (carryFlag == true)			//デコレーションを運んでいる状態ではデコレーションを投げる
 	{
 		carryFlag = false;

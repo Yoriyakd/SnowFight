@@ -101,7 +101,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	lpD3DDevice->SetLight(0, &Light);
 	lpD3DDevice->LightEnable(0, TRUE);
 	//-----------------------------
-	GetSound.Play2D(InGameBGM_ID);
+	GetSound.Play2D(InGameBGM_SOUND);
 }
 
 GameScene::~GameScene()
@@ -388,6 +388,9 @@ bool GameScene::Update()
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
 			eventManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
 			timePenaltyUI.push_back(new TimePenaltyUI(3));
+
+			//Soundを呼ぶ
+			GetSound.Play2D(SnowBallHit_SOUND);
 
 			//----------------------------------------------------
 			//HitEffecctの処理(Effectのクラスに変数を持たせた方がいいのでは？)

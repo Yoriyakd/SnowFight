@@ -2636,7 +2636,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.300000; 0.300000; 0.300000;;
-          TextureFilename {"data/WoodPlanksPaintedW.jpg";}
+          TextureFilename {"data/Texture/WoodPlanksPaintedW.jpg";}
         }
       } // End of Bobbin material list
     } // End of Bobbin mesh
