@@ -10,6 +10,7 @@
 #include"Effect/EffectManager.h"
 #include"Effect/SceneSwitchEffect.h"
 #include"Sound/SoundManager.h"
+#include"commonObj/BackToTitle.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -263,6 +264,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	EffectManager::Create();
 	GetSound.Create();
 	GetSound.Initialize();
+	BackToTitle::Create();
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 
 
@@ -300,7 +302,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	SceneSwitchEffect::Destroy();
 	EffectManager::Destroy();
 	GetSound.Destroy();
-
+	BackToTitle::Destroy();
 
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
 

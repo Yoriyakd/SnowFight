@@ -8,7 +8,7 @@ public:
 	void Update();
 	bool GetState(void);
 protected:
-	void Stage1Initialize(void);
+	void Stage1Initialize(void);				//‚Æ‚è‚ ‚¦‚¸‚±‚±‚É‘‚­(text‚âCSV‚©‚ç“Ç‚İ‚Ş‚æ‚¤‚É•ÏX‚·‚é)™
 	void Stage2Initialize(void);
 
 	LPDIRECT3DTEXTURE9 stagePicTex, backTex, stageTextTex, stageNumTex;

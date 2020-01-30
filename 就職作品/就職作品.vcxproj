@@ -131,6 +131,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="commonObj\BackToTitle.cpp" />
     <ClCompile Include="commonObj\ButtonBase.cpp" />
     <ClCompile Include="commonObj\Function.cpp" />
     <ClCompile Include="commonObj\SkyBox.cpp">
@@ -217,6 +218,7 @@
     </ClCompile>
     <ClCompile Include="Map\XmasTree.cpp" />
     <ClCompile Include="MenuScene\MenuScene.cpp" />
+    <ClCompile Include="MenuScene\StageSelectButton.cpp" />
     <ClCompile Include="Player\CarryItem.cpp" />
     <ClCompile Include="Player\MakeSnowBallState.cpp" />
     <ClCompile Include="Player\Player.cpp">
@@ -257,6 +259,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
+    <ClInclude Include="commonObj\BackToTitle.h" />
     <ClInclude Include="commonObj\ButtonBase.h" />
     <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />
@@ -299,6 +302,7 @@
     <ClInclude Include="Map\MapObjManager.h" />
     <ClInclude Include="Map\XmasTree.h" />
     <ClInclude Include="MenuScene\MenuScene.h" />
+    <ClInclude Include="MenuScene\StageSelectButton.h" />
     <ClInclude Include="Player\CarryItem.h" />
     <ClInclude Include="Player\MakeSnowBallState.h" />
     <ClInclude Include="Player\Player.h" />

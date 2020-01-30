@@ -58,7 +58,7 @@ PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR
 		else
 		{
 			KeyFlag = true;
-			return nullptr;		//拾える状態なら雪玉を作らない(新しく拾えないが近くにデコレーションがあって作れないという状況が発生する☆)
+			return nullptr;		//拾える状態なら雪玉を作らない
 		}
 	}
 	else

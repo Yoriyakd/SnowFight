@@ -57,5 +57,8 @@ PlayerStateBase * WindUpState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 		GetPlayer.SetShootPower(0);
 		return new ThrowState();
 	}
+
+	//右クリックでキャンセルできるようにする
+	//キャンセルメソッドをPlayerに作って呼び出す
 	return nullptr;
 }

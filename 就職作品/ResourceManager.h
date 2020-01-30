@@ -63,8 +63,12 @@ enum TexName
 	ButtonText_Tex,
 	ButtonBack_Tex,
 	ButtonNum_Tex,
+	
+//Button
 	Stage1Button_Tex,
 	Stage2Button_Tex,
+	YesButton_Tex,
+	NoButton_Tex,
 
 //InGame-----------------------------
 	ThrowGhostSnow_Tex,
@@ -99,6 +103,9 @@ enum TexName
 	Hedge_Tex,
 	Pole_Tex,
 	Ground_Tex,
+
+
+	BackToTitle_Tex,
 };
 
 enum SoundID {
@@ -184,8 +191,12 @@ private:
 		{ButtonText_Tex,		  TexData{"StageSelectText.png", 132, 30, NULL}},
 		{ButtonBack_Tex,		  TexData{"StageButton.jpg", 132, 132, NULL}},
 		{ButtonNum_Tex,			  TexData{"StageSelectNum.png", 300, 30, NULL}},
+
+		//Button
 		{Stage1Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
 		{Stage2Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
+		{YesButton_Tex,           TexData{"Yes.png", 96, 54, NULL}},
+		{NoButton_Tex,            TexData{"No.png", 96, 54, NULL}},
 
 		//InGame
 		{ThrowGhostSnow_Tex,      TexData{"PredictionLine_Snow.png", 64, 64, NULL}},
@@ -220,6 +231,8 @@ private:
 		{Hedge_Tex,               TexData{"Hedge.png", 512, 512, NULL}},
 		{Pole_Tex,                TexData{"Pole.png", 512, 512, NULL}},
 		{Ground_Tex,              TexData{"SnowGround.png", 512, 512, NULL}},
+
+		{BackToTitle_Tex,		  TexData{"BackToTitle.png", 1280, 720, NULL}},
 	};
 
 	std::map<SoundID, std::string> SoundFileName{

@@ -232,7 +232,7 @@ void GameScene::Render2D(void)
 
 	}
 
-
+	GetBackToTitle.Draw();
 	GetSceneSwitchEffect.Draw();			//常に描画
 
 	// 描画終了
@@ -241,11 +241,27 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	static bool BackToTitleFlag = false;
+	if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000) || BackToTitleFlag == true)
 	{
-		GetSceneSwitcher.SwitchScene(new TitleScene());			//エフェクトと確認を入れる☆
-		GetSound.AllStop();
-		return false;
+		BackToTitleFlag = true;
+		int State;
+
+		State = GetBackToTitle.CallBackToTitle();
+		switch (State)
+		{
+		case -1:
+			BackToTitleFlag = false;
+			break;
+		case 0 :
+			return true;
+			break;
+		case 1:
+			BackToTitleFlag = false;
+			GetSound.AllStop();
+			return false;
+			break;
+		}
 	}
 
 	//---------------------------------------------------------

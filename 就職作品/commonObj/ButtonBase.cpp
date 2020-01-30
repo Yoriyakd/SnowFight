@@ -1,8 +1,8 @@
 #include "ButtonBase.h"
 
-ButtonBase::ButtonBase(int Stage):onMouseColor(200)
+ButtonBase::ButtonBase(int No):onMouseColor(200)
 {
-	switch (Stage)
+	switch (No)
 	{
 	case 1:
 		Stage1Initialize();
@@ -16,7 +16,7 @@ ButtonBase::ButtonBase(int Stage):onMouseColor(200)
 	D3DXMatrixTranslation(&textOffsetMat, 4, 95, 0);
 	D3DXMatrixTranslation(&numOffsetMat, 90, 95, 0);
 	D3DXMatrixTranslation(&picOffsetMat, 18, 30, 0);
-	stageNum = Stage;
+	stageNum = No;
 }
 
 void ButtonBase::Draw()

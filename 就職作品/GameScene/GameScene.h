@@ -33,6 +33,7 @@
 #include"../UI/GameObjective.h"
 #include"../UI/AddSnowBallUI.h"
 #include"../Effect/SceneSwitchEffect.h"
+#include"../commonObj/BackToTitle.h"
 #include"ResultCam.h"
 
 //--------------------------------------------------------------------------------------------

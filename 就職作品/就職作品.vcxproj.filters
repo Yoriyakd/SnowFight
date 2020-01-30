@@ -249,6 +249,12 @@
     <ClCompile Include="UI\AddSnowBallUI.cpp">
       <Filter>GameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\BackToTitle.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene\StageSelectButton.cpp">
+      <Filter>MenuScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -448,6 +454,12 @@
     </ClInclude>
     <ClInclude Include="UI\AddSnowBallUI.h">
       <Filter>GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\BackToTitle.h">
+      <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene\StageSelectButton.h">
+      <Filter>MenuScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
