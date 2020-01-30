@@ -3,6 +3,7 @@
 #include"../ResourceManager.h"
 #include"ButtonBase.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
+#include"../Sound/SoundManager.h"
 
 //--------------------------------------------------------------
 //タイトルバック確認画面のクラス

@@ -42,7 +42,7 @@ void SoundManager::Initialize()
 	//とりあえずここに直接書く（）TEXT等外部ファイルから読み込む
 	SoundInitData tmp{ InGameBGM_SOUND, false, -100, 1 };
 
-	Sound2DMap.emplace(InGameBGM_SOUND, new Sound2D[tmp.MaxPlayCnt]);
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 	
 	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
 	{
@@ -54,7 +54,7 @@ void SoundManager::Initialize()
 	tmp.Volume = 0;
 	tmp.MaxPlayCnt = 10;
 
-	Sound2DMap.emplace(SnowBallHit_SOUND, new Sound2D[tmp.MaxPlayCnt]);
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 
 	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
 	{
@@ -66,12 +66,26 @@ void SoundManager::Initialize()
 	tmp.Volume = 0;
 	tmp.MaxPlayCnt = 3;
 
-	Sound2DMap.emplace(Throw_Sound, new Sound2D[tmp.MaxPlayCnt]);
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 
 	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
 	{
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
 	}
+	
+	tmp.ID = Success_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 2;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+
 }
 
 void SoundManager::Update()

@@ -115,6 +115,7 @@ enum SoundID {
 	//SE
 	SnowBallHit_SOUND,
 	Throw_Sound,
+	Success_Sound,
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
@@ -241,6 +242,7 @@ private:
 
 		{SnowBallHit_SOUND, "Snowball_Impact.wav"},
 		{Throw_Sound,       "Throw.wav"},
+		{Success_Sound,     "Success.wav"},
 
 	};
 };

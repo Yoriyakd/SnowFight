@@ -1,7 +1,7 @@
 #include "BackToTitle.h"
 #include"../TitleScene/TitleScene.h"
 
-BackToTitle::BackToTitle() : ESCKyeFlag(false)
+BackToTitle::BackToTitle() : ESCKyeFlag(true)
 {
 	tex = GetResource.GetTexture(BackToTitle_Tex);
 	D3DXMatrixTranslation(&mat, 0, 0, 0);
@@ -44,10 +44,14 @@ int BackToTitle::CallBackToTitle()
 	{
 		if (YesButton->GetState() == true)
 		{
+			GetSound.Play2D(Success_Sound);
 			calledState = false;
 			GetSceneSwitcher.SwitchScene(new TitleScene());
 			ShowCursor(false);		//仮☆
 			CursorFlag = false;
+
+			ESCKyeFlag = true;
+
 			return 1;
 		}
 		if (NoButton->GetState() == true) 
@@ -55,6 +59,7 @@ int BackToTitle::CallBackToTitle()
 			calledState = false;
 			ShowCursor(false);		//仮☆
 			CursorFlag = false;
+			ESCKyeFlag = true;
 			return -1;
 		}
 	}
@@ -67,7 +72,9 @@ int BackToTitle::CallBackToTitle()
 		}
 		calledState = false;
 		GetSceneSwitcher.SwitchScene(new TitleScene());
-		ShowCursor(false);		//仮☆
+		ShowCursor(false);		//仮☆(全体で管理した方がよさそうカーソル使うなら)
+		CursorFlag = false;
+
 		ESCKyeFlag = true;
 
 		return 1;

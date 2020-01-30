@@ -74,20 +74,25 @@ bool TitleScene::Update(void)
 		ESCFlag = true;
 	}
 
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	if (sceneSwitchState == false)
 	{
-		sceneSwitchState = true;
-	}
+		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+		{
+			GetSound.Play2D(Success_Sound);
+			sceneSwitchState = true;
+		}
 
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-	{
-		sceneSwitchState = true;
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		{
+			sceneSwitchState = true;
+		}
 	}
 
 	if (sceneSwitchState == true)
 	{
 		if (GetSceneSwitchEffect.ToDarkness() == true)		//ê^Ç¡à√Ç…Ç»Ç¡ÇΩÇÁà⁄çs
 		{
+			GetSound.Play2D(Success_Sound);
 			GetSceneSwitcher.SwitchScene(new MenuScene());
 			return false;
 		}

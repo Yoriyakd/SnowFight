@@ -92,23 +92,26 @@ bool MenuScene::Update(void)
 		return false;
 	}
 	
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	if (sceneSwitchState == 0)		//シーン切り替え回り要改善　☆
 	{
-		if (stage1Button->GetState() == true)
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
-			sceneSwitchState = -1;
-			selectedStage = 1;
+			if (stage1Button->GetState() == true)
+			{
+				GetSound.Play2D(Success_Sound);
+				sceneSwitchState = -1;
+				selectedStage = 1;
+			}
+
+			if (stage2Button->GetState() == true)
+			{
+				GetSound.Play2D(Success_Sound);
+				sceneSwitchState = -1;
+				selectedStage = 2;
+			}
 		}
 	}
 	
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-	{
-		if (stage2Button->GetState() == true)
-		{
-			sceneSwitchState = -1;
-			selectedStage = 2;
-		}
-	}
 
 	if (sceneSwitchState == -1)
 	{
