@@ -24,5 +24,6 @@ private:
 	LPDIRECT3DTEXTURE9 effectTex;
 	D3DXMATRIX effectMat;
 	int effectAlpha;
+	bool switchFlag;		//画面が暗くなりシーン変更の準備ができたことを表す
 };
 SceneSwitchEffect* SingletonBase<SceneSwitchEffect>::instance = nullptr;

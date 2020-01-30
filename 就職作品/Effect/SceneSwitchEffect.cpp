@@ -1,6 +1,6 @@
 #include "SceneSwitchEffect.h"
 
-SceneSwitchEffect::SceneSwitchEffect()
+SceneSwitchEffect::SceneSwitchEffect() : switchFlag(false)
 {
 	effectTex = GetResource.GetTexture(SceneSwitch_Tex);
 	D3DXMatrixTranslation(&effectMat, 0, 0, 0);
@@ -21,25 +21,40 @@ void SceneSwitchEffect::Draw()
 
 bool SceneSwitchEffect::ToDarkness(void)
 {
+	if (switchFlag == true)		//遷移フラグが立っているなら切り替える
+	{
+		switchFlag = false;		//フラグを下す
+		return true;
+	}
+
 	effectAlpha += 20;
 	if (effectAlpha > 255)		//アルファ値が255まで
 	{
 		effectAlpha = 255;
-
-		return true;
+		switchFlag = true;
+		
 	}
+
+	
 	return false;
 }
 
 bool SceneSwitchEffect::ToBrightness(void)
 {
+	if (switchFlag == true)			//遷移フラグが立っているなら切り替える
+	{
+		switchFlag = false;		//フラグを下す
+		return true;
+	}
+	
+
 	effectAlpha -= 20;
 
 	if (effectAlpha < 0)
 	{
 		effectAlpha = 0;
-
-		return true;
+		switchFlag = true;
 	}
+
 	return false;
 }
