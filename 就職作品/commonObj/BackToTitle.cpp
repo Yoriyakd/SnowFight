@@ -1,7 +1,7 @@
 #include "BackToTitle.h"
 #include"../TitleScene/TitleScene.h"
 
-BackToTitle::BackToTitle()
+BackToTitle::BackToTitle() : ESCKyeFlag(false)
 {
 	tex = GetResource.GetTexture(BackToTitle_Tex);
 	D3DXMatrixTranslation(&mat, 0, 0, 0);
@@ -47,13 +47,35 @@ int BackToTitle::CallBackToTitle()
 			calledState = false;
 			GetSceneSwitcher.SwitchScene(new TitleScene());
 			ShowCursor(false);		//âºÅô
+			CursorFlag = false;
 			return 1;
 		}
 		if (NoButton->GetState() == true) 
 		{
 			calledState = false;
+			ShowCursor(false);		//âºÅô
+			CursorFlag = false;
 			return -1;
 		}
 	}
+
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		if (ESCKyeFlag == true)
+		{
+			return 0;
+		}
+		calledState = false;
+		GetSceneSwitcher.SwitchScene(new TitleScene());
+		ShowCursor(false);		//âºÅô
+		ESCKyeFlag = true;
+
+		return 1;
+	}
+	else
+	{
+		ESCKyeFlag = false;
+	}
+
 	return 0;
 }

@@ -24,6 +24,7 @@ public:
 	D3DXMATRIX mat;
 
 	bool calledState;			//ŒÄ‚Ño‚³‚ê‚Ä‚¢‚é‚©‚ğ•\‚·
+	bool ESCKyeFlag;
 
 	ButtonBase *YesButton;
 	ButtonBase *NoButton;
