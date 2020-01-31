@@ -132,6 +132,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="commonObj\BackToTitle.cpp" />
+    <ClCompile Include="commonObj\BackToTitleButton.cpp" />
     <ClCompile Include="commonObj\ButtonBase.cpp" />
     <ClCompile Include="commonObj\Function.cpp" />
     <ClCompile Include="commonObj\SkyBox.cpp">
@@ -260,6 +261,7 @@
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
     <ClInclude Include="commonObj\BackToTitle.h" />
+    <ClInclude Include="commonObj\BackToTitleButton.h" />
     <ClInclude Include="commonObj\ButtonBase.h" />
     <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />

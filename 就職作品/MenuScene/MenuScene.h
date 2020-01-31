@@ -2,7 +2,7 @@
 #include"../main.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
-#include"../commonObj/ButtonBase.h"
+#include"StageSelectButton.h"
 #include"../Effect/SceneSwitchEffect.h"
 class MenuScene : public SceneBase {
 public:
@@ -43,6 +43,6 @@ private:
 	LPDIRECT3DTEXTURE9 cursorTex;
 	D3DXMATRIX cursorMat;
 
-	ButtonBase *stage1Button, *stage2Button;
+	StageSelectButton *stage1Button, *stage2Button;
 	int selectedStage;		//選択されたステージ番号
 };

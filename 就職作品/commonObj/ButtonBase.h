@@ -1,20 +1,23 @@
 #pragma once
 #include"../main.h"
 #include"../ResourceManager.h"
+
+struct ButtonData {
+	D3DXVECTOR2 Pos;		//座標
+	D3DXVECTOR2 BoxSize;	//クリック判定のサイズ
+};
+
 class ButtonBase {
 public:
-	ButtonBase(int Stage);
+	ButtonBase(void);
 	void Draw();
 	void Update();
 	bool GetState(void);
 protected:
-	void Stage1Initialize(void);				//とりあえずここに書く(textやCSVから読み込むように変更する)☆
-	void Stage2Initialize(void);
-
-	LPDIRECT3DTEXTURE9 stagePicTex, backTex, stageTextTex, stageNumTex;
-	D3DXMATRIX mat, textOffsetMat, numOffsetMat, picOffsetMat;
-	D3DXVECTOR2 pos, boxSize;		//座標とbuttonのサイズX,Y	boxSizeはクリック判定のサイズ
+	virtual void OnMouseEvent(void);
+	virtual void OffMouseEvent(void);
+	
+	ButtonData buttonData;
 	bool nowStae;		//カーソルが上に乗っかていたらtrue
-	int stageNum;
-	int onMouseColor;
+	
 };

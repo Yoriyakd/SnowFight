@@ -29,8 +29,11 @@ MenuScene::MenuScene()
 	//---------------------------------------
 	cursorTex = GetResource.GetTexture(MenuCursor_Tex);
 
-	stage1Button = new ButtonBase(1);
-	stage2Button = new ButtonBase(2);
+	stage1Button = new StageSelectButton();
+	stage1Button->Stage1Initialize();		//‚Æ‚è‚ ‚¦‚¸‚±‚ê‚Å(CSV‚Æ‚©‚©‚ç“Ç‚Ýž‚Þ‚æ‚¤‚É•ÏX‚·‚é™)
+
+	stage2Button = new StageSelectButton();
+	stage2Button->Stage2Initialize();
 }
 
 MenuScene::~MenuScene()

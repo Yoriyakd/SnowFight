@@ -104,7 +104,7 @@ enum TexName
 	Pole_Tex,
 	Ground_Tex,
 
-
+//タイトルに戻る確認
 	BackToTitle_Tex,
 };
 
@@ -196,8 +196,8 @@ private:
 		//Button
 		{Stage1Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
 		{Stage2Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
-		{YesButton_Tex,           TexData{"Yes.png", 96, 54, NULL}},
-		{NoButton_Tex,            TexData{"No.png", 96, 54, NULL}},
+		{YesButton_Tex,			  TexData{"YES.png", 132, 132, NULL}},
+		{NoButton_Tex,			  TexData{"NO.png", 132, 132, NULL}},
 
 		//InGame
 		{ThrowGhostSnow_Tex,      TexData{"PredictionLine_Snow.png", 64, 64, NULL}},

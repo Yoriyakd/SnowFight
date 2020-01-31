@@ -6,8 +6,16 @@ BackToTitle::BackToTitle() : ESCKyeFlag(true)
 	tex = GetResource.GetTexture(BackToTitle_Tex);
 	D3DXMatrixTranslation(&mat, 0, 0, 0);
 
-	YesButton = new ButtonBase(1);
-	NoButton = new ButtonBase(2);
+	YesButton = new BackToTitleButton();
+	ButtonData TmpData;
+	TmpData.Pos = D3DXVECTOR2(440, 300);
+	TmpData.BoxSize = D3DXVECTOR2(132, 132);
+	YesButton->Initialize(TmpData, GetResource.GetTexture(YesButton_Tex));		//CSV‚©‚ç“Ç‚Ýž‚Þ‚æ‚¤‚É•ÏX‚·‚é™
+	
+	NoButton = new BackToTitleButton();
+	TmpData.Pos = D3DXVECTOR2(740, 300);
+	TmpData.BoxSize = D3DXVECTOR2(132, 132);
+	NoButton->Initialize(TmpData, GetResource.GetTexture(NoButton_Tex));
 }
 
 BackToTitle::~BackToTitle()

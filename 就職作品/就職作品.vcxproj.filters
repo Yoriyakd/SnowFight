@@ -255,6 +255,9 @@
     <ClCompile Include="MenuScene\StageSelectButton.cpp">
       <Filter>MenuScene</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\BackToTitleButton.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="MenuScene\StageSelectButton.h">
       <Filter>MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\BackToTitleButton.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

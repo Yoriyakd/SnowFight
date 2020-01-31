@@ -1,7 +1,7 @@
 #pragma once
 #include"../SingletonBase.h"
 #include"../ResourceManager.h"
-#include"ButtonBase.h"
+#include"BackToTitleButton.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../Sound/SoundManager.h"
 
@@ -27,8 +27,8 @@ public:
 	bool calledState;			//ŒÄ‚Ño‚³‚ê‚Ä‚¢‚é‚©‚ğ•\‚·
 	bool ESCKyeFlag;
 
-	ButtonBase *YesButton;
-	ButtonBase *NoButton;
+	BackToTitleButton *YesButton;
+	BackToTitleButton *NoButton;
 };
 
 BackToTitle* SingletonBase<BackToTitle>::instance = nullptr;		//nullptr‚Å‰Šú‰»
