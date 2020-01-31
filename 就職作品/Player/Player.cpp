@@ -101,6 +101,10 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 			carryItem->SetDisplayFlag(false);
 		}
 	}
+	else
+	{
+		carryItem->SetDisplayFlag(true);
+	}
 
 	//-----------------------------------------------------
 	D3DXMatrixTranslation(&transMat, pos.x, pos.y, pos.z);
