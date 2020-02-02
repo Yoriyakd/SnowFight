@@ -84,6 +84,7 @@ bool TitleScene::Update(void)
 
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
+			GetSound.Play2D(Success_Sound);
 			sceneSwitchState = true;
 		}
 	}
@@ -92,7 +93,6 @@ bool TitleScene::Update(void)
 	{
 		if (GetSceneSwitchEffect.ToDarkness() == true)		//ê^Ç¡à√Ç…Ç»Ç¡ÇΩÇÁà⁄çs
 		{
-			GetSound.Play2D(Success_Sound);
 			GetSceneSwitcher.SwitchScene(new MenuScene());
 			return false;
 		}
