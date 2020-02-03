@@ -26,6 +26,7 @@ private:
 	bool sceneSwitchState;
 	
 	bool ESCFlag;	//ƒQ[ƒ€I—¹‚ÌESC‰Ÿ‚µ‚Á‚Ï‚È‚µ”»’è
+	bool clickFlag;	//‰Ÿ‚µ‚Á‚Ï‚È‚µ‘Îô
 
 	LPDIRECT3DTEXTURE9 backTex;
 	D3DXMATRIX backMat;

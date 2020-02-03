@@ -76,16 +76,18 @@ bool TitleScene::Update(void)
 
 	if (sceneSwitchState == false)
 	{
-		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+		
+		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 || GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
-			GetSound.Play2D(Success_Sound);
-			sceneSwitchState = true;
+			if (clickFlag == true)
+			{
+				GetSound.Play2D(Success_Sound);
+				sceneSwitchState = true;
+			}
 		}
-
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		else
 		{
-			GetSound.Play2D(Success_Sound);
-			sceneSwitchState = true;
+			clickFlag = true;
 		}
 	}
 
