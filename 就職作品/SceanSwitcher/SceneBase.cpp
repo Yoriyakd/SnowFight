@@ -1,6 +1,7 @@
 #include<d3dx9.h>
 #include"SceneBase.h"
 #include"../Sound/SoundManager.h"
+#include"../Effect/SceneSwitchEffect.h"
 
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 
@@ -48,7 +49,7 @@ void SceneBase::Frame(void)
 		BTcnt = NTcnt;		//基準時間を変更
 	}
 	//---------------------------------------------------------------------------
-	GetSound.Update();			//どの状態でも更新してほしいけどここでいいのか？☆
+	GetSceneSwitchEffect.Update();		//60FP制限処理を↑に書いているのでいったんここに置いておく☆
 	if (Update() == false)											//falseを返さないと消したシーンをが実行されるので注意
 	{
 		return;
@@ -62,3 +63,4 @@ void SceneBase::Frame(void)
 	lpD3DDevice->EndScene();
 	lpD3DDevice->Present(NULL, NULL, NULL, NULL);
 }
+

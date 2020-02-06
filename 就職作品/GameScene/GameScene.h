@@ -51,6 +51,11 @@ public:
 	bool Update(void);
 
 private:
+	void StartScene();
+	void EndScene();
+	bool endSceneState;		//シーンが終了中か
+	bool isESCKye;
+
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;
@@ -76,12 +81,14 @@ private:
 	//リザルト
 	//------------------------------------------
 	int Resultime;
+	void StartResult(void);		//リザルトを実行する際1度のみ呼ぶ
+	void EndResult(void);		//リザルトを終了する際1度のみ呼ぶ
 	bool ResultUpdate(void);
 
 	ResultCam *resultCam;
 
 	bool resultFlag;		//リザルト表示中かの状態
-	int sceneSwitchState;		//-1 = 暗転	0 = 動きなし	1 = 明転
+	bool endResultState;	//リザルトが終了中か
 	
 	LPDIRECT3DTEXTURE9 resultTex, returnTex;
 	D3DXMATRIX resultMat, returnMat;

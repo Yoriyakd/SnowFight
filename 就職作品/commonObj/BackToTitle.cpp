@@ -54,7 +54,6 @@ int BackToTitle::CallBackToTitle()
 		{
 			GetSound.Play2D(Success_Sound);
 			calledState = false;
-			GetSceneSwitcher.SwitchScene(new TitleScene());
 			ShowCursor(false);		//仮☆
 			CursorFlag = false;
 
@@ -79,13 +78,12 @@ int BackToTitle::CallBackToTitle()
 			return 0;
 		}
 		calledState = false;
-		GetSceneSwitcher.SwitchScene(new TitleScene());
 		ShowCursor(false);		//仮☆(全体で管理した方がよさそうカーソル使うなら)
 		CursorFlag = false;
 
 		ESCKyeFlag = true;
 
-		return 1;
+		return -1;
 	}
 	else
 	{

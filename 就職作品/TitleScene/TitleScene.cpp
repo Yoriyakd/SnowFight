@@ -13,6 +13,7 @@ TitleScene::TitleScene():ESCFlag(false)
 	kyeInstructionTex = GetResource.GetTexture(TitleInstructions_Tex);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 
+	StartScene();		//シーン開始時1度呼ぶ
 }
 
 TitleScene::~TitleScene()
@@ -56,10 +57,15 @@ void TitleScene::Render2D(void)
 
 bool TitleScene::Update(void)
 {
-	//if (GetAsyncKeyState(VK_RBUTTON || VK_LBUTTON) & 0x8000)		できなかった
-	//{
-	//	sceneSwitchState = true;
-	//}
+	if (endSceneState == true)
+	{
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
+		{
+			GetSceneSwitcher.SwitchScene(new MenuScene());
+			return false;
+		}
+		return true;
+	}
 
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 	{
@@ -74,30 +80,28 @@ bool TitleScene::Update(void)
 		ESCFlag = true;
 	}
 
-	if (sceneSwitchState == false)
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 || GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		
-		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000 || GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		if (isClick == true)
 		{
-			if (clickFlag == true)
-			{
-				GetSound.Play2D(Success_Sound);
-				sceneSwitchState = true;
-			}
-		}
-		else
-		{
-			clickFlag = true;
+			GetSound.Play2D(Success_Sound);
+			EndScene();
 		}
 	}
-
-	if (sceneSwitchState == true)
+	else
 	{
-		if (GetSceneSwitchEffect.ToDarkness() == true)		//真っ暗になったら移行
-		{
-			GetSceneSwitcher.SwitchScene(new MenuScene());
-			return false;
-		}
+		isClick = true;		//クリックできる
 	}
 	return true;
+}
+
+void TitleScene::StartScene(void)
+{
+	GetSceneSwitchEffect.PlayFadeIn();		//明るくする
+}
+
+void TitleScene::EndScene(void)
+{
+	GetSceneSwitchEffect.PlayFadeOut();		//暗くする
+	endSceneState = true;
 }

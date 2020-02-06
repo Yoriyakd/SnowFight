@@ -2,10 +2,8 @@
 #include"../GameScene/GameScene.h"
 #include"../TitleScene/TitleScene.h"
 
-MenuScene::MenuScene()
+MenuScene::MenuScene() : endSceneState(false)
 {
-	sceneSwitchState = 1;		//1最初は明転させる
-
 	//---------------------------------------
 	//背景
 	//---------------------------------------
@@ -34,6 +32,8 @@ MenuScene::MenuScene()
 
 	stage2Button = new StageSelectButton();
 	stage2Button->Stage2Initialize();
+
+	StartScene();
 }
 
 MenuScene::~MenuScene()
@@ -86,6 +86,16 @@ void MenuScene::Render2D(void)
 
 bool MenuScene::Update(void)
 {
+	if (endSceneState == true)
+	{
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
+		{
+			GetSceneSwitcher.SwitchScene(new GameScene(selectedStage));
+			return false;		//このfalse返すのシーン遷移とセットやからスマートにかけないだろうか☆
+		}
+		return true;		//シーン遷移状態なら早期リターン
+	}
+
 	stage1Button->Update();
 	stage2Button->Update();
 
@@ -95,41 +105,21 @@ bool MenuScene::Update(void)
 		return false;
 	}
 	
-	if (sceneSwitchState == 0)		//シーン切り替え回り要改善　☆
-	{
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-		{
-			if (stage1Button->GetState() == true)
-			{
-				GetSound.Play2D(Success_Sound);
-				sceneSwitchState = -1;
-				selectedStage = 1;
-			}
 
-			if (stage2Button->GetState() == true)
-			{
-				GetSound.Play2D(Success_Sound);
-				sceneSwitchState = -1;
-				selectedStage = 2;
-			}
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		if (stage1Button->GetState() == true)
+		{
+			GetSound.Play2D(Success_Sound);
+			EndScene();
+			selectedStage = 1;
 		}
-	}
-	
 
-	if (sceneSwitchState == -1)
-	{
-		if (GetSceneSwitchEffect.ToDarkness() == true)			//暗転させる
+		if (stage2Button->GetState() == true)
 		{
-			GetSceneSwitcher.SwitchScene(new GameScene(selectedStage));
-			return false;
-		}
-	}
-
-	if (sceneSwitchState == 1)
-	{
-		if (GetSceneSwitchEffect.ToBrightness() == true)
-		{
-			sceneSwitchState = 0;
+			GetSound.Play2D(Success_Sound);
+			EndScene();
+			selectedStage = 2;
 		}
 	}
 
@@ -144,4 +134,15 @@ bool MenuScene::Update(void)
 	D3DXMatrixTranslation(&cursorMat, (float)Pt.x, (float)Pt.y, 0);
 
 	return true;
+}
+
+void MenuScene::StartScene(void)
+{
+	GetSceneSwitchEffect.PlayFadeIn();
+}
+
+void MenuScene::EndScene(void)
+{
+	GetSceneSwitchEffect.PlayFadeOut();
+	endSceneState = true;
 }

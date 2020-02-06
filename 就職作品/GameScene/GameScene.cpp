@@ -6,14 +6,13 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo): Resultime(120)
+GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), endSceneState(false)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
 	GetResource.GetXFILE(EnemyHat_M);/*1度読み込むことで軽量化*/
 
 	srand(timeGetTime());
-	sceneSwitchState = 1;		//最初は明転させる
 
 	GetEnemyManager.Create();
 	loadStageData = new LoadStageData(StageNo);
@@ -101,7 +100,7 @@ GameScene::GameScene(int StageNo): Resultime(120)
 	lpD3DDevice->SetLight(0, &Light);
 	lpD3DDevice->LightEnable(0, TRUE);
 	//-----------------------------
-	GetSound.Play2D(InGameBGM_SOUND);
+	StartScene();
 }
 
 GameScene::~GameScene()
@@ -244,24 +243,41 @@ bool GameScene::Update()
 	static bool BackToTitleFlag = false;
 	if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000) || BackToTitleFlag == true)
 	{
-		BackToTitleFlag = true;
-		int State;
-
-		State = GetBackToTitle.CallBackToTitle();
-		switch (State)
+		if (isESCKye == true)
 		{
-		case -1:
-			BackToTitleFlag = false;
-			break;
-		case 0 :
-			return true;
-			break;
-		case 1:
-			BackToTitleFlag = false;
-			GetSound.AllStop();
-			return false;
-			break;
+			BackToTitleFlag = true;
+			int State;
+
+			State = GetBackToTitle.CallBackToTitle();
+			switch (State)
+			{
+			case -1:
+				BackToTitleFlag = false;
+				isESCKye = false;		//押しっぱなし対策
+				break;
+			case 0:
+				return true;
+				break;
+			case 1:
+				BackToTitleFlag = false;
+				EndScene();
+				break;
+			}
 		}
+	}
+	else
+	{
+		isESCKye = true;
+	}
+
+	if (endSceneState == true)
+	{
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
+		{
+			GetSceneSwitcher.SwitchScene(new TitleScene());			//タイトルへ移行
+			return false;
+		}
+		return true;
 	}
 
 	//---------------------------------------------------------
@@ -278,14 +294,6 @@ bool GameScene::Update()
 		return true;		//リザルト表示中は早期リターンして動きを止める
 	}
 
-
-	if (sceneSwitchState == 1)				//初めに明転させる処理
-	{
-		if (GetSceneSwitchEffect.ToBrightness() == true)
-		{
-			sceneSwitchState = 0;
-		}
-	}
 	//----------------------------------------------------------------------------------------------------------------
 	//プレイヤーの更新	※カメラ→あたり判定→プレイヤーの順番で	プレイヤーのの位置がカメラとずれるため
 	//----------------------------------------------------------------------------------------------------------------
@@ -490,23 +498,7 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------
 	if (eventManager->Update(GetEnemyManager, GetDecorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
 	{
-		sceneSwitchState = -1;
-	}
-
-	if (sceneSwitchState == -1)
-	{
-		if (GetSceneSwitchEffect.ToDarkness() == true)
-		{
-			resultFlag = true;
-			resultCam = new ResultCam();
-			sceneSwitchState = 1;
-
-			//敵やエフェクトなど邪魔なものを削除する
-			GetEnemyManager.AllDelete();
-			Effect.AllDelete();
-			GetSnowBallManager.AllDelete();
-			GetDecorationManager.DeleteToResult();
-		}
+		StartResult();
 	}
 	//----------------------------------------------------------------------------------------
 	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
@@ -525,33 +517,57 @@ bool GameScene::Update()
 	return true;
 }
 
+void GameScene::StartScene()
+{
+	GetSound.Play2D(InGameBGM_SOUND);
+	GetSceneSwitchEffect.PlayFadeIn();
+}
+
+void GameScene::EndScene()
+{
+	GetSceneSwitchEffect.PlayFadeOut();
+	GetSound.AllStop();										//サウンドを再生停止
+	endSceneState = true;
+}
+
+void GameScene::StartResult(void)
+{
+	resultFlag = true;
+	GetSceneSwitchEffect.PlayFadeIn();
+	resultFlag = true;
+	resultCam = new ResultCam();
+
+	//敵やエフェクトなど邪魔なものを削除する
+	GetEnemyManager.AllDelete();
+	Effect.AllDelete();
+	GetSnowBallManager.AllDelete();
+	GetDecorationManager.DeleteToResult();
+}
+
+void GameScene::EndResult(void)
+{
+	GetSceneSwitchEffect.PlayFadeOut();
+
+}
+
 //この辺りは作り直しの必要あり
 bool GameScene::ResultUpdate(void)
 {
-	if (sceneSwitchState == 1)				//シーン移行後明転させる処理
-	{
-		if (GetSceneSwitchEffect.ToBrightness() == true)
-		{
-			sceneSwitchState = 0;
-		}
-	}
-
 	resultCam->Update(&mapObjManager->GetXmasTreePos());
 
 	Resultime--;
 
-	if (Resultime <= 0)
+	if (Resultime <= 0)//一定時間入力をうけつけない
 	{
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//一定時間入力をうけつけない
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//右クリックが押されるとシーン遷移
 		{
-			sceneSwitchState = -1;
-			Resultime = 360;
+			EndResult();
 		}
 	}
 
-	if (sceneSwitchState == -1)
+	if (endResultState == true)		//リザルト終了フラグが立っている状態でフェードが終了するとシーン遷移
 	{
-		if (GetSceneSwitchEffect.ToDarkness() == true)
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			return false;
 		}

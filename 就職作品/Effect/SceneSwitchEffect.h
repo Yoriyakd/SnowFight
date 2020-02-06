@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------------------
 
 #define GetSceneSwitchEffect SceneSwitchEffect::GetInstance()
+enum SwitchEffectState { FADE_IN, STOP, FADE_OUT};
 
 class SceneSwitchEffect : public SingletonBase<SceneSwitchEffect>{
 public:
@@ -16,14 +17,24 @@ public:
 
 	void Draw();
 
-	bool ToDarkness(void);
-	bool ToBrightness(void);
+	void Update();
+
+	void PlayFadeIn(void);
+	void PlayFadeOut(void);
+
+	SwitchEffectState GetFadeState();
+	
 private:
 	SceneSwitchEffect();
 	~SceneSwitchEffect();
+
+	void ToDarkness(void);
+	void ToBrightness(void);
+
 	LPDIRECT3DTEXTURE9 effectTex;
 	D3DXMATRIX effectMat;
 	int effectAlpha;
 	bool switchFlag;		//画面が暗くなりシーン変更の準備ができたことを表す
+	SwitchEffectState nowState;
 };
 SceneSwitchEffect* SingletonBase<SceneSwitchEffect>::instance = nullptr;

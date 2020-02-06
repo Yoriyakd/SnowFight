@@ -293,6 +293,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		else 
 		{
 			GetSceneSwitcher.NowScene();
+			//GetSceneSwitchEffect.Update();
 		}
 	}
 
@@ -304,7 +305,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	GetSound.Destroy();
 	BackToTitle::Destroy();
 
-	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない
+	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない	管理するクラスを作る
 
 
 	lpSprite->Release();	// スプライト
