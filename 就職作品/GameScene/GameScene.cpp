@@ -6,7 +6,7 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), endSceneState(false)
+GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), isSwitchResulut(false), endSceneState(false)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
@@ -281,6 +281,17 @@ bool GameScene::Update()
 	}
 
 	//---------------------------------------------------------
+	//リザルト移行
+	//---------------------------------------------------------
+	if (isSwitchResulut == true)
+	{
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
+		{
+			StartResult();
+		}
+	}
+
+	//---------------------------------------------------------
 	//リザルト中の処理
 	//---------------------------------------------------------
 	if (resultFlag == true)
@@ -496,14 +507,22 @@ bool GameScene::Update()
 	}
 	GetSpawnerManager.Update(*stageBorder);
 	//----------------------------------------------------------------------------------------
+	//イベント処理
+	//----------------------------------------------------------------------------------------
 	if (eventManager->Update(GetEnemyManager, GetDecorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
 	{
-		StartResult();
+		SwitchResulut();
 	}
+
+	//----------------------------------------------------------------------------------------
+	//時間処理
 	//----------------------------------------------------------------------------------------
 	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
-	bool NormState;
 
+	//----------------------------------------------------------------------------------------
+	//ノルマ処理
+	//----------------------------------------------------------------------------------------
+	bool NormState;
 	NormState = eventManager->GetNormState();
 	if (NormState == false)
 	{
@@ -530,24 +549,31 @@ void GameScene::EndScene()
 	endSceneState = true;
 }
 
+void GameScene::SwitchResulut()
+{
+	GetSceneSwitchEffect.PlayFadeOut();
+	isSwitchResulut = true;
+}
+
 void GameScene::StartResult(void)
 {
-	resultFlag = true;
-	GetSceneSwitchEffect.PlayFadeIn();
-	resultFlag = true;
-	resultCam = new ResultCam();
-
 	//敵やエフェクトなど邪魔なものを削除する
 	GetEnemyManager.AllDelete();
 	Effect.AllDelete();
 	GetSnowBallManager.AllDelete();
 	GetDecorationManager.DeleteToResult();
+
+	resultFlag = true;
+	isSwitchResulut = false;
+	GetSceneSwitchEffect.PlayFadeIn();
+	resultFlag = true;
+	resultCam = new ResultCam();
 }
 
 void GameScene::EndResult(void)
 {
 	GetSceneSwitchEffect.PlayFadeOut();
-
+	endResultState = true;
 }
 
 //この辺りは作り直しの必要あり
