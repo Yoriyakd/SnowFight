@@ -328,7 +328,6 @@ bool GameScene::Update()
 	GetEnemyManager.Update(GetSnowBallManager, *stageBorder);
 
 	remainingBallUI->SetRemainingBallCnt(GetPlayer.GetRemainingBalls());
-	//remainingBallUI->SetRemainingBallCnt(player->GetHP());		//HP確認用☆
 	GetSnowBallManager.Update();
 
 	Effect.SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
@@ -422,7 +421,7 @@ bool GameScene::Update()
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
 			eventManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
-			timePenaltyUI.push_back(new TimePenaltyUI(3));
+			timePenaltyUI.push_back(new TimePenaltyUI(3));		//変数化
 
 			//Soundを呼ぶ
 			GetSound.Play2D(SnowBallHit_SOUND);
@@ -509,7 +508,7 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------
 	//イベント処理
 	//----------------------------------------------------------------------------------------
-	if (eventManager->Update(GetEnemyManager, GetDecorationManager, *stageBorder) == false)		//falseが返ってきたらリザルトへ移行する
+	if (eventManager->Update() == false)		//falseが返ってきたらリザルトへ移行する
 	{
 		SwitchResulut();
 	}
@@ -517,7 +516,8 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------
 	//時間処理
 	//----------------------------------------------------------------------------------------
-	timeUI->SetTime_s(eventManager->GetRemainingTime_s());
+	timeUI->SetTime_s(eventManager->GetRemainingTime_s());		//フレームを秒に直して渡している
+	timeUI->Update();
 
 	//----------------------------------------------------------------------------------------
 	//ノルマ処理

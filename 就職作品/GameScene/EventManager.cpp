@@ -10,7 +10,7 @@ EventManager::~EventManager()
 {
 }
 
-bool EventManager::Update(EnemyManager &EnemyManager, DecorationManager & DecorationManager, StageBorder & StageBorder)
+bool EventManager::Update()
 {
 	timeLimit_Frame--;
 

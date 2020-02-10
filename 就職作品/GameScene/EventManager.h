@@ -12,7 +12,7 @@ class EventManager {
 public:
 	EventManager();
 	~EventManager();
-	bool Update(EnemyManager &EnemyManager, DecorationManager &DecorationManager, StageBorder &StageBorder);
+	bool Update();
 
 	//void AddScore(int Score);
 	void DoDecorate(CarryObjectID ID);			//Œ»ó‚Í”‚¾‚¯‚¾‚ªAƒmƒ‹ƒ}‚Éí—Ş‚È‚Ç‚ğİ‚¯‚é

@@ -46,6 +46,32 @@ void TimeUI::Draw()
 		NumberMat = NumberDisMat * NumberMat;			//右にずらす
 	}
 	
+	//大きく薄くなっていく文字表示
+	for (auto BoldNumber : BoldNumber)
+	{
+		RECT RcBoldNumber = { 46 * BoldNumber->DisplayNum, 0, 46 * (BoldNumber->DisplayNum + 1), 46 };
+
+		D3DXMATRIX TmpMat;
+
+		TmpMat = /*BoldNumber->ScalMat */ logoMat * numberOffsetMat;
+		lpSprite->SetTransform(&TmpMat);
+		lpSprite->Draw(numberTex, &RcBoldNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+}
+
+void TimeUI::Update()
+{
+	//10秒から強調とサウンド再生
+
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		BoldNumber.push_back(new BoldNumberData);
+
+		//終端の要素初期化
+		auto Tmp = BoldNumber.back();
+		Tmp->Alpha = 255;
+		Tmp->DisplayNum = 9;
+	}
 }
 
 void TimeUI::SetTime_s(int setTime_s)
