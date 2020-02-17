@@ -1,5 +1,6 @@
 #pragma once
 #include"../ResourceManager.h"
+#include"../Sound/SoundManager.h"
 #include<vector>
 
 class TimeUI {
@@ -15,11 +16,14 @@ private:
 	LPDIRECT3DTEXTURE9 logoTex, numberTex;
 	D3DXMATRIX logoMat, numberOffsetMat;
 	
+
+	int memoryTime;
+
 	struct BoldNumberData
 	{
 		int DisplayNum;
 		D3DXMATRIX ScalMat;
-		float Alpha;			//完全に透明になったら必要なくなる
+		int Alpha;			//完全に透明になったら必要なくなる
 	};
 
 	std::vector<BoldNumberData*> BoldNumber;		//強調文字を表示したいとき構造体を入れるといい感じに表示してくれるようにする

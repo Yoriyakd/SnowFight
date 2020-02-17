@@ -53,24 +53,51 @@ void TimeUI::Draw()
 
 		D3DXMATRIX TmpMat;
 
-		TmpMat = /*BoldNumber->ScalMat */ logoMat * numberOffsetMat;
+		TmpMat = BoldNumber->ScalMat * logoMat * numberOffsetMat;
 		lpSprite->SetTransform(&TmpMat);
-		lpSprite->Draw(numberTex, &RcBoldNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		//中央に向かって大きくなってもらうため0, 0, 0が中央
+		lpSprite->Draw(numberTex, &RcBoldNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(BoldNumber->Alpha, 255, 255, 255));
 	}
 }
 
 void TimeUI::Update()
 {
-	//10秒から強調とサウンド再生
-
-	if (GetAsyncKeyState(VK_SPACE))
+	for (unsigned int i = 0; i < BoldNumber.size(); i++)
 	{
+		D3DXMATRIX TmpScal;
+
+		D3DXMatrixScaling(&TmpScal, 1.01f, 1.01f, 1.01f);
+
+		BoldNumber[i]->ScalMat *= TmpScal;
+		BoldNumber[i]->Alpha -= 3;
+		
+		if (BoldNumber[i]->Alpha <= 0)
+		{
+			delete BoldNumber[i];
+			BoldNumber.erase(BoldNumber.begin() + i);		//配列開放
+			i--;											//消した分つめる
+		}
+	}
+
+	//9秒から強調とサウンド再生
+	if (displayTime_s <= 9)
+	{
+		GetSound.Play2D(Clock_Sound);
+
+		if (memoryTime == displayTime_s)return;		//前回と値に変化が無かったらスキップする
+
+		memoryTime = displayTime_s;
+
 		BoldNumber.push_back(new BoldNumberData);
 
 		//終端の要素初期化
 		auto Tmp = BoldNumber.back();
 		Tmp->Alpha = 255;
-		Tmp->DisplayNum = 9;
+		Tmp->DisplayNum = displayTime_s;
+
+		D3DXMATRIX TmpScal;
+		D3DXMatrixScaling(&TmpScal, 1.0f, 1.0f, 1.0f);
+		Tmp->ScalMat = TmpScal;
 	}
 }
 

@@ -63,6 +63,7 @@ enum TexName
 	ButtonText_Tex,
 	ButtonBack_Tex,
 	ButtonNum_Tex,
+	SantaWear_Tex,
 	
 //Button
 	Stage1Button_Tex,
@@ -116,6 +117,8 @@ enum SoundID {
 	SnowBallHit_SOUND,
 	Throw_Sound,
 	Success_Sound,
+	Clock_Sound,
+	EndWhistle_Sound
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
@@ -192,6 +195,7 @@ private:
 		{ButtonText_Tex,		  TexData{"StageSelectText.png", 132, 30, NULL}},
 		{ButtonBack_Tex,		  TexData{"StageButton.jpg", 132, 132, NULL}},
 		{ButtonNum_Tex,			  TexData{"StageSelectNum.png", 300, 30, NULL}},
+		{SantaWear_Tex,			  TexData{"SantaWear.png", 360, 560, NULL}},
 
 		//Button
 		{Stage1Button_Tex,        TexData{"Stage1Pic.png", 96, 54, NULL}},
@@ -243,6 +247,8 @@ private:
 		{SnowBallHit_SOUND, "Snowball_Impact.wav"},
 		{Throw_Sound,       "Throw.wav"},
 		{Success_Sound,     "Success.wav"},
+		{Clock_Sound,     "Clock.wav"},
+		{EndWhistle_Sound, "Whistle.wav"}
 
 	};
 };

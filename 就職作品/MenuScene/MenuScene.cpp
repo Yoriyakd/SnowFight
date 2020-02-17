@@ -27,6 +27,12 @@ MenuScene::MenuScene() : endSceneState(false)
 	//---------------------------------------
 	cursorTex = GetResource.GetTexture(MenuCursor_Tex);
 
+	//---------------------------------------
+	//ƒTƒ“ƒ^•ž
+	//---------------------------------------
+	SantaWearTex = GetResource.GetTexture(SantaWear_Tex);
+	D3DXMatrixTranslation(&santaWearMat, 20, 100, 0);
+
 	stage1Button = new StageSelectButton();
 	stage1Button->Stage1Initialize();		//‚Æ‚è‚ ‚¦‚¸‚±‚ê‚Å(CSV‚Æ‚©‚©‚ç“Ç‚Ýž‚Þ‚æ‚¤‚É•ÏX‚·‚é™)
 
@@ -73,6 +79,11 @@ void MenuScene::Render2D(void)
 
 	stage1Button->Draw();
 	stage2Button->Draw();
+
+
+	RECT RcSantWear = { 0, 0, 360, 560 };
+	lpSprite->SetTransform(&santaWearMat);
+	lpSprite->Draw(SantaWearTex, &RcSantWear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT RcCursor = { 0, 0, 64, 64 };
 	lpSprite->SetTransform(&cursorMat);

@@ -13,8 +13,9 @@ public:
 	~SoundManager();
 
 	//Ž¸”sŽžfalse‚ª•Ô‚é
-	bool Play2D(SoundID);
+	bool Play2D(SoundID _ID);
 
+	void Stop(SoundID _ID);
 	void AllStop();
 
 	void Initialize();

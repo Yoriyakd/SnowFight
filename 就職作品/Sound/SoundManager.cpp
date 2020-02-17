@@ -24,6 +24,16 @@ bool SoundManager::Play2D(SoundID _ID)
 	return false;		//失敗		//すべて再生中
 }
 
+void SoundManager::Stop(SoundID _ID)
+{
+	const int CNT = Sound2DMap[_ID][0].GetMaxPlayCnt();
+
+	for (auto i = 0; i < CNT; i++)
+	{
+		Sound2DMap[_ID][i].Stop();
+	}
+}
+
 void SoundManager::AllStop()
 {
 	for (auto ite = begin(Sound2DMap); ite != end(Sound2DMap); ite++)
@@ -39,7 +49,7 @@ void SoundManager::AllStop()
 
 void SoundManager::Initialize()
 {
-	//とりあえずここに直接書く（）TEXT等外部ファイルから読み込む
+	//とりあえずここに直接書く(TEXT等外部ファイルから読み込む)
 	SoundInitData tmp{ InGameBGM_SOUND, false, -100, 1 };
 
 	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
@@ -84,8 +94,30 @@ void SoundManager::Initialize()
 	{
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
 	}
+	
+	tmp.ID = Clock_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
 
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = EndWhistle_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
 }
 
 void SoundManager::Update()

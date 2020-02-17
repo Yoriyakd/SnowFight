@@ -42,6 +42,13 @@ private:
 	LPDIRECT3DTEXTURE9 cursorTex;
 	D3DXMATRIX cursorMat;
 
+
+	//---------------------------------------
+	//サンタ服
+	//---------------------------------------
+	LPDIRECT3DTEXTURE9 SantaWearTex;
+	D3DXMATRIX santaWearMat;
+
 	StageSelectButton *stage1Button, *stage2Button;
 	int selectedStage;		//選択されたステージ番号
 };
