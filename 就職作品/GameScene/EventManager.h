@@ -12,7 +12,7 @@ class EventManager {
 public:
 	EventManager();
 	~EventManager();
-	bool Update();
+	bool TimeUpdate();		//時間進行
 
 	//void AddScore(int Score);
 	void DoDecorate(CarryObjectID ID);			//現状は数だけだが、ノルマに種類などを設ける

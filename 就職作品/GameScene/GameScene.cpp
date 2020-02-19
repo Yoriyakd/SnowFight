@@ -6,7 +6,7 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), isSwitchResulut(false), endSceneState(false)
+GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), isSwitchResulut(false), endSceneState(false), BackToTitleFlag(false)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
@@ -240,29 +240,14 @@ void GameScene::Render2D(void)
 
 bool GameScene::Update()
 {
-	static bool BackToTitleFlag = false;
-	if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000) || BackToTitleFlag == true)
+	//-------------------------------------------------------------------
+	//タイトルに戻る前の確認		☆一つのモジュールにする
+	//-------------------------------------------------------------------
+	if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
 	{
 		if (isESCKye == true)
 		{
 			BackToTitleFlag = true;
-			int State;
-
-			State = GetBackToTitle.CallBackToTitle();
-			switch (State)
-			{
-			case -1:
-				BackToTitleFlag = false;
-				isESCKye = false;		//押しっぱなし対策
-				break;
-			case 0:
-				return true;
-				break;
-			case 1:
-				BackToTitleFlag = false;
-				EndScene();
-				break;
-			}
 		}
 	}
 	else
@@ -270,6 +255,13 @@ bool GameScene::Update()
 		isESCKye = true;
 	}
 
+	if (BackToTitleFlag == true)
+	{
+		BackToTitle();
+		return true;
+	}
+
+	//タイトルに戻る
 	if (endSceneState == true)
 	{
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
@@ -281,11 +273,23 @@ bool GameScene::Update()
 	}
 
 	//---------------------------------------------------------
+	//終了時の演出再生
+	//---------------------------------------------------------
+	if (isPlayTimeUpEffect == true)
+	{
+		if (TimeUpEffect() == false)
+		{
+			SwitchResulut();		//演出終了後リザルトへ移行
+			//return true;
+		}
+	}
+
+	//---------------------------------------------------------
 	//リザルト移行
 	//---------------------------------------------------------
 	if (isSwitchResulut == true)
 	{
-		if (GetSceneSwitchEffect.GetFadeState() == STOP)
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//明るく成り切った後リザルト開始
 		{
 			StartResult();
 		}
@@ -345,6 +349,10 @@ bool GameScene::Update()
 			{
 				if (GetEnemyManager.enemy[ei]->TakeDamage(10) == false)		//falseが返ってきたら
 				{
+					//-------------------------------------------------------------
+					//HeadShoot用サウンド再生
+					//-------------------------------------------------------------
+					GetSound.Play2D(HeadShoot_Sound);
 					//-------------------------------------------------------------
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
@@ -466,6 +474,10 @@ bool GameScene::Update()
 		}
 	}
 
+	//--------------------------------------------------------
+	//HitEffect
+	//--------------------------------------------------------
+
 	for (auto PlayerHitEffect_Right : playerHitEffect_Right)
 	{
 		PlayerHitEffect_Right->Update();
@@ -508,9 +520,10 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------
 	//イベント処理
 	//----------------------------------------------------------------------------------------
-	if (eventManager->Update() == false)		//falseが返ってきたらリザルトへ移行する
+	if (eventManager->TimeUpdate() == false)		//時間切れでfalseが返ってきたらリザルトへ移行する
 	{
-		SwitchResulut();
+		//SwitchResulut();				//リザルト移行
+		PlayTimeUpEffect();				//タイムアップ演出再生
 	}
 
 	//----------------------------------------------------------------------------------------
@@ -551,6 +564,7 @@ void GameScene::EndScene()
 
 void GameScene::SwitchResulut()
 {
+	isPlayTimeUpEffect = false;
 	GetSceneSwitchEffect.PlayFadeOut();
 	isSwitchResulut = true;
 }
@@ -576,7 +590,7 @@ void GameScene::EndResult(void)
 	endResultState = true;
 }
 
-//この辺りは作り直しの必要あり
+//この辺りはリファクタリングの必要あり
 bool GameScene::ResultUpdate(void)
 {
 	resultCam->Update(&mapObjManager->GetXmasTreePos());
@@ -599,4 +613,42 @@ bool GameScene::ResultUpdate(void)
 		}
 	}
 	return true;
+}
+
+void GameScene::BackToTitle(void)
+{
+	int State;
+
+	State = GetBackToTitle.CallBackToTitle();
+	switch (State)
+	{
+	case -1:
+		BackToTitleFlag = false;
+		isESCKye = false;		//押しっぱなし対策
+		break;
+	case 0:
+		break;
+	case 1:
+		BackToTitleFlag = false;
+		EndScene();
+		break;
+	}
+}
+
+bool GameScene::TimeUpEffect()
+{
+	timeUpEffectCnt++;
+	if (timeUpEffectCnt > timeUpEffectPlayTime)
+	{
+		return false;
+	}
+	return true;
+}
+
+void GameScene::PlayTimeUpEffect()
+{
+	if (isSwitchResulut == true)return;		//☆対処療法　要改善
+	isPlayTimeUpEffect = true;
+	GetSound.Stop(Clock_Sound);
+	GetSound.Play2D(EndWhistle_Sound);
 }

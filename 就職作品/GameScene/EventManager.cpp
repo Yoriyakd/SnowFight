@@ -10,7 +10,7 @@ EventManager::~EventManager()
 {
 }
 
-bool EventManager::Update()
+bool EventManager::TimeUpdate()
 {
 	timeLimit_Frame--;
 

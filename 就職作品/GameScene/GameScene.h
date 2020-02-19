@@ -96,6 +96,21 @@ private:
 	
 	LPDIRECT3DTEXTURE9 resultTex, returnTex;
 	D3DXMATRIX resultMat, returnMat;
+
+	//------------------------------------------
+	//BackToTitle
+	//------------------------------------------
+	bool BackToTitleFlag;
+
+	void BackToTitle(void);
+	//------------------------------------------
+	//TimeUpの表示
+	//------------------------------------------
+	bool TimeUpEffect();
+	void PlayTimeUpEffect();
+	bool isPlayTimeUpEffect;
+	int timeUpEffectCnt;
+	const int timeUpEffectPlayTime = 90;
 };
 
-extern const float SnowBallGravity;
+extern const float SnowBallGravity;		//☆環境等をまとめたクラスに収めるように変更
