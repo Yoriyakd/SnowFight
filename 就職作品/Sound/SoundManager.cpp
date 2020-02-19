@@ -118,6 +118,18 @@ void SoundManager::Initialize()
 	{
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
 	}
+
+	tmp.ID = HeadShoot_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 5;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
 }
 
 void SoundManager::Update()

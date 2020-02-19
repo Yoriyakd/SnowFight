@@ -118,7 +118,8 @@ enum SoundID {
 	Throw_Sound,
 	Success_Sound,
 	Clock_Sound,
-	EndWhistle_Sound
+	EndWhistle_Sound,
+	HeadShoot_Sound,
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
@@ -248,7 +249,8 @@ private:
 		{Throw_Sound,       "Throw.wav"},
 		{Success_Sound,     "Success.wav"},
 		{Clock_Sound,     "Clock.wav"},
-		{EndWhistle_Sound, "Whistle.wav"}
+		{EndWhistle_Sound, "Whistle.wav"},
+		{HeadShoot_Sound, "EFX SD Cymbal MEINL 10 Splash Dark Crash Unfinished Mallet 01 A.wav"},
 
 	};
 };
