@@ -6,7 +6,7 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo): isESCKye(false), Resultime(120), isSwitchResulut(false), endSceneState(false), BackToTitleFlag(false)
+GameScene::GameScene(int StageNo):Resultime(120), isSwitchResulut(false), endSceneState(false)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
@@ -243,23 +243,8 @@ bool GameScene::Update()
 	//-------------------------------------------------------------------
 	//タイトルに戻る前の確認		☆一つのモジュールにする
 	//-------------------------------------------------------------------
-	if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
-	{
-		if (isESCKye == true)
-		{
-			BackToTitleFlag = true;
-		}
-	}
-	else
-	{
-		isESCKye = true;
-	}
+	if (BackToTitle() == true)return true;		//動作中は早期リターン
 
-	if (BackToTitleFlag == true)
-	{
-		BackToTitle();
-		return true;
-	}
 
 	//タイトルに戻る
 	if (endSceneState == true)
@@ -615,24 +600,15 @@ bool GameScene::ResultUpdate(void)
 	return true;
 }
 
-void GameScene::BackToTitle(void)
+bool GameScene::BackToTitle(void)
 {
-	int State;
+	RETURN_STATE NowState;
+	NowState = GetBackToTitle.CallBackToTitle();
 
-	State = GetBackToTitle.CallBackToTitle();
-	switch (State)
-	{
-	case -1:
-		BackToTitleFlag = false;
-		isESCKye = false;		//押しっぱなし対策
-		break;
-	case 0:
-		break;
-	case 1:
-		BackToTitleFlag = false;
-		EndScene();
-		break;
-	}
+	if (NowState == NOT_ACTIVE)return false;
+	if (NowState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
+	if (NowState == WAITING_INPUT)return true;
+	if (NowState == RETURN_TITLE)EndScene();
 }
 
 bool GameScene::TimeUpEffect()

@@ -82,7 +82,7 @@ void TimeUI::Update()
 	//9秒から強調とサウンド再生
 	if (displayTime_s <= 9)
 	{
-		GetSound.Play2D(Clock_Sound);
+		//GetSound.Play2D(Clock_Sound);		サウンドは移動
 
 		if (memoryTime == displayTime_s)return;		//前回と値に変化が無かったらスキップする
 

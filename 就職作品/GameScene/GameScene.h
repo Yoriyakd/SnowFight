@@ -54,7 +54,7 @@ private:
 	void StartScene();		//シーンを開始する際1度のみ呼ぶ
 	void EndScene();		//シーンを終了する際1度のみ呼ぶ
 	bool endSceneState;		//シーンが終了中か
-	bool isESCKye;
+	
 
 	LoadStageData *loadStageData;
 	Ground *ground;
@@ -100,9 +100,8 @@ private:
 	//------------------------------------------
 	//BackToTitle
 	//------------------------------------------
-	bool BackToTitleFlag;
 
-	void BackToTitle(void);
+	bool BackToTitle(void);
 	//------------------------------------------
 	//TimeUpの表示
 	//------------------------------------------

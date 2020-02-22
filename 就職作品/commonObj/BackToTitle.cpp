@@ -1,7 +1,7 @@
 #include "BackToTitle.h"
 #include"../TitleScene/TitleScene.h"
 
-BackToTitle::BackToTitle() : ESCKyeFlag(true)
+BackToTitle::BackToTitle() : nowState(false)
 {
 	tex = GetResource.GetTexture(BackToTitle_Tex);
 	D3DXMatrixTranslation(&mat, 0, 0, 0);
@@ -24,7 +24,7 @@ BackToTitle::~BackToTitle()
 
 void BackToTitle::Draw()
 {
-	if (calledState == true)		//タイトルバック確認画面が呼ばれている間のみ描画
+	if (nowState == true)		//タイトルバック確認画面が呼ばれている間のみ描画
 	{
 		RECT RectTmp = { 0, 0, 1280, 720 };
 		lpSprite->SetTransform(&mat);
@@ -35,15 +35,43 @@ void BackToTitle::Draw()
 	}
 }
 
-int BackToTitle::CallBackToTitle()
+RETURN_STATE BackToTitle::CallBackToTitle()
 {
 	static bool CursorFlag = false;		//自前のカーソルに変更する☆
-	if (CursorFlag == false)
+
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	{
+		if (isESCKey == true)
+		{
+			if (nowState == true)
+			{
+				//カーソル
+				ShowCursor(false);
+				CursorFlag = false;
+
+				nowState = false;
+				isESCKey = false;	//ESCを連続して押せないように
+				return CANCEL;
+			}
+			else
+			{
+				nowState = true;
+				isESCKey = false;	//実行ESCを連続して押せないように
+			}
+		}
+	}
+	else
+	{
+		isESCKey = true;
+	}
+	
+	if (nowState == false)return NOT_ACTIVE;
+
+	if (CursorFlag == false)		//仮☆(全体で管理した方がよさそうカーソル使うなら)	//カーソルが見えないなら見えるようにする
 	{
 		CursorFlag = true;
 		ShowCursor(true);		//仮☆
 	}
-	calledState = true;
 
 	YesButton->Update();
 	NoButton->Update();
@@ -53,42 +81,23 @@ int BackToTitle::CallBackToTitle()
 		if (YesButton->GetState() == true)
 		{
 			GetSound.Play2D(Success_Sound);
-			calledState = false;
+			nowState = false;
 			ShowCursor(false);		//仮☆
 			CursorFlag = false;
 
-			ESCKyeFlag = true;
+			nowState = false;
 
-			return 1;
+			return RETURN_TITLE;
 		}
 		if (NoButton->GetState() == true) 
 		{
-			calledState = false;
+			nowState = false;
 			ShowCursor(false);		//仮☆
 			CursorFlag = false;
-			ESCKyeFlag = true;
-			return -1;
+			nowState = false;
+			return CANCEL;
 		}
 	}
 
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
-	{
-		if (ESCKyeFlag == true)
-		{
-			return 0;
-		}
-		calledState = false;
-		ShowCursor(false);		//仮☆(全体で管理した方がよさそうカーソル使うなら)
-		CursorFlag = false;
-
-		ESCKyeFlag = true;
-
-		return -1;
-	}
-	else
-	{
-		ESCKyeFlag = false;
-	}
-
-	return 0;
+	return WAITING_INPUT;
 }
