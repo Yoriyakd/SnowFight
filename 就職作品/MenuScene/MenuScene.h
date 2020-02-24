@@ -14,7 +14,7 @@ public:
 	void Render2D(void);
 	bool Update(void);
 private:
-	void StartScene(void);			//シーンを開始する際1度だけ呼ぶ		こっちいる？
+	void BeginScene(void);			//シーンを開始する際1度だけ呼ぶ		こっちいる？
 	void EndScene(void);			//シーンを終了する際1度だけ呼ぶ		デストラクタ前に実行してほしい処理
 
 	bool endSceneState;		//シーンの遷移フラグ

@@ -16,7 +16,7 @@ public:
 	bool Update(void);
 
 private:
-	void StartScene(void);			//シーンを開始する際1度だけ呼ぶ
+	void BeginScene(void);			//シーンを開始する際1度だけ呼ぶ
 	void EndScene(void);			//シーンを終了する際1度だけ呼ぶ
 
 	LPDIRECT3DTEXTURE9 logoTex, kyeInstructionTex;

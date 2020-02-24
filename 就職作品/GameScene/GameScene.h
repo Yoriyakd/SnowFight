@@ -36,10 +36,14 @@
 #include"../commonObj/BackToTitle.h"
 #include"ResultCam.h"
 
+#include"GameTime.h"
+#include"TimeUpEffect.h"
+
 //--------------------------------------------------------------------------------------------
 //ゲーム中の処理を書くクラス
 //--------------------------------------------------------------------------------------------
 
+//enum GameSceneState {IN_GAME, SWITCH_RESULT, IN_RESULT, END_RESULT, TIME_UP_EFFECT};
 
 class GameScene : public SceneBase {
 public:
@@ -51,17 +55,18 @@ public:
 	bool Update(void);
 
 private:
-	void StartScene();		//シーンを開始する際1度のみ呼ぶ
+	void BeginScene();		//シーンを開始する際1度のみ呼ぶ
 	void EndScene();		//シーンを終了する際1度のみ呼ぶ
-	bool endSceneState;		//シーンが終了中か
-	
+
+	void Collision();
+
 
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;
 	Stage1Enclosure *stage1Enclosure;
-	MapObjManager *mapObjManager;	
-	EventManager *eventManager;
+	MapObjManager *mapObjManager;
+	GameNormManager *gameNormManager;
 	PickUpInstructions *pickUpInstructions;
 
 	static const int EFFECT_CNT = 5;
@@ -70,6 +75,9 @@ private:
 	PlayerHitEffect *playerHitEffect_Back;
 
 	StageBorder *stageBorder;
+	GameSceneState nowState;
+
+	AddUpdateBase *addUpdate;
 	//------------------------------------------
 	//UI
 	//------------------------------------------
@@ -77,39 +85,30 @@ private:
 	TimeUI *timeUI;
 	std::vector<TimePenaltyUI*> timePenaltyUI;
 	GameObjective *gameObjective;
+
 	//------------------------------------------//クラスにまとめる(設計思いつき次第)
 	//リザルト
 	//------------------------------------------
-	void SwitchResulut();		//ゲームシーンから移行する際呼ぶ
-	bool isSwitchResulut;
+	void SwitchResult();		//ゲームシーンから移行する際呼ぶ
+	int ResulCnt;
 
-	int Resultime;
-
-	void StartResult(void);		//リザルトを実行する際1度のみ呼ぶ
+	void BeginResult(void);		//リザルトを実行する際1度のみ呼ぶ
 	void EndResult(void);		//リザルトを終了する際1度のみ呼ぶ
 	bool ResultUpdate(void);
 
 	ResultCam *resultCam;
 
-	bool resultFlag;		//リザルト表示中かの状態
-	bool endResultState;	//リザルトが終了中か
-	
 	LPDIRECT3DTEXTURE9 resultTex, returnTex;
 	D3DXMATRIX resultMat, returnMat;
 
 	//------------------------------------------
 	//BackToTitle
 	//------------------------------------------
-
 	bool BackToTitle(void);
 	//------------------------------------------
 	//TimeUpの表示
 	//------------------------------------------
-	bool TimeUpEffect();
-	void PlayTimeUpEffect();
-	bool isPlayTimeUpEffect;
-	int timeUpEffectCnt;
-	const int timeUpEffectPlayTime = 90;
+	void BeginTimeUpEffect();
 };
 
 extern const float SnowBallGravity;		//☆環境等をまとめたクラスに収めるように変更

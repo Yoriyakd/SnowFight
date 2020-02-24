@@ -15,14 +15,13 @@ enum RETURN_STATE { RETURN_TITLE, CANCEL, WAITING_INPUT, NOT_ACTIVE };
 
 #define GetBackToTitle BackToTitle::GetInstance()
 class BackToTitle : public SingletonBase<BackToTitle> {
-	friend class SingletonBase<ResourceManager>;			//SingletonBaseでのインスタンス作成削除は許可
+	friend class SingletonBase<BackToTitle>;			//SingletonBaseでのインスタンス作成削除は許可
 public:
-	BackToTitle();
-	~BackToTitle();
 
 	void Draw();
 	RETURN_STATE CallBackToTitle();		//戻り値　-1 = No, 0 = 選択なし画面継続 1 = Yes シーン切り替え
 
+private:
 	LPDIRECT3DTEXTURE9 tex;
 	D3DXMATRIX mat;
 
@@ -31,10 +30,8 @@ public:
 
 	BackToTitleButton *YesButton;
 	BackToTitleButton *NoButton;
+	BackToTitle();
+	~BackToTitle();
 };
-
-//class ESCUpdateBase {
-//
-//};
 
 BackToTitle* SingletonBase<BackToTitle>::instance = nullptr;		//nullptrで初期化

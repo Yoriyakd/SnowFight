@@ -39,7 +39,7 @@ MenuScene::MenuScene() : endSceneState(false)
 	stage2Button = new StageSelectButton();
 	stage2Button->Stage2Initialize();
 
-	StartScene();
+	BeginScene();
 }
 
 MenuScene::~MenuScene()
@@ -147,7 +147,7 @@ bool MenuScene::Update(void)
 	return true;
 }
 
-void MenuScene::StartScene(void)
+void MenuScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();
 }

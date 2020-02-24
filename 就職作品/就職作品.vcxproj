@@ -183,8 +183,10 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="GameScene\GameTime.cpp" />
     <ClCompile Include="GameScene\ResultCam.cpp" />
     <ClCompile Include="GameScene\SpawnerManager.cpp" />
+    <ClCompile Include="GameScene\TimeUpEffect.cpp" />
     <ClCompile Include="Item\DecorationBase.cpp" />
     <ClCompile Include="Item\DecorationManager.cpp" />
     <ClCompile Include="Item\Decoration_BlueBall.cpp" />
@@ -283,11 +285,14 @@
     <ClInclude Include="Enemy\EnemyState\ShootSnowBall.h" />
     <ClInclude Include="Enemy\EnemyState\TurnToPlayer.h" />
     <ClInclude Include="Enemy\Kamakura.h" />
+    <ClInclude Include="GameScene\AddUpdateBase.h" />
     <ClInclude Include="GameScene\EventManager.h" />
     <ClInclude Include="GameScene\GameObjectSpawner.h" />
     <ClInclude Include="GameScene\GameScene.h" />
+    <ClInclude Include="GameScene\GameTime.h" />
     <ClInclude Include="GameScene\ResultCam.h" />
     <ClInclude Include="GameScene\SpawnerManager.h" />
+    <ClInclude Include="GameScene\TimeUpEffect.h" />
     <ClInclude Include="Item\DecorationBase.h" />
     <ClInclude Include="Item\DecorationManager.h" />
     <ClInclude Include="Item\Decoration_BlueBall.h" />

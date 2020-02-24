@@ -258,6 +258,12 @@
     <ClCompile Include="commonObj\BackToTitleButton.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\GameTime.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\TimeUpEffect.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -466,6 +472,15 @@
     </ClInclude>
     <ClInclude Include="commonObj\BackToTitleButton.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\GameTime.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\AddUpdateBase.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\TimeUpEffect.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ D3DLIGHT9 Light;
 
 const float SnowBallGravity = -0.05f;						//重力	※必ず負の値のする
 
-GameScene::GameScene(int StageNo):Resultime(120), isSwitchResulut(false), endSceneState(false)
+GameScene::GameScene(int StageNo):ResulCnt(120)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
@@ -22,7 +22,7 @@ GameScene::GameScene(int StageNo):Resultime(120), isSwitchResulut(false), endSce
 	GetSnowBallManager.Create();
 	mapObjManager = new MapObjManager();
 	GetPlayerCam.Create();
-	eventManager = new EventManager();
+	gameNormManager = new GameNormManager();
 
 	GetPlayer.Create();
 	
@@ -65,7 +65,7 @@ GameScene::GameScene(int StageNo):Resultime(120), isSwitchResulut(false), endSce
 	D3DXMatrixTranslation(&returnMat, 800, 500, 0);
 
 
-	loadStageData->SetStageMap(*mapObjManager, *eventManager, *gameObjective, *stageBorder);
+	loadStageData->SetStageMap(*mapObjManager, *gameNormManager, *gameObjective, *stageBorder);
 	
 	//-------------------------------------------------------
 	GetPlayerCam.SetPos(&D3DXVECTOR3(stageBorder->Right / 2, 0, 10.0f));				//プレイヤーの初期位置
@@ -100,7 +100,7 @@ GameScene::GameScene(int StageNo):Resultime(120), isSwitchResulut(false), endSce
 	lpD3DDevice->SetLight(0, &Light);
 	lpD3DDevice->LightEnable(0, TRUE);
 	//-----------------------------
-	StartScene();
+	BeginScene();
 }
 
 GameScene::~GameScene()
@@ -112,7 +112,7 @@ GameScene::~GameScene()
 	GetSnowBallManager.Destroy();
 	delete mapObjManager;
 	GetPlayerCam.Destroy();
-	delete eventManager;
+	delete gameNormManager;
 
 	GetPlayer.Destroy();
 	GetEnemyManager.Destroy();
@@ -158,30 +158,37 @@ void GameScene::Render3D(void)
 	mapObjManager->Draw();
 
 	GetDecorationManager.Draw();
-	if (resultFlag == true)
+	if (nowState== IN_RESULT)
 	{
 		return;		//描画しない		(インスタンスを削除する方がいいんだろうか？)☆
 	}
 	//-------------------------------------------------------
 	//
 	//-------------------------------------------------------
-	GetEnemyManager.Draw();
-	EnemyAnime.Draw();
-	GetSnowBallManager.Draw();
-	Effect.Draw();
-	
+	if (nowState == IN_GAME)
+	{
+		GetEnemyManager.Draw();
+		EnemyAnime.Draw();
+		GetSnowBallManager.Draw();
+		Effect.Draw();
 
-	GetPlayer.Draw();		//※Zバッファクリアをしているため最後に描画する
+		GetPlayer.Draw();		//※Zバッファクリアをしているため最後に描画する
+	}
 }
 
 void GameScene::SetCamera(void)
 {
-	if (resultFlag == true)
+	if (nowState == IN_RESULT)
 	{
 		resultCam->SetCamera();				//リザルト中のカメラ
 		return;
 	}
-	GetPlayerCam.SetCamera();
+
+	if (nowState == IN_GAME)
+	{
+		GetPlayerCam.SetCamera();
+	}
+
 }
 
 void GameScene::Render2D(void)
@@ -191,7 +198,7 @@ void GameScene::Render2D(void)
 	//////////////////////////////////////////////////
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
-	if (resultFlag == false)		//リザルト表示中は消す
+	if (nowState == IN_GAME)		//リザルト表示中は消す
 	{
 		for (auto PlayerHitEffect_Right : playerHitEffect_Right)
 		{
@@ -216,14 +223,14 @@ void GameScene::Render2D(void)
 
 		AddSnowBallUI::GetInstance().Draw();
 	}
-	else
+	if (nowState == IN_RESULT)
 	{
 		RECT RcResult = { 0, 0, 820, 160 };
 		lpSprite->SetTransform(&resultMat);
 		lpSprite->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		RECT RcReturn = { 0, 0, 499, 84 };
-		if (Resultime <= 0)
+		if (ResulCnt <= 0)
 		{
 			lpSprite->SetTransform(&returnMat);
 			lpSprite->Draw(returnTex, &RcReturn, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -247,7 +254,7 @@ bool GameScene::Update()
 
 
 	//タイトルに戻る
-	if (endSceneState == true)
+	if (nowState == BACK_TO_TITLE)
 	{
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
 		{
@@ -257,42 +264,71 @@ bool GameScene::Update()
 		return true;
 	}
 
-	//---------------------------------------------------------
-	//終了時の演出再生
-	//---------------------------------------------------------
-	if (isPlayTimeUpEffect == true)
+	//------------------------------------------------------
+	//とりあえず実装
+	//------------------------------------------------------
+	if (nowState == SWITCH_RESULT)
 	{
-		if (TimeUpEffect() == false)
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
-			SwitchResulut();		//演出終了後リザルトへ移行
-			//return true;
+			BeginResult();
 		}
+		return true;
 	}
 
-	//---------------------------------------------------------
-	//リザルト移行
-	//---------------------------------------------------------
-	if (isSwitchResulut == true)
+	if (nowState == IN_RESULT)
 	{
-		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//明るく成り切った後リザルト開始
-		{
-			StartResult();
-		}
+		ResultUpdate();
 	}
 
-	//---------------------------------------------------------
-	//リザルト中の処理
-	//---------------------------------------------------------
-	if (resultFlag == true)
+	if (nowState == END_RESULT)
 	{
-		if (ResultUpdate() == false)			//リザルト中の処理はここに記述
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			GetSceneSwitcher.SwitchScene(new MenuScene());
 			GetSound.AllStop();
 			return false;
 		}
-		return true;		//リザルト表示中は早期リターンして動きを止める
+		return true;
 	}
+
+	if (addUpdate != nullptr)
+	{
+		GameSceneState NextState;
+		NextState = addUpdate->AddUpdate();
+
+		if (NextState != nowState)
+		{
+			delete addUpdate;
+			addUpdate = nullptr;
+
+			switch (NextState)
+			{
+			case IN_GAME:
+				break;
+			case SWITCH_RESULT:		//リザルト移行
+				SwitchResult();
+				break;
+			case IN_RESULT:			//リザルト中の処理
+				BeginResult();
+				break;
+			case END_RESULT:
+				
+				break;
+			case TIME_UP_EFFECT:	//終了時の演出再生
+				BeginTimeUpEffect();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	//------------------------------------------------------
+	//とりあえず実装ここまで
+	//------------------------------------------------------
+
+	Collision();
 
 	//----------------------------------------------------------------------------------------------------------------
 	//プレイヤーの更新	※カメラ→あたり判定→プレイヤーの順番で	プレイヤーのの位置がカメラとずれるため
@@ -325,6 +361,71 @@ bool GameScene::Update()
 
 	GetDecorationManager.Updata();
 
+	
+
+	//--------------------------------------------------------
+	//HitEffect
+	//--------------------------------------------------------
+
+	for (auto PlayerHitEffect_Right : playerHitEffect_Right)
+	{
+		PlayerHitEffect_Right->Update();
+	}
+
+	for (auto PlayerHitEffect_Left : playerHitEffect_Left)
+	{
+		PlayerHitEffect_Left->Update();
+	}
+
+	playerHitEffect_Back->Update();
+
+	GetSpawnerManager.Update(*stageBorder);
+	//----------------------------------------------------------------------------------------
+	//イベント処理
+	//----------------------------------------------------------------------------------------
+	gameNormManager->Update();
+
+	//----------------------------------------------------------------------------------------
+	//時間処理
+	//----------------------------------------------------------------------------------------
+	//timeUI->SetTime_s(GameNormManager->GetRemainingTime_s());		//フレームを秒に直して渡している
+	timeUI->SetTime_s(GameTime::GetRemainingTime_s());		//フレームを秒に直して渡している
+	timeUI->Update();
+
+	//----------------------------------------------------------------------------------------
+	//ノルマ処理
+	//----------------------------------------------------------------------------------------
+	bool NormState;
+	NormState = gameNormManager->GetNormState();
+	if (NormState == false)
+	{
+		gameObjective->SetNowNormCnt(gameNormManager->GetNowNormCnt());		//現在の数を渡す
+	}
+	else
+	{
+		gameObjective->SetNormState(gameNormManager->GetNormState());			//現在のノルマ状況を渡す		//☆改善の余地あり
+	}
+
+	return true;
+}
+
+void GameScene::BeginScene()
+{
+	nowState = IN_GAME;
+	addUpdate = new GameTime();
+	GetSound.Play2D(InGameBGM_SOUND);
+	GetSceneSwitchEffect.PlayFadeIn();
+}
+
+void GameScene::EndScene()
+{
+	nowState = BACK_TO_TITLE;
+	GetSceneSwitchEffect.PlayFadeOut();
+	GetSound.AllStop();										//サウンドを再生停止
+}
+
+void GameScene::Collision()
+{
 	//雪玉と敵の当たり判定
 	for (unsigned int ei = 0; ei < GetEnemyManager.enemy.size(); ei++)
 	{
@@ -357,7 +458,7 @@ bool GameScene::Update()
 
 					break;
 				}
-				
+
 			}
 
 			if (CollisionObserver::SnowBalltoEnemy(GetSnowBallManager.snowBall[sj], GetEnemyManager.enemy[ei]) == true)		//命中でtrueが返ってくる
@@ -413,7 +514,8 @@ bool GameScene::Update()
 		{
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
-			eventManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
+			//GameNormManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
+			GameTime::PlayerTakeDamage(3);
 			timePenaltyUI.push_back(new TimePenaltyUI(3));		//変数化
 
 			//Soundを呼ぶ
@@ -439,7 +541,7 @@ bool GameScene::Update()
 				}
 				break;
 			case Left:
-				for (auto PlayerHitEffect_Left: playerHitEffect_Left)
+				for (auto PlayerHitEffect_Left : playerHitEffect_Left)
 				{
 					if (PlayerHitEffect_Left->GetActiveState() == false)
 					{
@@ -453,34 +555,17 @@ bool GameScene::Update()
 				break;
 			}
 
-			//----------------------------------------------------
 			GetSnowBallManager.DeleteInstance(si);
 			si--;						//きえた分詰める
 		}
 	}
-
-	//--------------------------------------------------------
-	//HitEffect
-	//--------------------------------------------------------
-
-	for (auto PlayerHitEffect_Right : playerHitEffect_Right)
-	{
-		PlayerHitEffect_Right->Update();
-	}
-
-	for (auto PlayerHitEffect_Left : playerHitEffect_Left)
-	{
-		PlayerHitEffect_Left->Update();
-	}
-
-	playerHitEffect_Back->Update();
 
 	//デコレーションとMapObjの当たり判定
 	for (unsigned int i = 0; i < GetDecorationManager.decoration.size(); i++)
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			CollisionObserver::DecorationToMapObj(GetDecorationManager.decoration[i], mapObjManager->mapObj[j], eventManager);
+			CollisionObserver::DecorationToMapObj(GetDecorationManager.decoration[i], mapObjManager->mapObj[j], gameNormManager);
 		}
 	}
 
@@ -499,80 +584,32 @@ bool GameScene::Update()
 			timePenaltyUI.erase(timePenaltyUI.begin() + i);
 			i--;
 		}
-
 	}
-	GetSpawnerManager.Update(*stageBorder);
-	//----------------------------------------------------------------------------------------
-	//イベント処理
-	//----------------------------------------------------------------------------------------
-	if (eventManager->TimeUpdate() == false)		//時間切れでfalseが返ってきたらリザルトへ移行する
-	{
-		//SwitchResulut();				//リザルト移行
-		PlayTimeUpEffect();				//タイムアップ演出再生
-	}
-
-	//----------------------------------------------------------------------------------------
-	//時間処理
-	//----------------------------------------------------------------------------------------
-	timeUI->SetTime_s(eventManager->GetRemainingTime_s());		//フレームを秒に直して渡している
-	timeUI->Update();
-
-	//----------------------------------------------------------------------------------------
-	//ノルマ処理
-	//----------------------------------------------------------------------------------------
-	bool NormState;
-	NormState = eventManager->GetNormState();
-	if (NormState == false)
-	{
-		gameObjective->SetNowNormCnt(eventManager->GetNowNormCnt());
-	}
-	else
-	{
-		gameObjective->SetNormState(eventManager->GetNormState());
-	}
-
-	return true;
 }
 
-void GameScene::StartScene()
+void GameScene::SwitchResult()
 {
-	GetSound.Play2D(InGameBGM_SOUND);
-	GetSceneSwitchEffect.PlayFadeIn();
-}
-
-void GameScene::EndScene()
-{
+	nowState = SWITCH_RESULT;
 	GetSceneSwitchEffect.PlayFadeOut();
-	GetSound.AllStop();										//サウンドを再生停止
-	endSceneState = true;
 }
 
-void GameScene::SwitchResulut()
+void GameScene::BeginResult(void)
 {
-	isPlayTimeUpEffect = false;
-	GetSceneSwitchEffect.PlayFadeOut();
-	isSwitchResulut = true;
-}
-
-void GameScene::StartResult(void)
-{
+	nowState = IN_RESULT;
 	//敵やエフェクトなど邪魔なものを削除する
 	GetEnemyManager.AllDelete();
 	Effect.AllDelete();
 	GetSnowBallManager.AllDelete();
 	GetDecorationManager.DeleteToResult();
 
-	resultFlag = true;
-	isSwitchResulut = false;
 	GetSceneSwitchEffect.PlayFadeIn();
-	resultFlag = true;
 	resultCam = new ResultCam();
 }
 
 void GameScene::EndResult(void)
 {
+	nowState = END_RESULT;
 	GetSceneSwitchEffect.PlayFadeOut();
-	endResultState = true;
 }
 
 //この辺りはリファクタリングの必要あり
@@ -580,9 +617,9 @@ bool GameScene::ResultUpdate(void)
 {
 	resultCam->Update(&mapObjManager->GetXmasTreePos());
 
-	Resultime--;
+	ResulCnt--;
 
-	if (Resultime <= 0)//一定時間入力をうけつけない
+	if (ResulCnt <= 0)//一定時間入力をうけつけない
 	{
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//右クリックが押されるとシーン遷移
 		{
@@ -590,7 +627,7 @@ bool GameScene::ResultUpdate(void)
 		}
 	}
 
-	if (endResultState == true)		//リザルト終了フラグが立っている状態でフェードが終了するとシーン遷移
+	if (nowState == END_RESULT)		//リザルト終了フラグが立っている状態でフェードが終了するとシーン遷移
 	{
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
@@ -602,29 +639,23 @@ bool GameScene::ResultUpdate(void)
 
 bool GameScene::BackToTitle(void)
 {
-	RETURN_STATE NowState;
-	NowState = GetBackToTitle.CallBackToTitle();
+	RETURN_STATE GameSceneState;
+	GameSceneState = GetBackToTitle.CallBackToTitle();
 
-	if (NowState == NOT_ACTIVE)return false;
-	if (NowState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
-	if (NowState == WAITING_INPUT)return true;
-	if (NowState == RETURN_TITLE)EndScene();
-}
-
-bool GameScene::TimeUpEffect()
-{
-	timeUpEffectCnt++;
-	if (timeUpEffectCnt > timeUpEffectPlayTime)
+	if (GameSceneState == NOT_ACTIVE)return false;
+	if (GameSceneState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
+	if (GameSceneState == WAITING_INPUT)return true;
+	if (GameSceneState == RETURN_TITLE)
 	{
+		EndScene();
 		return false;
 	}
-	return true;
 }
 
-void GameScene::PlayTimeUpEffect()
+void GameScene::BeginTimeUpEffect()
 {
-	if (isSwitchResulut == true)return;		//☆対処療法　要改善
-	isPlayTimeUpEffect = true;
+	nowState = TIME_UP_EFFECT;
 	GetSound.Stop(Clock_Sound);
 	GetSound.Play2D(EndWhistle_Sound);
+	addUpdate = new TimeUpEffect();
 }

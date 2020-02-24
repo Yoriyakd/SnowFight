@@ -13,7 +13,7 @@ TitleScene::TitleScene():ESCFlag(false)
 	kyeInstructionTex = GetResource.GetTexture(TitleInstructions_Tex);
 	D3DXMatrixTranslation(&kyeInstructionMat, SCRW / 2, 500, 0);
 
-	StartScene();		//シーン開始時1度呼ぶ
+	BeginScene();		//シーン開始時1度呼ぶ
 }
 
 TitleScene::~TitleScene()
@@ -95,7 +95,7 @@ bool TitleScene::Update(void)
 	return true;
 }
 
-void TitleScene::StartScene(void)
+void TitleScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();		//明るくする
 }

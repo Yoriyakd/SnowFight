@@ -1,4 +1,5 @@
 #include "LoadStageData.h"
+#
 
 //===============================================
 //public
@@ -17,8 +18,10 @@ LoadStageData::~LoadStageData()
 }
 
 
-void LoadStageData::SetStageMap(MapObjManager & MapObjManager, EventManager & EventManager, GameObjective & GameObjective, StageBorder & StageBorder)
+void LoadStageData::SetStageMap(MapObjManager &MapObjManager, GameNormManager &GameNormManager, GameObjective &GameObjective, StageBorder &StageBorder)
 {
+	//☆順不問で読み込めるようにする
+
 	char FileName[16];
 	//=================================================================================
 	//ファイルオープン
@@ -44,11 +47,12 @@ void LoadStageData::SetStageMap(MapObjManager & MapObjManager, EventManager & Ev
 
 	int TimeLimit_frame;		//制限時間
 	fscanf_s(fp, "TimeLimit_Frame:%d\n", &TimeLimit_frame);
-	EventManager.SetTimeLimit(TimeLimit_frame);
+	//GameNormManager.SetTimeLimit(TimeLimit_frame);
+	GameTime::SetTimeLimit(TimeLimit_frame);
 
 	int NormCnt;
 	fscanf_s(fp, "Norm:%d\n", &NormCnt);
-	EventManager.SetNorm(NormCnt);
+	GameNormManager.SetNorm(NormCnt);
 	GameObjective.SetNorm(NormCnt);
 
 	int BenchCnt, TreeCnt, XmasTreeCnt;
