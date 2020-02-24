@@ -96,8 +96,8 @@ void SoundManager::Initialize()
 	}
 	
 	tmp.ID = Clock_Sound;
-	tmp.LoopFlag = false;
-	tmp.Volume = 0;
+	tmp.LoopFlag = true;
+	tmp.Volume = -10;
 	tmp.MaxPlayCnt = 1;
 
 	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
