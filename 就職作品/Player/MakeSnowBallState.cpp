@@ -29,7 +29,7 @@ MakeSnowBallState::~MakeSnowBallState()
 {
 }
 
-PlayerStateBase * MakeSnowBallState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase * MakeSnowBallState::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{

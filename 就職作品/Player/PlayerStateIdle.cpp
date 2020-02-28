@@ -27,7 +27,7 @@ PlayerStateIdle::~PlayerStateIdle()
 {
 }
 
-PlayerStateBase* PlayerStateIdle::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase* PlayerStateIdle::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	animeFrame += AnimeSpeed;
 

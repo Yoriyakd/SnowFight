@@ -9,7 +9,7 @@ ThrowState::ThrowState() : shootAng(30)
 	endAng = -150;
 }
 
-PlayerStateBase *ThrowState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase *ThrowState::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	NowMatR->_42 += -0.1f;
 	NowMatR->_43 = 2.5f;

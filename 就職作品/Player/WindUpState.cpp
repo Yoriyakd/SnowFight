@@ -25,7 +25,7 @@ WindUpState::~WindUpState()
 	
 }
 
-PlayerStateBase * WindUpState::Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
+PlayerStateBase * WindUpState::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 {
 	animeFrame += animeSpeed;
 
