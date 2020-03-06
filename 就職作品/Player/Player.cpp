@@ -343,6 +343,7 @@ void Player::MakeBallStart()
 			D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
 
 			AddSnowBallUI::GetInstance().AddSnowBall();
+			GetSound.Play2D(FinishedMakingSnowBall_Sound);
 		}
 	}
 }
@@ -429,7 +430,7 @@ ThrowingInitValue Player::MakeThrowValue(const float PowerPct)
 	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 	_ThrowingBallInitValue.shootPos = pos + ShootOffset;
-	_ThrowingBallInitValue.XAxisAng = GetPlayerCam.GetCamAngX() * -1;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+	_ThrowingBallInitValue.XAxisAng = GetPlayerCam.GetCamAngX() * -1 + AddShootAng;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
 	_ThrowingBallInitValue.YAxisAng = GetPlayerCam.GetCamAngY();
 	_ThrowingBallInitValue.powerRate = PowerPct;
 	return _ThrowingBallInitValue;
