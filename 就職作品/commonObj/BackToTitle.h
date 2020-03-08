@@ -4,6 +4,7 @@
 #include"BackToTitleButton.h"
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../Sound/SoundManager.h"
+#include"../commonObj/Cursor.h"
 
 //--------------------------------------------------------------
 //タイトルバック確認画面のクラス

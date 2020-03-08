@@ -11,7 +11,4 @@ public:
 	void Frame(void);
 
 private:
-	DWORD NTlmt, BTlmt, NTcnt, BTcnt;
-	int cntFPS;
-
 };

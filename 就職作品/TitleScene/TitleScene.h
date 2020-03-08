@@ -4,6 +4,7 @@
 #include"../SceanSwitcher/SceneSwitcher.h"
 #include"../ResourceManager.h"
 #include"../Effect/SceneSwitchEffect.h"
+#include"../commonObj/Cursor.h"
 
 class TitleScene : public SceneBase {
 public:

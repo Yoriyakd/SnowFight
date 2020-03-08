@@ -23,11 +23,6 @@ MenuScene::MenuScene() : endSceneState(false)
 	D3DXMatrixTranslation(&headCharMat, 430, 100, 0);
 
 	//---------------------------------------
-	//カーソル
-	//---------------------------------------
-	cursorTex = GetResource.GetTexture(MenuCursor_Tex);
-
-	//---------------------------------------
 	//サンタ服
 	//---------------------------------------
 	SantaWearTex = GetResource.GetTexture(SantaWear_Tex);
@@ -40,12 +35,13 @@ MenuScene::MenuScene() : endSceneState(false)
 	stage2Button->Stage2Initialize();
 
 	BeginScene();
+
 }
 
 MenuScene::~MenuScene()
 {
 	delete stage1Button;
-	delete stage2Button;
+	delete stage2Button;	
 }
 
 void MenuScene::Render3D(void)
@@ -85,9 +81,7 @@ void MenuScene::Render2D(void)
 	lpSprite->SetTransform(&santaWearMat);
 	lpSprite->Draw(SantaWearTex, &RcSantWear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	RECT RcCursor = { 0, 0, 64, 64 };
-	lpSprite->SetTransform(&cursorMat);
-	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	GetCursor.Draw();
 
 	GetSceneSwitchEffect.Draw();
 
@@ -134,26 +128,18 @@ bool MenuScene::Update(void)
 		}
 	}
 
-	//--------------------------------------------
-	//カーソル移動
-	//--------------------------------------------
-	POINT Pt;
-
-	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
-	ScreenToClient(hwnd, &Pt);		//スクリーン座標に変換
-
-	D3DXMatrixTranslation(&cursorMat, (float)Pt.x, (float)Pt.y, 0);
-
 	return true;
 }
 
 void MenuScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();
+	GetCursor.ShowCursor(true);
 }
 
 void MenuScene::EndScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeOut();
+	GetCursor.ShowCursor(false);
 	endSceneState = true;
 }

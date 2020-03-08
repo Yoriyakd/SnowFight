@@ -4,6 +4,8 @@
 #include"../ResourceManager.h"
 #include"StageSelectButton.h"
 #include"../Effect/SceneSwitchEffect.h"
+#include"../commonObj/Cursor.h"
+
 class MenuScene : public SceneBase {
 public:
 	MenuScene();
@@ -35,13 +37,6 @@ private:
 	//---------------------------------------
 	LPDIRECT3DTEXTURE9 headCharTex;
 	D3DXMATRIX headCharMat;
-
-	//---------------------------------------
-	//カーソル
-	//---------------------------------------
-	LPDIRECT3DTEXTURE9 cursorTex;
-	D3DXMATRIX cursorMat;
-
 
 	//---------------------------------------
 	//サンタ服

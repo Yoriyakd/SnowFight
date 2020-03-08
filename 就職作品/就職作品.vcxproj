@@ -136,6 +136,7 @@
     <ClCompile Include="commonObj\BackToTitle.cpp" />
     <ClCompile Include="commonObj\BackToTitleButton.cpp" />
     <ClCompile Include="commonObj\ButtonBase.cpp" />
+    <ClCompile Include="commonObj\Cursor.cpp" />
     <ClCompile Include="commonObj\Function.cpp" />
     <ClCompile Include="commonObj\SkyBox.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
@@ -267,6 +268,7 @@
     <ClInclude Include="commonObj\BackToTitle.h" />
     <ClInclude Include="commonObj\BackToTitleButton.h" />
     <ClInclude Include="commonObj\ButtonBase.h" />
+    <ClInclude Include="commonObj\Cursor.h" />
     <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />
     <ClInclude Include="commonObj\SnowBallManager.h" />

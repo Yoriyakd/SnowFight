@@ -50,7 +50,7 @@ void TitleScene::Render2D(void)
 
 	GetSceneSwitchEffect.Draw();
 
-
+	GetCursor.Draw();
 	// •`‰æI—¹
 	lpSprite->End();
 }
@@ -98,10 +98,12 @@ bool TitleScene::Update(void)
 void TitleScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();		//–¾‚é‚­‚·‚é
+	GetCursor.ShowCursor(true);
 }
 
 void TitleScene::EndScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeOut();		//ˆÃ‚­‚·‚é
+	GetCursor.ShowCursor(false);
 	endSceneState = true;
 }

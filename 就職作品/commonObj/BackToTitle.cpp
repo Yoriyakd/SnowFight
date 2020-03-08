@@ -32,13 +32,13 @@ void BackToTitle::Draw()
 
 		YesButton->Draw();
 		NoButton->Draw();
+
+		GetCursor.Draw();
 	}
 }
 
 RETURN_STATE BackToTitle::CallBackToTitle()
 {
-	static bool CursorFlag = false;		//自前のカーソルに変更する☆
-
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 	{
 		if (isESCKey == true)
@@ -46,8 +46,7 @@ RETURN_STATE BackToTitle::CallBackToTitle()
 			if (nowState == true)
 			{
 				//カーソル
-				ShowCursor(false);
-				CursorFlag = false;
+				GetCursor.ShowCursor(false);
 
 				nowState = false;
 				isESCKey = false;	//ESCを連続して押せないように
@@ -55,6 +54,7 @@ RETURN_STATE BackToTitle::CallBackToTitle()
 			}
 			else
 			{
+				GetCursor.ShowCursor(true);
 				nowState = true;
 				isESCKey = false;	//実行ESCを連続して押せないように
 			}
@@ -67,12 +67,6 @@ RETURN_STATE BackToTitle::CallBackToTitle()
 	
 	if (nowState == false)return NOT_ACTIVE;
 
-	if (CursorFlag == false)		//仮☆(全体で管理した方がよさそうカーソル使うなら)	//カーソルが見えないなら見えるようにする
-	{
-		CursorFlag = true;
-		ShowCursor(true);		//仮☆
-	}
-
 	YesButton->Update();
 	NoButton->Update();
 
@@ -82,8 +76,7 @@ RETURN_STATE BackToTitle::CallBackToTitle()
 		{
 			GetSound.Play2D(Success_Sound);
 			nowState = false;
-			ShowCursor(false);		//仮☆
-			CursorFlag = false;
+			GetCursor.ShowCursor(false);
 
 			nowState = false;
 
@@ -92,8 +85,7 @@ RETURN_STATE BackToTitle::CallBackToTitle()
 		if (NoButton->GetState() == true) 
 		{
 			nowState = false;
-			ShowCursor(false);		//仮☆
-			CursorFlag = false;
+			GetCursor.ShowCursor(false);
 			nowState = false;
 			return CANCEL;
 		}

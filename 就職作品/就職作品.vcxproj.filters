@@ -264,6 +264,9 @@
     <ClCompile Include="GameScene\TimeUpEffect.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="commonObj\Cursor.cpp">
+      <Filter>commonObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\TimeUpEffect.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="commonObj\Cursor.h">
+      <Filter>commonObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

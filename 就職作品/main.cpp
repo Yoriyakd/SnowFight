@@ -11,6 +11,7 @@
 #include"Effect/SceneSwitchEffect.h"
 #include"Sound/SoundManager.h"
 #include"commonObj/BackToTitle.h"
+#include"commonObj/Cursor.h"
 
 
 #pragma comment(lib, "d3d9.lib")
@@ -39,6 +40,35 @@ const int GameFPS = 60;		//ゲームのFPS指定
 
 LPDIRECTSOUND8 lpDSound;	//DirectSoundオブジェクト
 LPDIRECTSOUNDBUFFER lpSPrimary;
+
+//60FPS固定のための処理とりあえずここに書く
+bool FPSLimiter(void)
+{
+	static DWORD NTlmt, BTlmt, NTcnt, BTcnt;
+	static int cntFPS;
+
+	//---------------------------------------------------------------------------
+	//60FPS制限処理
+	NTlmt = timeGetTime();
+
+	if (NTlmt - BTlmt <= 1000.0f / GameFPS)			//1 / 60秒　経っていなかったらリターンでとばすことで60FPS上限をつける
+	{
+		return false;
+	}
+	BTlmt = NTlmt;
+	//---------------------------------------------------------------------------
+
+	NTlmt = timeGetTime();
+	cntFPS++;
+
+	if ((NTcnt - BTcnt) >= 1000)
+	{
+		cntFPS = 0;				//リセット
+		BTcnt = NTcnt;		//基準時間を変更
+	}
+
+	return true;
+}
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
@@ -265,6 +295,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	GetSound.Create();
 	GetSound.Initialize();
 	BackToTitle::Create();
+	GetCursor.Create();
+
 	ShowCursor(FALSE);			//カーソルを表示しない	※FALSEの回数をカウントしているので必要以上に呼ばない
 
 
@@ -292,8 +324,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		}
 		else 
 		{
-			GetSceneSwitcher.NowScene();
-			//GetSceneSwitchEffect.Update();
+			if (FPSLimiter() == true)		//FPS制御
+			{
+				GetSceneSwitcher.NowScene();
+				GetSceneSwitchEffect.Update();
+				GetCursor.Update();
+			}
 		}
 	}
 
@@ -304,7 +340,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	EffectManager::Destroy();
 	GetSound.Destroy();
 	BackToTitle::Destroy();
-
+	GetCursor.Destroy();
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない	管理するクラスを作る
 
 
