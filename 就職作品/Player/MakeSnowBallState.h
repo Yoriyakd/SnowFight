@@ -4,7 +4,7 @@ class MakeSnowBallState : public PlayerStateBase{
 public:
 	MakeSnowBallState(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR);
 	~MakeSnowBallState();
-	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
+	PlayerStateBase* Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 private:
 	const float AnimeSpeed = 0.1f;
 	float animeFrame;

@@ -121,7 +121,7 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 	if (playerState != nullptr)
 	{
 		PlayerStateBase *NextAnime;
-		NextAnime = playerState->Anime(&armLOffsetMat, &armROffsetMat);
+		NextAnime = playerState->Action(&armLOffsetMat, &armROffsetMat);
 		if (NextAnime != nullptr)
 		{
 			delete playerState;

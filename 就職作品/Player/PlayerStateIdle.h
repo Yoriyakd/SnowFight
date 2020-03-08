@@ -4,7 +4,7 @@ class PlayerStateIdle :public PlayerStateBase {
 public:
 	PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR);
 	~PlayerStateIdle();
-	PlayerStateBase* Anime(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
+	PlayerStateBase* Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR);
 
 private:
 	const float AnimeSpeed = 0.1f;
