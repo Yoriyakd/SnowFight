@@ -50,7 +50,7 @@ void SoundManager::AllStop()
 void SoundManager::Initialize()
 {
 	//とりあえずここに直接書く(TEXT等外部ファイルから読み込む)
-	SoundInitData tmp{ InGameBGM_SOUND, false, -100, 1 };
+	SoundInitData tmp{ InGameBGM_Sound, false, -100, 1 };
 
 	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 	
@@ -59,7 +59,7 @@ void SoundManager::Initialize()
 		Sound2DMap[tmp.ID][i].Initialize(tmp);
 	}
 
-	tmp.ID = SnowBallHit_SOUND;
+	tmp.ID = SnowBallHit_Sound;
 	tmp.LoopFlag = false;
 	tmp.Volume = 0;
 	tmp.MaxPlayCnt = 10;
@@ -123,6 +123,54 @@ void SoundManager::Initialize()
 	tmp.LoopFlag = false;
 	tmp.Volume = 0;
 	tmp.MaxPlayCnt = 5;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = XmasTreeHit_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 5;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = FinishedMakingSnowBall_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = -100;
+	tmp.MaxPlayCnt = 3;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = MakingSnowBall_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = PickUp_Sound;
+	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
 
 	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 

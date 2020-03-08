@@ -27,7 +27,7 @@
 //ワールド座標で管理
 
 class Player : public SingletonBase<Player>{
-	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成削除は許可
+	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成、削除は許可
 public:
 	bool Update(PickUpInstructions &PickUpInstructions);
 	void Draw(void);
@@ -129,6 +129,8 @@ private:
 	void MakeGhostMat();
 	//呼ぶと戻り値で雪玉初期化用のデータが返ってくる
 	ThrowingInitValue MakeThrowValue(const float PowerPct);
+
+	void PickUpDecoration();
 };
 
 Player* SingletonBase<Player>::instance = nullptr;

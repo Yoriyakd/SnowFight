@@ -249,6 +249,7 @@ void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *M
 				PushVec = LayVec * MeshDis;	//ƒƒbƒVƒ…‚Ü‚Å‚Ì’·‚³•ªˆÚ“®‚³‚¹‚é
 				Decoration->PushPos(&PushVec);
 				GameNormManager->DoDecorate(Decoration->GetID());
+				GetSound.Play2D(XmasTreeHit_Sound);
 				//GameNormManager->AddScore(500);
 			}
 			else

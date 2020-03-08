@@ -111,21 +111,25 @@ enum TexName
 
 enum SoundID {
 	//Ingame
-	InGameBGM_SOUND,
+	InGameBGM_Sound,
 
 	//SE
-	SnowBallHit_SOUND,
+	SnowBallHit_Sound,
 	Throw_Sound,
 	Success_Sound,
 	Clock_Sound,
 	EndWhistle_Sound,
 	HeadShoot_Sound,
+	XmasTreeHit_Sound,
+	MakingSnowBall_Sound,
+	FinishedMakingSnowBall_Sound,
+	PickUp_Sound,
 };
 
 class ResourceManager : public SingletonBase<ResourceManager>
 {
 public:
-	friend class SingletonBase<ResourceManager>;			//SingletonBaseでのインスタンス作成削除は許可
+	friend class SingletonBase<ResourceManager>;			//SingletonBaseでのインスタンス作成、削除は許可
 
 	//enumで定義されたMeshNameを入れる
 	XFILE			     GetXFILE(enum MeshName);
@@ -243,15 +247,18 @@ private:
 
 	std::map<SoundID, std::string> SoundFileName{
 		//InGame
-		{InGameBGM_SOUND,   "MusMus-BGM-061.wav"},
+		{InGameBGM_Sound,   "MusMus-BGM-061.wav"},
 
-		{SnowBallHit_SOUND, "Snowball_Impact.wav"},
+		{SnowBallHit_Sound, "Snowball_Impact.wav"},
 		{Throw_Sound,       "Throw.wav"},
 		{Success_Sound,     "Success.wav"},
 		{Clock_Sound,     "Clock.wav"},
 		{EndWhistle_Sound, "Whistle.wav"},
 		{HeadShoot_Sound, "EFX SD Cymbal MEINL 10 Splash Dark Crash Unfinished Mallet 01 A.wav"},
-
+		{XmasTreeHit_Sound, "XmasTreeHit.wav"},
+		{MakingSnowBall_Sound, "MakingSnowBall.wav"},
+		{FinishedMakingSnowBall_Sound, "FinishedMakingSnowBall.wav"},
+		{PickUp_Sound, "PickUp.wav"},
 	};
 };
 ResourceManager* SingletonBase<ResourceManager>::instance = nullptr;		//nullptrで初期化(DirectXの機能を使うためDirectX初期化後に作成する必要がある)staticで最初に確保されていたやつはどこへ...?解放されてないきがするぞ

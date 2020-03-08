@@ -7,6 +7,7 @@
 #include"Player/Player.h"
 #include"Item/DecorationManager.h"
 #include"GameScene/EventManager.h"
+#include"Sound/SoundManager.h"
 
 class CollisionObserver {
 public:

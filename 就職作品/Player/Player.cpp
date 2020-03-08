@@ -73,8 +73,7 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 		{
 			if (carryFlag == false)		//今運んでいないなら
 			{
-				carryObjID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
-				carryFlag = true;
+				PickUpDecoration();
 				canMakeSnowBallFlag = false;		//拾える状態では雪玉作成より拾うことを優先する
 			}
 			else
@@ -318,6 +317,8 @@ void Player::MakeBallStart()
 
 	static float ballSize = 0;
 
+	GetSound.Play2D(MakingSnowBall_Sound);
+
 	shootPower = 0;
 	carryItem->SetDisplayFlag(false);			//タイミングの調整とplayerに消える瞬間がみえないようにするアニメ挿入☆
 
@@ -344,12 +345,14 @@ void Player::MakeBallStart()
 
 			AddSnowBallUI::GetInstance().AddSnowBall();
 			GetSound.Play2D(FinishedMakingSnowBall_Sound);
+			GetSound.Stop(MakingSnowBall_Sound);
 		}
 	}
 }
 
 void Player::MakeBallEnd()
 {
+	GetSound.Stop(MakingSnowBall_Sound);
 	Effect.NewSnowFrag((D3DXVECTOR3(ballMat._41, ballMat._42, ballMat._43)));	
 	makingTimeCnt = 0;		//リセット
 	D3DXMatrixScaling(&ballScalMat, 0.0f, 0.0f, 0.0f);
@@ -434,5 +437,12 @@ ThrowingInitValue Player::MakeThrowValue(const float PowerPct)
 	_ThrowingBallInitValue.YAxisAng = GetPlayerCam.GetCamAngY();
 	_ThrowingBallInitValue.powerRate = PowerPct;
 	return _ThrowingBallInitValue;
+}
+
+void Player::PickUpDecoration()
+{
+	carryObjID = GetDecorationManager.PickUp(&pos);				//拾う	近くに2つ以上アイテムがあると配列番号が若いものが優先して拾われてしまう
+	carryFlag = true;
+	GetSound.Play2D(PickUp_Sound);
 }
 

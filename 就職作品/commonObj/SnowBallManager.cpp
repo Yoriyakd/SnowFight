@@ -1,4 +1,5 @@
 #include "SnowBallManager.h"
+#include"../Sound/SoundManager.h"
 
 SnowBallManager::SnowBallManager()
 {
@@ -22,6 +23,7 @@ void SnowBallManager::DeleteInstance(unsigned int ite)
 {
 	delete snowBall[ite];
 	snowBall.erase(snowBall.begin() + ite);
+	GetSound.Play2D(SnowBallHit_Sound);		//è¡ñ≈éûÉTÉEÉìÉhçƒê∂
 }
 
 void SnowBallManager::SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID)

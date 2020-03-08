@@ -286,7 +286,7 @@ bool GameScene::Update()
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			GetSceneSwitcher.SwitchScene(new MenuScene());
-			GetSound.AllStop();
+			GetSound.Stop(InGameBGM_Sound);
 			return false;
 		}
 		return true;
@@ -388,6 +388,15 @@ bool GameScene::Update()
 	//----------------------------------------------------------------------------------------
 	//時間処理
 	//----------------------------------------------------------------------------------------
+	for (unsigned int i = 0; i < timePenaltyUI.size(); i++)
+	{
+		if (timePenaltyUI[i]->Update() == false)
+		{
+			delete timePenaltyUI[i];
+			timePenaltyUI.erase(timePenaltyUI.begin() + i);
+			i--;
+		}
+	}
 	//timeUI->SetTime_s(GameNormManager->GetRemainingTime_s());		//フレームを秒に直して渡している
 	timeUI->SetTime_s(GameTime::GetRemainingTime_s());		//フレームを秒に直して渡している
 	timeUI->Update();
@@ -413,7 +422,7 @@ void GameScene::BeginScene()
 {
 	nowState = IN_GAME;
 	addUpdate = new GameTime();
-	GetSound.Play2D(InGameBGM_SOUND);
+	GetSound.Play2D(InGameBGM_Sound);
 	GetSceneSwitchEffect.PlayFadeIn();
 }
 
@@ -421,7 +430,8 @@ void GameScene::EndScene()
 {
 	nowState = BACK_TO_TITLE;
 	GetSceneSwitchEffect.PlayFadeOut();
-	GetSound.AllStop();										//サウンドを再生停止
+	GetSound.Stop(InGameBGM_Sound);										//サウンドを再生停止
+	GetSound.Stop(Clock_Sound);										//サウンドを再生停止(移行時に止めるサウンドをまとめた関数作成)
 }
 
 void GameScene::Collision()
@@ -518,9 +528,6 @@ void GameScene::Collision()
 			GameTime::PlayerTakeDamage(3);
 			timePenaltyUI.push_back(new TimePenaltyUI(3));		//変数化
 
-			//Soundを呼ぶ
-			GetSound.Play2D(SnowBallHit_SOUND);
-
 			//----------------------------------------------------
 			//HitEffecctの処理(Effectのクラスに変数を持たせた方がいいのでは？)
 			//----------------------------------------------------
@@ -569,20 +576,12 @@ void GameScene::Collision()
 		}
 	}
 
+	//敵とMapObjの判定
 	for (unsigned int ei = 0; ei < GetEnemyManager.enemy.size(); ei++)
 	{
 		for (unsigned int mj = 0; mj < mapObjManager->mapObj.size(); mj++)
 		{
 			CollisionObserver::EnemyToMapObj(GetEnemyManager.enemy[ei], mapObjManager->mapObj[mj]);
-		}
-	}
-	for (unsigned int i = 0; i < timePenaltyUI.size(); i++)
-	{
-		if (timePenaltyUI[i]->Update() == false)
-		{
-			delete timePenaltyUI[i];
-			timePenaltyUI.erase(timePenaltyUI.begin() + i);
-			i--;
 		}
 	}
 }
@@ -623,6 +622,7 @@ bool GameScene::ResultUpdate(void)
 	{
 		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//右クリックが押されるとシーン遷移
 		{
+			GetSound.Play2D(Success_Sound);
 			EndResult();
 		}
 	}
@@ -650,6 +650,7 @@ bool GameScene::BackToTitle(void)
 		EndScene();
 		return false;
 	}
+	return false;
 }
 
 void GameScene::BeginTimeUpEffect()
