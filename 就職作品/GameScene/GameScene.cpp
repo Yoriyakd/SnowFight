@@ -10,7 +10,10 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 {
 	GetResource.GetXFILE(EnemyBody_M);
 	GetResource.GetXFILE(EnemyHand_M);
-	GetResource.GetXFILE(EnemyHat_M);/*1度読み込むことで軽量化*/
+	GetResource.GetXFILE(EnemyHat_M);
+	GetResource.GetXFILE(Decoration_BlueBall_M);
+	GetResource.GetXFILE(Decoration_RedBall_M);
+	GetResource.GetXFILE(Decoration_YellowBall_M);/*1度読み込むことで軽量化*/
 
 	srand(timeGetTime());
 
@@ -462,6 +465,8 @@ void GameScene::Collision()
 					//SnowFragエフェクト呼ぶ
 					Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
 
+					GetSound.Play2D(SnowBallHit_Sound);
+
 					//死んだインスタンス削除
 					GetSnowBallManager.DeleteInstance(sj);
 					sj--;		//きえた分詰める
@@ -487,6 +492,8 @@ void GameScene::Collision()
 					ei--;		//きえた分詰める
 				}
 
+				GetSound.Play2D(SnowBallHit_Sound);
+
 				//SnowFragエフェクト呼ぶ
 				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
 
@@ -510,6 +517,7 @@ void GameScene::Collision()
 				//SnowFragエフェクト呼ぶ
 				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
 
+				//GetSound.Play2D(SnowBallHit_Sound);
 				//死んだインスタンス削除
 				GetSnowBallManager.DeleteInstance(sj);
 				sj--;				//きえた分詰める

@@ -23,7 +23,6 @@ void SnowBallManager::DeleteInstance(unsigned int ite)
 {
 	delete snowBall[ite];
 	snowBall.erase(snowBall.begin() + ite);
-	GetSound.Play2D(SnowBallHit_Sound);		//Á–ÅƒTƒEƒ“ƒhÄ¶
 }
 
 void SnowBallManager::SetSnowBall(ThrowingInitValue *ThrowingInitValue, ID _ID)
