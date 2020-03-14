@@ -2,7 +2,7 @@
 #include"../GameScene/GameScene.h"
 #include"../TitleScene/TitleScene.h"
 
-MenuScene::MenuScene() : endSceneState(false)
+MenuScene::MenuScene()
 {
 	//---------------------------------------
 	//背景
@@ -83,6 +83,7 @@ void MenuScene::Render2D(void)
 
 	GetCursor.Draw();
 
+	GetBackToTitle.Draw();
 	GetSceneSwitchEffect.Draw();
 
 	// 描画終了
@@ -91,24 +92,38 @@ void MenuScene::Render2D(void)
 
 bool MenuScene::Update(void)
 {
-	if (endSceneState == true)
+	//-------------------------------------------------------------------
+	//タイトルに戻る前の確認		☆一つのモジュールにする
+	//-------------------------------------------------------------------
+	if (BackToTitle() == true)return true;		//動作中は早期リターン
+
+
+	switch (nowState)
 	{
+	case GAME_START:
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			GetSceneSwitcher.SwitchScene(new GameScene(selectedStage));
-			return false;		//このfalse返すのシーン遷移とセットやからスマートにかけないだろうか☆
+			return false;		//このfalse返すのシーン遷移とセットやからスマートにかけないだろうか ☆
 		}
 		return true;		//シーン遷移状態なら早期リターン
+
+		break;
+	case BACK_TO_TITLE_MENU:
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
+		{
+			GetSceneSwitcher.SwitchScene(new TitleScene());			//タイトルへ移行
+			return false;
+		}
+		return true;
+		break;
+	default:
+		break;
 	}
 
 	stage1Button->Update();
 	stage2Button->Update();
 
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
-	{
-		GetSceneSwitcher.SwitchScene(new TitleScene());				//エフェクトと確認を入れる☆
-		return false;
-	}
 	
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
@@ -118,6 +133,7 @@ bool MenuScene::Update(void)
 			GetSound.Play2D(Success_Sound);
 			EndScene();
 			selectedStage = 1;
+			nowState = GAME_START;
 		}
 
 		if (stage2Button->GetState() == true)
@@ -125,6 +141,7 @@ bool MenuScene::Update(void)
 			GetSound.Play2D(Success_Sound);
 			EndScene();
 			selectedStage = 2;
+			nowState = GAME_START;
 		}
 	}
 
@@ -135,11 +152,33 @@ void MenuScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();
 	GetCursor.ShowCursor(true);
+	GetSound.Play2D(MenuBGM_Sound);
+	nowState = IN_MENU;
 }
 
 void MenuScene::EndScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeOut();
 	GetCursor.ShowCursor(false);
-	endSceneState = true;
+	GetSound.Stop(MenuBGM_Sound);
+}
+
+
+bool MenuScene::BackToTitle(void)
+{
+	RETURN_STATE GameSceneState;
+	GameSceneState = GetBackToTitle.CallBackToTitle();
+
+	if (GameSceneState == WAITING_INPUT)return true;
+	if (GameSceneState == RETURN_TITLE)
+	{
+		nowState = BACK_TO_TITLE_MENU;
+		EndScene();
+		return false;
+	}
+
+	if (GameSceneState == NOT_ACTIVE)return false;
+	if (GameSceneState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
+
+	return false;
 }

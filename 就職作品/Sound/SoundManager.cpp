@@ -86,7 +86,7 @@ void SoundManager::Initialize()
 	tmp.ID = Success_Sound;
 	tmp.LoopFlag = false;
 	tmp.Volume = 0;
-	tmp.MaxPlayCnt = 2;
+	tmp.MaxPlayCnt = 4;
 
 	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
 
@@ -169,6 +169,31 @@ void SoundManager::Initialize()
 
 	tmp.ID = PickUp_Sound;
 	tmp.LoopFlag = false;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+
+	tmp.ID = TitleBGM_Sound;
+	tmp.LoopFlag = true;
+	tmp.Volume = 0;
+	tmp.MaxPlayCnt = 1;
+
+	Sound2DMap.emplace(tmp.ID, new Sound2D[tmp.MaxPlayCnt]);
+
+	for (auto i = 0; i < tmp.MaxPlayCnt; i++)
+	{
+		Sound2DMap[tmp.ID][i].Initialize(tmp);
+	}
+
+	tmp.ID = MenuBGM_Sound;
+	tmp.LoopFlag = true;
 	tmp.Volume = 0;
 	tmp.MaxPlayCnt = 1;
 

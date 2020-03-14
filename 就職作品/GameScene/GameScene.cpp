@@ -256,36 +256,27 @@ bool GameScene::Update()
 	if (BackToTitle() == true)return true;		//動作中は早期リターン
 
 
-	//タイトルに戻る
-	if (nowState == BACK_TO_TITLE)
-	{
-		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
-		{
-			GetSceneSwitcher.SwitchScene(new TitleScene());			//タイトルへ移行
-			return false;
-		}
-		return true;
-	}
-
 	//------------------------------------------------------
 	//とりあえず実装
 	//------------------------------------------------------
-	if (nowState == SWITCH_RESULT)
+	switch (nowState)
 	{
+	case IN_GAME:
+		break;
+	case SWITCH_RESULT:
+
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			BeginResult();
 		}
 		return true;
-	}
+		break;
 
-	if (nowState == IN_RESULT)
-	{
+	case IN_RESULT:
 		ResultUpdate();
-	}
+		break;
 
-	if (nowState == END_RESULT)
-	{
+	case END_RESULT:
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
 		{
 			GetSceneSwitcher.SwitchScene(new MenuScene());
@@ -293,6 +284,22 @@ bool GameScene::Update()
 			return false;
 		}
 		return true;
+		break;
+
+	case TIME_UP_EFFECT:
+		break;
+
+	case BACK_TO_TITLE_GAME:
+		if (GetSceneSwitchEffect.GetFadeState() == STOP)		//シーン遷移が終わっていたら移行
+		{
+			GetSceneSwitcher.SwitchScene(new TitleScene());			//タイトルへ移行
+			return false;
+		}
+		return true;
+		break;
+
+	default:
+		break;
 	}
 
 	if (addUpdate != nullptr)
@@ -431,7 +438,7 @@ void GameScene::BeginScene()
 
 void GameScene::EndScene()
 {
-	nowState = BACK_TO_TITLE;
+	nowState = BACK_TO_TITLE_GAME;
 	GetSceneSwitchEffect.PlayFadeOut();
 	GetSound.Stop(InGameBGM_Sound);										//サウンドを再生停止
 	GetSound.Stop(Clock_Sound);										//サウンドを再生停止(移行時に止めるサウンドをまとめた関数作成)
@@ -634,14 +641,6 @@ bool GameScene::ResultUpdate(void)
 			EndResult();
 		}
 	}
-
-	if (nowState == END_RESULT)		//リザルト終了フラグが立っている状態でフェードが終了するとシーン遷移
-	{
-		if (GetSceneSwitchEffect.GetFadeState() == STOP)
-		{
-			return false;
-		}
-	}
 	return true;
 }
 
@@ -650,14 +649,16 @@ bool GameScene::BackToTitle(void)
 	RETURN_STATE GameSceneState;
 	GameSceneState = GetBackToTitle.CallBackToTitle();
 
-	if (GameSceneState == NOT_ACTIVE)return false;
-	if (GameSceneState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
 	if (GameSceneState == WAITING_INPUT)return true;
 	if (GameSceneState == RETURN_TITLE)
 	{
 		EndScene();
 		return false;
 	}
+
+	if (GameSceneState == NOT_ACTIVE)return false;
+	if (GameSceneState == CANCEL)return false;			//☆解除後カメラが移動するのを何とかする
+	
 	return false;
 }
 

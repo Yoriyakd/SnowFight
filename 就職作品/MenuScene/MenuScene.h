@@ -6,6 +6,8 @@
 #include"../Effect/SceneSwitchEffect.h"
 #include"../commonObj/Cursor.h"
 
+enum MenuSceneState{IN_MENU, GAME_START, BACK_TO_TITLE_MENU};
+
 class MenuScene : public SceneBase {
 public:
 	MenuScene();
@@ -18,8 +20,9 @@ public:
 private:
 	void BeginScene(void);			//シーンを開始する際1度だけ呼ぶ		こっちいる？
 	void EndScene(void);			//シーンを終了する際1度だけ呼ぶ		デストラクタ前に実行してほしい処理
+	bool BackToTitle(void);
 
-	bool endSceneState;		//シーンの遷移フラグ
+	MenuSceneState nowState;
 	//---------------------------------------
 	//背景
 	//---------------------------------------

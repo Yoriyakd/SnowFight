@@ -99,6 +99,7 @@ void TitleScene::BeginScene(void)
 {
 	GetSceneSwitchEffect.PlayFadeIn();		//–¾‚é‚­‚·‚é
 	GetCursor.ShowCursor(true);
+	GetSound.Play2D(TitleBGM_Sound);
 }
 
 void TitleScene::EndScene(void)
@@ -106,4 +107,5 @@ void TitleScene::EndScene(void)
 	GetSceneSwitchEffect.PlayFadeOut();		//ˆÃ‚­‚·‚é
 	GetCursor.ShowCursor(false);
 	endSceneState = true;
+	GetSound.Stop(TitleBGM_Sound);
 }

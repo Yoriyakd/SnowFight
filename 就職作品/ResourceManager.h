@@ -110,6 +110,11 @@ enum TexName
 };
 
 enum SoundID {
+	//Title
+	TitleBGM_Sound,
+	//Menu
+	MenuBGM_Sound,
+
 	//Ingame
 	InGameBGM_Sound,
 
@@ -246,6 +251,10 @@ private:
 	};
 
 	std::map<SoundID, std::string> SoundFileName{
+		//Title
+		{TitleBGM_Sound, "bgm_maoudamashii_xmax02.wav"},
+		//Menu
+		{MenuBGM_Sound, "game_maoudamashii_4_field02.wav"},
 		//InGame
 		{InGameBGM_Sound,   "MusMus-BGM-061.wav"},
 
