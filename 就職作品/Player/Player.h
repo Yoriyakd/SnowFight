@@ -132,5 +132,3 @@ private:
 
 	void PickUpDecoration();
 };
-
-Player* SingletonBase<Player>::instance = nullptr;

@@ -37,4 +37,3 @@ private:
 	bool switchFlag;		//画面が暗くなりシーン変更の準備ができたことを表す
 	SwitchEffectState nowState;
 };
-SceneSwitchEffect* SingletonBase<SceneSwitchEffect>::instance = nullptr;

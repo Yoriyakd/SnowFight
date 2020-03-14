@@ -34,5 +34,3 @@ private:
 	BackToTitle();
 	~BackToTitle();
 };
-
-BackToTitle* SingletonBase<BackToTitle>::instance = nullptr;		//nullptr‚Å‰Šú‰»

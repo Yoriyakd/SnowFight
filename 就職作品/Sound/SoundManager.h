@@ -27,5 +27,3 @@ private:
 
 	void AllDelete();
 };
-
-SoundManager* SingletonBase<SoundManager>::instance = nullptr;

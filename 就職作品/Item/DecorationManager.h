@@ -27,5 +27,3 @@ private:
 	DecorationManager();
 	~DecorationManager();
 };
-
-DecorationManager* SingletonBase<DecorationManager>::instance = nullptr;

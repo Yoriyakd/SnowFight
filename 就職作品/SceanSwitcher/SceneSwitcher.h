@@ -17,5 +17,3 @@ private:
 	~SceneSwitcher();
 	SceneBase *Scene;
 };
-
-SceneSwitcher* SingletonBase<SceneSwitcher>::instance = nullptr;

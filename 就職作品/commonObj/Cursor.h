@@ -19,5 +19,3 @@ private:
 	LPDIRECT3DTEXTURE9 cursorTex;
 	D3DXMATRIX cursorMat;
 };
-
-Cursor* SingletonBase<Cursor>::instance = nullptr;

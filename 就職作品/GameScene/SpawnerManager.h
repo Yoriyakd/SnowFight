@@ -21,5 +21,3 @@ private:
 
 	GameObjectSpawner *decorationSpawner;
 };
-
-SpawnerManager* SingletonBase<SpawnerManager>::instance = nullptr;

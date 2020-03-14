@@ -38,5 +38,3 @@ private:
 	std::vector<SnowFrag*> snowFrag;
 	std::vector<SnowLocus*> snowLocus;
 };
-
-EffectManager* SingletonBase<EffectManager>::instance = nullptr;

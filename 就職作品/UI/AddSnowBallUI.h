@@ -19,5 +19,3 @@ private:
 	std::vector<AddSnowBallData*> AddUI;
 	LPDIRECT3DTEXTURE9 tex;
 };
-
-AddSnowBallUI* SingletonBase<AddSnowBallUI>::instance = nullptr;		//nullptr‚Å‰Šú‰»

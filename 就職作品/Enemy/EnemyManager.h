@@ -24,4 +24,3 @@ public:
 private:
 	~EnemyManager();
 };
-EnemyManager* SingletonBase<EnemyManager>::instance = nullptr;

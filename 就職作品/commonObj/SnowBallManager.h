@@ -27,5 +27,3 @@ private:
 	SnowBallManager();
 	~SnowBallManager();
 };
-
-SnowBallManager* SingletonBase<SnowBallManager>::instance = nullptr;

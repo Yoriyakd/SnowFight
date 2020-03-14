@@ -30,5 +30,3 @@ private:
 	std::vector<EnemyDeathAnime*> enemyDeathAnime;
 	std::vector<EnemyHatAnime*> enemyHatAnime;
 };
-
-EnemyAnimeManager* SingletonBase<EnemyAnimeManager>::instance = nullptr;

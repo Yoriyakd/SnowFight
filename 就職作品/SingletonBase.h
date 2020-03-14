@@ -40,3 +40,5 @@ private:
 
 	static T *instance;
 };
+
+template<class T> T* SingletonBase<T>::instance = nullptr;

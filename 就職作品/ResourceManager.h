@@ -270,4 +270,3 @@ private:
 		{PickUp_Sound, "PickUp.wav"},
 	};
 };
-ResourceManager* SingletonBase<ResourceManager>::instance = nullptr;		//nullptrで初期化(DirectXの機能を使うためDirectX初期化後に作成する必要がある)staticで最初に確保されていたやつはどこへ...?解放されてないきがするぞ

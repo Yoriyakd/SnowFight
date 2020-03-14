@@ -65,5 +65,3 @@ private:
 	bool MakeSnowBallPose(void);
 
 };
-
-PlayerCamera* SingletonBase<PlayerCamera>::instance = nullptr;
