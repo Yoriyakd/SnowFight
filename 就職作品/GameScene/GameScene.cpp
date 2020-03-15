@@ -472,8 +472,6 @@ void GameScene::Collision()
 					//SnowFragエフェクト呼ぶ
 					Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
 
-					GetSound.Play2D(SnowBallHit_Sound);
-
 					//死んだインスタンス削除
 					GetSnowBallManager.DeleteInstance(sj);
 					sj--;		//きえた分詰める
@@ -499,7 +497,7 @@ void GameScene::Collision()
 					ei--;		//きえた分詰める
 				}
 
-				GetSound.Play2D(SnowBallHit_Sound);
+				GetSound.Play2D(Damage_Sound);
 
 				//SnowFragエフェクト呼ぶ
 				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
@@ -524,7 +522,9 @@ void GameScene::Collision()
 				//SnowFragエフェクト呼ぶ
 				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
 
-				//GetSound.Play2D(SnowBallHit_Sound);
+				//サウンド
+				GetSound.Play2D(SnowBallBreak_Sound);
+
 				//死んだインスタンス削除
 				GetSnowBallManager.DeleteInstance(sj);
 				sj--;				//きえた分詰める
@@ -539,6 +539,10 @@ void GameScene::Collision()
 		{
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
+
+			//サウンド
+			GetSound.Play2D(Damage_Sound);
+
 			//GameNormManager->PlayerTakeDamage();			//HIT時のメソッドを呼ぶ
 			GameTime::PlayerTakeDamage(3);
 			timePenaltyUI.push_back(new TimePenaltyUI(3));		//変数化

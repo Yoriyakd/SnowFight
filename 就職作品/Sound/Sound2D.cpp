@@ -23,7 +23,7 @@ void Sound2D::Stop()
 void Sound2D::Initialize(const SoundInitData &_SoundInitData)
 {
 	//CSV‚Æ‚©‚©‚ç“Ç‚Ýž‚Þ
-	Buffer = GetResource.GetSound(_SoundInitData.ID);
+	Buffer = GetResource.GetSound(_SoundInitData.FileName);
 	soundData = _SoundInitData;
 	Buffer->SetVolume(soundData.Volume);
 }

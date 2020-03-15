@@ -51,13 +51,9 @@ LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(enum TexName _TexName)
 	return TextureList[TexData.FileName];
 }
 
-LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(SoundID _SoundName)
+LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(const std::string& FileName)
 {
 	LPDIRECTSOUNDBUFFER8 Tmp;
-
-	std::string FileName;
-
-	FileName = SoundFileName[_SoundName];
 
 	if (SoundBufferList.find(FileName) == SoundBufferList.end())
 	{

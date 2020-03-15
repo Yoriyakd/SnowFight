@@ -119,7 +119,8 @@ enum SoundID {
 	InGameBGM_Sound,
 
 	//SE
-	SnowBallHit_Sound,
+	Damage_Sound,
+	SnowBallBreak_Sound,
 	Throw_Sound,
 	Success_Sound,
 	Clock_Sound,
@@ -143,7 +144,7 @@ public:
 	LPDIRECT3DTEXTURE9   GetTexture(enum TexName);
 
 	//enum‚Å’è‹`‚³‚ê‚½SoundName‚ð“ü‚ê‚é
-	LPDIRECTSOUNDBUFFER8 GetSound(enum SoundID);
+	LPDIRECTSOUNDBUFFER8 GetSound(const std::string& FileName);
 protected:
 
 private:
@@ -248,25 +249,5 @@ private:
 		{Ground_Tex,              TexData{"SnowGround.png", 512, 512, NULL}},
 
 		{BackToTitle_Tex,		  TexData{"BackToTitle.png", 1280, 720, NULL}},
-	};
-
-	std::map<SoundID, std::string> SoundFileName{
-		//Title
-		{TitleBGM_Sound, "bgm_maoudamashii_xmax02.wav"},
-		//Menu
-		{MenuBGM_Sound, "game_maoudamashii_4_field02.wav"},
-		//InGame
-		{InGameBGM_Sound,   "MusMus-BGM-061.wav"},
-
-		{SnowBallHit_Sound, "Snowball_Impact.wav"},
-		{Throw_Sound,       "Throw.wav"},
-		{Success_Sound,     "Success.wav"},
-		{Clock_Sound,     "Clock.wav"},
-		{EndWhistle_Sound, "Whistle.wav"},
-		{HeadShoot_Sound, "EFX SD Cymbal MEINL 10 Splash Dark Crash Unfinished Mallet 01 A.wav"},
-		{XmasTreeHit_Sound, "XmasTreeHit.wav"},
-		{MakingSnowBall_Sound, "MakingSnowBall.wav"},
-		{FinishedMakingSnowBall_Sound, "FinishedMakingSnowBall.wav"},
-		{PickUp_Sound, "PickUp.wav"},
 	};
 };

@@ -47,6 +47,8 @@ void SnowBallManager::Update(void)
 			//SnowFragエフェクト呼ぶ
 			Effect.NewSnowFrag(snowBall[i]->GetPos());
 
+			//サウンド
+			GetSound.Play2D(SnowBallBreak_Sound);
 
 			//インスタンス削除
 			DeleteInstance(i);
