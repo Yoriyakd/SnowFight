@@ -66,7 +66,6 @@ private:
 	SkyBox *skyBox;
 	Stage1Enclosure *stage1Enclosure;
 	MapObjManager *mapObjManager;
-	GameNormManager *gameNormManager;
 	PickUpInstructions *pickUpInstructions;
 
 	static const int EFFECT_CNT = 5;

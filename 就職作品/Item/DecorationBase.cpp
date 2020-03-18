@@ -1,10 +1,8 @@
 #include "DecorationBase.h"
 #include"../GameScene/GameScene.h"
 
-DecorationBase::DecorationBase()
+DecorationBase::DecorationBase() : canPicUp(false), isDecorated(false), decorationRadius(0.2)
 {
-	picUpFlag = false;
-	decoratedState = false;
 }
 
 DecorationBase::~DecorationBase()
@@ -19,7 +17,7 @@ void DecorationBase::Draw()
 
 bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 {
-	if (decoratedState == true)
+	if (isDecorated == true)
 	{
 		return false;			//動けない状態なら拾えない
 	}
@@ -32,12 +30,12 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 	if (TargetLength < picUpDistans)		//2点の距離が拾うことができる距離より小さかったら
 	{
-		picUpFlag = true;
+		canPicUp = true;
 		return true;
 	}
 	else
 	{
-		picUpFlag = false;
+		canPicUp = false;
 	}
 
 	return false;
@@ -45,32 +43,9 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 
 void DecorationBase::Updata()
 {
-	if (decoratedState == false)
+	if (isDecorated == false)
 	{
-		D3DXMATRIX TmpMat;
-		moveVec.y += SnowBallGravity;		//地面に落ちていく
-
-		D3DXMatrixTranslation(&TmpMat, moveVec.x, moveVec.y, moveVec.z);
-
-		mat = TmpMat * mat;		//行列更新
-
-		if (mat._42 <= 0.0f)		//地面に埋もれない
-		{
-			mat._42 = 0.0f;
-
-			//地面につくと少し滑って止まる
-			moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
-
-			if (moveVec.x <= 0.0f)
-			{
-				moveVec.x = 0.0f;
-			}
-
-			if (moveVec.z <= 0.0f)
-			{
-				moveVec.z = 0.0f;
-			}
-		}
+		Move();
 
 		globalMoveVec = D3DXVECTOR3(mat._41, mat._42, mat._43) - memoryPos;				//現在の座標と記憶しておいた前フレームの座標を計算して回転行列を含めた移動ベクトルを求めている
 
@@ -82,6 +57,13 @@ void DecorationBase::Updata()
 	{
 		globalMoveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
+
+	if (doDecoratFlag == true)
+	{
+		doDecoratFlag = false;
+		Move();
+		DecorateEffect();
+	}
 }
 
 
@@ -90,12 +72,12 @@ void DecorationBase::SetPos(D3DXVECTOR3 * _Pos)
 	pos = *_Pos;
 }
 
-void DecorationBase::SetMoveVec(D3DXVECTOR3 * _Vec)
+void DecorationBase::SetMoveVec(const D3DXVECTOR3 &_Vec)
 {
 	D3DXMATRIX InvMat;
 
 	D3DXMatrixInverse(&InvMat, NULL, &mat);
-	D3DXVec3TransformNormal(&moveVec,  _Vec, &InvMat);
+	D3DXVec3TransformNormal(&moveVec,  &_Vec, &InvMat);
 }
 
 D3DXVECTOR3 DecorationBase::GetPos()
@@ -106,7 +88,7 @@ D3DXVECTOR3 DecorationBase::GetPos()
 
 bool DecorationBase::GetPicUpFlag(void)
 {
-	return picUpFlag;
+	return canPicUp;
 }
 
 CarryObjectID DecorationBase::GetID(void)
@@ -121,18 +103,68 @@ D3DXVECTOR3 DecorationBase::GetMoveVec()
 
 void DecorationBase::SetDecoratedState(bool State)
 {
-	decoratedState = State;
+	isDecorated = State;
 }
 
 bool DecorationBase::GetDecoratedState(void)
 {
-	return decoratedState;
+	return isDecorated;
 }
 
-void DecorationBase::PushPos(D3DXVECTOR3 * PushVec)
+void DecorationBase::DoDecorate(const D3DXVECTOR3 &TreeVec)
+{
+	float MoveVecLen, TreeVecLen;
+
+	MoveVecLen = D3DXVec3Length(&moveVec);
+	TreeVecLen= D3DXVec3Length(&TreeVec);
+
+	if (TreeVecLen < MoveVecLen)
+	{
+		D3DXVec3Normalize(&moveVec, &moveVec);
+		moveVec *= TreeVecLen + decorationRadius;
+		doDecoratFlag = true;
+		isDecorated = true;
+	}
+}
+
+void DecorationBase::PushPos(const D3DXVECTOR3 &PushVec)
 {
 	D3DXMATRIX TmpMat;
 
-	D3DXMatrixTranslation(&TmpMat, PushVec->x, PushVec->y, PushVec->z);
+	D3DXMatrixTranslation(&TmpMat, PushVec.x, PushVec.y, PushVec.z);
 	mat = mat * TmpMat;
+}
+
+void DecorationBase::Move()
+{
+	D3DXMATRIX TmpMat;
+	moveVec.y += SnowBallGravity;		//地面に落ちていく
+
+	D3DXMatrixTranslation(&TmpMat, moveVec.x, moveVec.y, moveVec.z);
+
+	mat = TmpMat * mat;		//行列更新
+
+	if (mat._42 <= 0.0f)		//地面に埋もれない
+	{
+		mat._42 = 0.0f;
+
+		//地面につくと少し滑って止まる
+		moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
+
+		if (moveVec.x <= 0.0f)
+		{
+			moveVec.x = 0.0f;
+		}
+
+		if (moveVec.z <= 0.0f)
+		{
+			moveVec.z = 0.0f;
+		}
+	}
+}
+
+void DecorationBase::DecorateEffect()
+{
+	GetSound.Play2D(XmasTreeHit_Sound);
+	GameNorm.DoDecorate();
 }

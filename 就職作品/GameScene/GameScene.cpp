@@ -16,7 +16,7 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 	GetResource.GetXFILE(Decoration_YellowBall_M);/*1度読み込むことで軽量化*/
 
 	srand(timeGetTime());
-
+	GameNorm.Create();
 	GetEnemyManager.Create();
 	loadStageData = new LoadStageData(StageNo);
 	ground = new Ground;
@@ -25,7 +25,7 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 	GetSnowBallManager.Create();
 	mapObjManager = new MapObjManager();
 	GetPlayerCam.Create();
-	gameNormManager = new GameNormManager();
+	
 
 	GetPlayer.Create();
 	
@@ -68,7 +68,7 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 	D3DXMatrixTranslation(&returnMat, 800, 500, 0);
 
 
-	loadStageData->SetStageMap(*mapObjManager, *gameNormManager, *gameObjective, *stageBorder);
+	loadStageData->SetStageMap(*mapObjManager, GameNorm, *gameObjective, *stageBorder);
 	
 	//-------------------------------------------------------
 	GetPlayerCam.SetPos(&D3DXVECTOR3(stageBorder->Right / 2, 0, 10.0f));				//プレイヤーの初期位置
@@ -112,10 +112,10 @@ GameScene::~GameScene()
 	delete ground;
 	delete skyBox;
 	delete stage1Enclosure;
+	GameNorm.Destroy();
 	GetSnowBallManager.Destroy();
 	delete mapObjManager;
 	GetPlayerCam.Destroy();
-	delete gameNormManager;
 
 	GetPlayer.Destroy();
 	GetEnemyManager.Destroy();
@@ -390,10 +390,6 @@ bool GameScene::Update()
 	playerHitEffect_Back->Update();
 
 	GetSpawnerManager.Update(*stageBorder);
-	//----------------------------------------------------------------------------------------
-	//イベント処理
-	//----------------------------------------------------------------------------------------
-	gameNormManager->Update();
 
 	//----------------------------------------------------------------------------------------
 	//時間処理
@@ -415,14 +411,14 @@ bool GameScene::Update()
 	//ノルマ処理
 	//----------------------------------------------------------------------------------------
 	bool NormState;
-	NormState = gameNormManager->GetNormState();
+	NormState = GameNorm.GetNormState();
 	if (NormState == false)
 	{
-		gameObjective->SetNowNormCnt(gameNormManager->GetNowNormCnt());		//現在の数を渡す
+		gameObjective->SetNowNormCnt(GameNorm.GetNowNormCnt());		//現在の数を渡す
 	}
 	else
 	{
-		gameObjective->SetNormState(gameNormManager->GetNormState());			//現在のノルマ状況を渡す		//☆改善の余地あり
+		gameObjective->SetNormState(GameNorm.GetNormState());			//現在のノルマ状況を渡す		//☆改善の余地あり
 	}
 
 	return true;
@@ -591,7 +587,7 @@ void GameScene::Collision()
 	{
 		for (unsigned int j = 0; j < mapObjManager->mapObj.size(); j++)
 		{
-			CollisionObserver::DecorationToMapObj(GetDecorationManager.decoration[i], mapObjManager->mapObj[j], gameNormManager);
+			CollisionObserver::DecorationToMapObj(GetDecorationManager.decoration[i], mapObjManager->mapObj[j]);
 		}
 	}
 

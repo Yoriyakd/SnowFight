@@ -470,9 +470,6 @@
     <ClInclude Include="commonObj\BackToTitle.h">
       <Filter>commonObj</Filter>
     </ClInclude>
-    <ClInclude Include="MenuScene\StageSelectButton.h">
-      <Filter>MenuScene</Filter>
-    </ClInclude>
     <ClInclude Include="commonObj\BackToTitleButton.h">
       <Filter>commonObj</Filter>
     </ClInclude>
@@ -487,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="commonObj\Cursor.h">
       <Filter>commonObj</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene\StageSelectButton.h">
+      <Filter>MenuScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

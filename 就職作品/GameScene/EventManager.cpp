@@ -1,21 +1,11 @@
 #include "EventManager.h"
 
-GameNormManager::GameNormManager()
+GameNormManager::GameNormManager() : normState(false), nowCnt(0)
 {
-	normState = false;
-	nowCnt = 0;
 }
 
 GameNormManager::~GameNormManager()
 {
-}
-
-void GameNormManager::Update()
-{
-	if (nowCnt >= normCnt)
-	{
-		normState = true;
-	}
 }
 
 //void GameNormManager::AddScore(int Score)
@@ -23,9 +13,19 @@ void GameNormManager::Update()
 //	score = Score;
 //}
 
-void GameNormManager::DoDecorate(CarryObjectID ID)
+//void GameNormManager::DoDecorate(CarryObjectID ID)
+//{
+//	nowCnt += 1;
+//}
+
+void GameNormManager::DoDecorate(void)
 {
 	nowCnt += 1;
+
+	if (nowCnt >= normCnt)
+	{
+		normState = true;
+	}
 }
 
 void GameNormManager::SetNorm(int Norm)

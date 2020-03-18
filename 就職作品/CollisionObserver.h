@@ -22,7 +22,7 @@ public:
 	//敵の雪玉とプレイヤーの当たり判定
 	static bool EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall);
 	//Mapオブジェとデコレーションの当たり判定
-	static void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, GameNormManager *GameNormManager);
+	static void DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj);
 	//Mapオブジェと敵の当たり判定
 	static void EnemyToMapObj(Enemy *Enemy, MapObj *MapObj);
 

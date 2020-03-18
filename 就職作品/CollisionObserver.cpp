@@ -202,7 +202,7 @@ bool CollisionObserver::EnemySnowBalltoPlayer(Player *Player, SnowBall *SnowBall
 }
 
 
-void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj, GameNormManager *GameNormManager)
+void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *MapObj)
 {
 	if (Decoration->GetDecoratedState() == true)return;		//状態が飾られているならreturnで抜ける
 	//---------------------------------------------------------------
@@ -243,27 +243,24 @@ void CollisionObserver::DecorationToMapObj(DecorationBase *Decoration, MapObj *M
 		{
 			if (MapObj->GetPossibleDecorate() == true)			//飾ることができるなら
 			{
-				Decoration->SetDecoratedState(true);		//飾られている状態にする
-				D3DXVECTOR3 PushVec;
+				D3DXVECTOR3 TreeDis;
 
-				PushVec = LayVec * MeshDis;	//メッシュまでの長さ分移動させる
-				Decoration->PushPos(&PushVec);
-				GameNormManager->DoDecorate(Decoration->GetID());
-				GetSound.Play2D(XmasTreeHit_Sound);
-				//GameNormManager->AddScore(500);
+				TreeDis = LayVec * MeshDis;			//Treeまでのベクトルを求める
+				Decoration->DoDecorate(TreeDis);		//飾られている状態にする
+
 			}
 			else
 			{
 				D3DXVECTOR3 PushVec;
 
 				PushVec = ObjNormal * ((Limit - MeshDis) * Dot);	//法線方向に押し出す長さを求める
-				Decoration->PushPos(&PushVec);		//1度法線方向に押し出す
+				Decoration->PushPos(PushVec);		//1度法線方向に押し出す
 
 				MoveVec = MoveVec + ((2 * Dot) * ObjNormal);			//移動ベクトルを壁の法線方向に2回押し出して反射ベクトルを求めている
 				
 				MoveVec *= 0.8f;		//反発係数を設定
 
-				Decoration->SetMoveVec(&MoveVec);
+				Decoration->SetMoveVec(MoveVec);
 			}
 		}
 	}
