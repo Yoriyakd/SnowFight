@@ -657,7 +657,11 @@ bool GameScene::BackToTitle(void)
 	}
 
 	if (GameSceneState == NOT_ACTIVE)return false;
-	if (GameSceneState == CANCEL)return false;			//™‰ğœŒãƒJƒƒ‰‚ªˆÚ“®‚·‚é‚Ì‚ğ‰½‚Æ‚©‚·‚é
+	if (GameSceneState == CANCEL)
+	{
+		PlayerStateIdle::LimitKeepPushShootKey();
+		return false;			//™‰ğœŒãƒJƒƒ‰‚ªˆÚ“®‚·‚é‚Ì‚ğ‰½‚Æ‚©‚·‚é
+	}
 	
 	return false;
 }

@@ -4,7 +4,7 @@
 #include"../Item/DecorationManager.h"
 
 
-PlayerStateIdle::PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR):animeFrame(0), KeyFlag(false)
+PlayerStateIdle::PlayerStateIdle(D3DXMATRIX *StartMatL, D3DXMATRIX *StartMatR):animeFrame(0), isMakeKey(false)
 {
 	startMatL = *StartMatL;
 	startMatR = *StartMatR;
@@ -42,28 +42,42 @@ PlayerStateBase* PlayerStateIdle::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMat
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)		//‰½‚©“Š‚°‚ç‚ê‚éó‘Ô‚È‚ç
 	{
-		if (GetPlayer.IsThrowAnything() == true)
+		if (isShootKey == true)
 		{
-			return new WindUpState(NowMatR);
+			if (GetPlayer.IsThrowAnything() == true)
+			{
+				return new WindUpState(NowMatR);
+			}
 		}
+	}
+	else
+	{
+		isShootKey = true;
 	}
 	
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		if(KeyFlag == true)return nullptr;		//E‚Á‚½‚ ‚Æ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Åá‹Ê‚ğì‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚é
+		if(isMakeKey == true)return nullptr;		//E‚Á‚½‚ ‚Æ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Åá‹Ê‚ğì‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚é
 		if(GetPlayer.CanMakeSnowBall() == true)
 		{
 			return new MakeSnowBallState(NowMatL, NowMatR);	
 		}
 		else
 		{
-			KeyFlag = true;
+			isMakeKey = true;
 			return nullptr;		//E‚¦‚éó‘Ô‚È‚çá‹Ê‚ğì‚ç‚È‚¢
 		}
 	}
 	else
 	{
-		KeyFlag = false;
+		isMakeKey = false;
 	}
 	return nullptr;
 }
+
+void PlayerStateIdle::LimitKeepPushShootKey(void)
+{
+	isShootKey = false;		//1“xƒL[‚©‚ç—£‚³‚È‚¢‚Æ‘Å‚Ä‚È‚¢‚æ‚¤‚É‚·‚é
+}
+
+bool PlayerStateIdle::isShootKey = false;
