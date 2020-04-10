@@ -21,7 +21,7 @@ private:
 	void EndScene(void);			//シーンを終了する際1度だけ呼ぶ
 
 	LPDIRECT3DTEXTURE9 logoTex, kyeInstructionTex;
-	D3DXMATRIX logoMat, kyeInstructionMat;
+	D3DXMATRIX logoMat, kyeInstructionMat, waveMatY;
 	const int logoTexX = 832, kyeInstructionX = 426;		//ロゴのx方向のサイズ	xだけ使うから一応xだけ変数にしてみた
 
 	LPDIRECT3DTEXTURE9 switchEffectTex;

@@ -45,7 +45,7 @@ void TitleScene::Render2D(void)
 	lpSprite->Draw(logoTex, &RcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT RcKyeInstruction = { 0, 0, kyeInstructionX, 116 };
-	lpSprite->SetTransform(&kyeInstructionMat);
+	lpSprite->SetTransform(&(kyeInstructionMat * waveMatY));
 	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	GetSceneSwitchEffect.Draw();
@@ -57,6 +57,10 @@ void TitleScene::Render2D(void)
 
 bool TitleScene::Update(void)
 {
+	static float Cnt = 0;
+	D3DXMatrixTranslation(&waveMatY, 0.0f, (float)(sin(Cnt / 50)) * 10, 0.0f);
+	Cnt++;
+
 	if (endSceneState == true)
 	{
 		if (GetSceneSwitchEffect.GetFadeState() == STOP)
