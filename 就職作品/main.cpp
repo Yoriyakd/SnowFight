@@ -44,8 +44,7 @@ LPDIRECTSOUNDBUFFER lpSPrimary;
 //60FPS固定のための処理とりあえずここに書く
 bool FPSLimiter(void)
 {
-	static DWORD NTlmt, BTlmt, NTcnt, BTcnt;
-	static int cntFPS;
+	static DWORD NTlmt, BTlmt;
 
 	//---------------------------------------------------------------------------
 	//60FPS制限処理
@@ -57,15 +56,6 @@ bool FPSLimiter(void)
 	}
 	BTlmt = NTlmt;
 	//---------------------------------------------------------------------------
-
-	NTlmt = timeGetTime();
-	cntFPS++;
-
-	if ((NTcnt - BTcnt) >= 1000)
-	{
-		cntFPS = 0;				//リセット
-		BTcnt = NTcnt;		//基準時間を変更
-	}
 
 	return true;
 }
