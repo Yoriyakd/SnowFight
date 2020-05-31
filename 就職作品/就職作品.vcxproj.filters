@@ -267,6 +267,9 @@
     <ClCompile Include="commonObj\Cursor.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
+    <ClCompile Include="Item\Decoration_Star.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="MenuScene\StageSelectButton.h">
       <Filter>MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Decoration_Star.h">
+      <Filter>Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

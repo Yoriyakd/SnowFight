@@ -5,6 +5,7 @@
 #include"Decoration_RedBall.h"
 #include"Decoration_BlueBall.h"
 #include"Decoration_YellowBall.h"
+#include"Decoration_Star.h"
 
 #define GetDecorationManager DecorationManager::GetInstance() 
 

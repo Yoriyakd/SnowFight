@@ -1,25 +1,25 @@
-#include "Decoration_RedBall.h"
+#include "Decoration_Star.h"
 
-Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
+Decoration_Star::Decoration_Star(const D3DXVECTOR3 * _Pos)
 {
-	mesh = GetResource.GetXFILE(Decoration_RedBall_M);
+	mesh = GetResource.GetXFILE(Decoration_YellowBall_M);
 	pos = *_Pos;
 
 	picUpDistans = 8.0f;
-	decorationID = RED_BALL;
+	decorationID = STAR;
 
 	D3DXMatrixTranslation(&mat, _Pos->x, _Pos->y, _Pos->z);
-	
+
 	moveVec = D3DXVECTOR3(0, 0, 0);
 }
 
-Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValue)
+Decoration_Star::Decoration_Star(const ThrowingInitValue * ThrowingInitValue)
 {
-	mesh = GetResource.GetXFILE(Decoration_RedBall_M);
+	mesh = GetResource.GetXFILE(Decoration_YellowBall_M);
 	pos = ThrowingInitValue->shootPos;
 
 	picUpDistans = 8.0f;
-	decorationID = RED_BALL;
+	decorationID = STAR;
 
 	moveVec = ThrowingInit(ThrowingInitValue, &mat);
 
@@ -29,6 +29,6 @@ Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValu
 	mat = TmpRot * mat;
 }
 
-Decoration_RedBall::~Decoration_RedBall()
+Decoration_Star::~Decoration_Star()
 {
 }

@@ -7,6 +7,5 @@ public:
 	Decoration_YellowBall(const D3DXVECTOR3 *_Pos);
 	Decoration_YellowBall(const ThrowingInitValue *ThrowingInitValue);
 	~Decoration_YellowBall();
-	void Draw();
 private:
 };

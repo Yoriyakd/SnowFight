@@ -1,7 +1,7 @@
 #pragma once
 #include"../main.h"
 
-enum CarryObjectID{RED_BALL, BLUE_BALL, YELLOW_BALL, SNOW_BALL, NUM_ITEM_Dummy};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
+enum CarryObjectID{RED_BALL, BLUE_BALL, YELLOW_BALL, SNOW_BALL, STAR, NUM_ITEM_Dummy};		//デコレーションの種類を判別に使用	最終IDはITEMの種類用のダミー
 
 //------------------------------------------------------------------------
 //デコレーションの基底クラス継承して使う

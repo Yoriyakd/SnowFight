@@ -58,15 +58,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\DX9.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\DX9.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\DX9.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\DX9.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -195,6 +199,7 @@
     <ClCompile Include="Item\DecorationManager.cpp" />
     <ClCompile Include="Item\Decoration_BlueBall.cpp" />
     <ClCompile Include="Item\Decoration_RedBall.cpp" />
+    <ClCompile Include="Item\Decoration_Star.cpp" />
     <ClCompile Include="Item\Decoration_YellowBall.cpp" />
     <ClCompile Include="main.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
@@ -302,6 +307,7 @@
     <ClInclude Include="Item\DecorationManager.h" />
     <ClInclude Include="Item\Decoration_BlueBall.h" />
     <ClInclude Include="Item\Decoration_RedBall.h" />
+    <ClInclude Include="Item\Decoration_Star.h" />
     <ClInclude Include="Item\Decoration_YellowBall.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Map\Bench.h" />

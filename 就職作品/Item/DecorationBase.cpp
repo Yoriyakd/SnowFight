@@ -1,7 +1,7 @@
 #include "DecorationBase.h"
 #include"../GameScene/GameScene.h"
 
-DecorationBase::DecorationBase() : canPicUp(false), isDecorated(false), decorationRadius(0.2)
+DecorationBase::DecorationBase() : canPicUp(false), isDecorated(false), decorationRadius((float)0.2)
 {
 }
 

@@ -32,9 +32,3 @@ Decoration_YellowBall::Decoration_YellowBall(const ThrowingInitValue * ThrowingI
 Decoration_YellowBall::~Decoration_YellowBall()
 {
 }
-
-void Decoration_YellowBall::Draw()
-{
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	DrawMesh(&mesh);
-}

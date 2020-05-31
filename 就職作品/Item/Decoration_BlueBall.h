@@ -6,6 +6,5 @@ public:
 	Decoration_BlueBall(const D3DXVECTOR3 *_Pos);
 	Decoration_BlueBall(const ThrowingInitValue * ThrowingInitValue);
 	~Decoration_BlueBall();
-	void Draw();
 private:
 };
