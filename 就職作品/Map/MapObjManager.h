@@ -1,10 +1,11 @@
 #pragma once
 #include<vector>
+//#include"MapObj.h"
+//#include"Tree.h"
+//#include"Bench.h"
+//#include"XmasTree.h"
+//#include"Bobbin_Red.h"
 #include"MapObj.h"
-#include"Tree.h"
-#include"Bench.h"
-#include"XmasTree.h"
-#include"Bobbin_Red.h"
 
 class MapObjManager {
 public:
@@ -13,13 +14,8 @@ public:
 	MapObjManager();
 	~MapObjManager();
 
-	void SetTree(D3DXVECTOR3 Pos, float Ang);
-	void SetBench(D3DXVECTOR3 Pos, float Ang);
-	void SetBobbin_Red(D3DXVECTOR3 Pos, float Ang);
-	void SetXmasTree(D3DXVECTOR3 Pos);
-
+	void CreatObj(D3DXVECTOR3 Pos, float Ang, MapOBJ_ID ID);
 	D3DXVECTOR3 GetXmasTreePos(void);
 
 	void Draw();
-	void Update();
 };

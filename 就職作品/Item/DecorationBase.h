@@ -28,11 +28,11 @@ public:
 	void SetDecoratedState(bool);					//状態を更新
 	bool GetDecoratedState(void);				//状態を返す
 
-	//デコレーションが特定の状態になった際呼び出す関数
+	//デコレーションが飾られる状態になった際呼び出す関数
 	void DoDecorate(const D3DXVECTOR3 &TreeVec);
 	void PushPos(const D3DXVECTOR3 &PushVec);		//埋まってい分押し出すときに使う
 protected:
-	float picUpDistans;		//拾うことができるようになるまでの距離
+	virtual float GetCanPicUpRange() = 0;		//拾うことができるようになるまでの距離	それぞれの派生に定数で距離を持たせるのは効率の面でいいのだろうか？
 	D3DXVECTOR3 pos;
 	D3DXMATRIX mat;
 	XFILE mesh;
@@ -44,6 +44,8 @@ private:
 	bool isDecorated;		//飾られているか　trueなら飾られていて動かない
 	bool doDecoratFlag;
 	D3DXVECTOR3 memoryPos, globalMoveVec;
+
+	static const D3DXVECTOR3 GROUND_GRIP;
 
 	void Move();
 	void DecorateEffect();

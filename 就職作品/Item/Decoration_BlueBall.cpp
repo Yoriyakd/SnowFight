@@ -1,16 +1,17 @@
 #include "Decoration_BlueBall.h"
 
+const float Decoration_BlueBall::BLUE_PIC_UP_RANGE = 8.0f;
+
 Decoration_BlueBall::Decoration_BlueBall(const D3DXVECTOR3 * _Pos)
 {
 	mesh = GetResource.GetXFILE(Decoration_BlueBall_M);
 	pos = *_Pos;
 
-	picUpDistans = 8.0f;
 	decorationID = BLUE_BALL;
 
 	D3DXMatrixTranslation(&mat, _Pos->x, _Pos->y, _Pos->z);
 
-	moveVec = D3DXVECTOR3(0, 0, 0);
+	moveVec = D3DXVECTOR3(0, 0, 0);		//0‰Šú‰»
 }
 
 Decoration_BlueBall::Decoration_BlueBall(const ThrowingInitValue *ThrowingInitValue)
@@ -19,7 +20,6 @@ Decoration_BlueBall::Decoration_BlueBall(const ThrowingInitValue *ThrowingInitVa
 	mesh = GetResource.GetXFILE(Decoration_BlueBall_M);
 	pos = ThrowingInitValue->shootPos;
 
-	picUpDistans = 8.0f;
 	decorationID = BLUE_BALL;
 
 	moveVec = ThrowingInit(ThrowingInitValue, &mat);
@@ -32,5 +32,10 @@ Decoration_BlueBall::Decoration_BlueBall(const ThrowingInitValue *ThrowingInitVa
 
 Decoration_BlueBall::~Decoration_BlueBall()
 {
+}
+
+float Decoration_BlueBall::GetCanPicUpRange()
+{
+	return BLUE_PIC_UP_RANGE;
 }
 

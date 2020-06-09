@@ -4,7 +4,6 @@ void Cursor::Draw()
 {
 	if (isShow == false)return;
 
-	RECT RcCursor = { 0, 0, 64, 64 };
 	lpSprite->SetTransform(&cursorMat);
 	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }

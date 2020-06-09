@@ -18,4 +18,5 @@ private:
 
 	LPDIRECT3DTEXTURE9 cursorTex;
 	D3DXMATRIX cursorMat;
+	const RECT RcCursor = { 0, 0, 64, 64 };
 };

@@ -20,4 +20,9 @@ private:
 	XFILE mesh;
 	D3DXMATRIX startRotMat, mat, rotMat;
 	D3DXVECTOR3 rotAxis, moveVec;
+
+	const static D3DXVECTOR3 DEFAULT_HIT_FLYING_HIGHT;
+	const static float HEAD_HIT_FLYING_HIGHT;
+	const static float HAT_GRAVITY;
+	const static int ROT_SPEED;
 };

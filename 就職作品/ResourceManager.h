@@ -237,7 +237,7 @@ private:
 		//Effect
 		{SnowLocus_Tex,           TexData{"FallingSnow.png", 250, 250, NULL}},
 		{SnowFrag_Tex,            TexData{"SnowFrag.png", 1024, 1024, NULL}},
-		{SnowSmoke_Tex,           TexData{"Smoke.png", 250, 250, NULL}},			//もっと煙のテクスチャに変える
+		{SnowSmoke_Tex,           TexData{"Smoke.png", 250, 250, NULL}},
 		{SceneSwitch_Tex,         TexData{"SceneSwitchEffect.png", 32, 32, NULL}},
 		{HitEffect_Tex,           TexData{"HitEffect.png", 500, 500, NULL}},
 		{BackHitEffect_Tex,       TexData{"BackHitEffect.png", 1280, 720, NULL}},

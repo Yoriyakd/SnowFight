@@ -99,17 +99,8 @@
     <ClCompile Include="Map\MapObj.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\Tree.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapObjManager.cpp">
       <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\Bench.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy\Kamakura.cpp">
-      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp">
       <Filter>Player</Filter>
@@ -119,9 +110,6 @@
     </ClCompile>
     <ClCompile Include="GameScene\EventManager.cpp">
       <Filter>GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\XmasTree.cpp">
-      <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Item\DecorationBase.cpp">
       <Filter>Item</Filter>
@@ -154,9 +142,6 @@
       <Filter>commonObj</Filter>
     </ClCompile>
     <ClCompile Include="Map\Stage1Enclosure.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\Bobbin_Red.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="UI\TimeUI.cpp">
@@ -267,8 +252,8 @@
     <ClCompile Include="commonObj\Cursor.cpp">
       <Filter>commonObj</Filter>
     </ClCompile>
-    <ClCompile Include="Item\Decoration_Star.cpp">
-      <Filter>Item</Filter>
+    <ClCompile Include="Constants.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,17 +299,8 @@
     <ClInclude Include="Map\MapObj.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\Tree.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapObjManager.h">
       <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Bench.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\Kamakura.h">
-      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerCamera.h">
       <Filter>Player</Filter>
@@ -334,9 +310,6 @@
     </ClInclude>
     <ClInclude Include="GameScene\EventManager.h">
       <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\XmasTree.h">
-      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Item\DecorationBase.h">
       <Filter>Item</Filter>
@@ -369,9 +342,6 @@
       <Filter>commonObj</Filter>
     </ClInclude>
     <ClInclude Include="Map\Stage1Enclosure.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Bobbin_Red.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="UI\TimeUI.h">
@@ -491,8 +461,8 @@
     <ClInclude Include="MenuScene\StageSelectButton.h">
       <Filter>MenuScene</Filter>
     </ClInclude>
-    <ClInclude Include="Item\Decoration_Star.h">
-      <Filter>Item</Filter>
+    <ClInclude Include="Constants.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
