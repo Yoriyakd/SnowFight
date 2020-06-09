@@ -1,30 +1,20 @@
 #include "BackToTitle.h"
 #include"../TitleScene/TitleScene.h"
 
-const D3DXVECTOR3 BackToTitle::DISPLAY_POS = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR2 BackToTitle::YESBUTTON_POS = D3DXVECTOR2(440.0f, 300.0f);
-const D3DXVECTOR2 BackToTitle::NOBUTTON_POS = D3DXVECTOR2(740.0f, 300.0f);
-const D3DXVECTOR2 BackToTitle::BUTTON_HIT_AREA = D3DXVECTOR2(132.0f, 132.0f);
-const RECT BackToTitle::BACK_RECT = RECT{ 0, 0, 1280, 720 };
-
 BackToTitle::BackToTitle() : nowState(false)
 {
 	tex = GetResource.GetTexture(BackToTitle_Tex);
-	D3DXMatrixTranslation(&mat, DISPLAY_POS.x, DISPLAY_POS.y, DISPLAY_POS.z);
+	D3DXMatrixTranslation(&mat, 0, 0, 0);
 
 	YesButton = new BackToTitleButton();
-
 	ButtonData TmpData;
-	TmpData.Pos = YESBUTTON_POS;
-	TmpData.BoxSize = BUTTON_HIT_AREA;
-
+	TmpData.Pos = D3DXVECTOR2(440, 300);
+	TmpData.BoxSize = D3DXVECTOR2(132, 132);
 	YesButton->Initialize(TmpData, GetResource.GetTexture(YesButton_Tex));		//CSVから読み込むように変更する☆
 	
 	NoButton = new BackToTitleButton();
-
-	TmpData.Pos = NOBUTTON_POS;
-	
-
+	TmpData.Pos = D3DXVECTOR2(740, 300);
+	TmpData.BoxSize = D3DXVECTOR2(132, 132);
 	NoButton->Initialize(TmpData, GetResource.GetTexture(NoButton_Tex));
 }
 
@@ -36,8 +26,9 @@ void BackToTitle::Draw()
 {
 	if (nowState == true)		//タイトルバック確認画面が呼ばれている間のみ描画
 	{
+		RECT RectTmp = { 0, 0, 1280, 720 };
 		lpSprite->SetTransform(&mat);
-		lpSprite->Draw(tex, &BACK_RECT, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		lpSprite->Draw(tex, &RectTmp, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		YesButton->Draw();
 		NoButton->Draw();

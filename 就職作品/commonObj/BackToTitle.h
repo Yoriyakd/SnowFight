@@ -25,19 +25,12 @@ public:
 private:
 	LPDIRECT3DTEXTURE9 tex;
 	D3DXMATRIX mat;
-	static const D3DXVECTOR3 DISPLAY_POS;
-	const static RECT BACK_RECT;
 
 	bool nowState;			//åƒÇ—èoÇ≥ÇÍÇƒÇ¢ÇÈÇ©Çï\Ç∑
 	bool isESCKey;
 
 	BackToTitleButton *YesButton;
-	static const D3DXVECTOR2 YESBUTTON_POS;
-
 	BackToTitleButton *NoButton;
-	static const D3DXVECTOR2 NOBUTTON_POS;
-
-	static const D3DXVECTOR2 BUTTON_HIT_AREA;
 	BackToTitle();
 	~BackToTitle();
 };

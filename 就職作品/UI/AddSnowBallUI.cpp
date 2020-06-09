@@ -1,8 +1,4 @@
 #include "AddSnowBallUI.h"
-const RECT AddSnowBallUI::Rc = { 0, 0, 158, 61 };
-const D3DXVECTOR3 AddSnowBallUI::DISPLAY_POS = D3DXVECTOR3(700, 450, 0);
-const int AddSnowBallUI::FADE_OUT_SPEED = 10;
-const float AddSnowBallUI::MOVE_SPPE_Y = -2;
 
 AddSnowBallUI::AddSnowBallUI()
 {
@@ -17,16 +13,17 @@ void AddSnowBallUI::AddSnowBall()
 {
 	D3DXMATRIX TmpMat;
 
-	D3DXMatrixTranslation(&TmpMat, DISPLAY_POS.x, DISPLAY_POS.y, DISPLAY_POS.z);
-	AddUI.push_back(new AddSnowBallData{TmpMat, D3DCOLLARMaxARGBValue::a});
+	D3DXMatrixTranslation(&TmpMat, 700, 450, 0);
+	AddUI.push_back(new AddSnowBallData{TmpMat, 255});
 }
 
 void AddSnowBallUI::Draw()
 {
+	RECT Rc = { 0, 0, 158, 61 };
 	for (unsigned int i = 0; i < AddUI.size(); i++)
 	{
 		lpSprite->SetTransform(&AddUI[i]->mat);
-		lpSprite->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(AddUI[i]->alpha, D3DCOLLARMaxARGBValue::r, D3DCOLLARMaxARGBValue::g, D3DCOLLARMaxARGBValue::b));
+		lpSprite->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(AddUI[i]->alpha, 255, 255, 255));
 	}
 }
 
@@ -34,11 +31,11 @@ void AddSnowBallUI::Update()
 {
 	for (unsigned int i = 0; i < AddUI.size(); i++)
 	{
-		AddUI[i]->alpha -= FADE_OUT_SPEED;
+		AddUI[i]->alpha -= 10;
 
 		D3DXMATRIX TmpMat;
 
-		D3DXMatrixTranslation(&TmpMat, 0, MOVE_SPPE_Y, 0);
+		D3DXMatrixTranslation(&TmpMat, 0, -2, 0);
 		AddUI[i]->mat *= TmpMat;
 
 		if (AddUI[i]->alpha < 0)

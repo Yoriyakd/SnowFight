@@ -190,16 +190,3 @@ void LoadWAVE3D(LPDIRECTSOUNDBUFFER8 &pDSData, LPDIRECTSOUND3DBUFFER8 &pDSData3D
 	//3Dのセカンダリバッファを作る
 	pDSData->QueryInterface(IID_IDirectSound3DBuffer8, (LPVOID*)&pDSData3D);
 }
-
-bool IsOverProbabilityValue(const int &Probability)
-{
-	const int Percentage = 100;
-	if (rand() % Percentage < Probability)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}

@@ -1,7 +1,6 @@
 #pragma once
 #include<stdlib.h>
 #include"../SingletonBase.h"
-#include"../main.h"
 struct SpawnerData{
 	int SpawnProbability;			//’Š‘IŠm—§(0`100)
 	int MaxSpawnAtOnceCnt;			//1“x‚É•¦‚­Å‘å”

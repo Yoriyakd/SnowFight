@@ -155,7 +155,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Effect\EffectManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -183,6 +182,9 @@
     <ClCompile Include="Enemy\EnemyState\PlayerSearchState.cpp" />
     <ClCompile Include="Enemy\EnemyState\ShootSnowBall.cpp" />
     <ClCompile Include="Enemy\EnemyState\TurnToPlayer.cpp" />
+    <ClCompile Include="Enemy\Kamakura.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="GameScene\EventManager.cpp" />
     <ClCompile Include="GameScene\GameObjectSpawner.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp">
@@ -197,11 +199,16 @@
     <ClCompile Include="Item\DecorationManager.cpp" />
     <ClCompile Include="Item\Decoration_BlueBall.cpp" />
     <ClCompile Include="Item\Decoration_RedBall.cpp" />
+    <ClCompile Include="Item\Decoration_Star.cpp" />
     <ClCompile Include="Item\Decoration_YellowBall.cpp" />
     <ClCompile Include="main.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\Bench.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <ClCompile Include="Map\Bobbin_Red.cpp" />
     <ClCompile Include="Map\Ground.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
@@ -214,10 +221,14 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Map\Stage1Enclosure.cpp" />
+    <ClCompile Include="Map\Tree.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="Map\MapObjManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Map\XmasTree.cpp" />
     <ClCompile Include="MenuScene\MenuScene.cpp" />
     <ClCompile Include="MenuScene\StageSelectButton.cpp" />
     <ClCompile Include="Player\CarryItem.cpp" />
@@ -267,7 +278,6 @@
     <ClInclude Include="commonObj\SkyBox.h" />
     <ClInclude Include="commonObj\SnowBall.h" />
     <ClInclude Include="commonObj\SnowBallManager.h" />
-    <ClInclude Include="Constants.h" />
     <ClInclude Include="Effect\EffectManager.h" />
     <ClInclude Include="Effect\EnemyAnimeManager.h" />
     <ClInclude Include="Effect\EnemyDeathAnime.h" />
@@ -284,6 +294,7 @@
     <ClInclude Include="Enemy\EnemyState\PlayerSearchState.h" />
     <ClInclude Include="Enemy\EnemyState\ShootSnowBall.h" />
     <ClInclude Include="Enemy\EnemyState\TurnToPlayer.h" />
+    <ClInclude Include="Enemy\Kamakura.h" />
     <ClInclude Include="GameScene\AddUpdateBase.h" />
     <ClInclude Include="GameScene\EventManager.h" />
     <ClInclude Include="GameScene\GameObjectSpawner.h" />
@@ -296,13 +307,18 @@
     <ClInclude Include="Item\DecorationManager.h" />
     <ClInclude Include="Item\Decoration_BlueBall.h" />
     <ClInclude Include="Item\Decoration_RedBall.h" />
+    <ClInclude Include="Item\Decoration_Star.h" />
     <ClInclude Include="Item\Decoration_YellowBall.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Map\Bench.h" />
+    <ClInclude Include="Map\Bobbin_Red.h" />
     <ClInclude Include="Map\Ground.h" />
     <ClInclude Include="Map\LoadStageData.h" />
     <ClInclude Include="Map\MapObj.h" />
     <ClInclude Include="Map\Stage1Enclosure.h" />
+    <ClInclude Include="Map\Tree.h" />
     <ClInclude Include="Map\MapObjManager.h" />
+    <ClInclude Include="Map\XmasTree.h" />
     <ClInclude Include="MenuScene\MenuScene.h" />
     <ClInclude Include="MenuScene\StageSelectButton.h" />
     <ClInclude Include="Player\CarryItem.h" />

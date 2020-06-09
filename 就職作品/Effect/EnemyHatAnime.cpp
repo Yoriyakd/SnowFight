@@ -1,10 +1,5 @@
 #include "EnemyHatAnime.h"
 
-const D3DXVECTOR3 EnemyHatAnime::DEFAULT_HIT_FLYING_HIGHT = D3DXVECTOR3(0.0f, 0.8f, 0.0f);
-const float EnemyHatAnime::HEAD_HIT_FLYING_HIGHT = 1.5f;
-const float EnemyHatAnime::HAT_GRAVITY = -0.1f;
-const int EnemyHatAnime::ROT_SPEED = 15;
-
 EnemyHatAnime::EnemyHatAnime(Enemy &Enemy, SnowBall &SnowBall, bool HeadShot)
 {
 	//初期化
@@ -29,11 +24,11 @@ EnemyHatAnime::EnemyHatAnime(Enemy &Enemy, SnowBall &SnowBall, bool HeadShot)
 
 	D3DXVec3TransformNormal(&rotAxis, &rotAxis, &InvMat);		//回転軸を対象のローカル座標に変換する
 
-	moveVec = DEFAULT_HIT_FLYING_HIGHT;
+	moveVec = D3DXVECTOR3(0.0f, 0.8f, 0.0f);
 
 	if (HeadShot == true)
 	{
-		moveVec.y = HEAD_HIT_FLYING_HIGHT;
+		moveVec.y = 1.5f;
 	}
 
 	moveVec += SnowBall.GetMoveVec();
@@ -49,7 +44,7 @@ void EnemyHatAnime::Draw()
 
 bool EnemyHatAnime::Update()
 {
-	D3DXMatrixRotationAxis(&rotMat, &rotAxis, D3DXToRadian(ROT_SPEED));
+	D3DXMatrixRotationAxis(&rotMat, &rotAxis, D3DXToRadian(15));
 
 	
 	//mat = rotMat * startRotMat;		//最初の姿勢に回転行列を足していく
@@ -59,12 +54,12 @@ bool EnemyHatAnime::Update()
 
 	D3DXMATRIX TmpTransMat;
 
-	moveVec.y += HAT_GRAVITY;
+	moveVec.y -= 0.1f;
 
 	D3DXMatrixTranslation(&TmpTransMat, moveVec.x, moveVec.y, moveVec.z);
 	mat = mat * TmpTransMat;
 
-	if (mat._42 < GROUND_HIGHT)
+	if (mat._42 < 0.0f)
 	{
 		return false;
 	}

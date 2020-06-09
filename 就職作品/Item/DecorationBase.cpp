@@ -1,8 +1,5 @@
 #include "DecorationBase.h"
 #include"../GameScene/GameScene.h"
-#include"../Constants.h"
-
-const D3DXVECTOR3 DecorationBase::GROUND_GRIP = D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
 
 DecorationBase::DecorationBase() : canPicUp(false), isDecorated(false), decorationRadius((float)0.2)
 {
@@ -31,7 +28,7 @@ bool DecorationBase::CheckForCanPicUp(const D3DXVECTOR3 * _Pos)
 	float TargetLength;
 	TargetLength = D3DXVec3Length(&TargetVec);	//2点の距離を求める	
 
-	if (TargetLength < GetCanPicUpRange())		//2点の距離が拾うことができる距離より小さかったら
+	if (TargetLength < picUpDistans)		//2点の距離が拾うことができる距離より小さかったら
 	{
 		canPicUp = true;
 		return true;
@@ -140,21 +137,21 @@ void DecorationBase::PushPos(const D3DXVECTOR3 &PushVec)
 
 void DecorationBase::Move()
 {
-	D3DXMATRIX MoveTmpMat;
+	D3DXMATRIX TmpMat;
 	moveVec.y += SnowBallGravity;		//地面に落ちていく
 
-	D3DXMatrixTranslation(&MoveTmpMat, moveVec.x, moveVec.y, moveVec.z);
+	D3DXMatrixTranslation(&TmpMat, moveVec.x, moveVec.y, moveVec.z);
 
-	mat = MoveTmpMat * mat;		//行列更新ローカルな移動をさせる
+	mat = TmpMat * mat;		//行列更新
 
-	if (mat._42 <= GROUND_HIGHT)		//地面に埋もれない
+	if (mat._42 <= 0.0f)		//地面に埋もれない
 	{
-		mat._42 = GROUND_HIGHT;
+		mat._42 = 0.0f;
 
 		//地面につくと少し滑って止まる
-		moveVec += GROUND_GRIP;
+		moveVec += D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
 
-		if (moveVec.x <= 0.0f)	//0に固定
+		if (moveVec.x <= 0.0f)
 		{
 			moveVec.x = 0.0f;
 		}

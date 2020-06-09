@@ -2,7 +2,6 @@
 #include"../ResourceManager.h"
 #include"../SingletonBase.h"
 #include<vector>
-#include"../Constants.h"
 
 struct AddSnowBallData {
 	D3DXMATRIX mat;
@@ -19,8 +18,4 @@ public:
 private:
 	std::vector<AddSnowBallData*> AddUI;
 	LPDIRECT3DTEXTURE9 tex;
-	const static RECT Rc;
-	const static D3DXVECTOR3 DISPLAY_POS;
-	const static int FADE_OUT_SPEED;
-	const static float MOVE_SPPE_Y;
 };
