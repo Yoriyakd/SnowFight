@@ -45,12 +45,13 @@ LPDIRECTSOUNDBUFFER lpSPrimary;
 bool FPSLimiter(void)
 {
 	static DWORD NTlmt, BTlmt;
+	static const float MIN = 1000.0f;
 
 	//---------------------------------------------------------------------------
 	//60FPS制限処理
 	NTlmt = timeGetTime();
 
-	if (NTlmt - BTlmt <= 1000.0f / GameFPS)			//1 / 60秒　経っていなかったらリターンでとばすことで60FPS上限をつける
+	if (NTlmt - BTlmt <= MIN / GameFPS)			//1000 / 60ms経っていなかったらリターンでとばすことで60FPS上限をつける
 	{
 		return false;
 	}

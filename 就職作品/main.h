@@ -73,8 +73,6 @@ struct StageBorder
 	float Right;
 };
 
-
-
 enum CollisionDetectionType{Ray, Circles};
 
 void DrawMesh(XFILE *XFile);
@@ -94,3 +92,6 @@ void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMAT
 
 //視点行列を渡してビルボード行列を作成
 void MakeBillBoardMat(D3DXMATRIX *OutMat, const D3DXMATRIX *_mView);
+
+//引数で渡された百分率の値が今回trueになるかを返す
+bool IsOverProbabilityValue(const int& Probability);

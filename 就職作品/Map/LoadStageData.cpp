@@ -55,8 +55,8 @@ void LoadStageData::SetStageMap(MapObjManager &MapObjManager, GameNormManager &G
 	GameNormManager.SetNorm(NormCnt);
 	GameObjective.SetNorm(NormCnt);
 
-	int BenchCnt, TreeCnt, XmasTreeCnt;
-
+	int BenchCnt, TreeCnt, BobbinCnt, XmasTreeCnt;
+	//IDも外部から取得し、順番がバラバラでも読めるように変える
 	fscanf_s(fp, "Bench:%d\n", &BenchCnt);
 
 	for (int i = 0; i <= BenchCnt; i++)
@@ -64,7 +64,7 @@ void LoadStageData::SetStageMap(MapObjManager &MapObjManager, GameNormManager &G
 		D3DXVECTOR3 TmpPos;
 		float TmpAng;
 		fscanf_s(fp, "%f,%f,%f:%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z, &TmpAng);
-		MapObjManager.SetBench(TmpPos, TmpAng);
+		MapObjManager.CreatObj(TmpPos, TmpAng, BENCH);
 	}
 
 	fscanf_s(fp, "Tree:%d\n", &TreeCnt);
@@ -74,17 +74,17 @@ void LoadStageData::SetStageMap(MapObjManager &MapObjManager, GameNormManager &G
 		D3DXVECTOR3 TmpPos;
 		float TmpAng;
 		fscanf_s(fp, "%f,%f,%f:%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z, &TmpAng);
-		MapObjManager.SetTree(TmpPos, TmpAng);
+		MapObjManager.CreatObj(TmpPos, TmpAng, TREE);
 	}
 
-	fscanf_s(fp, "Bobbin_Red:%d\n", &TreeCnt);
+	fscanf_s(fp, "Bobbin_Red:%d\n", &BobbinCnt);
 
-	for (int i = 0; i <= TreeCnt; i++)
+	for (int i = 0; i <= BobbinCnt; i++)
 	{
 		D3DXVECTOR3 TmpPos;
 		float TmpAng;
 		fscanf_s(fp, "%f,%f,%f:%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z, &TmpAng);
-		MapObjManager.SetBobbin_Red(TmpPos, TmpAng);
+		MapObjManager.CreatObj(TmpPos, TmpAng, BOBBIN);
 	}
 
 	fscanf_s(fp, "XmasTree:%d\n", &XmasTreeCnt);
@@ -93,7 +93,7 @@ void LoadStageData::SetStageMap(MapObjManager &MapObjManager, GameNormManager &G
 	{
 		D3DXVECTOR3 TmpPos;
 		fscanf_s(fp, "%f,%f,%f\n", &TmpPos.x, &TmpPos.y, &TmpPos.z);
-		MapObjManager.SetXmasTree(TmpPos);
+		MapObjManager.CreatObj(TmpPos, 0, X_MAS_TREE);
 	}
 
 	SpawnerData TmpData;

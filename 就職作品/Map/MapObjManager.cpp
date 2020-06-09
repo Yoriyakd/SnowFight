@@ -13,25 +13,10 @@ MapObjManager::~MapObjManager()
 	mapObj.clear();
 }
 
-
-void MapObjManager::SetTree(D3DXVECTOR3 Pos, float Ang)
+void MapObjManager::CreatObj(D3DXVECTOR3 Pos, float Ang, MapOBJ_ID ID)
 {
-	mapObj.push_back(new Tree(Pos, Ang));
-}
-
-void MapObjManager::SetBench(D3DXVECTOR3 Pos, float Ang)
-{
-	mapObj.push_back(new Bench(Pos, Ang));
-}
-
-void MapObjManager::SetBobbin_Red(D3DXVECTOR3 Pos, float Ang)
-{
-	mapObj.push_back(new Bobbin_Red(Pos, Ang));
-}
-
-void MapObjManager::SetXmasTree(D3DXVECTOR3 Pos)
-{
-	mapObj.push_back(new XmasTree(Pos));
+	mapObj.push_back(new MapObj());
+	mapObj.back()->CreatObj(Pos, Ang, ID);
 }
 
 D3DXVECTOR3 MapObjManager::GetXmasTreePos(void)
@@ -54,6 +39,3 @@ void MapObjManager::Draw()
 	}
 }
 
-void MapObjManager::Update()
-{
-}

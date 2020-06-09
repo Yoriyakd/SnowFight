@@ -21,7 +21,7 @@ int GameObjectSpawner::Updata(void)
 
 	if (spawnerData.NowFrameCnt % spawnerData.LotteryIntervals_f == 0)			//’Š‘IŠÔŠu–ˆ‚ÉÀs
 	{
-		if (rand() % 100 < spawnerData.SpawnProbability)
+		if (IsOverProbabilityValue(spawnerData.SpawnProbability))
 		{
 			int SpawnCntTmp;
 

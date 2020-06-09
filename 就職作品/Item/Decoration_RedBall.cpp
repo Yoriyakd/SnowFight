@@ -1,16 +1,17 @@
 #include "Decoration_RedBall.h"
 
+const float Decoration_RedBall::RED_PIC_UP_RANGE = 8.0f;
+
 Decoration_RedBall::Decoration_RedBall(const D3DXVECTOR3 * _Pos)
 {
 	mesh = GetResource.GetXFILE(Decoration_RedBall_M);
 	pos = *_Pos;
 
-	picUpDistans = 8.0f;
 	decorationID = RED_BALL;
 
 	D3DXMatrixTranslation(&mat, _Pos->x, _Pos->y, _Pos->z);
 	
-	moveVec = D3DXVECTOR3(0, 0, 0);
+	moveVec = D3DXVECTOR3(0, 0, 0);		//0‰Šú‰»
 }
 
 Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValue)
@@ -18,7 +19,6 @@ Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValu
 	mesh = GetResource.GetXFILE(Decoration_RedBall_M);
 	pos = ThrowingInitValue->shootPos;
 
-	picUpDistans = 8.0f;
 	decorationID = RED_BALL;
 
 	moveVec = ThrowingInit(ThrowingInitValue, &mat);
@@ -31,4 +31,9 @@ Decoration_RedBall::Decoration_RedBall(const ThrowingInitValue *ThrowingInitValu
 
 Decoration_RedBall::~Decoration_RedBall()
 {
+}
+
+float Decoration_RedBall::GetCanPicUpRange()
+{
+	return RED_PIC_UP_RANGE;
 }
