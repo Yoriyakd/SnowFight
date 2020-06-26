@@ -6,11 +6,10 @@
 EnemyStateBase * PlayerSearchState::Action(Enemy &Enemy)
 {
 	float Length;
-	const float SensingLength = 60.0f;
 
 	Length = D3DXVec3Length(&Enemy.GetPlayerVec());
 
-	if (Length < SensingLength)
+	if (Length < Enemy.GetSensingLength())
 	{
 		return new EngagingMode();
 	}

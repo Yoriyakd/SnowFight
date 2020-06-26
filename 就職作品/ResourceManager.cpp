@@ -175,6 +175,10 @@ ResourceManager::ResourceManager()
 
 }
 
+//---------------------------------------------------------------------
+//ここから学校で配布されたソースコードです
+//---------------------------------------------------------------------
+
 void ResourceManager::LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3DCOLOR Color)
 {
 	if (W == 0)W = D3DX_DEFAULT;
@@ -225,3 +229,7 @@ void ResourceManager::ReleaseMesh(struct XFILE *XFile)
 		XFile->lpMesh = NULL;
 	}
 }
+
+//---------------------------------------------------------------------
+//ここまで学校で配布されたソースコードです
+//---------------------------------------------------------------------

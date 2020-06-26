@@ -33,7 +33,6 @@ EnemyStateBase *EngagingMode::Action(Enemy &Enemy)
 	}
 
 	float Length;
-	const float SensingLength = 40.0f;
 
 	Length = D3DXVec3Length(&Enemy.GetPlayerVec());
 

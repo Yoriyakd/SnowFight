@@ -1,11 +1,18 @@
 #include "Enemy.h"
 #include"EnemyState/EngagingMode.h"
 
+const int Enemy::DEFAULT_HP = 3;
+const float Enemy::HAT_RADIUS = 1.0f;
+const float Enemy::HAT_HIGHT = 2.0f;
+const float Enemy::SPHERE_RADIUS_HEAD = 1.3f;
+const float Enemy::SPHER_RADIUS_BODY = 2.0f;
+const float Enemy::SENSING_LENGTH = 60.0f;
+
 //=====================================
 //publicÉÅÉ\ÉbÉh
 //=====================================
 
-Enemy::Enemy(D3DXVECTOR3 Pos) : jumpState(false), nowState(new PlayerSearchState())
+Enemy::Enemy(D3DXVECTOR3 Pos) : nowState(new PlayerSearchState())
 {
 	bodyMesh = GetResource.GetXFILE(EnemyBody_M);
 	D3DXMatrixTranslation(&transMat, Pos.x, Pos.y, Pos.z);
@@ -27,7 +34,7 @@ Enemy::Enemy(D3DXVECTOR3 Pos) : jumpState(false), nowState(new PlayerSearchState
 
 	hatMat = hatRotMat * hatOffsetMat * mat;
 
-	HP = 3;
+	nowHP = DEFAULT_HP;
 }
 
 Enemy::~Enemy()
@@ -48,7 +55,6 @@ bool Enemy::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 	if (mat._42 < 0.0f)
 	{
 		mat._42 = 0.0f;
-		jumpState = false;
 		moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
@@ -98,18 +104,19 @@ void Enemy::GetCollisionSphere(CollisionSphere * CollisionSphereA, CollisionSphe
 	
 	CollisionSphereA->pos = D3DXVECTOR3(mat._41, mat._42 + 2.0f, mat._43);
 	CollisionSphereB->pos = D3DXVECTOR3(mat._41, mat._42 + 4.7f, mat._43);
-	CollisionSphereA->radius = SphereRadiusHead;
-	CollisionSphereB->radius = SphereRadiusBody;
+	CollisionSphereA->radius = SPHERE_RADIUS_HEAD;
+	CollisionSphereB->radius = SPHER_RADIUS_BODY;
 }
 
 float Enemy::GetRadisu(void)
 {
-	return SphereRadiusBody;
+	return SPHER_RADIUS_BODY;
 }
 
-bool Enemy::GetJumpState()
+bool Enemy::IsJump()
 {
-	return jumpState;
+	if (mat._42 > 0.0f){ return true;}
+	return false;
 }
 
 D3DXVECTOR3 Enemy::GetPlayerVec()
@@ -189,12 +196,17 @@ D3DXMATRIX Enemy::GetHatMat(void)
 
 float Enemy::GetHatRadius(void)
 {
-	return hatRadius;
+	return HAT_RADIUS;
 }
 
 float Enemy::GetHatHight(void)
 {
-	return hatHight;
+	return HAT_HIGHT;
+}
+
+float Enemy::GetSensingLength(void)
+{
+	return SENSING_LENGTH;
 }
 
 float Enemy::CalculateEnemyToPlayerAng()
@@ -256,7 +268,7 @@ float Enemy::CalculateEnemyToPlayerAng()
 
 void Enemy::Spin(float AtOneceAng)
 {
-	if (jumpState == false)
+	if (IsJump() == false)
 	{
 		Jump();
 	}
@@ -269,32 +281,29 @@ void Enemy::Spin(float AtOneceAng)
 
 void Enemy::Jump(void)
 {
-	if (jumpState == true)return;
+	if (IsJump())return;
 	D3DXVECTOR3 JumpVec(0.0f, 0.05f, 0.0f);
 	D3DXMATRIX TmpMat;
 
 	moveVec = JumpVec;
-	jumpState = true;
 }
 
 void Enemy::FrontJump(void)
 {
-	if (jumpState == true)return;
+	if (IsJump())return;
 	D3DXVECTOR3 JumpVec(0.0f, 0.1f, 0.1f);
 	D3DXMATRIX TmpMat;
 
 	moveVec = JumpVec;
-	jumpState = true;
 }
 
 void Enemy::BackJump(void)
 {
-	if (jumpState == true)return;
+	if (IsJump())return;
 	D3DXVECTOR3 JumpVec(0.0f, 0.05f, -0.1f);
 	D3DXMATRIX TmpMat;
 
 	moveVec = JumpVec;
-	jumpState = true;
 }
 
 void Enemy::ShootSnowBall()
@@ -338,8 +347,8 @@ void Enemy::CheckOverlapEnemies(const D3DXVECTOR3 *TargetPos)
 bool Enemy::TakeDamage(int Damage)
 {
 	nowState = new EngagingMode();
-	HP -= Damage;
-	if (HP <= 0)
+	nowHP -= Damage;
+	if (nowHP <= 0)
 	{
 		return false;
 	}

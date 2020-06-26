@@ -81,7 +81,7 @@ LRESULT APIENTRY WndFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 }
 
-
+//DirectX,Windowの作成は学校配布コードです
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	LPSTR lpszCmdParam, int nCmdshow)

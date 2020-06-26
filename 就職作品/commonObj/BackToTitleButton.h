@@ -8,4 +8,5 @@ public:
 private:
 	D3DXMATRIX mat;
 	LPDIRECT3DTEXTURE9 tex;
+	const static RECT TEX_RECT;
 };

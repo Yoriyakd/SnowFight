@@ -4,7 +4,7 @@
 
 EnemyStateBase* ShootSnowBall::Action(Enemy& Enemy)
 {
-	if (Enemy.GetJumpState() == false)		//ジャンプ中は撃たない
+	if (Enemy.IsJump() == false)		//ジャンプ中は撃たない
 	{
 		//振りかぶり
 		if (!WindUp(Enemy))return nullptr;		//終了まで行う
@@ -16,7 +16,7 @@ EnemyStateBase* ShootSnowBall::Action(Enemy& Enemy)
 
 bool ShootSnowBall::WindUp(Enemy& Enemy)
 {
-
+	//ここで雪だるまが傾く動作追加
 	return true;		//動きが終了するとtrueを返す
 	return false;
 }

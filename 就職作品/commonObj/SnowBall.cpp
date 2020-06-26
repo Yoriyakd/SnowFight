@@ -1,6 +1,9 @@
 #include "SnowBall.h"
 #include"../GameScene/GameScene.h"
 
+const float SnowBall::SPHER_RADIUS = 0.4f;
+const int SnowBall::DELETE_TIME = 10;
+
 //発射位置、発射角度、発射方向、発射パワー(パワー 0~100)
 SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 {
@@ -9,7 +12,7 @@ SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(ThrowingInitValue.YAxisAng));		//発射元の角度から行列作成
 	mat = rotMat * mat;
 
-	deleteTime = 10 * GameFPS;
+	nowDeleteTime = DELETE_TIME * GameFPS;
 	id = _ID;
 }
 
@@ -19,7 +22,7 @@ SnowBall::~SnowBall()
 
 bool SnowBall::Update(void)
 {
-	if (deleteTime-- < 0)			//5秒経過で消滅
+	if (nowDeleteTime-- < 0)			//5秒経過で消滅
 	{
 		return false;
 	}
@@ -77,10 +80,10 @@ ID SnowBall::GetID()
 void SnowBall::GetCollisionSphere(CollisionSphere * CollisionSphere)
 {
 	CollisionSphere->pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-	CollisionSphere->radius = SphereRadius;
+	CollisionSphere->radius = SPHER_RADIUS;
 }
 
 float SnowBall::GetSphereRadius(void)
 {
-	return SphereRadius;
+	return SPHER_RADIUS;
 }

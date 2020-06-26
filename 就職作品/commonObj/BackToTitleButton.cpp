@@ -1,10 +1,11 @@
 #include "BackToTitleButton.h"
 
+const RECT BackToTitleButton::TEX_RECT = RECT{ 0, 0, 132, 132 };
+
 void BackToTitleButton::Draw()
 {
-	RECT RECT = { 0, 0, 132, 132 };
 	lpSprite->SetTransform(&mat);
-	lpSprite->Draw(tex, &RECT, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	lpSprite->Draw(tex, &TEX_RECT, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void BackToTitleButton::Initialize(ButtonData& _ButtonData, LPDIRECT3DTEXTURE9 _Tex)

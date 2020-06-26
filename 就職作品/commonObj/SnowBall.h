@@ -4,13 +4,6 @@
 #include"../ResourceManager.h"
 #include"../Effect/EffectManager.h"
 class SnowBall {
-private:
-	XFILE mesh;
-	D3DXMATRIX mat, rotMat, transMat;
-	D3DXVECTOR3 moveVec, memoryPos, globalMoveVec;
-	int deleteTime;
-	ID id;
-	const float SphereRadius = 0.4f;				//当たり判定に使う球の半径
 public:
 	SnowBall(ThrowingInitValue, ID);			//発射位置、発射角度、発射方向、発射パワー
 	~SnowBall();
@@ -22,4 +15,13 @@ public:
 	ID GetID();
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 	float GetSphereRadius(void);
+
+private:
+	XFILE mesh;
+	D3DXMATRIX mat, rotMat, transMat;
+	D3DXVECTOR3 moveVec, memoryPos, globalMoveVec;
+	const static int DELETE_TIME;
+	int nowDeleteTime;
+	ID id;
+	const static float SPHER_RADIUS;				//当たり判定に使う球の半径
 };
