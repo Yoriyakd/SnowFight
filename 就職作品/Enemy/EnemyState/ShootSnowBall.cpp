@@ -8,13 +8,13 @@ ShootSnowBall::ShootSnowBall()
 {
 	//振りかぶりアニメーションの終わりの行列を作成（毎回初期化してるの非効率何か考えないと）
 	D3DXMATRIX TmpMat;
-	D3DXMatrixRotationZ(&TmpMat, D3DXToRadian(45));
+	D3DXMatrixRotationZ(&TmpMat, D3DXToRadian(45));		//傾く軸の角度
 
 	D3DXVECTOR3 RotAxis(0, 1, 0);
 	D3DXVec3TransformNormal(&RotAxis, &RotAxis, &TmpMat);
-	D3DXMatrixRotationAxis(&windUpEndMat ,&RotAxis, D3DXToRadian(5));
+	D3DXMatrixRotationAxis(&windUpEndMat ,&RotAxis, D3DXToRadian(5));		//振りかぶり角度
 
-	D3DXMatrixRotationAxis(&throwEndMat ,&RotAxis, D3DXToRadian(-5));
+	D3DXMatrixRotationAxis(&throwEndMat ,&RotAxis, D3DXToRadian(-5));		//ふり抜き角度
 
 	D3DXMatrixIdentity(&windUpStartMat);
 	D3DXMatrixIdentity(&throwStartMat);
