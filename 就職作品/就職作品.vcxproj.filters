@@ -225,9 +225,6 @@
     <ClCompile Include="Sound\Sound2D.cpp">
       <Filter>Effect\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\Sound3D.cpp">
-      <Filter>Effect\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="Sound\SoundManager.cpp">
       <Filter>Effect\Sound</Filter>
     </ClCompile>
@@ -429,9 +426,6 @@
       <Filter>Effect\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sound\Sound2D.h">
-      <Filter>Effect\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\Sound3D.h">
       <Filter>Effect\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sound\SoundManager.h">
