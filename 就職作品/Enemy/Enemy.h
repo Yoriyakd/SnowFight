@@ -30,6 +30,12 @@ public:
 	float GetToPlayerAng();
 	//player‚Æ‚ÌŠp“x‚ð•Ô‚·“n‚³‚ê‚½Pos‚Æ
 	float GetToPlayerAng(D3DXVECTOR3 &Pos);
+	//--------------------------------------------
+	//Setter
+	//--------------------------------------------
+	void SetMat(D3DXMATRIX &_Mat);
+
+
 	void PushedObj(const D3DXVECTOR3 &PushVec);
 
 	D3DXMATRIX GetHatMat(void);

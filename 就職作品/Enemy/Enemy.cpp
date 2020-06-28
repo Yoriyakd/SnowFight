@@ -181,6 +181,11 @@ float Enemy::GetToPlayerAng(D3DXVECTOR3 &Offset)
 	return TragetAng;
 }
 
+void Enemy::SetMat(D3DXMATRIX& _Mat)
+{
+	mat = _Mat;
+}
+
 void Enemy::PushedObj(const D3DXVECTOR3 &PushVec)
 {
 	D3DXMATRIX TmpMat;

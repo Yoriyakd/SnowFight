@@ -51,8 +51,6 @@ bool EnemyHatAnime::Update()
 {
 	D3DXMatrixRotationAxis(&rotMat, &rotAxis, D3DXToRadian(ROT_SPEED));
 
-	
-	//mat = rotMat * startRotMat;		//Å‰‚Ìp¨‚É‰ñ“]s—ñ‚ğ‘«‚µ‚Ä‚¢‚­
 	mat = rotMat * mat;		//‰ñ“]s—ñ‚ğ‘«‚µ‚Ä‰ñ“]‚³‚¹‚Ä‚¢‚­
 
 	
