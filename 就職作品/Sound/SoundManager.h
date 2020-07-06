@@ -1,7 +1,6 @@
 #pragma once
 #include"../SingletonBase.h"
 #include"Sound2D.h"
-#include"Sound3D.h"
 #include<map>
 
 
@@ -23,7 +22,6 @@ private:
 	SoundManager();
 	~SoundManager();
 	std::map<SoundID, Sound2D*> Sound2DMap;			//2Dサウンド管理(3Dもここに入れたかったが座標等の設定方法が思いつかなかった)
-	std::map<SoundID, Sound3D*> Sound3DMap;			//3Dサウンド管理
 
 	void AllDelete();
 };
