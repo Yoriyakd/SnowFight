@@ -227,6 +227,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp" />
+    <ClCompile Include="Player\PlayerStateBase.cpp" />
     <ClCompile Include="Player\PlayerStateIdle.cpp" />
     <ClCompile Include="Player\ThrowState.cpp" />
     <ClCompile Include="Player\WindUpState.cpp" />
