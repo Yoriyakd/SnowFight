@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include "DirectX/Direct3D.h"
+#include "DirectX/DirectSound.h"
 
 XFILE ResourceManager::GetXFILE(enum MeshName _MeshName)
 {
@@ -69,7 +70,7 @@ LPDIRECTSOUNDBUFFER8 ResourceManager::GetSound(const std::string& FileName)
 	
 	LPDIRECTSOUNDBUFFER Copy;
 
-	lpDSound->DuplicateSoundBuffer(SoundBufferList[FileName], &Copy);			//複製する
+	DirectSound::GetInstance().GetLpDSound()->DuplicateSoundBuffer(SoundBufferList[FileName], &Copy);			//複製する
 	
 	return (LPDIRECTSOUNDBUFFER8)Copy;		//キャストして返す
 }
@@ -105,7 +106,7 @@ void ResourceManager::LoadWAVE(LPDIRECTSOUNDBUFFER8 &_Buffer, const char fname[]
 		// バッファを作る
 	LPDIRECTSOUNDBUFFER pDSTmp;
 	//	lpDSound->CreateSoundBuffer(&dsbdesc, &pDSData, NULL); 
-	lpDSound->CreateSoundBuffer(&dsbdesc, &pDSTmp, NULL);
+	DirectSound::GetInstance().GetLpDSound()->CreateSoundBuffer(&dsbdesc, &pDSTmp, NULL);
 	pDSTmp->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&_Buffer);
 	pDSTmp->Release();
 

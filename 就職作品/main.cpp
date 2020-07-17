@@ -4,6 +4,7 @@
 
 #include"Window/Window.h"
 #include"DirectX/Direct3D.h"
+#include"DirectX/DirectSound.h"
 
 #include"SceanSwitcher/SceneSwitcher.h"
 #include"GameScene/GameScene.h"
@@ -22,10 +23,6 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "winmm.lib")
 
-
-D3DPRESENT_PARAMETERS d3dpp;
-
-
 ////  グローバル変数宣言
 
 LPD3DXSPRITE lpSprite;	// スプライト
@@ -33,10 +30,6 @@ LPD3DXFONT lpFont;		// フォント
 
 bool gameFullScreen;	// フルスクリーン（true,false)
 const int GameFPS = 60;		//ゲームのFPS指定
-
-
-LPDIRECTSOUND8 lpDSound;	//DirectSoundオブジェクト
-LPDIRECTSOUNDBUFFER lpSPrimary;
 
 //60FPS固定のための処理とりあえずここに書く
 bool FPSLimiter(void)
@@ -60,9 +53,6 @@ bool FPSLimiter(void)
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
-
-//DirectX,Windowの作成は学校配布コードです
-
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	LPSTR lpszCmdParam, int nCmdshow)
 {
@@ -80,41 +70,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		return false;
 	}
 
-
 	timeBeginPeriod(1);
 
-	//---------------------DirectSound関連-----------------------
-	DirectSoundCreate8(NULL, &lpDSound, NULL);
+	//DirectSound初期化
+	DirectSound::Create();
+	if (DirectSound::GetInstance().InitDirectSound() == false)
+	{
+		return false;
+	}
 
-	//協調レベルを設定
-	lpDSound->SetCooperativeLevel(Window::GetInstance().GetHWND(), DSSCL_PRIORITY);
-
-	// プライマリ・バッファの作成
-	// DSBUFFERDESC構造体を設定
-	DSBUFFERDESC dsbdesc;
-	ZeroMemory(&dsbdesc, sizeof(DSBUFFERDESC));
-	dsbdesc.dwSize = sizeof(DSBUFFERDESC);
-	// プライマリ・バッファを指定
-	dsbdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D | DSBCAPS_PRIMARYBUFFER;
-	dsbdesc.dwBufferBytes = 0;
-	dsbdesc.lpwfxFormat = NULL;
-
-	// バッファを作る
-	lpDSound->CreateSoundBuffer(&dsbdesc, &lpSPrimary, NULL);
-
-	// プライマリ・バッファのWaveフォーマットを設定
-	// 　　　優先協調レベル以上の協調レベルが設定されている必要があります．
-	WAVEFORMATEX pcmwf;
-	ZeroMemory(&pcmwf, sizeof(WAVEFORMATEX));
-	pcmwf.wFormatTag = WAVE_FORMAT_PCM;
-	pcmwf.nChannels = 2;		// ２チャンネル（ステレオ）
-	pcmwf.nSamplesPerSec = 44100;	// サンプリング・レート　44.1kHz
-	pcmwf.nBlockAlign = 4;
-	pcmwf.nAvgBytesPerSec = pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
-	pcmwf.wBitsPerSample = 16;		// 16ビット
-	lpSPrimary->SetFormat(&pcmwf);
-
-	CoInitialize(NULL);
 
 	// ゲームに関する初期化処理 ---------------------------
 	SceneSwitcher::Create();
@@ -179,13 +143,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 	timeEndPeriod(1);
 
-	lpSPrimary->Release();
-	lpDSound->Release();
-
-	CoUninitialize();
-
 	Window::Destroy();
 	Direct3D::Destroy();
+	DirectSound::Destroy();
 
 	return (int)msg.wParam;
 }

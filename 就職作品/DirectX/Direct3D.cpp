@@ -22,6 +22,8 @@ bool Direct3D::InitDirect3D(void)
 	// 使用するアダプタ番号
 	adapter = D3DADAPTER_DEFAULT;
 
+	D3DPRESENT_PARAMETERS d3dpp;
+
 	// ウインドウの作成が完了したので、Direct3D を初期化する
 	ZeroMemory(&d3dpp, sizeof(D3DPRESENT_PARAMETERS));
 	// Direct3D 初期化パラメータの設定

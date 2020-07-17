@@ -4,8 +4,7 @@
 #include"../main.h"
 
 // direct3D関係のクラス、シングルトン
-class Direct3D : public SingletonBase<Direct3D>
-{
+class Direct3D : public SingletonBase<Direct3D>{
 	friend class SingletonBase<Direct3D>;		//SingletonBaseでのインスタンス化は許可
 public:
 	// 描画系を設定
@@ -27,4 +26,6 @@ private:
 
 	// 描画系のデバイス
 	LPDIRECT3DDEVICE9 lpD3DDevice = nullptr;
+
+
 };

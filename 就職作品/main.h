@@ -1,15 +1,10 @@
 #pragma once
 #include<d3dx9.h>
-#include<dsound.h>
-#include "Sound/wavread.h"
-#pragma comment(lib, "dsound.lib")
+
 
 
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern LPD3DXFONT lpFont;		// フォント
-extern D3DPRESENT_PARAMETERS d3dpp;
-extern LPDIRECTSOUND8 lpDSound;	//DirectSoundオブジェクト
-extern LPDIRECTSOUNDBUFFER lpSPrimary;
 extern const int GameFPS;
 
 #define	SCRW		1280	// ウィンドウ幅（Width

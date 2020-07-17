@@ -3,6 +3,7 @@
 #include<string>
 #include<map>
 #include"SingletonBase.h"
+#include"DirectX/DirectSound.h"
 
 //------------------------------------------------------------------------------------------------
 //※シングルトンクラス
