@@ -5,14 +5,11 @@
 #pragma comment(lib, "dsound.lib")
 
 
-extern LPDIRECT3D9				lpD3D;		// Direct3Dインターフェイス
-extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern LPD3DXFONT lpFont;		// フォント
 extern D3DPRESENT_PARAMETERS d3dpp;
 extern LPDIRECTSOUND8 lpDSound;	//DirectSoundオブジェクト
 extern LPDIRECTSOUNDBUFFER lpSPrimary;
-extern HWND hwnd;
 extern const int GameFPS;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
@@ -76,7 +73,6 @@ struct StageBorder
 enum CollisionDetectionType{Ray, Circles};
 
 void DrawMesh(XFILE *XFile);
-void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color);
 
 //球同士の当たり判定
 bool SphereCollisionDetection(CollisionSphere *dataA, CollisionSphere *dataB);

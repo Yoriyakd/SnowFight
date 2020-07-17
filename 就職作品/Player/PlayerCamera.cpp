@@ -1,5 +1,7 @@
 #include "PlayerCamera.h"
 #include"../GameScene/GameScene.h"		//ステージサイズの情報共有のため
+#include"../Window/Window.h"
+#include"../DirectX/Direct3D.h"
 
 //=====================================
 //publicメソッド
@@ -10,7 +12,7 @@ PlayerCamera::PlayerCamera()
 	basePt.x = SCRW / 2;
 	basePt.y = SCRH / 2;
 	angX = 0, angY = 0;		//初期化
-	ClientToScreen(hwnd, &basePt);		//basePtをスクリーン座標に変換する(画面の中央に設定される)
+	ClientToScreen(Window::GetInstance().GetHWND(), &basePt);		//basePtをスクリーン座標に変換する(画面の中央に設定される)
 	SetCursorPos(basePt.x, basePt.y);
 	D3DXMatrixIdentity(&billBoardMat);
 	hasPosed = false;
@@ -49,7 +51,7 @@ void PlayerCamera::Update(StageBorder & StageBorder)
 	}
 
 	POINT Pt;
-	ClientToScreen(hwnd, &Pt);		//スクリーン座標座標に変換
+	ClientToScreen(Window::GetInstance().GetHWND(), &Pt);		//スクリーン座標座標に変換
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
 	angY += ((Pt.x - basePt.x) / 4.0f) * mouseSensitivityX;	//最初の位置との差を求め、移動量を調整している
 
@@ -97,8 +99,8 @@ void PlayerCamera::SetCamera(void)
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 2000.0f);
 
 	//行列設定
-	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
-	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_VIEW, &mView);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_PROJECTION, &mProj);
 }
 
 

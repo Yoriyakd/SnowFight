@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include"../MenuScene/MenuScene.h"
 #include"../TitleScene/TitleScene.h"
+#include"../DirectX/Direct3D.h"
 
 D3DLIGHT9 Light;
 
@@ -77,7 +78,7 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 
 
 	//-----------------------------
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
 	Light.Type = D3DLIGHT_DIRECTIONAL;
@@ -100,8 +101,8 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 
 	Light.Range = 1000.0f;
 
-	lpD3DDevice->SetLight(0, &Light);
-	lpD3DDevice->LightEnable(0, TRUE);
+	Direct3D::GetInstance().GetD3DDevice()->SetLight(0, &Light);
+	Direct3D::GetInstance().GetD3DDevice()->LightEnable(0, TRUE);
 	//-----------------------------
 	BeginScene();
 }

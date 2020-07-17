@@ -1,5 +1,6 @@
 #include "Player.h"
 #include"../GameScene/GameScene.h"
+#include"../DirectX/Direct3D.h"
 
 //=====================================
 //publicメソッド
@@ -158,12 +159,12 @@ void Player::Draw(void)
 	//--------------------------------------------------------------
 	//軌道の表示
 	//--------------------------------------------------------------
-	lpD3DDevice->SetFVF(FVF_VERTEX);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
-	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
-	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
+	Direct3D::GetInstance().GetD3DDevice()->SetFVF(FVF_VERTEX);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
 
 	VERTEX vertex[4];
 
@@ -191,59 +192,59 @@ void Player::Draw(void)
 
 		if (carryFlag == true)
 		{
-			lpD3DDevice->SetTexture(0, ghost_DecoTex);
+			Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, ghost_DecoTex);
 		}
 		else
 		{
-			lpD3DDevice->SetTexture(0, ghost_SnowTex);
+			Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, ghost_SnowTex);
 		}
 
 		D3DXMATRIX IdenMat;
 		D3DXMatrixIdentity(&IdenMat);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
+		Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &IdenMat);
 
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
+		Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
 	}
 
 
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
-	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
 	   
 	//--------------------------------------------------------------
 	//作成中の雪玉表示
 	//--------------------------------------------------------------
-	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
+	Direct3D::GetInstance().GetD3DDevice()->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
 
-	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &ballMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &ballMat);
 	DrawMesh(&ballMesh);
 
-	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 
 	//--------------------------------------------------------------
 	//靴表示
 	//--------------------------------------------------------------
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &shoesMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &shoesMat);
 	DrawMesh(&shoesMesh);
 
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//--------------------------------------------------------------
 	//腕表示
 	//--------------------------------------------------------------
-	lpD3DDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
+	Direct3D::GetInstance().GetD3DDevice()->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 125), 1.0f, 0);		//Zバッファクリア	※GameSceneで最後に呼ぶ
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armRMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &armRMat);
 	DrawMesh(&armRMesh);
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &armLMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &armLMat);
 	DrawMesh(&armLMesh);
 
 	carryItem->Draw();

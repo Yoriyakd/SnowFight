@@ -1,4 +1,5 @@
 #include "Stage1Enclosure.h"
+#include"../DirectX/Direct3D.h"
 
 Stage1Enclosure::Stage1Enclosure(StageBorder * StageBorder)
 {
@@ -25,9 +26,9 @@ Stage1Enclosure::~Stage1Enclosure()
 
 void Stage1Enclosure::Draw()
 {
-	lpD3DDevice->SetFVF(FVF_VERTEX);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
+	Direct3D::GetInstance().GetD3DDevice()->SetFVF(FVF_VERTEX);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
 
 	
 	static const int FenceCnt = 18;		//ステージサイズに合わせた数
@@ -43,10 +44,10 @@ void Stage1Enclosure::Draw()
 		D3DXMATRIX TmpMat;
 
 		D3DXMatrixTranslation(&TmpMat, (16.0f * (i - 1)) + 8, 4.0f, (p_StageBorder->Top + 2));
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);
-		lpD3DDevice->SetTexture(0, hedgeTex);
+		Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &TmpMat);
+		Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, hedgeTex);
 
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
+		Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
 		
 	}
 
@@ -55,20 +56,20 @@ void Stage1Enclosure::Draw()
 		D3DXMATRIX TmpMat;
 
 		D3DXMatrixTranslation(&TmpMat, (16.0f * (i - 1)) + 8, 4.0f, (p_StageBorder->Bottom - 2));		//1枚のサイズ(16) * 枚数(i - 1)いい感じに隅がクロスするようにしている
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);
-		lpD3DDevice->SetTexture(0, hedgeTex);
+		Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &TmpMat);
+		Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, hedgeTex);
 
 		if (i >= 7 && i <=10)		//セットするテクスチャを変える		7～10枚目
 		{
-			lpD3DDevice->SetTexture(0, brickTex);
+			Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, brickTex);
 		}
 
 		if (i >= 8 && i <= 9)		//セットするテクスチャを変える		8,9枚目
 		{
-			lpD3DDevice->SetTexture(0, poleTex);
+			Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, poleTex);
 		}
 
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
+		Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
 	}
 
 	//左上から時計回り
@@ -82,10 +83,10 @@ void Stage1Enclosure::Draw()
 		D3DXMATRIX TmpMat;
 
 		D3DXMatrixTranslation(&TmpMat, p_StageBorder->Left - 2, 4.0f, (16.0f * (i - 1)) + 8);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);
-		lpD3DDevice->SetTexture(0, hedgeTex);
+		Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &TmpMat);
+		Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, hedgeTex);
 
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
+		Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
 	}
 
 	for (int i = 0; i < FenceCnt; i++)		//stageRight
@@ -93,12 +94,12 @@ void Stage1Enclosure::Draw()
 		D3DXMATRIX TmpMat;
 
 		D3DXMatrixTranslation(&TmpMat, p_StageBorder->Right + 2, 4.0f, (16.0f * (i - 1)) + 8);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);
-		lpD3DDevice->SetTexture(0, hedgeTex);
+		Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &TmpMat);
+		Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, hedgeTex);
 
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
+		Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vEnclosure, sizeof(VERTEX));
 	}
 
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリング
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }

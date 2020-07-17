@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "DirectX/Direct3D.h"
 
 XFILE ResourceManager::GetXFILE(enum MeshName _MeshName)
 {
@@ -16,7 +17,7 @@ XFILE ResourceManager::GetXFILE(enum MeshName _MeshName)
 		LoadMesh(&TmpXFILE, &FilePath[0]);
 
 		LPD3DXMESH TmpMesh;
-		TmpXFILE.lpMesh->CloneMeshFVF(D3DXMESH_NPATCHES | D3DXMESH_MANAGED, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, lpD3DDevice, &TmpMesh);	//Meshデータを扱いやすい形に変換
+		TmpXFILE.lpMesh->CloneMeshFVF(D3DXMESH_NPATCHES | D3DXMESH_MANAGED, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, Direct3D::GetInstance().GetD3DDevice(), &TmpMesh);	//Meshデータを扱いやすい形に変換
 
 		TmpXFILE.lpMesh->Release();
 
@@ -183,7 +184,7 @@ void ResourceManager::LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[],
 {
 	if (W == 0)W = D3DX_DEFAULT;
 	if (H == 0)H = D3DX_DEFAULT;
-	D3DXCreateTextureFromFileEx(lpD3DDevice, fname, W, H, 1, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT, Color, NULL, NULL, lpTex);
+	D3DXCreateTextureFromFileEx(Direct3D::GetInstance().GetD3DDevice(), fname, W, H, 1, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT, Color, NULL, NULL, lpTex);
 }
 
 
@@ -192,7 +193,7 @@ void ResourceManager::LoadMesh(struct XFILE *XFile, const char FName[])
 {
 	LPD3DXBUFFER lpD3DXBuffer;
 
-	D3DXLoadMeshFromX(FName, D3DXMESH_MANAGED, lpD3DDevice, NULL, &lpD3DXBuffer, NULL, &(XFile->NumMaterial), &(XFile->lpMesh));
+	D3DXLoadMeshFromX(FName, D3DXMESH_MANAGED, Direct3D::GetInstance().GetD3DDevice(), NULL, &lpD3DXBuffer, NULL, &(XFile->NumMaterial), &(XFile->lpMesh));
 
 	XFile->Mat = new D3DMATERIAL9[XFile->NumMaterial];
 	XFile->Tex = new LPDIRECT3DTEXTURE9[XFile->NumMaterial];
@@ -203,7 +204,7 @@ void ResourceManager::LoadMesh(struct XFILE *XFile, const char FName[])
 	for (i = 0; i < XFile->NumMaterial; i++) {
 		XFile->Mat[i] = D3DXMat[i].MatD3D;
 		XFile->Mat[i].Ambient = XFile->Mat[i].Diffuse;
-		if (FAILED(D3DXCreateTextureFromFile(lpD3DDevice, D3DXMat[i].pTextureFilename, &(XFile->Tex[i])))) {
+		if (FAILED(D3DXCreateTextureFromFile(Direct3D::GetInstance().GetD3DDevice(), D3DXMat[i].pTextureFilename, &(XFile->Tex[i])))) {
 			XFile->Tex[i] = NULL;
 		}
 	}

@@ -1,4 +1,5 @@
 #include"../main.h"
+#include"../DirectX/Direct3D.h"
 //-------------------------------------------------------
 //プロトタイプ宣言はmain.hで記述
 //-------------------------------------------------------
@@ -7,23 +8,8 @@ void DrawMesh(XFILE *XFile)
 {
 	for (DWORD i = 0; i < XFile->NumMaterial; i++)
 	{
-		lpD3DDevice->SetMaterial(&(XFile->Mat[i]));
-		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
-		XFile->lpMesh->DrawSubset(i);
-	}
-}
-
-void DrawMesh(XFILE *XFile, D3DCOLORVALUE Color)
-{
-	for (DWORD i = 0; i < XFile->NumMaterial; i++)
-	{
-		//XFILE  TmpXFILE;
-		D3DMATERIAL9 TmpMat;
-		TmpMat = *XFile->Mat;
-		TmpMat.Diffuse = Color;
-
-		lpD3DDevice->SetMaterial(&(TmpMat));
-		lpD3DDevice->SetTexture(0, XFile->Tex[i]);
+		Direct3D::GetInstance().GetD3DDevice()->SetMaterial(&(XFile->Mat[i]));
+		Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, XFile->Tex[i]);
 		XFile->lpMesh->DrawSubset(i);
 	}
 }
@@ -104,10 +90,11 @@ void QuaternionAnime(D3DXMATRIX *OutMat, const D3DXMATRIX *NowMat, const D3DXMAT
 	D3DXMatrixRotationQuaternion(OutMat, &NowQua);
 
 	D3DXVECTOR3 StartPos, NowPos, EndPos;
-
+	//開始地点と終了地点の座標をセット
 	StartPos = D3DXVECTOR3(StartMat->_41, StartMat->_42, StartMat->_43);
 	EndPos = D3DXVECTOR3(EndMat->_41, EndMat->_42, EndMat->_43);
 
+	//Lerpで座標を移動
 	D3DXVec3Lerp(&NowPos, &StartPos, &EndPos, AnimeFrame);
 
 	OutMat->_41 = NowPos.x;

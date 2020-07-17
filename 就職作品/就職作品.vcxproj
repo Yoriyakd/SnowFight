@@ -156,6 +156,7 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="DirectX\Direct3D.cpp" />
     <ClCompile Include="Effect\EffectManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -227,7 +228,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="Player\PlayerCamera.cpp" />
-    <ClCompile Include="Player\PlayerStateBase.cpp" />
     <ClCompile Include="Player\PlayerStateIdle.cpp" />
     <ClCompile Include="Player\ThrowState.cpp" />
     <ClCompile Include="Player\WindUpState.cpp" />
@@ -257,6 +257,7 @@
     <ClCompile Include="UI\RemainingBallUI.cpp" />
     <ClCompile Include="UI\TimePenaltyUI.cpp" />
     <ClCompile Include="UI\TimeUI.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionObserver.h" />
@@ -268,6 +269,7 @@
     <ClInclude Include="commonObj\SnowBall.h" />
     <ClInclude Include="commonObj\SnowBallManager.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="DirectX\Direct3D.h" />
     <ClInclude Include="Effect\EffectManager.h" />
     <ClInclude Include="Effect\EnemyAnimeManager.h" />
     <ClInclude Include="Effect\EnemyDeathAnime.h" />
@@ -327,6 +329,7 @@
     <ClInclude Include="UI\RemainingBallUI.h" />
     <ClInclude Include="UI\TimePenaltyUI.h" />
     <ClInclude Include="UI\TimeUI.h" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,5 @@
 #include "ResultCam.h"
+#include"../DirectX/Direct3D.h"
 
 ResultCam::ResultCam()
 {
@@ -41,6 +42,6 @@ void ResultCam::SetCamera(void)
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DXToRadian(60), (float)SCRW / (float)SCRH, 1.0f, 2000.0f);
 
 	//s—ñÝ’è
-	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
-	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_VIEW, &mView);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_PROJECTION, &mProj);
 }

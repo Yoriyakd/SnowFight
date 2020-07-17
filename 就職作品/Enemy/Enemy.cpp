@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include"EnemyState/EngagingMode.h"
+#include"../DirectX/Direct3D.h"
 
 const int Enemy::DEFAULT_HP = 3;
 const float Enemy::HAT_RADIUS = 1.0f;
@@ -79,13 +80,13 @@ bool Enemy::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 
 void Enemy::Draw(void)
 {
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&bodyMesh);
 	
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&handMesh);
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &hatMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &hatMat);
 	DrawMesh(&hatMesh);
 }
 

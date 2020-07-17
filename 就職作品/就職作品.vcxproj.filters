@@ -55,6 +55,12 @@
     <Filter Include="Effect\VFX">
       <UniqueIdentifier>{944ed0bd-938d-4f1f-b775-2ee2bcf47610}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX">
+      <UniqueIdentifier>{d6a0fda2-bf84-4615-92c2-8b93b73379b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{736a33d6-d8bc-4082-96ff-01ddbcdb5209}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -252,8 +258,11 @@
     <ClCompile Include="Constants.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player\PlayerStateBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="DirectX\Direct3D.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\Window.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +469,12 @@
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\Direct3D.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Window.h">
+      <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

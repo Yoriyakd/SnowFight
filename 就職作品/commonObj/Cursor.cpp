@@ -1,4 +1,5 @@
 #include "Cursor.h"
+#include"../Window/Window.h"
 
 void Cursor::Draw()
 {
@@ -15,7 +16,7 @@ void Cursor::Update()
 	POINT Pt;
 
 	GetCursorPos(&Pt);					//現在のカーソルの位置をいれる
-	ScreenToClient(hwnd, &Pt);		//スクリーン座標に変換
+	ScreenToClient(Window::GetInstance().GetHWND(), &Pt);		//スクリーン座標に変換
 
 	D3DXMatrixTranslation(&cursorMat, (float)Pt.x, (float)Pt.y, 0);
 }

@@ -1,4 +1,5 @@
 #include "EnemyDeathAnime.h"
+#include"../DirectX/Direct3D.h"
 EnemyDeathAnime::EnemyDeathAnime(Enemy &Enemy, SnowBall &SnowBall)
 {
 	//‰Šú‰»
@@ -32,7 +33,7 @@ EnemyDeathAnime::~EnemyDeathAnime()
 
 void EnemyDeathAnime::Draw(void)
 {
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 }
 

@@ -1,4 +1,5 @@
 #include "SkyBox.h"
+#include"../DirectX/Direct3D.h"
 
 SkyBox::SkyBox()
 {
@@ -12,11 +13,11 @@ SkyBox::~SkyBox()
 
 void SkyBox::Draw()
 {
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }

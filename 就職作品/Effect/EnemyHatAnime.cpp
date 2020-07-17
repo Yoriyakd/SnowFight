@@ -1,4 +1,5 @@
 #include "EnemyHatAnime.h"
+#include"../DirectX/Direct3D.h"
 
 const D3DXVECTOR3 EnemyHatAnime::DEFAULT_HIT_FLYING_HIGHT = D3DXVECTOR3(0.0f, 0.8f, 0.0f);
 const float EnemyHatAnime::HEAD_HIT_FLYING_HIGHT = 1.5f;
@@ -43,7 +44,7 @@ EnemyHatAnime::EnemyHatAnime(Enemy &Enemy, SnowBall &SnowBall, bool HeadShot)
 
 void EnemyHatAnime::Draw()
 {
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 }
 

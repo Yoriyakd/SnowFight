@@ -1,4 +1,5 @@
 #include "CarryItem.h"
+#include"../DirectX/Direct3D.h"
 
 CarryItem::CarryItem(const D3DXMATRIX *ArmRMat) : armRMat_p(ArmRMat)
 {
@@ -31,17 +32,17 @@ void CarryItem::Draw()
 		{
 			D3DXMATRIX TmpMat;
 			TmpMat = ScalingMat * itemMat;
-			lpD3DDevice->SetTransform(D3DTS_WORLD, &TmpMat);				//á‹Ê‚Å‚Í‚È‚¢ê‡¬‚³‚­‚·‚é
-			lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);		//–@ü‚ÌÄŒvŽZ
+			Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &TmpMat);				//á‹Ê‚Å‚Í‚È‚¢ê‡¬‚³‚­‚·‚é
+			Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);		//–@ü‚ÌÄŒvŽZ
 		}
 		else
 		{
-			lpD3DDevice->SetTransform(D3DTS_WORLD, &itemMat);
+			Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &itemMat);
 		}
 		
 		DrawMesh(nowCarryItemMesh);
 	}
-	lpD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 }
 
 void CarryItem::Updata()

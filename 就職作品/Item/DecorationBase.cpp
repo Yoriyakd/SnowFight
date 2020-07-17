@@ -1,6 +1,7 @@
 #include "DecorationBase.h"
 #include"../GameScene/GameScene.h"
 #include"../Constants.h"
+#include"../DirectX/Direct3D.h"
 
 const D3DXVECTOR3 DecorationBase::GROUND_GRIP = D3DXVECTOR3(-0.1f, 0.0f, -0.1f);
 
@@ -14,7 +15,7 @@ DecorationBase::~DecorationBase()
 
 void DecorationBase::Draw()
 {
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 }
 

@@ -1,4 +1,5 @@
 #include "MapObj.h"
+#include"../DirectX/Direct3D.h"
 
 std::map<MapOBJ_ID, ObjData> MapObj::ObjDataList
 {
@@ -44,8 +45,8 @@ void MapObj::CreatObj(D3DXVECTOR3 Pos, float Ang, MapOBJ_ID _ID)
 
 void MapObj::Draw()
 {
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);			//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
 	DrawMesh(&mesh);
 }
 

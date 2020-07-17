@@ -1,4 +1,5 @@
 #include "Ground.h"
+#include"../DirectX/Direct3D.h"
 
 Ground::Ground()
 {
@@ -36,23 +37,23 @@ void Ground::SetMat(D3DXMATRIX)
 void Ground::Draw()
 {
 	
-	lpD3DDevice->SetFVF(FVF_VERTEX);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
+	Direct3D::GetInstance().GetD3DDevice()->SetFVF(FVF_VERTEX);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ
 
-	lpD3DDevice->SetTexture(0,tex);
+	Direct3D::GetInstance().GetD3DDevice()->SetTexture(0,tex);
 	D3DXMatrixTranslation(&mat, -150, 0, 0);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
 	D3DXMatrixTranslation(&mat, 150, 0, 0);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
 	D3DXMatrixTranslation(&mat, -150, 0, -300);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
 	D3DXMatrixTranslation(&mat, 150, 0, -300);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &mat);
+	Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground, sizeof(VERTEX));
 
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
 }

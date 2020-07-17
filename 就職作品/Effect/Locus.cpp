@@ -1,4 +1,5 @@
 #include "Locus.h"
+#include"../DirectX/Direct3D.h"
 
 SnowLocus::SnowLocus(const D3DXMATRIX &Mat)
 {
@@ -19,23 +20,22 @@ SnowLocus::~SnowLocus()
 
 void SnowLocus::Draw()
 {
-	lpD3DDevice->SetFVF(FVF_VERTEX);
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
-	//lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);	//フォグ☆
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
-	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
-	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
+	Direct3D::GetInstance().GetD3DDevice()->SetFVF(FVF_VERTEX);
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);	//カリング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);		//加算合成オン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);			//Zバッファ書き込みオフ
 
-	lpD3DDevice->SetTexture(0, tex);
+	Direct3D::GetInstance().GetD3DDevice()->SetTexture(0, tex);
 
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &billBoardMat);
+	Direct3D::GetInstance().GetD3DDevice()->SetTransform(D3DTS_WORLD, &billBoardMat);
 
-	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
+	Direct3D::GetInstance().GetD3DDevice()->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(VERTEX));
 
-	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
-	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
-	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);		//ライティング
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);		//加算合成オフ
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	//カリングオン
+	Direct3D::GetInstance().GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);			//Zバッファ書き込みオン
 }
 
 bool SnowLocus::Update()
