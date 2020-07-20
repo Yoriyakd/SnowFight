@@ -37,13 +37,13 @@ PlayerStateBase * WindUpState::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 	}
 
 	timeCnt_f++;
-	if (timeCnt_f > MaxPowerTime * GameFPS)
+	if (timeCnt_f > MaxPowerTime * GAME_FPS)
 	{
 		shootPowerPCT = 80;		//Å‘å—­‚ß‚Ì‘¬‚³
 	}
 	else
 	{
-		shootPowerPCT = 30 + 50 * (timeCnt_f / (MaxPowerTime * GameFPS));		//30‚â50‚Í‰½‚Æ‚È‚­‚ÅŒˆ‚ß‚Ä‚¢‚é
+		shootPowerPCT = 30 + 50 * (timeCnt_f / (MaxPowerTime * GAME_FPS));		//30‚â50‚Í‰½‚Æ‚È‚­‚ÅŒˆ‚ß‚Ä‚¢‚é
 	}
 
 	GetPlayer.SetShootPower(shootPowerPCT);

@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include"../GameScene/GameScene.h"
 #include"../MenuScene/MenuScene.h"
+#include"../DirectX/Sprite.h"
 
 TitleScene::TitleScene():ESCFlag(false)
 {
@@ -34,25 +35,25 @@ void TitleScene::Render2D(void)
 	///	スプライトの描画処理
 	//////////////////////////////////////////////////
 	// 描画開始
-	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	Sprite::GetInstance().GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
 	RECT RcBack = { 0, 0, SCRW, SCRH };
-	lpSprite->SetTransform(&backMat);
-	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&backMat);
+	Sprite::GetInstance().GetSprite()->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT RcLogo = { 0, 0, logoTexX, 170 };
-	lpSprite->SetTransform(&logoMat);
-	lpSprite->Draw(logoTex, &RcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&logoMat);
+	Sprite::GetInstance().GetSprite()->Draw(logoTex, &RcLogo, &D3DXVECTOR3((float)logoTexX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT RcKyeInstruction = { 0, 0, kyeInstructionX, 116 };
-	lpSprite->SetTransform(&(kyeInstructionMat * waveMatY));
-	lpSprite->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&(kyeInstructionMat * waveMatY));
+	Sprite::GetInstance().GetSprite()->Draw(kyeInstructionTex, &RcKyeInstruction, &D3DXVECTOR3((float)kyeInstructionX / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	GetSceneSwitchEffect.Draw();
 
 	GetCursor.Draw();
 	// 描画終了
-	lpSprite->End();
+	Sprite::GetInstance().GetSprite()->End();
 }
 
 bool TitleScene::Update(void)

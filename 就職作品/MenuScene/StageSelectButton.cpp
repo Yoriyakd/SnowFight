@@ -1,4 +1,5 @@
 #include "StageSelectButton.h"
+#include"../DirectX/Sprite.h"
 
 StageSelectButton::StageSelectButton() : onMouseColor(200)
 {
@@ -14,22 +15,22 @@ StageSelectButton::~StageSelectButton()
 void StageSelectButton::Draw()
 {
 	RECT RcBack = { 0, 0, 132, 132 };
-	lpSprite->SetTransform(&mat);
-	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
+	Sprite::GetInstance().GetSprite()->SetTransform(&mat);
+	Sprite::GetInstance().GetSprite()->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
 
 	D3DXMATRIX TmpMat;
 
 	TmpMat = picOffsetMat * mat;
 
 	RECT RcPic = { 0, 0, 96, 54 };
-	lpSprite->SetTransform(&TmpMat);
-	lpSprite->Draw(stagePicTex, &RcPic, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
+	Sprite::GetInstance().GetSprite()->SetTransform(&TmpMat);
+	Sprite::GetInstance().GetSprite()->Draw(stagePicTex, &RcPic, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
 
 	RECT RcText = { 0, 0, 132, 30 };
 
 	TmpMat = textOffsetMat * mat;
-	lpSprite->SetTransform(&TmpMat);
-	lpSprite->Draw(stageTextTex, &RcText, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
+	Sprite::GetInstance().GetSprite()->SetTransform(&TmpMat);
+	Sprite::GetInstance().GetSprite()->Draw(stageTextTex, &RcText, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, onMouseColor, onMouseColor, onMouseColor));
 
 	int DisplayNum;
 	D3DXMATRIX NumberMat, NumberDisMat;
@@ -50,8 +51,8 @@ void StageSelectButton::Draw()
 
 		RECT RcNumber = { 30 * DisplayNum, 0, 30 * (DisplayNum + 1), 30 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(stageNumTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(stageNumTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		NumberMat = NumberDisMat * NumberMat;			//‰E‚É‚¸‚ç‚·
 	}

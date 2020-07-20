@@ -1,4 +1,5 @@
 #include "GameObjective.h"
+#include"../DirectX/Sprite.h"
 
 GameObjective::GameObjective()
 {
@@ -35,8 +36,8 @@ void GameObjective::Draw()
 	if (normState == false)		//ƒmƒ‹ƒ}–¢’B¬‚È‚ç
 	{
 		RECT RcBack = { 0, 0, 400, 64 };
-		lpSprite->SetTransform(&backMat);
-		lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&backMat);
+		Sprite::GetInstance().GetSprite()->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		D3DXMATRIX NumberMat, NumberDisMat;
 
@@ -45,21 +46,21 @@ void GameObjective::Draw()
 
 		RECT RcNow = { 42 * nowCnt, 0, 42 * (nowCnt + 1), 42 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(numberTex, &RcNow, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcNow, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		D3DXMatrixTranslation(&NumberDisMat, 60, 0, 0);			//•¶Žš‚ÌŠÔŠu
 		NumberMat = NumberDisMat * NumberMat;			//‰E‚É‚¸‚ç‚·
 
 		RECT RcNorm = { 42 * normCnt, 0, 42 * (normCnt + 1), 42 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(numberTex, &RcNorm, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcNorm, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else                   //ƒmƒ‹ƒ}’B¬‚È‚ç
 	{
 		RECT RcClear = { 0, 0, 400, 64 };
-		lpSprite->SetTransform(&backMat);
-		lpSprite->Draw(clearTex, &RcClear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&backMat);
+		Sprite::GetInstance().GetSprite()->Draw(clearTex, &RcClear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }

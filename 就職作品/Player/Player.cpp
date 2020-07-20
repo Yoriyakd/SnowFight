@@ -334,11 +334,11 @@ void Player::MakeBallStart()
 
 		ShoesMakeBallAnime(true);
 
-		ballSize = makingTimeCnt / (MakeTime * GameFPS) * MaxBallScal;			//時間経過で大きくなる
+		ballSize = makingTimeCnt / (MakeTime * GAME_FPS) * MaxBallScal;			//時間経過で大きくなる
 
 		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
 
-		if (makingTimeCnt >= MakeTime * GameFPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
+		if (makingTimeCnt >= MakeTime * GAME_FPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
 		{
 			remainingBalls++;
 			makingTimeCnt = 0;		//リセット

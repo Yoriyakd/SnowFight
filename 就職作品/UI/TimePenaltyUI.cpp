@@ -1,4 +1,5 @@
 #include "TimePenaltyUI.h"
+#include"../DirectX/Sprite.h"
 
 TimePenaltyUI::TimePenaltyUI(int _MinusTime) : effectDisplayFlag(-1), flashIntervalCnt(0) , penaltyTime_s(_MinusTime), displayTime_frame(90)
 {
@@ -20,13 +21,13 @@ void TimePenaltyUI::Draw()
 	if (effectDisplayFlag == 1)
 	{
 		RECT RcEffect = { 0, 0, 256, 256 };
-		lpSprite->SetTransform(&effectMat);
-		lpSprite->Draw(effectTex, &RcEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&effectMat);
+		Sprite::GetInstance().GetSprite()->Draw(effectTex, &RcEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
 	RECT RcMinus = { 0, 0, 46, 46 };
-	lpSprite->SetTransform(&mat);
-	lpSprite->Draw(minusTex, &RcMinus, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&mat);
+	Sprite::GetInstance().GetSprite()->Draw(minusTex, &RcMinus, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 
 
 	int DisplayNum;
@@ -49,8 +50,8 @@ void TimePenaltyUI::Draw()
 
 		RECT RcNumber = { 46 * DisplayNum, 0, 46 * (DisplayNum + 1), 46 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 
 		NumberMat = NumberDisMat * NumberMat;			//‰E‚É‚¸‚ç‚·
 	}

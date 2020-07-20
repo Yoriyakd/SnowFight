@@ -1,4 +1,6 @@
 #include "TimeUI.h"
+#include"../DirectX/Sprite.h"
+#include"../DirectX/Sprite.h"
 
 TimeUI::TimeUI()
 {
@@ -16,8 +18,8 @@ TimeUI::~TimeUI()
 void TimeUI::Draw()
 {
 	RECT RcLogo = { 0, 0, 194, 46 };
-	lpSprite->SetTransform(&logoMat);
-	lpSprite->Draw(logoTex, &RcLogo, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&logoMat);
+	Sprite::GetInstance().GetSprite()->Draw(logoTex, &RcLogo, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 	int DisplayNum;
@@ -40,8 +42,8 @@ void TimeUI::Draw()
 
 		RECT RcNumber = { 46 * DisplayNum, 0, 46 * (DisplayNum + 1), 46 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		NumberMat = NumberDisMat * NumberMat;			//‰E‚É‚¸‚ç‚·
 	}
@@ -54,9 +56,9 @@ void TimeUI::Draw()
 		D3DXMATRIX TmpMat;
 
 		TmpMat = BoldNumber->ScalMat * logoMat * numberOffsetMat;
-		lpSprite->SetTransform(&TmpMat);
+		Sprite::GetInstance().GetSprite()->SetTransform(&TmpMat);
 		//’†‰›‚ÉŒü‚©‚Á‚Ä‘å‚«‚­‚È‚Á‚Ä‚à‚ç‚¤‚½‚ß0, 0, 0‚ª’†‰›
-		lpSprite->Draw(numberTex, &RcBoldNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(BoldNumber->Alpha, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcBoldNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(BoldNumber->Alpha, 255, 255, 255));
 	}
 }
 

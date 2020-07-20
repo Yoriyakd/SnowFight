@@ -1,4 +1,5 @@
 #include "RemainingBallUI.h"
+#include"../DirectX/Sprite.h"
 
 RemainingBallUI::RemainingBallUI()
 {
@@ -21,8 +22,8 @@ void RemainingBallUI::SetRemainingBallCnt(int Cnt)
 void RemainingBallUI::Draw()
 {
 	RECT RcBack = { 0, 0, 256, 64 };
-	lpSprite->SetTransform(&backMat);
-	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&backMat);
+	Sprite::GetInstance().GetSprite()->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	int DisplayNum;
 	const int NUM_DIGITS = 4;		//––”ö‚É\0‚ª‘}“ü‚³‚ê‚é‚½‚ß3Œ…•\Ž¦‚·‚éÛ4‚ð‚¢‚ê‚é
@@ -43,8 +44,8 @@ void RemainingBallUI::Draw()
 
 		RECT RcNumber = { 42 * DisplayNum, 0, 42 * (DisplayNum + 1), 42 };
 
-		lpSprite->SetTransform(&NumberMat);
-		lpSprite->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&NumberMat);
+		Sprite::GetInstance().GetSprite()->Draw(numberTex, &RcNumber, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		NumberMat = NumberDisMat * NumberMat;			//‰E‚É‚¸‚ç‚·
 	}

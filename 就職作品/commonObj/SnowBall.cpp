@@ -13,7 +13,7 @@ SnowBall::SnowBall(ThrowingInitValue ThrowingInitValue, ID _ID)
 	D3DXMatrixRotationY(&rotMat, D3DXToRadian(ThrowingInitValue.YAxisAng));		//î≠éÀå≥ÇÃäpìxÇ©ÇÁçsóÒçÏê¨
 	mat = rotMat * mat;
 
-	nowDeleteTime = DELETE_TIME * GameFPS;
+	nowDeleteTime = DELETE_TIME * GAME_FPS;
 	id = _ID;
 }
 

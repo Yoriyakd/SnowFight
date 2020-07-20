@@ -1,11 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 
-
-
-extern LPD3DXSPRITE lpSprite;	// スプライト
-extern LPD3DXFONT lpFont;		// フォント
-extern const int GameFPS;
+#define GAME_FPS 60		//ここら辺の定数データとかをまとめた情報管理クラスとか作ったほうがいいんだろうか
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height

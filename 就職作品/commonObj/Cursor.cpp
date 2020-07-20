@@ -1,12 +1,13 @@
 #include "Cursor.h"
 #include"../Window/Window.h"
+#include"../DirectX/Sprite.h"
 
 void Cursor::Draw()
 {
 	if (isShow == false)return;
 
-	lpSprite->SetTransform(&cursorMat);
-	lpSprite->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&cursorMat);
+	Sprite::GetInstance().GetSprite()->Draw(cursorTex, &RcCursor, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void Cursor::Update()

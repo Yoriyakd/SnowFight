@@ -5,6 +5,8 @@
 #include"Window/Window.h"
 #include"DirectX/Direct3D.h"
 #include"DirectX/DirectSound.h"
+#include"DirectX/Sprite.h"
+#include"DirectX/Font.h"
 
 #include"SceanSwitcher/SceneSwitcher.h"
 #include"GameScene/GameScene.h"
@@ -23,14 +25,6 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "winmm.lib")
 
-////  グローバル変数宣言
-
-LPD3DXSPRITE lpSprite;	// スプライト
-LPD3DXFONT lpFont;		// フォント
-
-bool gameFullScreen;	// フルスクリーン（true,false)
-const int GameFPS = 60;		//ゲームのFPS指定
-
 //60FPS固定のための処理とりあえずここに書く
 bool FPSLimiter(void)
 {
@@ -41,7 +35,7 @@ bool FPSLimiter(void)
 	//60FPS制限処理
 	NTlmt = timeGetTime();
 
-	if (NTlmt - BTlmt <= MIN / GameFPS)			//1000 / 60ms経っていなかったらリターンでとばすことで60FPS上限をつける
+	if (NTlmt - BTlmt <= MIN / GAME_FPS)			//1000 / 60ms経っていなかったらリターンでとばすことで60FPS上限をつける
 	{
 		return false;
 	}
@@ -79,7 +73,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 		return false;
 	}
 
-
 	// ゲームに関する初期化処理 ---------------------------
 	SceneSwitcher::Create();
 	ResourceManager::Create();
@@ -94,16 +87,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 
 
 
-	// スプライト作成
-	D3DXCreateSprite(Direct3D::GetInstance().GetD3DDevice(), &lpSprite);
-	lpSprite->OnResetDevice();
+	//スプライトオブジェクト作成
+	Sprite::Create();
 
-	// フォント作成
-	D3DXCreateFont(Direct3D::GetInstance().GetD3DDevice(), 30, 30, FW_REGULAR, NULL, FALSE, SHIFTJIS_CHARSET,
-		OUT_DEFAULT_PRECIS, PROOF_QUALITY, FIXED_PITCH | FF_MODERN, "ＭＳ ゴシック", &lpFont);
-
-	lpFont->OnResetDevice();
-
+	//フォントオブジェクト作成
+	Font::Create();
+	
 	GetSceneSwitcher.SwitchScene(new TitleScene());
 
 	MSG msg;
@@ -138,8 +127,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	ShowCursor(TRUE);			//カーソルを表示する	※TRUEの回数をカウントしているので必要以上に呼ばない	管理するクラスを作る
 
 
-	lpSprite->Release();	// スプライト
-	lpFont->Release();		// フォント
+	Sprite::GetInstance().GetSprite()->Release();	// スプライト
 
 	timeEndPeriod(1);
 

@@ -1,6 +1,7 @@
 #include "MenuScene.h"
 #include"../GameScene/GameScene.h"
 #include"../TitleScene/TitleScene.h"
+#include"../DirectX/Sprite.h"
 
 MenuScene::MenuScene()
 {
@@ -58,28 +59,28 @@ void MenuScene::Render2D(void)
 	///	スプライトの描画処理
 	//////////////////////////////////////////////////
 	// 描画開始
-	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	Sprite::GetInstance().GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
 
 	RECT RcBack = { 0, 0, SCRW, SCRH };
-	lpSprite->SetTransform(&backMat);
-	lpSprite->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&backMat);
+	Sprite::GetInstance().GetSprite()->Draw(backTex, &RcBack, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT RcBoard = { 0, 0, 768, 540 };
-	lpSprite->SetTransform(&boardMat);
-	lpSprite->Draw(boardTex, &RcBoard, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&boardMat);
+	Sprite::GetInstance().GetSprite()->Draw(boardTex, &RcBoard, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	RECT rcHead = { 0, 0, 640, 64 };
-	lpSprite->SetTransform(&headCharMat);
-	lpSprite->Draw(headCharTex, &rcHead, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&headCharMat);
+	Sprite::GetInstance().GetSprite()->Draw(headCharTex, &rcHead, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	stage1Button->Draw();
 	stage2Button->Draw();
 
 
 	RECT RcSantWear = { 0, 0, 360, 560 };
-	lpSprite->SetTransform(&santaWearMat);
-	lpSprite->Draw(SantaWearTex, &RcSantWear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&santaWearMat);
+	Sprite::GetInstance().GetSprite()->Draw(SantaWearTex, &RcSantWear, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	GetCursor.Draw();
 
@@ -87,7 +88,7 @@ void MenuScene::Render2D(void)
 	GetSceneSwitchEffect.Draw();
 
 	// 描画終了
-	lpSprite->End();
+	Sprite::GetInstance().GetSprite()->End();
 }
 
 bool MenuScene::Update(void)

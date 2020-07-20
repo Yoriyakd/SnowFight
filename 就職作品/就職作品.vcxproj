@@ -158,6 +158,8 @@
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="DirectX\Direct3D.cpp" />
     <ClCompile Include="DirectX\DirectSound.cpp" />
+    <ClCompile Include="DirectX\Font.cpp" />
+    <ClCompile Include="DirectX\Sprite.cpp" />
     <ClCompile Include="Effect\EffectManager.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -272,6 +274,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DirectX\Direct3D.h" />
     <ClInclude Include="DirectX\DirectSound.h" />
+    <ClInclude Include="DirectX\Font.h" />
+    <ClInclude Include="DirectX\Sprite.h" />
     <ClInclude Include="Effect\EffectManager.h" />
     <ClInclude Include="Effect\EnemyAnimeManager.h" />
     <ClInclude Include="Effect\EnemyDeathAnime.h" />

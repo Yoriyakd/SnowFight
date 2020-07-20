@@ -11,7 +11,7 @@ EnemyStateBase * LookForPlayerAnime::Action(Enemy & Enemy)
 	frameCnt++;
 	Enemy.Spin((float)(sin(frameCnt / 30) * 2));
 
-	if (frameCnt > 4 * GameFPS)
+	if (frameCnt > 4 * GAME_FPS)
 	{
 		Enemy.Spin((float)(rand() % 30));
 		return new PlayerSearchState();

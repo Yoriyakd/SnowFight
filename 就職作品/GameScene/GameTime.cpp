@@ -16,7 +16,7 @@ GameSceneState GameTime::AddUpdate()
 
 void GameTime::PlayerTakeDamage(int _Penalty)
 {
-	timeLimit_Frame -= _Penalty * GameFPS;
+	timeLimit_Frame -= _Penalty * GAME_FPS;
 }
 
 void GameTime::SetTimeLimit(int TimeLimit_Frame)
@@ -26,5 +26,5 @@ void GameTime::SetTimeLimit(int TimeLimit_Frame)
 
 int GameTime::GetRemainingTime_s(void)
 {
-	return timeLimit_Frame / GameFPS;
+	return timeLimit_Frame / GAME_FPS;
 }

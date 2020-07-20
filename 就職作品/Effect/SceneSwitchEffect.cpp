@@ -1,4 +1,5 @@
 #include "SceneSwitchEffect.h"
+#include"../DirectX/Sprite.h"
 
 SceneSwitchEffect::SceneSwitchEffect() : switchFlag(false), effectAlpha(0)
 {
@@ -14,8 +15,8 @@ SceneSwitchEffect::~SceneSwitchEffect()
 void SceneSwitchEffect::Draw()
 {
 	RECT RcSwitchEffect = { 0, 0, SCRW, SCRH };
-	lpSprite->SetTransform(&effectMat);
-	lpSprite->Draw(effectTex, &RcSwitchEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(effectAlpha, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&effectMat);
+	Sprite::GetInstance().GetSprite()->Draw(effectTex, &RcSwitchEffect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(effectAlpha, 255, 255, 255));
 }
 
 void SceneSwitchEffect::Update()

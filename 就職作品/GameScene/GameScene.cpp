@@ -2,6 +2,7 @@
 #include"../MenuScene/MenuScene.h"
 #include"../TitleScene/TitleScene.h"
 #include"../DirectX/Direct3D.h"
+#include"../DirectX/Sprite.h"
 
 D3DLIGHT9 Light;
 
@@ -201,7 +202,7 @@ void GameScene::Render2D(void)
 	///	スプライトの描画処理
 	//////////////////////////////////////////////////
 	// 描画開始
-	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+	Sprite::GetInstance().GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 	if (nowState == IN_GAME)		//リザルト表示中は消す
 	{
 		for (auto PlayerHitEffect_Right : playerHitEffect_Right)
@@ -230,14 +231,14 @@ void GameScene::Render2D(void)
 	if (nowState == IN_RESULT)
 	{
 		RECT RcResult = { 0, 0, 820, 160 };
-		lpSprite->SetTransform(&resultMat);
-		lpSprite->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&resultMat);
+		Sprite::GetInstance().GetSprite()->Draw(resultTex, &RcResult, &D3DXVECTOR3(820 / 2, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		RECT RcReturn = { 0, 0, 499, 84 };
 		if (ResulCnt <= 0)
 		{
-			lpSprite->SetTransform(&returnMat);
-			lpSprite->Draw(returnTex, &RcReturn, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			Sprite::GetInstance().GetSprite()->SetTransform(&returnMat);
+			Sprite::GetInstance().GetSprite()->Draw(returnTex, &RcReturn, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 
 	}
@@ -246,7 +247,7 @@ void GameScene::Render2D(void)
 	GetSceneSwitchEffect.Draw();			//常に描画
 
 	// 描画終了
-	lpSprite->End();
+	Sprite::GetInstance().GetSprite()->End();
 }
 
 bool GameScene::Update()

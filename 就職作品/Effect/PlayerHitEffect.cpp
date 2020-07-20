@@ -1,5 +1,6 @@
 #include "PlayerHitEffect.h"
 #include"../Player/Player.h"
+#include"../DirectX/Sprite.h"
 
 PlayerHitEffect::PlayerHitEffect()
 {
@@ -47,8 +48,8 @@ bool PlayerHitEffect::GetActiveState()
 void PlayerHitEffect::Draw()
 {	
 	if (activeFlag == false)return;
-	lpSprite->SetTransform(&transMat);
-	lpSprite->Draw(tex, &rect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	Sprite::GetInstance().GetSprite()->SetTransform(&transMat);
+	Sprite::GetInstance().GetSprite()->Draw(tex, &rect, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
 void PlayerHitEffect::Update()

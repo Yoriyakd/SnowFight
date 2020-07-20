@@ -267,6 +267,12 @@
     <ClCompile Include="DirectX\DirectSound.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="DirectX\Sprite.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX\Font.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceanSwitcher\SceneSwitcher.h">
@@ -480,6 +486,12 @@
       <Filter>Window</Filter>
     </ClInclude>
     <ClInclude Include="DirectX\DirectSound.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\Sprite.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\Font.h">
       <Filter>DirectX</Filter>
     </ClInclude>
   </ItemGroup>

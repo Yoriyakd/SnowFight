@@ -1,4 +1,6 @@
 #include "AddSnowBallUI.h"
+#include"../DirectX/Sprite.h"
+
 const RECT AddSnowBallUI::Rc = { 0, 0, 158, 61 };
 const D3DXVECTOR3 AddSnowBallUI::DISPLAY_POS = D3DXVECTOR3(700, 450, 0);
 const int AddSnowBallUI::FADE_OUT_SPEED = 10;
@@ -25,8 +27,8 @@ void AddSnowBallUI::Draw()
 {
 	for (unsigned int i = 0; i < AddUI.size(); i++)
 	{
-		lpSprite->SetTransform(&AddUI[i]->mat);
-		lpSprite->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(AddUI[i]->alpha, D3DCOLLARMaxARGBValue::r, D3DCOLLARMaxARGBValue::g, D3DCOLLARMaxARGBValue::b));
+		Sprite::GetInstance().GetSprite()->SetTransform(&AddUI[i]->mat);
+		Sprite::GetInstance().GetSprite()->Draw(tex, &Rc, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(AddUI[i]->alpha, D3DCOLLARMaxARGBValue::r, D3DCOLLARMaxARGBValue::g, D3DCOLLARMaxARGBValue::b));
 	}
 }
 

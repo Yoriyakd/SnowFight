@@ -1,5 +1,6 @@
 #include "BackToTitle.h"
 #include"../TitleScene/TitleScene.h"
+#include"../DirectX/Sprite.h"
 
 const D3DXVECTOR3 BackToTitle::DISPLAY_POS = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 const D3DXVECTOR2 BackToTitle::YESBUTTON_POS = D3DXVECTOR2(440.0f, 300.0f);
@@ -36,8 +37,8 @@ void BackToTitle::Draw()
 {
 	if (nowState == true)		//タイトルバック確認画面が呼ばれている間のみ描画
 	{
-		lpSprite->SetTransform(&mat);
-		lpSprite->Draw(tex, &BACK_RECT, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Sprite::GetInstance().GetSprite()->SetTransform(&mat);
+		Sprite::GetInstance().GetSprite()->Draw(tex, &BACK_RECT, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 		YesButton->Draw();
 		NoButton->Draw();
