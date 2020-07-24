@@ -49,6 +49,7 @@ private:
 	const float CAM_HIGHT = 5.0f;		//カメラのy0からの高さ
 	const float MAKEBALL_CAM_ANG = 50.0f;	//雪玉作成時のカメラの角度
 	const float SQUAT_SPEED = 0.2f;			//雪玉作成時のしゃがむスピード
+	const float MOVING_SPEED_WHEN_WINDUP_SPEED = 0.3f;
 	//-------------------------------------------------
 
 	D3DXMATRIX billBoardMat;		//作ったビルボードの行列を入れておく

@@ -59,9 +59,9 @@ private:
 	//-----------------------------
 	//プレイヤーステータス		ここを変更して調整する
 	//-----------------------------
-	const int StartBallCnt = 10;	//スタート時のボールの数
-	const float MakeTime = 1.5;		//作成に必要な時間
-	const int AddShootAng = 25;		//雪玉を飛ばす際カメラの角度のどれくらい上に飛ばすかの角度
+	const int START_BALL_CNT = 10;	//スタート時のボールの数
+	const float CREATION_SNOWBALL_TIME_SECOND = 1.5;		//作成に必要な時間
+	const int ADD_SHOOT_ANG = 25;		//雪玉を飛ばす際カメラの角度のどれくらい上に飛ばすかの角度
 
 	//-----------------------------
 	//ステータス変数

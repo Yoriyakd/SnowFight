@@ -14,5 +14,5 @@ private:
 	D3DXMATRIX endMatL, startMatL, endMatR, startMatR;
 	bool isMakeKey;
 
-	static bool isShootKey;
+	static bool isShootKey;		//Player‚É•Ï”‚ğ‚½‚¹‚é‚æ‚¤‚É•ÏX‚·‚é
 };

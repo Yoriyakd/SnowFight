@@ -6,7 +6,7 @@
 //publicメソッド
 //=====================================
 
-Player::Player() :remainingBalls(StartBallCnt), carryFlag(false), carryObjID(NUM_ITEM_Dummy), makingTimeCnt(0.0f), canMakeSnowBallFlag(true){
+Player::Player() :remainingBalls(START_BALL_CNT), carryFlag(false), carryObjID(NUM_ITEM_Dummy), makingTimeCnt(0.0f), canMakeSnowBallFlag(true){
 	//--------------------------------------------------------------
 	//プレイヤー初期化
 	//--------------------------------------------------------------
@@ -334,11 +334,11 @@ void Player::MakeBallStart()
 
 		ShoesMakeBallAnime(true);
 
-		ballSize = makingTimeCnt / (MakeTime * GAME_FPS) * MaxBallScal;			//時間経過で大きくなる
+		ballSize = makingTimeCnt / (CREATION_SNOWBALL_TIME_SECOND * GAME_FPS) * MaxBallScal;			//時間経過で大きくなる
 
 		D3DXMatrixScaling(&ballScalMat, ballSize, ballSize, ballSize);
 
-		if (makingTimeCnt >= MakeTime * GAME_FPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
+		if (makingTimeCnt >= CREATION_SNOWBALL_TIME_SECOND * GAME_FPS)		//作っていた時間が作るのに必要な時間以上なら作成完了
 		{
 			remainingBalls++;
 			makingTimeCnt = 0;		//リセット
@@ -434,7 +434,7 @@ ThrowingInitValue Player::MakeThrowValue(const float PowerPct)
 	D3DXVec3TransformCoord(&ShootOffset, &shootOffset, &rotMatY);	//回転を考慮したベクトル作成
 
 	_ThrowingBallInitValue.shootPos = pos + ShootOffset;
-	_ThrowingBallInitValue.XAxisAng = GetPlayerCam.GetCamAngX() * -1 + AddShootAng;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
+	_ThrowingBallInitValue.XAxisAng = GetPlayerCam.GetCamAngX() * -1 + ADD_SHOOT_ANG;	//カメラのX軸角度をそのまま渡すと上向きが-なので反転させてる
 	_ThrowingBallInitValue.YAxisAng = GetPlayerCam.GetCamAngY();
 	_ThrowingBallInitValue.powerRate = PowerPct;
 	return _ThrowingBallInitValue;
