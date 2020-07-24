@@ -177,9 +177,6 @@
     <ClCompile Include="Player\CarryItem.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\EnemyState\ShootSnowBall.cpp">
-      <Filter>Enemy\State</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnemyState\LookForPlayerAnime.cpp">
       <Filter>Enemy\State</Filter>
     </ClCompile>
@@ -272,6 +269,15 @@
     </ClCompile>
     <ClCompile Include="DirectX\Font.cpp">
       <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\WindUp_E.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\Throw_E.cpp">
+      <Filter>Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\BackOriginalPose.cpp">
+      <Filter>Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,9 +401,6 @@
     <ClInclude Include="Player\CarryItem.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\EnemyState\ShootSnowBall.h">
-      <Filter>Enemy\State</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\EnemyState\LookForPlayerAnime.h">
       <Filter>Enemy\State</Filter>
     </ClInclude>
@@ -493,6 +496,15 @@
     </ClInclude>
     <ClInclude Include="DirectX\Font.h">
       <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\WindUp_E.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\Throw_E.h">
+      <Filter>Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState\BackOriginalPose.h">
+      <Filter>Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

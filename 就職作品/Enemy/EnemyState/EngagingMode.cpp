@@ -1,7 +1,7 @@
 #include"EngagingMode.h"
 #include"../Enemy.h"
 #include"TurnToPlayer.h"
-#include"ShootSnowBall.h"
+#include"WindUp_E.h"
 
 
 
@@ -14,7 +14,7 @@ EnemyStateBase *EngagingMode::Action(Enemy &Enemy)
 	ShootCoolTime--;
 	if (ShootCoolTime <= 0)
 	{
-		return new ShootSnowBall();
+		return new WindUp_E();
 	}
 
 	float ToPlayerAng;

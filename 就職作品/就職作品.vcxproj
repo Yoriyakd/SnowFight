@@ -182,11 +182,13 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="Enemy\EnemyState\BackOriginalPose.cpp" />
     <ClCompile Include="Enemy\EnemyState\EngagingMode.cpp" />
     <ClCompile Include="Enemy\EnemyState\LookForPlayerAnime.cpp" />
     <ClCompile Include="Enemy\EnemyState\PlayerSearchState.cpp" />
-    <ClCompile Include="Enemy\EnemyState\ShootSnowBall.cpp" />
+    <ClCompile Include="Enemy\EnemyState\Throw_E.cpp" />
     <ClCompile Include="Enemy\EnemyState\TurnToPlayer.cpp" />
+    <ClCompile Include="Enemy\EnemyState\WindUp_E.cpp" />
     <ClCompile Include="GameScene\EventManager.cpp" />
     <ClCompile Include="GameScene\GameObjectSpawner.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp">
@@ -286,12 +288,14 @@
     <ClInclude Include="Effect\SnowFrag.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
+    <ClInclude Include="Enemy\EnemyState\BackOriginalPose.h" />
     <ClInclude Include="Enemy\EnemyState\EnemyStateBase.h" />
     <ClInclude Include="Enemy\EnemyState\EngagingMode.h" />
     <ClInclude Include="Enemy\EnemyState\LookForPlayerAnime.h" />
     <ClInclude Include="Enemy\EnemyState\PlayerSearchState.h" />
-    <ClInclude Include="Enemy\EnemyState\ShootSnowBall.h" />
+    <ClInclude Include="Enemy\EnemyState\Throw_E.h" />
     <ClInclude Include="Enemy\EnemyState\TurnToPlayer.h" />
+    <ClInclude Include="Enemy\EnemyState\WindUp_E.h" />
     <ClInclude Include="GameScene\AddUpdateBase.h" />
     <ClInclude Include="GameScene\EventManager.h" />
     <ClInclude Include="GameScene\GameObjectSpawner.h" />
