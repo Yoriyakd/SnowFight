@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include"EnemyState/EngagingMode.h"
 #include"../DirectX/Direct3D.h"
+#include"../GameScene/GameScene.h"
 
 const int Enemy::DEFAULT_HP = 3;
 const float Enemy::HAT_RADIUS = 1.0f;
@@ -43,7 +44,7 @@ Enemy::~Enemy()
 	delete nowState;
 }
 
-bool Enemy::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
+bool Enemy::Update(GameScene *_GameScene)
 {
 	moveVec.y -= 0.005f;
 
@@ -71,9 +72,14 @@ bool Enemy::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
 		}
 	}
 
-	StageBorderProcessing(StageBorder);			//移動処理のあとに呼ぶ
+	StageBorderProcessing(_GameScene->GetStageBorder());			//移動処理のあとに呼ぶ
 
 	hatMat = hatRotMat * hatOffsetMat * mat;
+
+	if (isShootSnowBall == true)		//GameSceneにstateからアクセスしてSnowBallManagerを呼べるようにすることで改善できそうだけど
+	{
+		ShootSnowBall(_GameScene);
+	}
 
 	return true;
 }
@@ -185,6 +191,11 @@ float Enemy::GetToPlayerAng(D3DXVECTOR3 &Offset)
 void Enemy::SetMat(D3DXMATRIX& _Mat)
 {
 	mat = _Mat;
+}
+
+void Enemy::SetShootFlag(bool flag)
+{
+	isShootSnowBall = flag;		//もっといい方法がありそう
 }
 
 void Enemy::PushedObj(const D3DXVECTOR3 &PushVec)
@@ -312,7 +323,7 @@ void Enemy::BackJump(void)
 	moveVec = JumpVec;
 }
 
-void Enemy::ShootSnowBall()
+void Enemy::ShootSnowBall(GameScene* _GameScene)
 {
 	D3DXVECTOR3 OffsetTmp(3, 3, 0);
 	ThrowingInitValue ValueTmp;
@@ -324,7 +335,9 @@ void Enemy::ShootSnowBall()
 	ValueTmp.XAxisAng = 30;								/*要調整*/	//☆
 	ValueTmp.powerRate = 45.0f + rand() % 5;							/*要調整*/
 
-	GetSnowBallManager.SetSnowBall(&ValueTmp, ENEMY_ID);
+	_GameScene->GetSnowBallManager().CreateSnowBall(&ValueTmp, ENEMY_ID);
+	isShootSnowBall = false;
+	
 }
 
 void Enemy::CheckOverlapEnemies(const D3DXVECTOR3 *TargetPos)
@@ -367,7 +380,7 @@ bool Enemy::TakeDamage(int Damage)
 //=====================================
 
 
-void Enemy::StageBorderProcessing(StageBorder & StageBorder)
+void Enemy::StageBorderProcessing(const StageBorder & StageBorder)
 {
 	//ステージ境界の処理
 	if (mat._43 > StageBorder.Top)

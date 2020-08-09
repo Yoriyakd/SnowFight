@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include"../GameScene/GameScene.h"
 
 EnemyManager::~EnemyManager()
 {
@@ -33,11 +34,11 @@ void EnemyManager::Draw()
 	}
 }
 
-void EnemyManager::Update(SnowBallManager & SnowBallManager, StageBorder & StageBorder)
+void EnemyManager::Update(GameScene* _GameScene)
 {
 	for (unsigned int i = 0; i < enemy.size(); i++)		//Œ^„˜_‚¾‚Æsigned‚É‚È‚é‚½‚ßƒ_ƒ‚Ý‚½‚¢
 	{
-		enemy[i]->Update(SnowBallManager, StageBorder);
+		enemy[i]->Update(_GameScene);
 		
 		for (unsigned int j = 0; j < enemy.size(); j++)
 		{

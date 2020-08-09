@@ -3,6 +3,7 @@
 #include"../TitleScene/TitleScene.h"
 #include"../DirectX/Direct3D.h"
 #include"../DirectX/Sprite.h"
+#include <algorithm>
 
 D3DLIGHT9 Light;
 
@@ -24,7 +25,7 @@ GameScene::GameScene(int StageNo):ResulCnt(120)
 	ground = new Ground;
 	
 	skyBox = new SkyBox;
-	GetSnowBallManager.Create();
+	snowBallManager = new SnowBallManager();
 	mapObjManager = new MapObjManager();
 	GetPlayerCam.Create();
 	
@@ -115,7 +116,7 @@ GameScene::~GameScene()
 	delete skyBox;
 	delete stage1Enclosure;
 	GameNorm.Destroy();
-	GetSnowBallManager.Destroy();
+	delete snowBallManager;
 	delete mapObjManager;
 	GetPlayerCam.Destroy();
 
@@ -174,7 +175,7 @@ void GameScene::Render3D(void)
 	{
 		GetEnemyManager.Draw();
 		EnemyAnime.Draw();
-		GetSnowBallManager.Draw();
+		snowBallManager->Draw();
 		Effect.Draw();
 
 		GetPlayer.Draw();		//※Zバッファクリアをしているため最後に描画する
@@ -353,7 +354,7 @@ bool GameScene::Update()
 		CollisionObserver::PlayertoObj(&GetPlayerCam, mapObjManager->mapObj[i]);
 	}
 
-	GetPlayer.Update(*pickUpInstructions);		//カメラを更新してから
+	GetPlayer.Update(*pickUpInstructions, this);		//カメラを更新してから
 
 	AddSnowBallUI::GetInstance().Update();
 	//---------------------------------------------------------
@@ -362,10 +363,10 @@ bool GameScene::Update()
 	D3DXMATRIX TmpBillBoardMat;
 	MakeBillBoardMat(&TmpBillBoardMat, &GetPlayerCam.GetmView());		//カメラのアップデートの後に呼ぶ
 
-	GetEnemyManager.Update(GetSnowBallManager, *stageBorder);
+	GetEnemyManager.Update(this);
 
 	remainingBallUI->SetRemainingBallCnt(GetPlayer.GetRemainingBalls());
-	GetSnowBallManager.Update();
+	snowBallManager->Update();
 
 	Effect.SetBillBoardMat(&TmpBillBoardMat);		//※effectManagerのUpdateの前に呼ぶ
 	Effect.Update();
@@ -426,6 +427,16 @@ bool GameScene::Update()
 	return true;
 }
 
+SnowBallManager& GameScene::GetSnowBallManager()
+{
+	return *snowBallManager;
+}
+
+StageBorder& GameScene::GetStageBorder()
+{
+	return *stageBorder;
+}
+
 void GameScene::BeginScene()
 {
 	nowState = IN_GAME;
@@ -447,9 +458,9 @@ void GameScene::Collision()
 	//雪玉と敵の当たり判定
 	for (unsigned int ei = 0; ei < GetEnemyManager.enemy.size(); ei++)
 	{
-		for (unsigned int sj = 0; sj < GetSnowBallManager.snowBall.size(); sj++)
+		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
 		{
-			if (CollisionObserver::SnowBalltoEnemyHat(GetSnowBallManager.snowBall[sj], GetEnemyManager.enemy[ei]) == true)
+			if (CollisionObserver::SnowBalltoEnemyHat(snowBallManager->snowBall[sj], GetEnemyManager.enemy[ei]) == true)
 			{
 				if (GetEnemyManager.enemy[ei]->TakeDamage(10) == false)		//falseが返ってきたら
 				{
@@ -460,18 +471,18 @@ void GameScene::Collision()
 					//-------------------------------------------------------------
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
-					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *GetSnowBallManager.snowBall[sj]);
-					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *GetSnowBallManager.snowBall[sj], true);
+					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj], true);
 
 					//死んだインスタンス削除
 					GetEnemyManager.DeleteEnemyInstance(ei);
 					ei--;		//きえた分詰める
 
 					//SnowFragエフェクト呼ぶ
-					Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
+					Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 					//死んだインスタンス削除
-					GetSnowBallManager.DeleteInstance(sj);
+					snowBallManager->DeleteInstance(sj);
 					sj--;		//きえた分詰める
 
 					break;
@@ -479,7 +490,7 @@ void GameScene::Collision()
 
 			}
 
-			if (CollisionObserver::SnowBalltoEnemy(GetSnowBallManager.snowBall[sj], GetEnemyManager.enemy[ei]) == true)		//命中でtrueが返ってくる
+			if (CollisionObserver::SnowBalltoEnemy(snowBallManager->snowBall[sj], GetEnemyManager.enemy[ei]) == true)		//命中でtrueが返ってくる
 			{
 				if (GetEnemyManager.enemy[ei]->TakeDamage(1) == false)		//falseが返ってきたら
 				{
@@ -487,8 +498,8 @@ void GameScene::Collision()
 					//EnemyDeathAnime作成
 					//-------------------------------------------------------------
 
-					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *GetSnowBallManager.snowBall[sj]);
-					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *GetSnowBallManager.snowBall[sj], false);
+					EnemyAnime.NewEnemyDeathAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj]);
+					EnemyAnime.NewEnemyHatAnime(*GetEnemyManager.enemy[ei], *snowBallManager->snowBall[sj], false);
 
 					//死んだインスタンス削除
 					GetEnemyManager.DeleteEnemyInstance(ei);
@@ -498,10 +509,10 @@ void GameScene::Collision()
 				GetSound.Play2D(Damage_Sound);
 
 				//SnowFragエフェクト呼ぶ
-				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
+				Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//死んだインスタンス削除
-				GetSnowBallManager.DeleteInstance(sj);
+				snowBallManager->DeleteInstance(sj);
 				sj--;		//きえた分詰める
 
 				break;
@@ -513,30 +524,28 @@ void GameScene::Collision()
 
 	for (unsigned int mi = 0; mi < mapObjManager->mapObj.size(); mi++)
 	{
-		for (unsigned int sj = 0; sj < GetSnowBallManager.snowBall.size(); sj++)
-		{
-			if (CollisionObserver::SnowBalltoObj(GetSnowBallManager.snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
+		for (unsigned int sj = 0; sj < snowBallManager->snowBall.size(); sj++)
+			if (CollisionObserver::SnowBalltoObj(snowBallManager->snowBall[sj], mapObjManager->mapObj[mi]))		//命中でtrueが返ってくる
 			{
 				//SnowFragエフェクト呼ぶ
-				Effect.NewSnowFrag(GetSnowBallManager.snowBall[sj]->GetPos());
+				Effect.NewSnowFrag(snowBallManager->snowBall[sj]->GetPos());
 
 				//サウンド
 				GetSound.Play2D(SnowBallBreak_Sound);
 
 				//死んだインスタンス削除
-				GetSnowBallManager.DeleteInstance(sj);
-				sj--;				//きえた分詰める
+				snowBallManager->DeleteInstance(sj);
+				sj--;
 			}
-		}
 	}
 
 	//敵の雪玉とプレイヤーのあたり判定
-	for (unsigned int si = 0; si < GetSnowBallManager.snowBall.size(); si++)
+	for (unsigned int si = 0; si < snowBallManager->snowBall.size(); si++)
 	{
-		if (CollisionObserver::EnemySnowBalltoPlayer(&GetPlayer, GetSnowBallManager.snowBall[si]))
+		if (CollisionObserver::EnemySnowBalltoPlayer(&GetPlayer, snowBallManager->snowBall[si]))
 		{
 			//SnowFragエフェクト呼ぶ
-			Effect.NewSnowFrag(GetSnowBallManager.snowBall[si]->GetPos());
+			Effect.NewSnowFrag(snowBallManager->snowBall[si]->GetPos());
 
 			//サウンド
 			GetSound.Play2D(Damage_Sound);
@@ -550,7 +559,7 @@ void GameScene::Collision()
 			//----------------------------------------------------
 			HitEffectID ActivationID;
 
-			ActivationID = PlayerHitEffect::CalculateHitDirection(GetSnowBallManager.snowBall[si]->GetMoveVec());
+			ActivationID = PlayerHitEffect::CalculateHitDirection(snowBallManager->snowBall[si]->GetMoveVec());
 
 			switch (ActivationID)
 			{
@@ -579,7 +588,7 @@ void GameScene::Collision()
 				break;
 			}
 
-			GetSnowBallManager.DeleteInstance(si);
+			snowBallManager->DeleteInstance(si);
 			si--;						//きえた分詰める
 		}
 	}
@@ -615,7 +624,7 @@ void GameScene::BeginResult(void)
 	//敵やエフェクトなど邪魔なものを削除する
 	GetEnemyManager.AllDelete();
 	Effect.AllDelete();
-	GetSnowBallManager.AllDelete();
+	snowBallManager->AllDelete();
 	GetDecorationManager.DeleteToResult();
 
 	GetSceneSwitchEffect.PlayFadeIn();

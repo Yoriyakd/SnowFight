@@ -29,7 +29,7 @@
 class Player : public SingletonBase<Player>{
 	friend class SingletonBase<Player>;			//SingletonBaseでのインスタンス作成、削除は許可
 public:
-	bool Update(PickUpInstructions &PickUpInstructions);
+	bool Update(PickUpInstructions &PickUpInstructions, GameScene* GameScene);
 	void Draw(void);
 
 	int GetRemainingBalls();			//残弾数を返す
@@ -37,7 +37,7 @@ public:
 	const D3DXMATRIX GetMat(void);
 	void GetCollisionSphere(CollisionSphere *CollisionSphere);
 
-	void Throw(const float PowerPCT);
+	void Throw(const float PowerPCT, GameScene* _GameScene);
 
 	bool IsThrowAnything();
 	void SetShootPower(float ShootPower);
@@ -48,6 +48,8 @@ public:
 	void MakeBallEnd();
 
 	bool CanMakeSnowBall();
+
+	void SetShootSnowBallFlag(bool Flag);
 private: 
 	Player();
 	~Player();
@@ -75,7 +77,7 @@ private:
 	//-----------------------------
 	//雪玉投擲関連
 	//-----------------------------
-
+	bool isShoot = false;		//trueなら雪玉を投げる別な方法を考えたい
 	//-----------------------------
 	//靴
 	//-----------------------------

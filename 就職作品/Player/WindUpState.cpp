@@ -50,9 +50,8 @@ PlayerStateBase * WindUpState::Action(D3DXMATRIX *NowMatL, D3DXMATRIX *NowMatR)
 
 	if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) == false)
 	{
-		GetPlayer.Throw(shootPowerPCT);
+		GetPlayer.SetShootSnowBallFlag(true);
 		GetPlayerCam.SetMoveSpeed(0.5f);		//移動速度リセット	//定数化☆
-		GetPlayer.SetShootPower(0);
 		return new ThrowState();
 	}
 

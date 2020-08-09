@@ -43,7 +43,6 @@
 //ゲーム中の処理を書くクラス
 //--------------------------------------------------------------------------------------------
 
-//enum GameSceneState {IN_GAME, SWITCH_RESULT, IN_RESULT, END_RESULT, TIME_UP_EFFECT};
 
 class GameScene : public SceneBase {
 public:
@@ -54,6 +53,9 @@ public:
 	void Render2D(void);
 	bool Update(void);
 
+	SnowBallManager& GetSnowBallManager();
+	StageBorder& GetStageBorder();
+
 private:
 	void BeginScene();		//シーンを開始する際1度のみ呼ぶ
 	void EndScene();		//シーンを終了する際1度のみ呼ぶ
@@ -61,6 +63,7 @@ private:
 	void Collision();
 
 
+	SnowBallManager *snowBallManager;
 	LoadStageData *loadStageData;
 	Ground *ground;
 	SkyBox *skyBox;

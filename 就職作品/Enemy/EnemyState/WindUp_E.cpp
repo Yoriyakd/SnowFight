@@ -11,7 +11,7 @@ EnemyStateBase * WindUp_E::Action(Enemy & Enemy)
 	if (Enemy.IsJump() == true)return nullptr;
 	if (nowRotAng >= END_ROT)
 	{
-		Enemy.ShootSnowBall();		//打つ前に手に持つチャージする
+		Enemy.SetShootFlag(true);		//打つ前に手に持つチャージする
 		return new Throw_E();		//動きが終了すると次のstateを返す
 	}
 

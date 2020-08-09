@@ -7,11 +7,12 @@
 #include<vector>
 #include"EnemyState/EnemyStateBase.h"
 #include"EnemyState/PlayerSearchState.h"
+
 class Enemy {
 public:
 	Enemy(D3DXVECTOR3);
 	~Enemy();
-	virtual bool Update(SnowBallManager &SnowBallManager, StageBorder &StageBorder);
+	virtual bool Update(GameScene* _GameScene);
 	virtual void Draw(void);
 	//--------------------------------------------
 	//Getter
@@ -30,18 +31,17 @@ public:
 	float GetToPlayerAng();
 	//player‚Æ‚ÌŠp“x‚ğ•Ô‚·“n‚³‚ê‚½Pos‚Æ
 	float GetToPlayerAng(D3DXVECTOR3 &Pos);
-	//--------------------------------------------
-	//Setter
-	//--------------------------------------------
-	void SetMat(D3DXMATRIX &_Mat);
-
-
-	void PushedObj(const D3DXVECTOR3 &PushVec);
 
 	D3DXMATRIX GetHatMat(void);
 	float GetHatRadius(void);
 	float GetHatHight(void);
 	float GetSensingLength(void);
+	//--------------------------------------------
+	//Setter
+	//--------------------------------------------
+	void SetMat(D3DXMATRIX &_Mat);
+	void SetShootFlag(bool flag);
+	void PushedObj(const D3DXVECTOR3 &PushVec);
 
 	float CalculateEnemyToPlayerAng();
 
@@ -50,7 +50,7 @@ public:
 	virtual void Jump(void);
 	virtual void FrontJump(void);
 	virtual void BackJump(void);
-	virtual void ShootSnowBall();
+	virtual void ShootSnowBall(GameScene* GameScene);
 
 	void CheckOverlapEnemies(const D3DXVECTOR3*);
 
@@ -69,6 +69,8 @@ private:
 
 	XFILE hatMesh;
 	D3DXMATRIX hatMat, hatOffsetMat, hatRotMat;
+
+	bool isShoot = false;		//true‚È‚çá‹Ê‚ğ“Š‚°‚é•Ê‚È•û–@‚ğl‚¦‚½‚¢
 	//------------------------------------------------
 	//’è”
 	//------------------------------------------------
@@ -76,7 +78,7 @@ private:
 	const static float SENSING_LENGTH;
 	//------------------------------------------------
 
-	virtual void StageBorderProcessing(StageBorder &StageBorder);
+	virtual void StageBorderProcessing(const StageBorder &StageBorder);
 
 	D3DXVECTOR3 moveVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//Œğí‚ÌˆÚ“®		‹…”­Ë‚Í~‚Ü‚é‚æ‚¤‚É‚·‚é
 

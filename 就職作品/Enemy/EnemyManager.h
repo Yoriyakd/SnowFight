@@ -19,7 +19,7 @@ public:
 	void SetEnemy(D3DXVECTOR3 Pos);
 	
 	void Draw();
-	void Update(SnowBallManager &SnowBallManager, StageBorder &StageBorder);
+	void Update(GameScene *_GameScene);
 
 private:
 	~EnemyManager();

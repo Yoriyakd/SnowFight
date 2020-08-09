@@ -57,7 +57,7 @@ Player::~Player()
 	delete carryItem;
 }
 
-bool Player::Update(PickUpInstructions &PickUpInstructions)
+bool Player::Update(PickUpInstructions &PickUpInstructions, GameScene* _GameScene)
 {
 	pos = GetPlayerCam.GetPos();		//カメラの座標をセット
 
@@ -150,6 +150,10 @@ bool Player::Update(PickUpInstructions &PickUpInstructions)
 		remainingBalls = 999;			//カンストチェック
 	}
 	
+	if (isShoot == true)
+	{
+		Throw(shootPower, _GameScene);
+	}
 	return true;
 }
 
@@ -280,9 +284,11 @@ void Player::GetCollisionSphere(CollisionSphere *CollisionSphere)
 //privateメソッド
 //=====================================
 
-void Player::Throw(const float PowerPct)
+void Player::Throw(const float PowerPct, GameScene *GameScene)
 {
 	GetSound.Play2D(Throw_Sound);
+	isShoot = false;
+	SetShootPower(0);
 	if (carryFlag == true)			//デコレーションを運んでいる状態ではデコレーションを投げる
 	{
 		carryFlag = false;
@@ -295,8 +301,7 @@ void Player::Throw(const float PowerPct)
 		GetDecorationManager.Throw(carryObjID, &MakeThrowValue(PowerPct));
 		return;
 	}
-
-	GetSnowBallManager.SetSnowBall(&MakeThrowValue(PowerPct), PLAYER_ID);
+	GameScene->GetSnowBallManager().CreateSnowBall(&MakeThrowValue(PowerPct), PLAYER_ID);
 	remainingBalls--;		//発射したら残数を1減らす
 }
 
@@ -369,6 +374,11 @@ void Player::MakeBallEnd()
 bool Player::CanMakeSnowBall()
 {
 	return canMakeSnowBallFlag;
+}
+
+void Player::SetShootSnowBallFlag(bool Flag)
+{
+	isShoot = Flag;
 }
 
 void Player::ShoesMakeBallAnime(bool AnimeState)
