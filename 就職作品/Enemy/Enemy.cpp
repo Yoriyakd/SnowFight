@@ -76,7 +76,7 @@ bool Enemy::Update(GameScene *_GameScene)
 
 	hatMat = hatRotMat * hatOffsetMat * mat;
 
-	if (isShootSnowBall == true)		//GameSceneにstateからアクセスしてSnowBallManagerを呼べるようにすることで改善できそうだけど
+	if (isShoot == true)		//GameSceneにstateからアクセスしてSnowBallManagerを呼べるようにすることで改善できそうだけど
 	{
 		ShootSnowBall(_GameScene);
 	}
@@ -195,7 +195,7 @@ void Enemy::SetMat(D3DXMATRIX& _Mat)
 
 void Enemy::SetShootFlag(bool flag)
 {
-	isShootSnowBall = flag;		//もっといい方法がありそう
+	isShoot = flag;		//もっといい方法がありそう
 }
 
 void Enemy::PushedObj(const D3DXVECTOR3 &PushVec)
@@ -336,7 +336,7 @@ void Enemy::ShootSnowBall(GameScene* _GameScene)
 	ValueTmp.powerRate = 45.0f + rand() % 5;							/*要調整*/
 
 	_GameScene->GetSnowBallManager().CreateSnowBall(&ValueTmp, ENEMY_ID);
-	isShootSnowBall = false;
+	isShoot = false;
 	
 }
 
